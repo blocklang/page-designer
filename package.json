@@ -17,10 +17,11 @@
     "prettier": "prettier --write 'src/**/*.ts' 'src/**/*.css' 'tests/**/*.ts'"
   },
   "dependencies": {
-    "@dojo/framework": "^6.0.0",
-    "@dojo/themes": "^6.0.0",
-    "@dojo/widgets": "^6.0.0",
     "tslib": "~1.9.1"
+  },
+  "peerDependencies": {
+    "@dojo/framework": "^6.0.0",
+    "@dojo/themes": "^6.0.0"
   },
   "devDependencies": {
     "@dojo/cli": "^6.0.0",
