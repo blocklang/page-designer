@@ -22,10 +22,14 @@
 		"sourceMap": true,
 		"strict": true,
 		"target": "es5",
-		"types": [ "intern" ]
+		"types": [
+			"intern"
+		]
 	},
 	"include": [
 		"./src/**/*.ts",
-		"./tests/**/*.ts"
+		"./src/**/*.tsx",
+		"./tests/**/*.ts",
+		"./tests/**/*.tsx"
 	]
 }

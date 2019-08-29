@@ -14,20 +14,21 @@
     "test:functional": "dojo build --mode functional && dojo test --functional --config local",
     "test:all": "dojo build --mode unit && dojo build --mode functional && dojo test --all --config local",
     "precommit": "lint-staged",
-    "prettier": "prettier --write 'src/**/*.ts' 'src/**/*.css' 'tests/**/*.ts'"
+    "prettier": "prettier --write 'src/**/*.{ts,tsx}' 'src/**/*.css' 'tests/**/*.ts'"
   },
   "dependencies": {
     "tslib": "~1.9.1"
   },
   "peerDependencies": {
-    "@dojo/framework": "^6.0.0",
-    "@dojo/themes": "^6.0.0"
+    "@dojo/framework": "^6.0.0"
   },
   "devDependencies": {
     "@dojo/cli": "^6.0.0",
     "@dojo/cli-build-app": "^6.0.0",
     "@dojo/cli-build-widget": "^6.0.0",
     "@dojo/cli-test-intern": "^6.0.0",
+    "@dojo/framework": "^6.0.0",
+    "@dojo/themes": "^6.0.0",
     "@types/node": "~9.6.5",
     "typescript": "~3.4.5",
     "husky": "3.0.4",
