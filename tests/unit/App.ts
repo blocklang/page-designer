@@ -4,15 +4,11 @@ import { v, w } from '@dojo/framework/core/vdom';
 
 import App from '../../src/App';
 import * as css from '../../src/App.m.css';
-import PageDesigner from '../../src/widgets/PageDesigner';
+import PageDesigner from '../../src/PageDesigner';
 
 describe('App', () => {
 	it('default renders correctly', () => {
 		const h = harness(() => w(App, {}));
-		h.expect(() =>
-			v('div', { classes: [css.root] }, [
-				w(PageDesigner, {})
-			])
-		);
+		h.expect(() => v('div', { classes: [css.root] }, [w(PageDesigner, {})]));
 	});
 });

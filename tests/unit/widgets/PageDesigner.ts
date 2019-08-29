@@ -2,8 +2,8 @@ const { describe, it } = intern.getInterface('bdd');
 import harness from '@dojo/framework/testing/harness';
 import { w, v } from '@dojo/framework/core/vdom';
 
-import About from '../../../src/widgets/PageDesigner';
-import * as css from '../../../src/widgets/styles/PageDesigner.m.css';
+import About from '../../../src/PageDesigner';
+import * as css from '../../../src/styles/PageDesigner.m.css';
 
 describe('Page Designer', () => {
 	it('default renders correctly', () => {
