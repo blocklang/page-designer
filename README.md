@@ -1,10 +1,10 @@
 # page-designer
 
-可视化页面设计器
+可视化页面设计器s
 
-This project was generated with the [Dojo CLI](https://github.com/dojo/cli) & [Dojo CLI create app command](https://github.com/dojo/cli-create-app).
+## 构建
 
-## Build
+运行 `dojo build widget --mode dist --target lib` 构建 `PageDesigner` 部件。
 
 Run `npm run build` or `dojo build --mode dist` (the `mode` option defaults to `dist`) to create a production build for the project. The built artifacts will be stored in the `output/dist` directory.
 
