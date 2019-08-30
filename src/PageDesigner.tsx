@@ -9,8 +9,7 @@ const factory = create().properties<PageDesignerProperties>();
 
 export default factory(function PageDesigner({ properties }) {
 	return (
-		<div>
-			<h1 classes={[css.root]}>Page Designer</h1>
+		<div classes={[css.root]}>
 			<Header />
 		</div>
 	);
