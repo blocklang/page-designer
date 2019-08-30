@@ -2,6 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/page-designer.svg)](https://badge.fury.io/js/page-designer)
 [![Build Status](https://travis-ci.org/blocklang/page-designer.svg?branch=master)](https://travis-ci.org/blocklang/page-designer)
+[![codecov](https://codecov.io/gh/blocklang/page-designer/branch/master/graph/badge.svg)](https://codecov.io/gh/blocklang/page-designer)
 
 可视化页面设计器
 
