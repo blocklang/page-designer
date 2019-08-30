@@ -15,8 +15,7 @@
     "test:all": "dojo build --mode unit && dojo build --mode functional && dojo test --all --config local",
     "precommit": "lint-staged",
     "prettier": "prettier --write 'src/**/*.{ts,tsx}' 'src/**/*.css' 'tests/**/*.ts'",
-    "test:ci": "dojo build --mode unit && dojo test --unit",
-    "uploadCoverage": "codecov --file=output/coverage/lcov/coverage.lcov"
+    "uploadCoverage": "codecov --file=output/coverage/lcov/coverage.lcov -t 29c87b14-9b8a-43e1-a43d-a94f51b0538e"
   },
   "dependencies": {
     "tslib": "~1.9.1"

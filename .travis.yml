@@ -1,14 +1,5 @@
 language: node_js
 node_js:
   - '12'
-addons:
-  chrome: stable
 script:
-  - npm run test:ci
-  - ls
-  - cd output
-  - ls
-  - cd coverage
-  - ls
-  - npm run uploadCoverage
-  - ls
+  - npm run test
