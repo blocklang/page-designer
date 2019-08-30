@@ -4,7 +4,7 @@ node_js:
 addons:
   chrome: stable
 script:
-  - npm run test:unit
+  - npm run test:ci
   - ls
   - cd output
   - ls
