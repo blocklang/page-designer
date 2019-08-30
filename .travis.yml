@@ -9,5 +9,7 @@ script:
   - ls
   - cd output
   - ls
+  - cd coverage
+  - ls
   - npm run uploadCoverage
   - ls
