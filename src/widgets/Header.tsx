@@ -15,7 +15,6 @@ export default factory(function Header({ properties }) {
 	return (
 		<div>
 			<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
-			<FontAwesomeIcon icon="cube" />
 		</div>
 	);
 });
