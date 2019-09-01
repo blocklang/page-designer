@@ -2,6 +2,12 @@
 
 ## 切换 NPM 镜像
 
+查询当前镜像
+
+```shell
+npm config get registry
+```
+
 如果当前使用的是淘宝镜像，则切换回 Npmjs
 
 ```shell
