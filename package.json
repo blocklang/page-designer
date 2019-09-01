@@ -19,7 +19,8 @@
   },
   "dependencies": {
     "tslib": "~1.9.1",
-    "dojo-fontawesome": "~0.0.2"
+    "dojo-fontawesome": "~0.0.2",
+    "bootstrap-classes": "~0.0.1"
   },
   "peerDependencies": {
     "@dojo/framework": "^6.0.0",

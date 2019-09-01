@@ -1,6 +1,7 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import { User, Project, Path, Permission } from "../interfaces";
+import * as c from "bootstrap-classes";
 
 export interface HeaderProperties {
 	user?: User;
@@ -13,7 +14,7 @@ const factory = create().properties<HeaderProperties>();
 
 export default factory(function Header({ properties }) {
 	return (
-		<div>
+		<div classes={[c.container]}>
 			<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
 		</div>
 	);
