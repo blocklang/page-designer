@@ -24,6 +24,7 @@ export default factory(function PageDesigner({ properties, middleware: { icache 
 	return (
 		<div classes={[c.container_fluid, css.root]}>
 			<Header
+				key="header"
 				user={user}
 				permission={permission}
 				project={project}

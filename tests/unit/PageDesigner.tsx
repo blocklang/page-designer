@@ -1,6 +1,5 @@
 const { describe, it } = intern.getInterface("bdd");
 
-import assertionTemplate from "@dojo/framework/testing/assertionTemplate";
 import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 import * as c from "bootstrap-classes";
@@ -33,26 +32,143 @@ const page: Page = {
 const pathes: Path[] = [{ name: "page1", path: "page1" }];
 
 describe("PageDesigner", () => {
-	const baseAssertion = assertionTemplate(() => (
-		<div classes={[c.container_fluid, css.root]}>
-			<Header
-				editMode="Preview"
-				activeView="ui"
-				user={user}
-				project={project}
-				permission={permission}
-				pathes={pathes}
-				onChangeEditMode={() => {}}
-				onChangeView={() => {}}
-			/>
-		</div>
-	));
-
-	it("renders", () => {
+	it("default properties", () => {
 		const h = harness(() => (
 			<PageDesigner user={user} project={project} permission={permission} page={page} pathes={pathes} />
 		));
 
-		h.expect(baseAssertion);
+		h.expect(() => (
+			<div classes={[c.container_fluid, css.root]}>
+				<Header
+					key="header"
+					editMode="Preview"
+					activeView="ui"
+					user={user}
+					project={project}
+					permission={permission}
+					pathes={pathes}
+					onChangeEditMode={() => {}}
+					onChangeView={() => {}}
+				/>
+			</div>
+		));
+	});
+
+	it("onChangeEditMode should be switch between edit and preview", () => {
+		const h = harness(() => (
+			<PageDesigner user={user} project={project} permission={permission} page={page} pathes={pathes} />
+		));
+
+		h.expect(() => (
+			<div classes={[c.container_fluid, css.root]}>
+				<Header
+					key="header"
+					editMode="Preview"
+					activeView="ui"
+					user={user}
+					project={project}
+					permission={permission}
+					pathes={pathes}
+					onChangeEditMode={() => {}}
+					onChangeView={() => {}}
+				/>
+			</div>
+		));
+
+		// 切换到编辑模式
+		h.trigger("@header", "onChangeEditMode");
+		h.expect(() => (
+			<div classes={[c.container_fluid, css.root]}>
+				<Header
+					key="header"
+					editMode="Edit"
+					activeView="ui"
+					user={user}
+					project={project}
+					permission={permission}
+					pathes={pathes}
+					onChangeEditMode={() => {}}
+					onChangeView={() => {}}
+				/>
+			</div>
+		));
+
+		// 切换回浏览模式
+		h.trigger("@header", "onChangeEditMode");
+		h.expect(() => (
+			<div classes={[c.container_fluid, css.root]}>
+				<Header
+					key="header"
+					editMode="Preview"
+					activeView="ui"
+					user={user}
+					project={project}
+					permission={permission}
+					pathes={pathes}
+					onChangeEditMode={() => {}}
+					onChangeView={() => {}}
+				/>
+			</div>
+		));
+	});
+
+	it("onChangeViewMode should be switch between ui and behavior", () => {
+		const h = harness(() => (
+			<PageDesigner user={user} project={project} permission={permission} page={page} pathes={pathes} />
+		));
+
+		h.expect(() => (
+			<div classes={[c.container_fluid, css.root]}>
+				<Header
+					key="header"
+					editMode="Preview"
+					activeView="ui"
+					user={user}
+					project={project}
+					permission={permission}
+					pathes={pathes}
+					onChangeEditMode={() => {}}
+					onChangeView={() => {}}
+				/>
+			</div>
+		));
+
+		// 切换到编辑模式
+		h.trigger("@header", "onChangeEditMode");
+		// 切换到交互视图
+		h.trigger("@header", "onChangeView");
+		h.expect(() => (
+			<div classes={[c.container_fluid, css.root]}>
+				<Header
+					key="header"
+					editMode="Edit"
+					activeView="behavior"
+					user={user}
+					project={project}
+					permission={permission}
+					pathes={pathes}
+					onChangeEditMode={() => {}}
+					onChangeView={() => {}}
+				/>
+			</div>
+		));
+
+		// 切换回 UI 视图
+		h.trigger("@header", "onChangeView");
+		h.expect(() => (
+			<div classes={[c.container_fluid, css.root]}>
+				<Header
+					key="header"
+					editMode="Edit"
+					activeView="ui"
+					user={user}
+					project={project}
+					permission={permission}
+					pathes={pathes}
+					onChangeEditMode={() => {}}
+					onChangeView={() => {}}
+				/>
+			</div>
+		));
 	});
 });
