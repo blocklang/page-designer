@@ -34,12 +34,14 @@
     "@dojo/framework": "^6.0.0",
     "@dojo/themes": "^6.0.0",
     "@types/node": "~9.6.5",
+    "@types/sinon": "~7.0.13",
     "bootstrap": "^4.3.1",
     "codecov": "~3.5.0",
     "typescript": "~3.4.5",
     "husky": "3.0.4",
     "lint-staged": "9.2.5",
-    "prettier": "1.18.2"
+    "prettier": "1.18.2",
+    "sinon": "~7.4.2"
   },
   "lint-staged": {
     "*.{ts,tsx,css}": [

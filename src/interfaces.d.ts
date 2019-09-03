@@ -53,3 +53,9 @@ export interface Path {
 	name: string;
 	path: string;
 }
+
+export type EditMode = "Preview" | "Edit";
+
+export interface State {
+	mode: EditMode;
+}

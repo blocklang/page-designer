@@ -6,10 +6,13 @@ import * as css from "./App.m.css";
 import PageDesigner from "./PageDesigner";
 import { User, Project, Permission, Page, Path } from "./interfaces";
 import { library } from "@fortawesome/fontawesome-svg-core";
+
 import { faArrowAltCircleLeft } from "@fortawesome/free-regular-svg-icons/faArrowAltCircleLeft";
+import { faEdit } from "@fortawesome/free-regular-svg-icons/faEdit";
+import { faCaretSquareRight } from "@fortawesome/free-regular-svg-icons/faCaretSquareRight";
 import { faCube } from "@fortawesome/free-solid-svg-icons/faCube";
 
-library.add(faArrowAltCircleLeft, faCube);
+library.add(faArrowAltCircleLeft, faEdit, faCaretSquareRight, faCube);
 
 const factory = create({ theme });
 
@@ -31,7 +34,7 @@ export default factory(function App({ middleware: { theme } }) {
 
 	const permission: Permission = {
 		canRead: true,
-		canWrite: false
+		canWrite: true
 	};
 
 	const page: Page = {
