@@ -3,7 +3,7 @@ const { describe, it } = intern.getInterface("bdd");
 import assertionTemplate from "@dojo/framework/testing/assertionTemplate";
 import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
-
+import * as c from "bootstrap-classes";
 import * as css from "../../src/styles/PageDesigner.m.css";
 import PageDesigner from "../../src/PageDesigner";
 import Header from "../../src/widgets/Header";
@@ -34,14 +34,16 @@ const pathes: Path[] = [{ name: "page1", path: "page1" }];
 
 describe("PageDesigner", () => {
 	const baseAssertion = assertionTemplate(() => (
-		<div classes={[css.root]}>
+		<div classes={[c.container_fluid, css.root]}>
 			<Header
 				editMode="Preview"
+				activeView="ui"
 				user={user}
 				project={project}
 				permission={permission}
 				pathes={pathes}
 				onChangeEditMode={() => {}}
+				onChangeView={() => {}}
 			/>
 		</div>
 	));

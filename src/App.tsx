@@ -10,9 +10,12 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faArrowAltCircleLeft } from "@fortawesome/free-regular-svg-icons/faArrowAltCircleLeft";
 import { faEdit } from "@fortawesome/free-regular-svg-icons/faEdit";
 import { faCaretSquareRight } from "@fortawesome/free-regular-svg-icons/faCaretSquareRight";
+import { faSave } from "@fortawesome/free-regular-svg-icons/faSave";
 import { faCube } from "@fortawesome/free-solid-svg-icons/faCube";
+import { faUndo } from "@fortawesome/free-solid-svg-icons/faUndo";
+import { faRedo } from "@fortawesome/free-solid-svg-icons/faRedo";
 
-library.add(faArrowAltCircleLeft, faEdit, faCaretSquareRight, faCube);
+library.add(faArrowAltCircleLeft, faEdit, faCaretSquareRight, faSave, faCube, faUndo, faRedo);
 
 const factory = create({ theme });
 

@@ -1,7 +1,8 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
-import { User, Project, Path, Permission, EditMode } from "../interfaces";
+import { User, Project, Path, Permission, EditMode, ViewType } from "../interfaces";
 import * as c from "bootstrap-classes";
+import { DNode } from "@dojo/framework/core/interfaces";
 
 export interface HeaderProperties {
 	user?: User;
@@ -9,15 +10,32 @@ export interface HeaderProperties {
 	project: Project;
 	pathes: Path[];
 	editMode?: EditMode;
+	activeView?: ViewType;
 	onChangeEditMode: () => void;
+	onChangeView: () => void;
 }
 
 const factory = create().properties<HeaderProperties>();
 
 export default factory(function Header({ properties }) {
-	const { user, project, pathes, permission, editMode = "Preview", onChangeEditMode } = properties();
+	const {
+		user,
+		project,
+		pathes,
+		permission,
+		editMode = "Preview",
+		activeView = "ui",
+		onChangeEditMode,
+		onChangeView
+	} = properties();
 
-	const path = `${project.createUserName}/${project.name}/${pathes.map((item) => item.name).join("/")}`;
+	let path;
+	if (editMode === "Preview") {
+		path = `${project.createUserName}/${project.name}/${pathes.map((item) => item.name).join("/")}`;
+	} else {
+		// 编辑模式下，只显示叶节点，为操作区腾出空间
+		path = pathes[pathes.length - 1].name;
+	}
 
 	const leftBlock = (
 		<div>
@@ -29,8 +47,60 @@ export default factory(function Header({ properties }) {
 	);
 
 	let centerBlock = undefined;
+
+	let switchViewActionButtons: DNode[] = [];
+	if (activeView === "ui") {
+		switchViewActionButtons = [
+			<button key="toUIViewButton" type="button" classes={[c.btn, c.btn_outline_secondary, c.active]}>
+				界面
+			</button>,
+			<button
+				key="toBehaviorViewButton"
+				type="button"
+				classes={[c.btn, c.btn_outline_secondary]}
+				onclick={() => onChangeView()}
+			>
+				交互
+			</button>
+		];
+	} else {
+		switchViewActionButtons = [
+			<button
+				key="toUIViewButton"
+				type="button"
+				classes={[c.btn, c.btn_outline_secondary]}
+				onclick={() => onChangeView()}
+			>
+				界面
+			</button>,
+			<button key="toBehaviorViewButton" type="button" classes={[c.btn, c.btn_outline_secondary, c.active]}>
+				交互
+			</button>
+		];
+	}
+
 	if (editMode === "Edit") {
-		centerBlock = <div></div>;
+		centerBlock = (
+			<div classes={[c.d_inline_flex]}>
+				<div classes={[c.btn_group, c.btn_group_sm]} role="group" aria-label="视图">
+					{switchViewActionButtons}
+				</div>
+				<div>
+					<button key="saveButton" type="button" disabled={true}>
+						<FontAwesomeIcon icon={["far", "save"]} />
+						<span>保存</span>
+					</button>
+					<button key="undoButton" type="button" disabled={true}>
+						<FontAwesomeIcon icon="undo" />
+						<span>撤销</span>
+					</button>
+					<button key="redoButton" type="button" disabled={true}>
+						<FontAwesomeIcon icon="redo" />
+						<span>恢复</span>
+					</button>
+				</div>
+			</div>
+		);
 	}
 
 	const userBlock =
@@ -75,7 +145,7 @@ export default factory(function Header({ properties }) {
 	}
 
 	return (
-		<div classes={[c.row, c.bg_light, c.d_flex, c.justify_content_between]}>
+		<div classes={[c.bg_light, c.d_flex, c.justify_content_between]}>
 			{leftBlock}
 			{centerBlock}
 			{rightBlock}

@@ -54,7 +54,25 @@ export interface Path {
 	path: string;
 }
 
+/**
+ * @type EditMode
+ *
+ * 编辑模式:
+ *
+ * 1. Preview: 预览
+ * 2. Edit: 编辑
+ */
 export type EditMode = "Preview" | "Edit";
+
+/**
+ * @type ViewType
+ *
+ * 视图类型
+ *
+ * 1. ui: 界面
+ * 2. behavior: 交互
+ */
+export type ViewType = "ui" | "behavior";
 
 export interface State {
 	mode: EditMode;
