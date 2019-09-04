@@ -5,6 +5,9 @@ import * as css from "./styles/PageDesigner.m.css";
 import * as c from "bootstrap-classes";
 import Header from "./widgets/Header";
 import { User, Project, Page, Path, Permission, EditMode, ViewType } from "./interfaces";
+import Preview from "./widgets/Preview";
+import UIView from "./widgets/UIView";
+import BehaviorView from "./widgets/BehaviorView";
 
 export interface PageDesignerProperties {
 	user?: User; // 如果是匿名用户，则值为 null
@@ -48,6 +51,7 @@ export default factory(function PageDesigner({ properties, middleware: { icache 
 					icache.set("activeView", activeView);
 				}}
 			/>
+			{editMode === "Preview" ? <Preview /> : activeView === "ui" ? <UIView /> : <BehaviorView />}
 		</div>
 	);
 });

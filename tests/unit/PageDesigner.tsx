@@ -7,6 +7,9 @@ import * as css from "../../src/styles/PageDesigner.m.css";
 import PageDesigner from "../../src/PageDesigner";
 import Header from "../../src/widgets/Header";
 import { User, Project, Path, Page, Permission } from "../../src/interfaces";
+import Preview from "../../src/widgets/Preview";
+import UIView from "../../src/widgets/UIView";
+import BehaviorView from "../../src/widgets/BehaviorView";
 
 // login user
 const user: User = {
@@ -50,6 +53,7 @@ describe("PageDesigner", () => {
 					onChangeEditMode={() => {}}
 					onChangeView={() => {}}
 				/>
+				<Preview />
 			</div>
 		));
 	});
@@ -72,6 +76,7 @@ describe("PageDesigner", () => {
 					onChangeEditMode={() => {}}
 					onChangeView={() => {}}
 				/>
+				<Preview />
 			</div>
 		));
 
@@ -90,6 +95,7 @@ describe("PageDesigner", () => {
 					onChangeEditMode={() => {}}
 					onChangeView={() => {}}
 				/>
+				<UIView />
 			</div>
 		));
 
@@ -108,6 +114,7 @@ describe("PageDesigner", () => {
 					onChangeEditMode={() => {}}
 					onChangeView={() => {}}
 				/>
+				<Preview />
 			</div>
 		));
 	});
@@ -130,6 +137,7 @@ describe("PageDesigner", () => {
 					onChangeEditMode={() => {}}
 					onChangeView={() => {}}
 				/>
+				<Preview />
 			</div>
 		));
 
@@ -150,6 +158,7 @@ describe("PageDesigner", () => {
 					onChangeEditMode={() => {}}
 					onChangeView={() => {}}
 				/>
+				<BehaviorView />
 			</div>
 		));
 
@@ -168,6 +177,7 @@ describe("PageDesigner", () => {
 					onChangeEditMode={() => {}}
 					onChangeView={() => {}}
 				/>
+				<UIView />
 			</div>
 		));
 	});
