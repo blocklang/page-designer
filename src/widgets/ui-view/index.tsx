@@ -6,5 +6,5 @@ const factory = create().properties<UIViewProperties>();
 
 export default factory(function UIView({ properties }) {
 	const {} = properties();
-	return <div></div>;
+	return <div>界面</div>;
 });

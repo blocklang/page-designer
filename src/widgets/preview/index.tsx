@@ -6,5 +6,5 @@ const factory = create().properties<PreviewProperties>();
 
 export default factory(function Preview({ properties }) {
 	const {} = properties();
-	return <div></div>;
+	return <div>浏览</div>;
 });

@@ -7,9 +7,9 @@ import * as css from "../../src/styles/PageDesigner.m.css";
 import PageDesigner from "../../src/PageDesigner";
 import Header from "../../src/widgets/Header";
 import { User, Project, Path, Page, Permission } from "../../src/interfaces";
-import Preview from "../../src/widgets/Preview";
-import UIView from "../../src/widgets/UIView";
-import BehaviorView from "../../src/widgets/BehaviorView";
+import Preview from "../../src/widgets/preview";
+import UIView from "../../src/widgets/ui-view";
+import BehaviorView from "../../src/widgets/behavior-view";
 
 // login user
 const user: User = {

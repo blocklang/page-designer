@@ -6,5 +6,5 @@ const factory = create().properties<BehaviorViewProperties>();
 
 export default factory(function BehaviorView({ properties }) {
 	const {} = properties();
-	return <div></div>;
+	return <div>交互</div>;
 });
