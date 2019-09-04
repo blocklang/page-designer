@@ -6,7 +6,7 @@ import { tsx } from "@dojo/framework/core/vdom";
 
 import UIOperatePane from "../../../../../src/widgets/ui-view/operate-pane";
 
-describe("UIOperatePane", () => {
+describe("ui-view/operate-pane", () => {
 	const baseAssertion = assertionTemplate(() => <div>UI 操作面板</div>);
 
 	it("renders", () => {

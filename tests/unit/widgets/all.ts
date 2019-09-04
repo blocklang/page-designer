@@ -1,2 +1,2 @@
 import "./Header";
-import "./ui-view/ui-operate-pane";
+import "./ui-view/operate-pane";
