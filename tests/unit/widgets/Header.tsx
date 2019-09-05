@@ -192,7 +192,7 @@ describe("Header", () => {
 					</a>
 					<span classes={[c.ml_1]}>page1</span>
 				</div>
-				<div classes={[c.d_inline_flex]}>
+				<div classes={[c.d_inline_flex, c.align_items_center]}>
 					<div classes={[c.btn_group, c.btn_group_sm]} role="group" aria-label="视图">
 						<button key="toUIViewButton" type="button" classes={[c.btn, c.btn_outline_secondary, c.active]}>
 							界面
@@ -286,7 +286,7 @@ describe("Header", () => {
 					</a>
 					<span classes={[c.ml_1]}>page1</span>
 				</div>
-				<div classes={[c.d_inline_flex]}>
+				<div classes={[c.d_inline_flex, c.align_items_center]}>
 					<div classes={[c.btn_group, c.btn_group_sm]} role="group" aria-label="视图">
 						<button
 							key="toUIViewButton"

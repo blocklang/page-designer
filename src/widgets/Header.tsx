@@ -81,7 +81,7 @@ export default factory(function Header({ properties }) {
 
 	if (editMode === "Edit") {
 		centerBlock = (
-			<div classes={[c.d_inline_flex]}>
+			<div classes={[c.d_inline_flex, c.align_items_center]}>
 				<div classes={[c.btn_group, c.btn_group_sm]} role="group" aria-label="视图">
 					{switchViewActionButtons}
 				</div>

@@ -1,0 +1,11 @@
+.root {
+	/*暂不支持移动
+    cursor: move;
+    */
+	background-color: #e9ecef;
+}
+
+.focusWidgetPath {
+	padding: 0.2rem 1rem;
+	margin-bottom: 0.4rem;
+}
