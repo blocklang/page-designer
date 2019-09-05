@@ -4,6 +4,8 @@ import * as c from "bootstrap-classes";
 import * as css from "./index.m.css";
 import Header from "./Header";
 import icache from "@dojo/framework/core/middleware/icache";
+import WidgetsTab from "./widgets-tab";
+import PropertiesTab from "./properties-tab";
 
 export interface UIOperatePaneProperties {
 	top?: number;
@@ -60,7 +62,7 @@ export default factory(function UIOperatePane({ properties, middleware: { icache
 					</a>
 				</li>
 			</ul>
-			<div>{activeNav === "widgets" ? "部件" : "属性"}</div>
+			{activeNav === "widgets" ? <WidgetsTab /> : <PropertiesTab />}
 		</div>
 	);
 });

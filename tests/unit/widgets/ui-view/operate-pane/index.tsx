@@ -8,6 +8,8 @@ import * as css from "../../../../../src/widgets/ui-view/operate-pane/index.m.cs
 
 import UIOperatePane from "../../../../../src/widgets/ui-view/operate-pane";
 import Header from "../../../../../src/widgets/ui-view/operate-pane/Header";
+import WidgetsTab from "../../../../../src/widgets/ui-view/operate-pane/widgets-tab";
+import PropertiesTab from "../../../../../src/widgets/ui-view/operate-pane/properties-tab";
 
 describe("ui-view/operate-pane", () => {
 	it("default properties", () => {
@@ -28,7 +30,7 @@ describe("ui-view/operate-pane", () => {
 						</a>
 					</li>
 				</ul>
-				<div>部件</div>
+				<WidgetsTab />
 			</div>
 		));
 	});
@@ -51,7 +53,7 @@ describe("ui-view/operate-pane", () => {
 						</a>
 					</li>
 				</ul>
-				<div>部件</div>
+				<WidgetsTab />
 			</div>
 		));
 
@@ -72,7 +74,7 @@ describe("ui-view/operate-pane", () => {
 						</a>
 					</li>
 				</ul>
-				<div>属性</div>
+				<PropertiesTab />
 			</div>
 		));
 	});
@@ -95,7 +97,7 @@ describe("ui-view/operate-pane", () => {
 						</a>
 					</li>
 				</ul>
-				<div>部件</div>
+				<WidgetsTab />
 			</div>
 		));
 
@@ -117,7 +119,7 @@ describe("ui-view/operate-pane", () => {
 						</a>
 					</li>
 				</ul>
-				<div>部件</div>
+				<WidgetsTab />
 			</div>
 		));
 	});
