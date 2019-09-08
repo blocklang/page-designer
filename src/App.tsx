@@ -33,8 +33,8 @@ export default factory(function App({ middleware: { theme } }) {
 
 	const project: Project = {
 		id: 1,
-		name: "project",
-		createUserName: "lucy"
+		name: "project_1",
+		createUserName: "jack"
 	};
 
 	const permission: Permission = {
@@ -49,7 +49,7 @@ export default factory(function App({ middleware: { theme } }) {
 	const pathes: Path[] = [{ name: "page1", path: "page1" }];
 
 	const urls: RequestUrl = {
-		fetchApiRepoWidgets: "http://localhost:3000/comments"
+		fetchApiRepoWidgets: "http://localhost:3000/{owner}/{projectName}/dependences/widgets"
 	};
 
 	return (

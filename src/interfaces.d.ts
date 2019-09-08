@@ -82,7 +82,7 @@ export interface WidgetRepo {
 
 export interface WidgetCategory {
 	name: string; // 如果未分类，则值为 _
-	Widgets: Widget[];
+	widgets: Widget[];
 }
 
 /**
@@ -92,16 +92,14 @@ export interface WidgetCategory {
  *
  * @property widgetId           部件标识
  * @property widgetName         部件名称
- * @property category           部件分类
+ * @property widgetCode         部件编码
  * @property iconClass          部件图标样式类
- * @property label              部件显示名
  */
 export interface Widget {
 	widgetId: number;
 	widgetName: string;
-	category: string;
-	iconClass?: string;
-	label?: string;
+	widgetCode: string;
+	iconClass: string;
 }
 
 // /**
@@ -160,6 +158,7 @@ export interface RequestUrl {
 }
 
 export interface State {
+	project: Project;
 	widgetRepos: WidgetRepo[];
 }
 

@@ -2,7 +2,6 @@ import { create, tsx } from "@dojo/framework/core/vdom";
 
 import store from "../../../../store";
 import * as c from "bootstrap-classes";
-import { WidgetRepo } from "../../../../interfaces";
 import { getWidgetsProcess } from "../../../../processes/widgetProcesses";
 
 export interface WidgetsTabProperties {}

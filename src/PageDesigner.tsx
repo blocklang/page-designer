@@ -8,7 +8,9 @@ import { User, Project, Page, Path, Permission, EditMode, ViewType, RequestUrl }
 import Preview from "./widgets/preview";
 import UIView from "./widgets/ui-view";
 import BehaviorView from "./widgets/behavior-view";
+import store from "./store";
 import { config } from "./config";
+import { initProjectProcess } from "./processes/projectProcesses";
 
 export interface PageDesignerProperties {
 	user?: User; // 如果是匿名用户，则值为 null
@@ -19,12 +21,15 @@ export interface PageDesignerProperties {
 	urls: RequestUrl;
 }
 
-const factory = create({ icache }).properties<PageDesignerProperties>();
+const factory = create({ icache, store }).properties<PageDesignerProperties>();
 
-export default factory(function PageDesigner({ properties, middleware: { icache } }) {
+export default factory(function PageDesigner({ properties, middleware: { icache, store } }) {
 	const { user, project, permission, pathes, urls } = properties();
+	const { executor } = store;
 
+	// 初始化数据
 	config.fetchApiRepoWidgetsUrl = urls.fetchApiRepoWidgets;
+	executor(initProjectProcess)({ project });
 
 	let editMode = icache.getOrSet<EditMode>("editMode", "Preview");
 	let activeView = icache.getOrSet<ViewType>("activeView", "ui");
