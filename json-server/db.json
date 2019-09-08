@@ -15,5 +15,21 @@
   ],
   "profile": {
     "name": "typicode"
-  }
+  },
+  "widgets": [
+    {
+      "owner": "jack",
+      "name": "project_1",
+      "apiRepoId": 1,
+      "apiRepoName": "api repo 1",
+      "widgetCategory": []
+    },
+    {
+      "owner": "jack",
+      "name": "project_1",
+      "apiRepoId": 2,
+      "apiRepoName": "api repo 2",
+      "widgetCategory": []
+    }
+  ]
 }

@@ -16,7 +16,7 @@
     "precommit": "lint-staged",
     "prettier": "prettier --write 'src/**/*.{ts,tsx}' 'src/**/*.css' 'tests/**/*.ts'",
     "uploadCoverage": "codecov --file=output/coverage/lcov/coverage.lcov -t 29c87b14-9b8a-43e1-a43d-a94f51b0538e",
-    "json-server": "json-server --watch json-server/db.json"
+    "json-server": "json-server --watch json-server/db.json --routes json-server/routes.json"
   },
   "dependencies": {
     "tslib": "~1.9.1",

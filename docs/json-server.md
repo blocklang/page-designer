@@ -11,7 +11,7 @@ npm i -g json-server
 运行 json server
 
 ```shell
-json-server --watch json-server/db.json
+json-server --watch json-server/db.json --routes json-server/routes.json
 ```
 
 或
