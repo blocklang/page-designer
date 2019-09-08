@@ -38,7 +38,7 @@ export default factory(function Header({ properties }) {
 	}
 
 	const leftBlock = (
-		<div>
+		<div key="left">
 			<a title="返回">
 				<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
 			</a>
@@ -81,7 +81,7 @@ export default factory(function Header({ properties }) {
 
 	if (editMode === "Edit") {
 		centerBlock = (
-			<div classes={[c.d_inline_flex, c.align_items_center]}>
+			<div key="center" classes={[c.d_inline_flex, c.align_items_center]}>
 				<div classes={[c.btn_group, c.btn_group_sm]} role="group" aria-label="视图">
 					{switchViewActionButtons}
 				</div>
@@ -137,7 +137,7 @@ export default factory(function Header({ properties }) {
 	let rightBlock;
 	if (userBlock || switchEditModeBlock) {
 		rightBlock = (
-			<div>
+			<div key="right">
 				{switchEditModeBlock}
 				{userBlock}
 			</div>

@@ -6,7 +6,7 @@ import * as c from "bootstrap-classes";
 import * as css from "../../src/styles/PageDesigner.m.css";
 import PageDesigner from "../../src/PageDesigner";
 import Header from "../../src/widgets/Header";
-import { User, Project, Path, Page, Permission } from "../../src/interfaces";
+import { User, Project, Path, Page, Permission, RequestUrl } from "../../src/interfaces";
 import Preview from "../../src/widgets/preview";
 import UIView from "../../src/widgets/ui-view";
 import BehaviorView from "../../src/widgets/behavior-view";
@@ -34,10 +34,19 @@ const page: Page = {
 
 const pathes: Path[] = [{ name: "page1", path: "page1" }];
 
+const urls: RequestUrl = { fetchApiRepoWidgets: "" };
+
 describe("PageDesigner", () => {
 	it("default properties", () => {
 		const h = harness(() => (
-			<PageDesigner user={user} project={project} permission={permission} page={page} pathes={pathes} />
+			<PageDesigner
+				user={user}
+				project={project}
+				permission={permission}
+				page={page}
+				pathes={pathes}
+				urls={urls}
+			/>
 		));
 
 		h.expect(() => (
@@ -60,7 +69,14 @@ describe("PageDesigner", () => {
 
 	it("onChangeEditMode should be switch between edit and preview", () => {
 		const h = harness(() => (
-			<PageDesigner user={user} project={project} permission={permission} page={page} pathes={pathes} />
+			<PageDesigner
+				user={user}
+				project={project}
+				permission={permission}
+				page={page}
+				pathes={pathes}
+				urls={urls}
+			/>
 		));
 
 		h.expect(() => (
@@ -121,7 +137,14 @@ describe("PageDesigner", () => {
 
 	it("onChangeViewMode should be switch between ui and behavior", () => {
 		const h = harness(() => (
-			<PageDesigner user={user} project={project} permission={permission} page={page} pathes={pathes} />
+			<PageDesigner
+				user={user}
+				project={project}
+				permission={permission}
+				page={page}
+				pathes={pathes}
+				urls={urls}
+			/>
 		));
 
 		h.expect(() => (

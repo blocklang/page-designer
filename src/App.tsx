@@ -4,7 +4,7 @@ import dojo from "@dojo/themes/dojo";
 import "bootstrap/dist/css/bootstrap.min.css";
 import * as css from "./App.m.css";
 import PageDesigner from "./PageDesigner";
-import { User, Project, Permission, Page, Path } from "./interfaces";
+import { User, Project, Permission, Page, Path, RequestUrl } from "./interfaces";
 import { library } from "@fortawesome/fontawesome-svg-core";
 
 import { faArrowAltCircleLeft } from "@fortawesome/free-regular-svg-icons/faArrowAltCircleLeft";
@@ -48,10 +48,21 @@ export default factory(function App({ middleware: { theme } }) {
 
 	const pathes: Path[] = [{ name: "page1", path: "page1" }];
 
+	const urls: RequestUrl = {
+		fetchApiRepoWidgets: "http://localhost:3000/comments"
+	};
+
 	return (
 		<div classes={[css.root]}>
 			<div>参数设置区</div>
-			<PageDesigner user={user} project={project} permission={permission} page={page} pathes={pathes} />
+			<PageDesigner
+				user={user}
+				project={project}
+				permission={permission}
+				page={page}
+				pathes={pathes}
+				urls={urls}
+			/>
 		</div>
 	);
 });

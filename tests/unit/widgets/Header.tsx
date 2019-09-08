@@ -37,7 +37,7 @@ describe("Header", () => {
 
 		h.expect(() => (
 			<div classes={[c.bg_light, c.d_flex, c.justify_content_between]}>
-				<div>
+				<div key="left">
 					<a title="返回">
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
 					</a>
@@ -79,13 +79,13 @@ describe("Header", () => {
 
 		h.expect(() => (
 			<div classes={[c.bg_light, c.d_flex, c.justify_content_between]}>
-				<div>
+				<div key="left">
 					<a title="返回">
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
 					</a>
 					<span classes={[c.ml_1]}>tom/project/page1</span>
 				</div>
-				<div>
+				<div key="right">
 					<span>
 						<img src="url" />
 						<span>jack</span>
@@ -127,13 +127,13 @@ describe("Header", () => {
 
 		h.expect(() => (
 			<div classes={[c.bg_light, c.d_flex, c.justify_content_between]}>
-				<div>
+				<div key="left">
 					<a title="返回">
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
 					</a>
 					<span classes={[c.ml_1]}>tom/project/page1</span>
 				</div>
-				<div>
+				<div key="right">
 					<button key="toEditButton" onclick={() => {}}>
 						<FontAwesomeIcon icon={["far", "edit"]} />
 						编辑
@@ -186,13 +186,13 @@ describe("Header", () => {
 
 		h.expect(() => (
 			<div classes={[c.bg_light, c.d_flex, c.justify_content_between]}>
-				<div>
+				<div key="left">
 					<a title="返回">
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
 					</a>
 					<span classes={[c.ml_1]}>page1</span>
 				</div>
-				<div classes={[c.d_inline_flex, c.align_items_center]}>
+				<div key="center" classes={[c.d_inline_flex, c.align_items_center]}>
 					<div classes={[c.btn_group, c.btn_group_sm]} role="group" aria-label="视图">
 						<button key="toUIViewButton" type="button" classes={[c.btn, c.btn_outline_secondary, c.active]}>
 							界面
@@ -221,7 +221,7 @@ describe("Header", () => {
 						</button>
 					</div>
 				</div>
-				<div>
+				<div key="right">
 					<button key="toPreviewButton" onclick={() => {}}>
 						<FontAwesomeIcon icon={["far", "caret-square-right"]} />
 						浏览
@@ -280,13 +280,13 @@ describe("Header", () => {
 
 		h.expect(() => (
 			<div classes={[c.bg_light, c.d_flex, c.justify_content_between]}>
-				<div>
+				<div key="left">
 					<a title="返回">
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
 					</a>
 					<span classes={[c.ml_1]}>page1</span>
 				</div>
-				<div classes={[c.d_inline_flex, c.align_items_center]}>
+				<div key="center" classes={[c.d_inline_flex, c.align_items_center]}>
 					<div classes={[c.btn_group, c.btn_group_sm]} role="group" aria-label="视图">
 						<button
 							key="toUIViewButton"
@@ -319,7 +319,7 @@ describe("Header", () => {
 						</button>
 					</div>
 				</div>
-				<div>
+				<div key="right">
 					<button key="toPreviewButton" onclick={() => {}}>
 						<FontAwesomeIcon icon={["far", "caret-square-right"]} />
 						浏览

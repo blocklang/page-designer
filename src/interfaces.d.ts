@@ -74,6 +74,96 @@ export type EditMode = "Preview" | "Edit";
  */
 export type ViewType = "ui" | "behavior";
 
-export interface State {
-	mode: EditMode;
+export interface WidgetRepo {
+	apiRepoId: number;
+	apiRepoName: string;
+	widgetCategories: WidgetCategory[];
 }
+
+export interface WidgetCategory {
+	name: string; // 如果未分类，则值为 _
+	Widgets: Widget[];
+}
+
+/**
+ * @type Widget
+ *
+ * UI 部件信息
+ *
+ * @property widgetId           部件标识
+ * @property widgetName         部件名称
+ * @property category           部件分类
+ * @property iconClass          部件图标样式类
+ * @property label              部件显示名
+ */
+export interface Widget {
+	widgetId: number;
+	widgetName: string;
+	category: string;
+	iconClass?: string;
+	label?: string;
+}
+
+// /**
+//  * @type WidgetProperty
+//  *
+//  * 部件的属性信息
+//  *
+//  * @property propId     属性标识
+//  * @property name       属性名
+//  * @property label      属性显示名
+//  * @property value      属性值
+//  * @property valueType  属性值类型,支持 string、int、float、date、boolean 类型
+//  * @property nls        是否支持国际化
+//  * @property options    属性可选值列表
+//  */
+// export interface WidgetProperty {
+// 	propId: string;
+// 	name: string;
+// 	label: string;
+// 	// FIXME:
+// 	// value 存储的值类型可能为 string|number|boolean
+// 	// 但是这里的 value 只以 string 类型存储，将类型信息存在 valueType 中
+// 	// 如果直接使用 TypeScript 中的或类型，需要在设计器中的属性部件中对值做不同类型的转换，
+// 	// 我们选择直接使用 any 类型，避免强制转换。
+// 	value: string|number|boolean;
+// 	valueType: string;
+// 	nls: boolean;
+// 	options?: PropertyValueOption[];
+// }
+
+// /**
+//  * 属性值可选项
+//  *
+//  * @property value      可选值
+//  * @property label      可选值的显示值
+//  * @property iconClass  用图标表示可选值
+//  */
+// export interface PropertyValueOption {
+// 	// FIXME:
+// 	// 节点中 value 值类型为 string|undefined，这边如果指定类型会出现 number 赋值给 undefined 的错误
+// 	value: string;
+// 	label?: string;
+// 	title?: string;
+// 	iconClass: string;
+// }
+
+/**
+ * @type RequestUrl
+ *
+ * 从服务器端请求数据的 url
+ *
+ * @property fetchApiRepoWidgets  用户获取 API 仓库中的部件列表
+ */
+export interface RequestUrl {
+	fetchApiRepoWidgets: string;
+}
+
+export interface State {
+	widgetRepos: WidgetRepo[];
+}
+
+// 有三类数据
+// 1. 配置数据
+// 2. 部件级数据
+// 3. 全局数据
