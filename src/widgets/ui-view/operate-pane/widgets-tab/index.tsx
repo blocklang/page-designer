@@ -12,10 +12,14 @@ export default factory(function WidgetsTab({ properties, middleware: { store } }
 	const {} = properties();
 	const { path, get, executor } = store;
 
-	const widgetRepos = get(path("widgetRepos"));
+	let widgetRepos = get(path("widgetRepos"));
 
 	if (!widgetRepos) {
 		executor(getWidgetsProcess)({});
+	} else {
+		widgetRepos.forEach(
+			(repo) => (repo.widgetCategories = repo.widgetCategories.filter((category) => category.widgets.length > 0))
+		);
 	}
 
 	return (
@@ -30,10 +34,38 @@ export default factory(function WidgetsTab({ properties, middleware: { store } }
 							请在 <strong>DEPENDENCE.json</strong> 中添加部件仓库
 						</p>
 					) : (
-						"显示部件"
+						widgetRepos.map((repo) => (
+							<div key={`${repo.apiRepoId}`}>
+								<div>{repo.apiRepoName}</div>
+								<div>
+									{repo.widgetCategories.length === 0 ? (
+										<p classes={[c.text_muted, c.text_center]}>无部件</p>
+									) : (
+										repo.widgetCategories.map((category) => (
+											<div key={category.name}>
+												<div>{category.name}</div>
+												<div>
+													<ul>
+														{category.widgets.map((widget) => (
+															<li key={`${widget.widgetId}`}>
+																<span>{widget.widgetName}</span>
+															</li>
+														))}
+													</ul>
+												</div>
+											</div>
+										))
+									)}
+								</div>
+							</div>
+						))
 					)
 				) : (
-					"加载中"
+					<div classes={[c.text_muted, c.text_center]}>
+						<div classes={[c.spinner_border]} role="status">
+							<span classes={[c.sr_only]}>Loading...</span>
+						</div>
+					</div>
 				)}
 			</div>
 		</div>
