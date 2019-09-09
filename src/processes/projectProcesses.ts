@@ -3,7 +3,7 @@ import { commandFactory } from "./utils";
 import { Project } from "../interfaces";
 import { add } from "@dojo/framework/stores/state/operations";
 
-const initProjectCommand = commandFactory<{ project: Project }>(({ path, state, payload: { project } }) => {
+const initProjectCommand = commandFactory<{ project: Project }>(({ path, payload: { project } }) => {
 	return [add(path("project"), project)];
 });
 

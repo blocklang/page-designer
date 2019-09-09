@@ -4,12 +4,11 @@ import { config } from "../config";
 import * as format from "string-format";
 import { add } from "@dojo/framework/stores/state/operations";
 
-const getWidgetsCommand = commandFactory<{}>(async ({ get, path, state, payload }) => {
-	console.log(state, payload);
+const getWidgetsCommand = commandFactory<{}>(async ({ get, path }) => {
 	const project = get(path("project"));
 
 	const url = format(config.fetchApiRepoWidgetsUrl, { owner: project.createUserName, projectName: project.name });
-
+	console.log(url);
 	const response = await fetch(url);
 	const json = await response.json();
 	return [add(path("widgetRepos"), json)];

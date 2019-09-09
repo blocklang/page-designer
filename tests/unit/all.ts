@@ -1,2 +1,3 @@
-import './PageDesigner';
-import './widgets/all';
+import "./widgets/all";
+import "./processes/all";
+import "./PageDesigner";
