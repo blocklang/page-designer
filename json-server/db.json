@@ -22,14 +22,22 @@
       "name": "project_1",
       "apiRepoId": 1,
       "apiRepoName": "api repo 1",
-      "widgetCategory": []
+      "widgetCategories": [{
+        "name": "category 1",
+        "widgets": [{
+          "widgetId": 1,
+          "widgetCode": "0001",
+          "widgetName": "Widget 1",
+          "iconClass": ""
+        }]
+      }]
     },
     {
       "owner": "jack",
       "name": "project_1",
       "apiRepoId": 2,
       "apiRepoName": "api repo 2",
-      "widgetCategory": []
+      "widgetCategories": []
     }
   ]
 }
