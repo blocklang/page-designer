@@ -165,4 +165,57 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 			</div>
 		));
 	});
+
+	it("如果部件未分类，则都归到 _ 下", () => {
+		const processStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[getWidgetsProcess, processStub]]);
+		const h = harness(() => <WidgetsTab />, { middleware: [[store, mockStore]] });
+
+		mockStore((path) => [
+			replace(path("widgetRepos"), [
+				{
+					apiRepoId: 1,
+					apiRepoName: "widget api repo 1",
+					widgetCategories: [
+						{
+							name: "_", // 未分类
+							widgets: [
+								{
+									widgetCode: "0001",
+									widgetId: 1,
+									widgetName: "widget 1",
+									iconClass: ""
+								}
+							]
+						}
+					]
+				}
+			])
+		]);
+
+		h.expect(() => (
+			<div>
+				<div classes={[c.m_1]}>
+					<input classes={[c.form_control]} placeholder="搜索部件" />
+				</div>
+				<div>
+					<div key="1">
+						<div>widget api repo 1</div>
+						<div>
+							<div key="_">
+								<div>未分类</div>
+								<div>
+									<ul>
+										<li key="1">
+											<span>widget 1</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		));
+	});
 });

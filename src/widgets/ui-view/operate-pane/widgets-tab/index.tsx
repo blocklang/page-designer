@@ -43,7 +43,7 @@ export default factory(function WidgetsTab({ properties, middleware: { store } }
 									) : (
 										repo.widgetCategories.map((category) => (
 											<div key={category.name}>
-												<div>{category.name}</div>
+												<div>{category.name === "_" ? "未分类" : category.name}</div>
 												<div>
 													<ul>
 														{category.widgets.map((widget) => (
