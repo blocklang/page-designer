@@ -21,7 +21,7 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 		h.expect(() => (
 			<div>
 				<div classes={[c.m_1]}>
-					<input classes={[c.form_control]} placeholder="搜索部件" />
+					<input key="search" classes={[c.form_control]} placeholder="搜索部件" oninput={() => {}} value="" />
 				</div>
 				<div>
 					<div classes={[c.text_muted, c.text_center]}>
@@ -38,7 +38,7 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 		h.expect(() => (
 			<div>
 				<div classes={[c.m_1]}>
-					<input classes={[c.form_control]} placeholder="搜索部件" />
+					<input key="search" classes={[c.form_control]} placeholder="搜索部件" oninput={() => {}} value="" />
 				</div>
 				<div>
 					<p classes={[c.text_muted, c.text_center]}>
@@ -65,7 +65,7 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 		h.expect(() => (
 			<div>
 				<div classes={[c.m_1]}>
-					<input classes={[c.form_control]} placeholder="搜索部件" />
+					<input key="search" classes={[c.form_control]} placeholder="搜索部件" oninput={() => {}} value="" />
 				</div>
 				<div>
 					<div key="1">
@@ -99,7 +99,7 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 		h.expect(() => (
 			<div>
 				<div classes={[c.m_1]}>
-					<input classes={[c.form_control]} placeholder="搜索部件" />
+					<input key="search" classes={[c.form_control]} placeholder="搜索部件" oninput={() => {}} value="" />
 				</div>
 				<div>
 					<div key="1">
@@ -143,7 +143,7 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 		h.expect(() => (
 			<div>
 				<div classes={[c.m_1]}>
-					<input classes={[c.form_control]} placeholder="搜索部件" />
+					<input key="search" classes={[c.form_control]} placeholder="搜索部件" oninput={() => {}} value="" />
 				</div>
 				<div>
 					<div key="1">
@@ -196,7 +196,92 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 		h.expect(() => (
 			<div>
 				<div classes={[c.m_1]}>
-					<input classes={[c.form_control]} placeholder="搜索部件" />
+					<input key="search" classes={[c.form_control]} placeholder="搜索部件" oninput={() => {}} value="" />
+				</div>
+				<div>
+					<div key="1">
+						<div>widget api repo 1</div>
+						<div>
+							<div key="_">
+								<div>未分类</div>
+								<div>
+									<ul>
+										<li key="1">
+											<span>widget 1</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		));
+	});
+
+	it("搜索部件", () => {
+		const processStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[getWidgetsProcess, processStub]]);
+		const h = harness(() => <WidgetsTab />, { middleware: [[store, mockStore]] });
+
+		mockStore((path) => [
+			replace(path("widgetRepos"), [
+				{
+					apiRepoId: 1,
+					apiRepoName: "widget api repo 1",
+					widgetCategories: [
+						{
+							name: "_", // 未分类
+							widgets: [
+								{
+									widgetCode: "0001",
+									widgetId: 1,
+									widgetName: "widget 1",
+									iconClass: ""
+								}
+							]
+						}
+					]
+				}
+			])
+		]);
+
+		h.trigger("@search", "oninput", { target: { value: "a" } });
+
+		h.expect(() => (
+			<div>
+				<div classes={[c.m_1]}>
+					<input
+						key="search"
+						classes={[c.form_control]}
+						placeholder="搜索部件"
+						oninput={() => {}}
+						value="a"
+					/>
+				</div>
+				<div>
+					<div key="1">
+						<div>widget api repo 1</div>
+						<div>
+							<p classes={[c.text_muted, c.text_center]}>无部件</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		));
+
+		// 忽略大小写
+		h.trigger("@search", "oninput", { target: { value: "W" } });
+		h.expect(() => (
+			<div>
+				<div classes={[c.m_1]}>
+					<input
+						key="search"
+						classes={[c.form_control]}
+						placeholder="搜索部件"
+						oninput={() => {}}
+						value="W"
+					/>
 				</div>
 				<div>
 					<div key="1">
