@@ -39,5 +39,23 @@
       "apiRepoName": "api repo 2",
       "widgetCategories": []
     }
+  ],
+  "pages": [
+    {
+      "id": 1,
+      "pageInfo": {
+        "id": 1,
+        "key": "page1",
+        "name": "页面1",
+        "appType": ""
+      },
+      "widgets": [{
+        "id":1,
+        "parentId": -1,
+        "apiRepoId": 1,
+        "widgetCode": "0001",
+        "widgetName": "Page"
+      }]
+    }
   ]
 }

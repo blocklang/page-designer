@@ -1,3 +1,4 @@
 {
+    "/pages/:id/model": "/pages/:id",
     "/:owner/:name/dependences/widgets": "/widgets?owner=:owner&name=:name"
 }
