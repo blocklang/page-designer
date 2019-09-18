@@ -16,6 +16,12 @@
 npm run json-server
 ```
 
+启动 [Serve](./docs/serve.md)
+
+```shell
+npm run serve
+```
+
 启动 Page Designer
 
 ```shell
