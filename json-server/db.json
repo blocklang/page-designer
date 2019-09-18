@@ -57,5 +57,16 @@
         "widgetName": "Page"
       }]
     }
+  ],
+  "devDependences": [
+    {
+      "projectId": 1,
+      "gitRepoWebsite": "github.com",
+      "gitRepoOwner": "jack",
+      "gitRepoName": "widgetRepo1",
+      "name": "repo1",
+      "category": "Widget",
+      "version": "0.1.0"
+    }
   ]
 }

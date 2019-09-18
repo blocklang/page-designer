@@ -2,6 +2,8 @@
 
 [Json Server](https://github.com/typicode/json-server) 是一个存储 json 数据的服务器。在开发过程中，我们使用 Json Server 作为 page designer 的服务器。所以，在启动 page designer 之前要先启动 json server。
 
+Json Server 相关的文件存放在 `json-server` 文件夹中。
+
 全局安装 json-server
 
 ```shell

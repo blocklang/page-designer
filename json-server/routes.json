@@ -1,4 +1,5 @@
 {
     "/pages/:id/model": "/pages/:id",
-    "/:owner/:name/dependences/widgets": "/widgets?owner=:owner&name=:name"
+    "/:owner/:name/dependences/widgets": "/widgets?owner=:owner&name=:name",
+    "/designer/projects/:projectId/dependences?category=dev": "/devDependences?projectId=:projectId"
 }
