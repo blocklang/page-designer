@@ -23,7 +23,14 @@
     "dojo-fontawesome": "~0.0.2",
     "bootstrap-classes": "~0.0.2",
     "string-format": "~2.0.0",
-    "@types/string-format": "~2.0.0"
+    "@types/string-format": "~2.0.0",
+    "systemjs": "6.1.0",
+    "requirejs": "2.3.6",
+    "@types/requirejs": "2.1.31",
+    "diff": "4.0.1",
+    "@types/diff": "4.0.2",
+    "scriptjs": "2.5.9",
+    "@types/scriptjs": "0.0.2"
   },
   "peerDependencies": {
     "@dojo/framework": "^6.0.0",
