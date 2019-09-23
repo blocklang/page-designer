@@ -39,6 +39,9 @@ export interface Permission {
  */
 export interface Page {
 	id: number;
+	key: string;
+	name: string;
+	appType: string;
 }
 
 /**
@@ -102,6 +105,17 @@ export interface Widget {
 	iconClass: string;
 }
 
+export interface AttachedWidget extends Widget {
+	id: string;
+	parentId?: string;
+
+	// 以下是部件对应的 IDE 版组件库信息
+	// 根据 componentRepoId 从 ideRepos 中获取 gitRepoWebsite、gitRepoOwner、gitRepoName 和 version 等信息
+	componentRepoId: number;
+}
+
+// 部件列表中显示的是组件的 API，但是在页面中使用的是 ide 版的组件，两者之间怎么关联？
+
 // /**
 //  * @type WidgetProperty
 //  *
@@ -155,11 +169,30 @@ export interface Widget {
  */
 export interface RequestUrl {
 	fetchApiRepoWidgets: string;
+	fetchPageModel: string;
+	fetchIdeDependenceInfos: string;
+}
+
+export interface ComponentRepo {
+	id: number;
+	gitRepoWebsite: string;
+	gitRepoOwner: string;
+	gitRepoName: string;
+	name: string;
+	category: string;
+	version: string;
+}
+
+export interface PageModel {
+	pageInfo: Page;
+	widgets: AttachedWidget[];
 }
 
 export interface State {
-	project: Project;
-	widgetRepos: WidgetRepo[];
+	project: Project; // 项目基本信息
+	widgetRepos: WidgetRepo[]; // 项目依赖的所有 widget。类型为 widget 的 API 库。
+	ideRepos: ComponentRepo[]; // 项目依赖的 ide 组件库信息
+	pageModel: PageModel; // 页面模型
 }
 
 // 有三类数据

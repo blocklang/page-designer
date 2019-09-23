@@ -5,6 +5,7 @@ import * as c from "bootstrap-classes";
 import { getWidgetsProcess } from "../../../../processes/widgetProcesses";
 import { WidgetRepo } from "../../../../interfaces";
 import { deepMixin } from "@dojo/framework/core/util";
+import { insertWidgetsProcess } from "../../../../processes/uiProcesses";
 export interface WidgetsTabProperties {}
 
 const factory = create({ store, icache }).properties<WidgetsTabProperties>();
@@ -41,6 +42,9 @@ export default factory(function WidgetsTab({ properties, middleware: { store, ic
 		);
 	}
 
+	// 为什么使用 _ 表示未分类
+	// 1. 在 rust 语言中，使用 _ 模式来匹配任何值
+	// 2. 如果直接写为“未分类”，在国际化时，没有使用 _ 更直观
 	return (
 		<div>
 			<div classes={[c.m_1]}>
@@ -75,7 +79,16 @@ export default factory(function WidgetsTab({ properties, middleware: { store, ic
 												<div>
 													<ul>
 														{category.widgets.map((widget) => (
-															<li key={`${widget.widgetId}`}>
+															<li
+																key={`${widget.widgetId}`}
+																onclick={(event: MouseEvent) => {
+																	// 注意，这里必须是复制的 widget，不然添加的新的同类部件都指向同一个对象。
+																	// const copyedWidget = { ...widget }; // 待测试
+																	executor(insertWidgetsProcess)({
+																		widgets: [widget]
+																	});
+																}}
+															>
 																<span>{widget.widgetName}</span>
 															</li>
 														))}

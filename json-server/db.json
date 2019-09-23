@@ -50,16 +50,19 @@
         "appType": ""
       },
       "widgets": [{
-        "id":1,
-        "parentId": -1,
+        "id":"1",
+        "parentId": "-1",
         "apiRepoId": 1,
         "widgetCode": "0001",
-        "widgetName": "Page"
+        "widgetName": "Page",
+        "componentRepoId": 1
       }]
     }
   ],
-  "devDependences": [
+  "ideDependences": [
     {
+      "id": 1,
+      "componentRepoId": 1,
       "projectId": 1,
       "gitRepoWebsite": "github.com",
       "gitRepoOwner": "jack",

@@ -153,7 +153,7 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 								<div>category 1</div>
 								<div>
 									<ul>
-										<li key="1">
+										<li key="1" onclick={() => {}}>
 											<span>widget 1</span>
 										</li>
 									</ul>
@@ -206,7 +206,7 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 								<div>未分类</div>
 								<div>
 									<ul>
-										<li key="1">
+										<li key="1" onclick={() => {}}>
 											<span>widget 1</span>
 										</li>
 									</ul>
@@ -291,7 +291,7 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 								<div>未分类</div>
 								<div>
 									<ul>
-										<li key="1">
+										<li key="1" onclick={() => {}}>
 											<span>widget 1</span>
 										</li>
 									</ul>

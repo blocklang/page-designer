@@ -1,6 +1,7 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
 import dimensions from "@dojo/framework/core/middleware/dimensions";
 import OperatePane from "./operate-pane";
+import Editor from "./editor";
 
 export interface UIViewProperties {}
 
@@ -16,6 +17,7 @@ export default factory(function UIView({ properties, middleware: { dimensions } 
 		<div key="root">
 			<h1>界面</h1>
 			<OperatePane top={top} />
+			<Editor />
 		</div>
 	);
 });

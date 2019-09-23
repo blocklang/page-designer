@@ -20,39 +20,40 @@
     "serve": "cd serve && serve -l 3001"
   },
   "dependencies": {
-    "tslib": "~1.9.1",
-    "dojo-fontawesome": "~0.0.2",
-    "bootstrap-classes": "~0.0.2",
-    "string-format": "~2.0.0",
-    "@types/string-format": "~2.0.0",
-    "systemjs": "6.1.0",
-    "requirejs": "2.3.6",
-    "@types/requirejs": "2.1.31",
-    "diff": "4.0.1",
     "@types/diff": "4.0.2",
+    "@types/requirejs": "2.1.31",
+    "@types/scriptjs": "0.0.2",
+    "@types/string-format": "~2.0.0",
+    "bootstrap-classes": "~0.0.2",
+    "diff": "4.0.1",
+    "dojo-fontawesome": "~0.0.2",
+    "requirejs": "2.3.6",
     "scriptjs": "2.5.9",
-    "@types/scriptjs": "0.0.2"
+    "std-ide-widget": "0.0.3-alpha.2",
+    "string-format": "~2.0.0",
+    "systemjs": "6.1.0",
+    "tslib": "~1.9.1"
   },
   "peerDependencies": {
-    "@dojo/framework": "^6.0.0",
+    "@dojo/framework": "^6.0.2",
     "bootstrap": "^4.3.1"
   },
   "devDependencies": {
     "@dojo/cli": "^6.0.0",
-    "@dojo/cli-build-app": "^6.0.0",
+    "@dojo/cli-build-app": "^6.0.3",
     "@dojo/cli-build-widget": "^6.0.0",
-    "@dojo/cli-test-intern": "^6.0.0",
-    "@dojo/framework": "^6.0.0",
+    "@dojo/cli-test-intern": "^6.0.1",
+    "@dojo/framework": "^6.0.2",
     "@dojo/themes": "^6.0.0",
-    "@types/node": "~9.6.5",
+    "@types/node": "^9.6.52",
     "@types/sinon": "~7.0.13",
     "bootstrap": "^4.3.1",
     "codecov": "~3.5.0",
-    "typescript": "~3.4.5",
     "husky": "3.0.4",
     "lint-staged": "9.2.5",
     "prettier": "1.18.2",
-    "sinon": "~7.4.2"
+    "sinon": "~7.4.2",
+    "typescript": "~3.4.5"
   },
   "lint-staged": {
     "*.{ts,tsx,css}": [

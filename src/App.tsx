@@ -43,13 +43,18 @@ export default factory(function App({ middleware: { theme } }) {
 	};
 
 	const page: Page = {
-		id: 2
+		id: 2,
+		key: "page1",
+		name: "页面1",
+		appType: "01" // web
 	};
 
 	const pathes: Path[] = [{ name: "page1", path: "page1" }];
 
 	const urls: RequestUrl = {
-		fetchApiRepoWidgets: "http://localhost:3000/{owner}/{projectName}/dependences/widgets"
+		fetchApiRepoWidgets: "http://localhost:3000/{owner}/{projectName}/dependences/widgets",
+		fetchPageModel: "http://localhost:3000/pages/{pageId}/model",
+		fetchIdeDependenceInfos: "http://localhost:3000/designer/projects/{projectId}/dependences?category=ide"
 	};
 
 	return (
