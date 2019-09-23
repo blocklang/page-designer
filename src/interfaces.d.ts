@@ -171,6 +171,7 @@ export interface RequestUrl {
 	fetchApiRepoWidgets: string;
 	fetchPageModel: string;
 	fetchIdeDependenceInfos: string;
+	externalScriptAndCssWebsite: string;
 }
 
 export interface ComponentRepo {

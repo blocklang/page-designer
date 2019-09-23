@@ -54,7 +54,8 @@ export default factory(function App({ middleware: { theme } }) {
 	const urls: RequestUrl = {
 		fetchApiRepoWidgets: "http://localhost:3000/{owner}/{projectName}/dependences/widgets",
 		fetchPageModel: "http://localhost:3000/pages/{pageId}/model",
-		fetchIdeDependenceInfos: "http://localhost:3000/designer/projects/{projectId}/dependences?category=ide"
+		fetchIdeDependenceInfos: "http://localhost:3000/designer/projects/{projectId}/dependences?category=ide",
+		externalScriptAndCssWebsite: "http://localhost:3001/"
 	};
 
 	return (

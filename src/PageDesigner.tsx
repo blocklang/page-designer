@@ -4,7 +4,7 @@ import icache from "@dojo/framework/core/middleware/icache";
 import * as css from "./styles/PageDesigner.m.css";
 import * as c from "bootstrap-classes";
 import Header from "./widgets/Header";
-import { User, Project, Page, Path, Permission, EditMode, ViewType, RequestUrl } from "./interfaces";
+import { User, Project, Page, Path, Permission, EditMode, ViewType, RequestUrl, ComponentRepo } from "./interfaces";
 import Preview from "./widgets/preview";
 import UIView from "./widgets/ui-view";
 import BehaviorView from "./widgets/behavior-view";
@@ -33,6 +33,9 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 	config.fetchApiRepoWidgetsUrl = urls.fetchApiRepoWidgets;
 	config.fetchPageModelUrl = urls.fetchPageModel;
 	config.fetchIdeDependenceInfosUrl = urls.fetchIdeDependenceInfos;
+	if (urls.externalScriptAndCssWebsite) {
+		config.externalScriptAndCssWebsite = urls.externalScriptAndCssWebsite;
+	}
 
 	const savedProject = get(path("project"));
 	console.log("saved project is:", savedProject);
@@ -42,26 +45,11 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 		executor(initProjectProcess)({ project });
 		// 获取项目的 dev 依赖
 
-		executor(getProjectIdeDependencesProcess)({ get, path }).then((a: any) => {
+		executor(getProjectIdeDependencesProcess)({ get, path }).then(() => {
 			// 获取完依赖之后要加载相应的 js 脚本
 			const ideRepos = get(path("ideRepos"));
-			// TODO: 后续版本再考虑 css
-			// TODO: 避免重复加载 script，删除项目用不到的 script
-			const jsUrls = ideRepos.map(
-				(item) =>
-					`/packages/${item.gitRepoWebsite}/${item.gitRepoOwner}/${item.gitRepoName}/${item.version}/main.bundle.js`
-			);
 
-			scriptjs.path("http://localhost:3001/");
-			// scriptjs("test.js", "test");
-			// scriptjs.ready("test", () => {
-			// 	console.log("load success");
-			// });
-			scriptjs(jsUrls, "extension_js");
-			// dojo 支持 single-bundle 命令
-			scriptjs.ready("extension_js", () => {
-				console.log("extension js ready");
-			});
+			loadExternalResources(ideRepos);
 		});
 	}
 
@@ -98,3 +86,30 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 		</div>
 	);
 });
+
+/**
+ * 加载外部的 javascript 文件和 css 文件
+ *
+ * TODO: 后续版本再考虑 css
+ * TODO: 避免重复加载 script，删除项目用不到的 script
+ *
+ * @param ideRepos
+ */
+function loadExternalResources(ideRepos: ComponentRepo[]) {
+	console.log("config.externalScriptAndCssWebsite:", config.externalScriptAndCssWebsite);
+	if (!ideRepos) {
+		console.log("ideRepos 为 undefined");
+		return;
+	}
+	const jsUrls = ideRepos.map(
+		(item) =>
+			`/packages/${item.gitRepoWebsite}/${item.gitRepoOwner}/${item.gitRepoName}/${item.version}/main.bundle.js`
+	);
+
+	scriptjs.path(config.externalScriptAndCssWebsite);
+	scriptjs(jsUrls, "extension_js");
+	// dojo 支持 single-bundle 命令
+	scriptjs.ready("extension_js", () => {
+		console.log("extension js ready");
+	});
+}

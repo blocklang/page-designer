@@ -9,15 +9,21 @@ import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/
 import { State } from "../../../../../src/interfaces";
 import store from "../../../../../src/store";
 import { getPageModelProcess } from "../../../../../src/processes/uiProcesses";
+import * as c from "bootstrap-classes";
 
-describe("ui-view/Editor", () => {
-	it("show empty page", () => {
+describe("ui-view/editor", () => {
+	it("show page when no root node", () => {
 		const processStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([[getPageModelProcess, processStub]]);
 
 		const h = harness(() => <Editor />, { middleware: [[store, mockStore]] });
 
-		// 默认先显示加载中
-		h.expect(() => <div></div>);
+		h.expect(() => (
+			<div>
+				<div classes={[c.alert, c.alert_danger]} role="alert">
+					页面中缺少根节点！
+				</div>
+			</div>
+		));
 	});
 });
