@@ -52,8 +52,8 @@ export default factory(function App({ middleware: { theme } }) {
 	const pathes: Path[] = [{ name: "page1", path: "page1" }];
 
 	const urls: RequestUrl = {
-		fetchApiRepoWidgets: "http://localhost:3000/{owner}/{projectName}/dependences/widgets",
-		fetchPageModel: "http://localhost:3000/pages/{pageId}/model",
+		fetchApiRepoWidgets: "http://localhost:3000/designer/{owner}/{projectName}/dependences/widgets",
+		fetchPageModel: "http://localhost:3000/designer/pages/{pageId}/model",
 		fetchIdeDependenceInfos: "http://localhost:3000/designer/projects/{projectId}/dependences?category=ide",
 		externalScriptAndCssWebsite: "http://localhost:3001/"
 	};

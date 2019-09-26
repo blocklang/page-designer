@@ -29,12 +29,20 @@ const permission: Permission = {
 };
 
 const page: Page = {
-	id: 2
+	id: 2,
+	key: "page1",
+	name: "页面1",
+	appType: "01"
 };
 
 const pathes: Path[] = [{ name: "page1", path: "page1" }];
 
-const urls: RequestUrl = { fetchApiRepoWidgets: "" };
+const urls: RequestUrl = {
+	fetchApiRepoWidgets: "",
+	fetchIdeDependenceInfos: "",
+	fetchPageModel: "",
+	externalScriptAndCssWebsite: ""
+};
 
 describe("PageDesigner", () => {
 	it("default properties", () => {

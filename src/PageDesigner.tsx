@@ -12,6 +12,7 @@ import store from "./store";
 import { config } from "./config";
 import { initProjectProcess, getProjectIdeDependencesProcess } from "./processes/projectProcesses";
 import * as scriptjs from "scriptjs";
+import { getPageModelProcess } from "./processes/uiProcesses";
 
 export interface PageDesignerProperties {
 	user?: User; // 如果是匿名用户，则值为 null
@@ -24,6 +25,8 @@ export interface PageDesignerProperties {
 
 const factory = create({ icache, store }).properties<PageDesignerProperties>();
 
+// 注意，根据职责单一原则，以及参数宜集中不宜分散的原则，在调用 PageDesigner 只有一个设置参数入口，
+// 就是通过 PageDesignerProperties，不允许直接设置 config 对象。
 export default factory(function PageDesigner({ properties, middleware: { icache, store } }) {
 	const { user, project, permission, pathes, urls } = properties();
 	const { executor, get, path } = store;
@@ -43,14 +46,14 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 	if (!savedProject || savedProject.id !== project.id) {
 		// 在 store 中存储项目基本信息
 		executor(initProjectProcess)({ project });
-		// 获取项目的 dev 依赖
-
+		// 获取项目的 ide 依赖
 		executor(getProjectIdeDependencesProcess)({ get, path }).then(() => {
 			// 获取完依赖之后要加载相应的 js 脚本
 			const ideRepos = get(path("ideRepos"));
 
 			loadExternalResources(ideRepos);
 		});
+		executor(getPageModelProcess)({});
 	}
 
 	let editMode = icache.getOrSet<EditMode>("editMode", "Preview");

@@ -65,9 +65,9 @@
       "componentRepoId": 1,
       "projectId": 1,
       "gitRepoWebsite": "github.com",
-      "gitRepoOwner": "jack",
-      "gitRepoName": "widgetRepo1",
-      "name": "repo1",
+      "gitRepoOwner": "blocklang",
+      "gitRepoName": "std-ide-widget",
+      "name": "std-ide-widget",
       "category": "Widget",
       "version": "0.1.0"
     }

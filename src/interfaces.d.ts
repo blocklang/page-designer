@@ -97,21 +97,32 @@ export interface WidgetCategory {
  * @property widgetName         部件名称
  * @property widgetCode         部件编码
  * @property iconClass          部件图标样式类
+ * @property canHasChildren     是否可以包含子部件
  */
 export interface Widget {
 	widgetId: number;
 	widgetName: string;
 	widgetCode: string;
 	iconClass: string;
+	canHasChildren: boolean;
 }
 
 export interface AttachedWidget extends Widget {
 	id: string;
-	parentId?: string;
+	parentId: string;
 
 	// 以下是部件对应的 IDE 版组件库信息
 	// 根据 componentRepoId 从 ideRepos 中获取 gitRepoWebsite、gitRepoOwner、gitRepoName 和 version 等信息
 	componentRepoId: number;
+
+	properties: AttachedWidgetProperty[];
+}
+
+export interface AttachedWidgetProperty {
+	id: string;
+	parentId: string;
+	name: string;
+	value?: string; // 有些属性可能未设置值
 }
 
 // 部件列表中显示的是组件的 API，但是在页面中使用的是 ide 版的组件，两者之间怎么关联？
