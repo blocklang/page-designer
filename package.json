@@ -29,7 +29,7 @@
     "dojo-fontawesome": "~0.0.2",
     "requirejs": "2.3.6",
     "scriptjs": "2.5.9",
-    "std-ide-widget": "0.0.3-alpha.3",
+    "std-ide-widget": "~0.0.3-alpha.5",
     "string-format": "~2.0.0",
     "systemjs": "6.1.0",
     "tslib": "~1.9.1"
