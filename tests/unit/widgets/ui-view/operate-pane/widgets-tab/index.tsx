@@ -131,7 +131,8 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 									widgetCode: "0001",
 									widgetId: 1,
 									widgetName: "widget 1",
-									iconClass: ""
+									iconClass: "",
+									canHasChildren: false
 								}
 							]
 						}
@@ -184,7 +185,8 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 									widgetCode: "0001",
 									widgetId: 1,
 									widgetName: "widget 1",
-									iconClass: ""
+									iconClass: "",
+									canHasChildren: false
 								}
 							]
 						}
@@ -237,7 +239,8 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 									widgetCode: "0001",
 									widgetId: 1,
 									widgetName: "widget 1",
-									iconClass: ""
+									iconClass: "",
+									canHasChildren: false
 								}
 							]
 						}
