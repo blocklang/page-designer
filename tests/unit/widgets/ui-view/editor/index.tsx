@@ -69,7 +69,8 @@ describe("ui-view/editor", () => {
 				gitRepoName: "std-ide-widget",
 				name: "std-ide-widget",
 				category: "widget",
-				version: "0.0.1"
+				version: "0.0.1",
+				std: true
 			}
 		];
 

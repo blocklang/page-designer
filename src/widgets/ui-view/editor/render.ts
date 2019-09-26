@@ -32,12 +32,13 @@ export function renderPage(widgets: AttachedWidget[], ideRepos: ComponentRepo[])
 	// 先选择在部件外展开，然后随着开发的深入，再做调整。
 
 	let originalProperties: InstWidgetProperties = {};
-	widgetInfo.properties.forEach((item) => {
-		// 如果 item 的 type 为 function，且值为 undefined，则设置为 ()=>{}
-		// 注意，从服务器端返回的是字符串类型，这里需要转换。
-		const value = item.value ? item.value : () => {};
-		originalProperties[item.name] = value;
-	});
+	widgetInfo.properties &&
+		widgetInfo.properties.forEach((item) => {
+			// 如果 item 的 type 为 function，且值为 undefined，则设置为 ()=>{}
+			// 注意，从服务器端返回的是字符串类型，这里需要转换。
+			const value = item.value ? item.value : () => {};
+			originalProperties[item.name] = value;
+		});
 
 	const properties: EditableWidgetProperties = {
 		widget: {

@@ -193,6 +193,7 @@ export interface ComponentRepo {
 	name: string;
 	category: string;
 	version: string;
+	std: boolean;
 }
 
 export interface PageModel {

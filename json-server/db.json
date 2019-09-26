@@ -55,7 +55,9 @@
         "apiRepoId": 1,
         "widgetCode": "0001",
         "widgetName": "Page",
-        "componentRepoId": 1
+        "componentRepoId": 1,
+        "canHasChildren": true,
+        "properties": [{}]
       }]
     }
   ],
@@ -69,7 +71,8 @@
       "gitRepoName": "std-ide-widget",
       "name": "std-ide-widget",
       "category": "Widget",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "std": true
     }
   ]
 }

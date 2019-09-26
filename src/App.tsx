@@ -43,7 +43,7 @@ export default factory(function App({ middleware: { theme } }) {
 	};
 
 	const page: Page = {
-		id: 2,
+		id: 1,
 		key: "page1",
 		name: "页面1",
 		appType: "01" // web

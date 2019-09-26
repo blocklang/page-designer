@@ -15,7 +15,6 @@ export default factory(function UIView({ properties, middleware: { dimensions } 
 	const {} = properties();
 	return (
 		<div key="root">
-			<h1>界面</h1>
 			<OperatePane top={top} />
 			<Editor />
 		</div>
