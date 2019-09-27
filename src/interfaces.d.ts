@@ -196,6 +196,23 @@ export interface ComponentRepo {
 	std: boolean;
 }
 
+/**
+ *
+ * @property widgets     页面中的部件列表，widgets 的排列结构如下：
+ *
+ * 1. 一个页面只能有一个根节点；
+ * 1. widgets 的第一个节点必须是根节点；
+ * 1. 直属子部件紧跟父部件之后，如
+ *    ```text
+ *    Page
+ *       Node1
+ *          Node11
+ *             Node111
+ *          Node12
+ *       Node2
+ *    ```
+ *
+ */
 export interface PageModel {
 	pageInfo: Page;
 	widgets: AttachedWidget[];
