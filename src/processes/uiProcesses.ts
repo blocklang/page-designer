@@ -15,7 +15,6 @@ const activeWidgetCommand = commandFactory<{ activeWidgetId: string }>(({ get, p
 		selectedWidgetIndex = 0;
 	}
 	return [replace(path("activeWidgetId"), activeWidgetId), replace(path("selectedWidgetIndex"), selectedWidgetIndex)];
-	s;
 });
 
 const insertWidgetsCommand = commandFactory<{ widgets: Widget[] }>(({ state, payload: { widgets } }) => {
