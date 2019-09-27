@@ -206,6 +206,9 @@ export interface State {
 	widgetRepos: WidgetRepo[]; // 项目依赖的所有 widget。类型为 widget 的 API 库。
 	ideRepos: ComponentRepo[]; // 项目依赖的 ide 组件库信息
 	pageModel: PageModel; // 页面模型
+	// ui 的焦点信息
+	activeWidgetId: string; // 当前选中部件的 ID
+	selectedWidgetIndex: number; // 当前选中的部件索引，是相对于全页面的索引
 }
 
 // 有三类数据
