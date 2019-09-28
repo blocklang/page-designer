@@ -7,7 +7,8 @@ import {
 	activeWidgetProcess,
 	insertWidgetsProcess,
 	removeActiveWidgetProcess,
-	moveActiveWidgetPreviousProcess
+	moveActiveWidgetPreviousProcess,
+	moveActiveWidgetNextProcess
 } from "../../../src/processes/uiProcesses";
 import { add } from "@dojo/framework/stores/state/operations";
 
@@ -577,7 +578,129 @@ describe("processes/uiProcesses", () => {
 		assert.equal(pageWidgets[2].id, "2");
 	});
 
-	it("moveActiveWidgetPreviousProcess - root->node1 root->node2->node21, move node2 previous, then become root->node2->node21 root->node1", () => {
+	it("moveActiveWidgetPreviousProcess - root->node1->node11 root->node2->node21, move node2 previous, then become root->node2->node21 root->node1->node11", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "3",
+					parentId: "2",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "4",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "5",
+					parentId: "4",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			]),
+			add(store.path("activeWidgetId"), "4"),
+			add(store.path("selectedWidgetIndex"), 3)
+		]);
+		moveActiveWidgetPreviousProcess(store)({});
+
+		assert.equal(store.get(store.path("activeWidgetId")), "4");
+		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
+		// 判断位置已互换
+		const pageWidgets = store.get(store.path("pageModel", "widgets"));
+
+		assert.equal(pageWidgets[1].id, "4");
+		assert.equal(pageWidgets[2].id, "5");
+		assert.equal(pageWidgets[3].id, "2");
+		assert.equal(pageWidgets[4].id, "3");
+	});
+
+	it("moveActiveWidgetNextProcess - has no next widget", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "3",
+					parentId: "2",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			]),
+			add(store.path("activeWidgetId"), "2"),
+			add(store.path("selectedWidgetIndex"), 1)
+		]);
+		moveActiveWidgetNextProcess(store)({});
+
+		// 没有前一个兄弟节点，所以没有移动
+		assert.equal(store.get(store.path("activeWidgetId")), "2");
+		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
+	});
+
+	it("moveActiveWidgetNextProcess - root->node1_node2, move node1 next, then become root->node2_node1", () => {
 		store.apply([
 			add(store.path("pageModel", "widgets"), [
 				{
@@ -612,10 +735,72 @@ describe("processes/uiProcesses", () => {
 					iconClass: "",
 					canHasChildren: true,
 					properties: []
+				}
+			]),
+			add(store.path("activeWidgetId"), "2"),
+			add(store.path("selectedWidgetIndex"), 1)
+		]);
+		moveActiveWidgetNextProcess(store)({});
+
+		assert.equal(store.get(store.path("activeWidgetId")), "2");
+		assert.equal(store.get(store.path("selectedWidgetIndex")), 2);
+		// 判断位置已互换
+		const pageWidgets = store.get(store.path("pageModel", "widgets"));
+
+		assert.equal(pageWidgets[1].id, "3");
+		assert.equal(pageWidgets[2].id, "2");
+	});
+
+	it("moveActiveWidgetNextProcess - root->node1->node11 root->node2->node21, move node1 next, then become root->node2->node21 root->node1->node11", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "3",
+					parentId: "2",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
 				},
 				{
 					id: "4",
-					parentId: "3",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "5",
+					parentId: "4",
 					widgetId: 2,
 					widgetCode: "0002",
 					widgetName: "Widget2",
@@ -625,18 +810,82 @@ describe("processes/uiProcesses", () => {
 					properties: []
 				}
 			]),
-			add(store.path("activeWidgetId"), "3"),
-			add(store.path("selectedWidgetIndex"), 2)
+			add(store.path("activeWidgetId"), "2"),
+			add(store.path("selectedWidgetIndex"), 1)
 		]);
-		moveActiveWidgetPreviousProcess(store)({});
+		moveActiveWidgetNextProcess(store)({});
 
-		assert.equal(store.get(store.path("activeWidgetId")), "3");
-		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
+		assert.equal(store.get(store.path("activeWidgetId")), "2");
+		assert.equal(store.get(store.path("selectedWidgetIndex")), 3);
 		// 判断位置已互换
 		const pageWidgets = store.get(store.path("pageModel", "widgets"));
 
-		assert.equal(pageWidgets[1].id, "3");
-		assert.equal(pageWidgets[2].id, "4");
+		assert.equal(pageWidgets[1].id, "4");
+		assert.equal(pageWidgets[2].id, "5");
 		assert.equal(pageWidgets[3].id, "2");
+		assert.equal(pageWidgets[4].id, "3");
+	});
+
+	it("moveActiveWidgetNextProcess - root->node1->node11 root->node2, move node1 next, then become root->node2 root->node1->node11", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "3",
+					parentId: "2",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "4",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			]),
+			add(store.path("activeWidgetId"), "2"),
+			add(store.path("selectedWidgetIndex"), 1)
+		]);
+		moveActiveWidgetNextProcess(store)({});
+
+		assert.equal(store.get(store.path("activeWidgetId")), "2");
+		assert.equal(store.get(store.path("selectedWidgetIndex")), 2);
+		// 判断位置已互换
+		const pageWidgets = store.get(store.path("pageModel", "widgets"));
+
+		assert.equal(pageWidgets[1].id, "4");
+		assert.equal(pageWidgets[2].id, "2");
+		assert.equal(pageWidgets[3].id, "3");
 	});
 });

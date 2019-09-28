@@ -78,7 +78,35 @@ const moveActiveWidgetPreviousCommand = commandFactory<{}>(({ at, get, path }) =
  *
  * 将选中的部件往后移动一步
  */
-const moveActiveWidgetNextCommand = commandFactory<{}>(() => {});
+const moveActiveWidgetNextCommand = commandFactory<{}>(({ at, get, path }) => {
+	const pageWidgets = get(path("pageModel", "widgets"));
+	const selectedWidgetIndex = get(path("selectedWidgetIndex"));
+
+	const nextNodeIndex = getNextIndex(pageWidgets, selectedWidgetIndex);
+	if (nextNodeIndex === -1) {
+		return [];
+	}
+
+	// 将选中部件及其所有子部件移到后一个兄弟节点的所有子节点之后
+	// 因为这样处理起来需要查当前节点的所有子节点个数，也要查后一个节点的所有子节点个数
+	// 为了减少一次查询，将逻辑调整为将后一个节点移到当前节点之前，这样效果是一样的。
+
+	// 获取后一个节点的所有子节点个数
+	const allNextNodeChildCount = getAllChildCount(pageWidgets, nextNodeIndex);
+	// 因为目前 dojo store 不支持 move operation，所以先 remove 再 add
+	const result = [];
+	for (let i = nextNodeIndex; i <= nextNodeIndex + allNextNodeChildCount; i++) {
+		result.push(remove(at(path("pageModel", "widgets"), i)));
+	}
+	for (let i = nextNodeIndex, j = selectedWidgetIndex; i <= nextNodeIndex + allNextNodeChildCount; i++, j++) {
+		result.push(add(at(path("pageModel", "widgets"), j), pageWidgets[i]));
+	}
+	// activeWidgetId 的值没有改变
+	result.push(
+		replace(path("selectedWidgetIndex"), selectedWidgetIndex + 1 /*表示 next node*/ + allNextNodeChildCount)
+	);
+	return result;
+});
 
 /**
  * 相对于当前选中的部件，改为选中父部件
