@@ -3,7 +3,11 @@ const { assert } = intern.getPlugin("chai");
 import Store from "@dojo/framework/stores/Store";
 import { State } from "../../../src/interfaces";
 
-import { activeWidgetProcess, insertWidgetsProcess } from "../../../src/processes/uiProcesses";
+import {
+	activeWidgetProcess,
+	insertWidgetsProcess,
+	removeActiveWidgetProcess
+} from "../../../src/processes/uiProcesses";
 import { add } from "@dojo/framework/stores/state/operations";
 
 describe("processes/uiProcesses", () => {
@@ -260,5 +264,228 @@ describe("processes/uiProcesses", () => {
 		assert.isNotNull(thirdWidget.id);
 		assert.equal(thirdWidget.widgetId, 3);
 		assert.equal(thirdWidget.widgetCode, "0003");
+	});
+
+	it("removeActiveWidgetCommand - root->node1->node11, remove node1 and node11", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "3",
+					parentId: "2",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			]),
+			add(store.path("activeWidgetId"), "2"),
+			add(store.path("selectedWidgetIndex"), 1)
+		]);
+		removeActiveWidgetProcess(store)({});
+		const widgets = store.get(store.path("pageModel", "widgets"));
+		assert.equal(widgets.length, 1);
+		assert.equal(widgets[0].id, "1");
+
+		assert.equal(store.get(store.path("activeWidgetId")), "1");
+		assert.equal(store.get(store.path("selectedWidgetIndex")), 0);
+	});
+
+	it("removeActiveWidgetCommand - root->node1->node11, remove node11 then node1 focused", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "3",
+					parentId: "2",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			]),
+			add(store.path("activeWidgetId"), "3"),
+			add(store.path("selectedWidgetIndex"), 2)
+		]);
+		removeActiveWidgetProcess(store)({});
+		const widgets = store.get(store.path("pageModel", "widgets"));
+		assert.equal(widgets.length, 2);
+
+		// node1 是 node11 的父节点，所以删除 node11 后，让 node1 获取焦点
+		assert.equal(store.get(store.path("activeWidgetId")), "2");
+		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
+	});
+
+	it("removeActiveWidgetCommand - root->node1_node2, remove node2 then node1 focused", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "3",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			]),
+			add(store.path("activeWidgetId"), "3"),
+			add(store.path("selectedWidgetIndex"), 2)
+		]);
+		removeActiveWidgetProcess(store)({});
+		const widgets = store.get(store.path("pageModel", "widgets"));
+		assert.equal(widgets.length, 2);
+
+		// node1 是 node2 的前一个兄弟节点，所以删除 node2 后，让 node1 获取焦点
+		assert.equal(store.get(store.path("activeWidgetId")), "2");
+		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
+	});
+
+	it("removeActiveWidgetCommand - root->node1_node2, remove node1 then node2 focused", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "3",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			]),
+			add(store.path("activeWidgetId"), "2"),
+			add(store.path("selectedWidgetIndex"), 1)
+		]);
+		removeActiveWidgetProcess(store)({});
+		const widgets = store.get(store.path("pageModel", "widgets"));
+		assert.equal(widgets.length, 2);
+
+		// node2 是 node1 的后一个兄弟节点，所以删除 node1 后，让 node2 获取焦点
+		assert.equal(store.get(store.path("activeWidgetId")), "3");
+		// 要考虑在计算索引时还没有实际删除，所以索引的位置还需要再移动一次的
+		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
+	});
+
+	// 此处不允许移除根节点
+	it("removeActiveWidgetCommand - can not remove root node", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			]),
+			add(store.path("activeWidgetId"), "1"),
+			add(store.path("selectedWidgetIndex"), 0)
+		]);
+		removeActiveWidgetProcess(store)({});
+
+		// 未删除根节点
+		const widgets = store.get(store.path("pageModel", "widgets"));
+		assert.equal(widgets.length, 1);
 	});
 });

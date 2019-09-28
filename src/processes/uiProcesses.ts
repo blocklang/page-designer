@@ -3,10 +3,10 @@ import { commandFactory } from "./utils";
 import { Widget, AttachedWidget } from "../interfaces";
 import { config } from "../config";
 import * as format from "string-format";
-import { add, replace } from "@dojo/framework/stores/state/operations";
+import { add, replace, remove } from "@dojo/framework/stores/state/operations";
 import { findIndex } from "@dojo/framework/shim/array";
 import { uuid } from "@dojo/framework/core/util";
-import { getAllChildCount } from "./pageTree";
+import { getAllChildCount, getPreviousIndex, getNextIndex, getParentIndex } from "./pageTree";
 
 const activeWidgetCommand = commandFactory<{ activeWidgetId: string }>(({ get, path, payload: { activeWidgetId } }) => {
 	const pageWidgets = get(path("pageModel", "widgets"));
@@ -61,7 +61,7 @@ function getInsertPosition(widgets: AttachedWidget[], selectedWidgetIndex: numbe
 	const selectedWidget = widgets[selectedWidgetIndex];
 	// 2. 如果是容器部件，则在容器的最后一个子节点的后面添加
 	if (selectedWidget.canHasChildren) {
-		// 2.1 从 selectedIndex 位置开始，寻找容器部件的所有子节点的个数
+		// 2.1 从 selectedWidgetIndex 位置开始，寻找容器部件的所有子节点的个数
 		let count = getAllChildCount(widgets, selectedWidgetIndex);
 		insertedIndex = selectedWidgetIndex + count;
 	} else {
@@ -79,8 +79,89 @@ const getPageModelCommand = commandFactory(async ({ path, payload: { pageId } })
 	return [add(path("pageModel"), json)];
 });
 
-export const insertWidgetsProcess = createProcess("insert-widgets", [insertWidgetsCommand]);
+/**
+ * 删除选定的部件。
+ *
+ * 当删除成功后，要重新设置获取焦点的部件，推算逻辑为：
+ * 1. 如果当前选定的部件有前一个兄弟节点，则让其聚焦；
+ * 1. 否则，查找是否有后一个兄弟节点，如有则让其聚焦；
+ * 1. 否则，则让父部件聚焦。
+ */
+const removeActiveWidgetCommand = commandFactory<{}>(({ at, get, path }) => {
+	const selectedWidgetIndex = get(path("selectedWidgetIndex"));
+	if (selectedWidgetIndex === 0) {
+		// 根节点是系统默认添加的，不允许删除。
+		return [];
+	}
+
+	const pageWidgets = get(path("pageModel", "widgets"));
+
+	const allChildCount = getAllChildCount(pageWidgets, selectedWidgetIndex);
+	const result = [];
+	for (let i = 0; i <= allChildCount; i++) {
+		result.push(remove(at(path("pageModel", "widgets"), selectedWidgetIndex)));
+	}
+
+	// 重新设置聚焦的部件
+	const {
+		selectedWidgetIndex: newSelectedWidgetIndex,
+		activeWidgetId: newActiveWidgetId
+	} = inferNextSelectedWidgetInfo(pageWidgets, selectedWidgetIndex);
+
+	if (newSelectedWidgetIndex > -1) {
+		result.push(replace(path("activeWidgetId"), newActiveWidgetId));
+		result.push(replace(path("selectedWidgetIndex"), newSelectedWidgetIndex));
+	}
+
+	return result;
+});
+
+/**
+ * 当选中的节点被删除后，推断出下一个获取焦点的部件信息
+ *
+ * @param pageWidgets          页面所有部件
+ * @param selectedWidgetIndex  当前选中的部件索引
+ *
+ * @returns                     新获取焦点的部件信息
+ */
+function inferNextSelectedWidgetInfo(
+	pageWidgets: AttachedWidget[],
+	selectedWidgetIndex: number
+): { selectedWidgetIndex: number; activeWidgetId: string } {
+	// 寻找前一个兄弟节点
+	const previousNodeIndex = getPreviousIndex(pageWidgets, selectedWidgetIndex);
+	if (previousNodeIndex > -1) {
+		return {
+			selectedWidgetIndex: previousNodeIndex,
+			activeWidgetId: pageWidgets[previousNodeIndex].id
+		};
+	}
+
+	// 寻找后一个兄弟节点
+	const nextNodeIndex = getNextIndex(pageWidgets, selectedWidgetIndex);
+	if (nextNodeIndex > 0 /* 不需要与 -1 比较，因为前面已有一个兄弟节点 */) {
+		// 要考虑在计算索引时还没有实际删除，所以索引的位置还需要再移动一次的
+		// 因为会删除前一个兄弟节点，所以需要再减去 1，但是获取部件时还不能减 1，因为还没有真正删除。
+		return {
+			selectedWidgetIndex: nextNodeIndex - 1,
+			activeWidgetId: pageWidgets[nextNodeIndex].id
+		};
+	}
+
+	// 寻找父节点
+	const parentNodeIndex = getParentIndex(pageWidgets, selectedWidgetIndex);
+	if (parentNodeIndex > -1) {
+		return {
+			selectedWidgetIndex: parentNodeIndex,
+			activeWidgetId: pageWidgets[parentNodeIndex].id
+		};
+	}
+
+	// 如果依然没有找到，则抛出异常
+	throw "没有找到下一个获取焦点的节点";
+}
 
 export const getPageModelProcess = createProcess("get-page-model", [getPageModelCommand]);
-
 export const activeWidgetProcess = createProcess("active-widget", [activeWidgetCommand]);
+export const insertWidgetsProcess = createProcess("insert-widgets", [insertWidgetsCommand]);
+export const removeActiveWidgetProcess = createProcess("remove-active-widget", [removeActiveWidgetCommand]);
