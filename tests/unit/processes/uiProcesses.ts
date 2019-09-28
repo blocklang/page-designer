@@ -8,7 +8,8 @@ import {
 	insertWidgetsProcess,
 	removeActiveWidgetProcess,
 	moveActiveWidgetPreviousProcess,
-	moveActiveWidgetNextProcess
+	moveActiveWidgetNextProcess,
+	activeParentWidgetProcess
 } from "../../../src/processes/uiProcesses";
 import { add } from "@dojo/framework/stores/state/operations";
 
@@ -887,5 +888,111 @@ describe("processes/uiProcesses", () => {
 		assert.equal(pageWidgets[1].id, "4");
 		assert.equal(pageWidgets[2].id, "2");
 		assert.equal(pageWidgets[3].id, "3");
+	});
+
+	it("activeParentWidgetProcess - root, no parent node", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			]),
+			add(store.path("activeWidgetId"), "1"),
+			add(store.path("selectedWidgetIndex"), 0)
+		]);
+		activeParentWidgetProcess(store)({});
+
+		// 没有父节点节点，所以没有移动
+		assert.equal(store.get(store.path("activeWidgetId")), "1");
+		assert.equal(store.get(store.path("selectedWidgetIndex")), 0);
+	});
+
+	it("activeParentWidgetProcess - root->node1, node1 focus default, active parent then root focused", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			]),
+			add(store.path("activeWidgetId"), "2"),
+			add(store.path("selectedWidgetIndex"), 1)
+		]);
+		activeParentWidgetProcess(store)({});
+
+		assert.equal(store.get(store.path("activeWidgetId")), "1");
+		assert.equal(store.get(store.path("selectedWidgetIndex")), 0);
+	});
+
+	it("activeParentWidgetProcess - root->node1 root->node2, node2 focus default, active parent then root focused", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "3",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			]),
+			add(store.path("activeWidgetId"), "3"),
+			add(store.path("selectedWidgetIndex"), 2)
+		]);
+		activeParentWidgetProcess(store)({});
+
+		assert.equal(store.get(store.path("activeWidgetId")), "1");
+		assert.equal(store.get(store.path("selectedWidgetIndex")), 0);
 	});
 });

@@ -11,7 +11,7 @@ import { getAllChildCount, getPreviousIndex, getNextIndex, getParentIndex } from
 const activeWidgetCommand = commandFactory<{ activeWidgetId: string }>(({ get, path, payload: { activeWidgetId } }) => {
 	const pageWidgets = get(path("pageModel", "widgets"));
 	let selectedWidgetIndex = findIndex(pageWidgets, (item) => item.id === activeWidgetId);
-	// 如果值为 -1，说明根据 id 没有找到，则先设置为选中父部件
+	// 如果值为 -1，说明根据 id 没有找到，则先设置为选中根部件
 	if (selectedWidgetIndex < 0) {
 		console.error("设置获取焦点的部件时，在页面的部件列表中没有找到该部件");
 		selectedWidgetIndex = 0;
@@ -111,7 +111,20 @@ const moveActiveWidgetNextCommand = commandFactory<{}>(({ at, get, path }) => {
 /**
  * 相对于当前选中的部件，改为选中父部件
  */
-const activeParentWidgetCommand = commandFactory<{}>(() => {});
+const activeParentWidgetCommand = commandFactory<{}>(({ get, path }) => {
+	const selectedWidgetIndex = get(path("selectedWidgetIndex"));
+	if (selectedWidgetIndex === 0) {
+		return [];
+	}
+	const pageWidgets = get(path("pageModel", "widgets"));
+	const parentNodeIndex = getParentIndex(pageWidgets, selectedWidgetIndex);
+	if (parentNodeIndex > -1) {
+		return [
+			replace(path("activeWidgetId"), pageWidgets[parentNodeIndex].id),
+			replace(path("selectedWidgetIndex"), parentNodeIndex)
+		];
+	}
+});
 
 /**
  * 获取新节点的插入位置。
