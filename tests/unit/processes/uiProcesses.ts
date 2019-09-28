@@ -6,7 +6,8 @@ import { State } from "../../../src/interfaces";
 import {
 	activeWidgetProcess,
 	insertWidgetsProcess,
-	removeActiveWidgetProcess
+	removeActiveWidgetProcess,
+	moveActiveWidgetPreviousProcess
 } from "../../../src/processes/uiProcesses";
 import { add } from "@dojo/framework/stores/state/operations";
 
@@ -266,7 +267,7 @@ describe("processes/uiProcesses", () => {
 		assert.equal(thirdWidget.widgetCode, "0003");
 	});
 
-	it("removeActiveWidgetCommand - root->node1->node11, remove node1 and node11", () => {
+	it("removeActiveWidgetProcess - root->node1->node11, remove node1 and node11", () => {
 		store.apply([
 			add(store.path("pageModel", "widgets"), [
 				{
@@ -315,7 +316,7 @@ describe("processes/uiProcesses", () => {
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 0);
 	});
 
-	it("removeActiveWidgetCommand - root->node1->node11, remove node11 then node1 focused", () => {
+	it("removeActiveWidgetProcess - root->node1->node11, remove node11 then node1 focused", () => {
 		store.apply([
 			add(store.path("pageModel", "widgets"), [
 				{
@@ -364,7 +365,7 @@ describe("processes/uiProcesses", () => {
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
 	});
 
-	it("removeActiveWidgetCommand - root->node1_node2, remove node2 then node1 focused", () => {
+	it("removeActiveWidgetProcess - root->node1_node2, remove node2 then node1 focused", () => {
 		store.apply([
 			add(store.path("pageModel", "widgets"), [
 				{
@@ -413,7 +414,7 @@ describe("processes/uiProcesses", () => {
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
 	});
 
-	it("removeActiveWidgetCommand - root->node1_node2, remove node1 then node2 focused", () => {
+	it("removeActiveWidgetProcess - root->node1_node2, remove node1 then node2 focused", () => {
 		store.apply([
 			add(store.path("pageModel", "widgets"), [
 				{
@@ -464,7 +465,7 @@ describe("processes/uiProcesses", () => {
 	});
 
 	// 此处不允许移除根节点
-	it("removeActiveWidgetCommand - can not remove root node", () => {
+	it("removeActiveWidgetProcess - can not remove root node", () => {
 		store.apply([
 			add(store.path("pageModel", "widgets"), [
 				{
@@ -487,5 +488,155 @@ describe("processes/uiProcesses", () => {
 		// 未删除根节点
 		const widgets = store.get(store.path("pageModel", "widgets"));
 		assert.equal(widgets.length, 1);
+	});
+
+	it("moveActiveWidgetPreviousProcess - has no previous widget", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			]),
+			add(store.path("activeWidgetId"), "2"),
+			add(store.path("selectedWidgetIndex"), 1)
+		]);
+		moveActiveWidgetPreviousProcess(store)({});
+
+		// 没有前一个兄弟节点，所以没有移动
+		assert.equal(store.get(store.path("activeWidgetId")), "2");
+		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
+	});
+
+	it("moveActiveWidgetPreviousProcess - root->node1_node2, move node2 previous, then become root->node2_node1", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "3",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			]),
+			add(store.path("activeWidgetId"), "3"),
+			add(store.path("selectedWidgetIndex"), 2)
+		]);
+		moveActiveWidgetPreviousProcess(store)({});
+
+		assert.equal(store.get(store.path("activeWidgetId")), "3");
+		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
+		// 判断位置已互换
+		const pageWidgets = store.get(store.path("pageModel", "widgets"));
+
+		assert.equal(pageWidgets[1].id, "3");
+		assert.equal(pageWidgets[2].id, "2");
+	});
+
+	it("moveActiveWidgetPreviousProcess - root->node1 root->node2->node21, move node2 previous, then become root->node2->node21 root->node1", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "3",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "4",
+					parentId: "3",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			]),
+			add(store.path("activeWidgetId"), "3"),
+			add(store.path("selectedWidgetIndex"), 2)
+		]);
+		moveActiveWidgetPreviousProcess(store)({});
+
+		assert.equal(store.get(store.path("activeWidgetId")), "3");
+		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
+		// 判断位置已互换
+		const pageWidgets = store.get(store.path("pageModel", "widgets"));
+
+		assert.equal(pageWidgets[1].id, "3");
+		assert.equal(pageWidgets[2].id, "4");
+		assert.equal(pageWidgets[3].id, "2");
 	});
 });

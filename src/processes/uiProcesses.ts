@@ -44,6 +44,48 @@ const insertWidgetsCommand = commandFactory<{ widgets: Widget[] }>(({ get, at, p
 });
 
 /**
+ * 移动部件
+ *
+ * 将选中的部件往前移动一步
+ */
+const moveActiveWidgetPreviousCommand = commandFactory<{}>(({ at, get, path }) => {
+	const pageWidgets = get(path("pageModel", "widgets"));
+	const selectedWidgetIndex = get(path("selectedWidgetIndex"));
+
+	const previousNodeIndex = getPreviousIndex(pageWidgets, selectedWidgetIndex);
+	if (previousNodeIndex === -1) {
+		return [];
+	}
+
+	// 将选中部件及其所有子部件移到前一个兄弟节点之前
+	// 获取当前选中部件的所有子节点个数
+	const allChildCount = getAllChildCount(pageWidgets, selectedWidgetIndex);
+	// 因为目前 dojo store 不支持 move operation，所以先 remove 再 add
+	const result = [];
+	for (let i = selectedWidgetIndex; i <= selectedWidgetIndex + allChildCount; i++) {
+		result.push(remove(at(path("pageModel", "widgets"), i)));
+	}
+	for (let i = selectedWidgetIndex, j = previousNodeIndex; i <= selectedWidgetIndex + allChildCount; i++, j++) {
+		result.push(add(at(path("pageModel", "widgets"), j), pageWidgets[i]));
+	}
+	// activeWidgetId 的值没有改变
+	result.push(replace(path("selectedWidgetIndex"), previousNodeIndex));
+	return result;
+});
+
+/**
+ * 移动部件
+ *
+ * 将选中的部件往后移动一步
+ */
+const moveActiveWidgetNextCommand = commandFactory<{}>(() => {});
+
+/**
+ * 相对于当前选中的部件，改为选中父部件
+ */
+const activeParentWidgetCommand = commandFactory<{}>(() => {});
+
+/**
  * 获取新节点的插入位置。
  *
  * 如果源数组中有三个元素，如['one', 'two', 'three'],
@@ -164,4 +206,9 @@ function inferNextSelectedWidgetInfo(
 export const getPageModelProcess = createProcess("get-page-model", [getPageModelCommand]);
 export const activeWidgetProcess = createProcess("active-widget", [activeWidgetCommand]);
 export const insertWidgetsProcess = createProcess("insert-widgets", [insertWidgetsCommand]);
+export const moveActiveWidgetPreviousProcess = createProcess("move-active-widget-previous", [
+	moveActiveWidgetPreviousCommand
+]);
+export const moveActiveWidgetNextProcess = createProcess("move-active-widget-next", [moveActiveWidgetNextCommand]);
+export const activeParentWidgetProcess = createProcess("active-parent-widget", [activeParentWidgetCommand]);
 export const removeActiveWidgetProcess = createProcess("remove-active-widget", [removeActiveWidgetCommand]);
