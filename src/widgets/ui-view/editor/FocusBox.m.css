@@ -1,0 +1,6 @@
+.nameBar {
+	composes: nameBar from "./HighlightBox.m.css";
+}
+.operateBar {
+	composes: nameBar from "./HighlightBox.m.css";
+}

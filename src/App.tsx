@@ -16,8 +16,26 @@ import { faUndo } from "@fortawesome/free-solid-svg-icons/faUndo";
 import { faRedo } from "@fortawesome/free-solid-svg-icons/faRedo";
 import { faArrowsAlt } from "@fortawesome/free-solid-svg-icons/faArrowsAlt";
 import { faMinus } from "@fortawesome/free-solid-svg-icons/faMinus";
+import { faLevelUpAlt } from "@fortawesome/free-solid-svg-icons/faLevelUpAlt";
+import { faStepForward } from "@fortawesome/free-solid-svg-icons/faStepForward";
+import { faStepBackward } from "@fortawesome/free-solid-svg-icons/faStepBackward";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons/faTrashAlt";
 
-library.add(faArrowAltCircleLeft, faEdit, faCaretSquareRight, faSave, faCube, faUndo, faRedo, faArrowsAlt, faMinus);
+library.add(
+	faArrowAltCircleLeft,
+	faEdit,
+	faCaretSquareRight,
+	faSave,
+	faCube,
+	faUndo,
+	faRedo,
+	faArrowsAlt,
+	faMinus,
+	faLevelUpAlt,
+	faStepForward,
+	faStepBackward,
+	faTrashAlt
+);
 
 const factory = create({ theme });
 
