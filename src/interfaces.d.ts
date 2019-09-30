@@ -1,3 +1,5 @@
+import { DimensionResults } from "@dojo/framework/core/meta/Dimensions";
+
 export interface User {
 	name: string;
 	avatar: string;
@@ -226,6 +228,10 @@ export interface State {
 	// ui 的焦点信息
 	activeWidgetId: string; // 当前选中部件的 ID
 	selectedWidgetIndex: number; // 当前选中的部件索引，是相对于全页面的索引
+	activeWidgetDimensions: DimensionResults; // 当前选中部件的位置和大小信息等
+	// 页面中高亮显示部件的信息
+	// highlightWidgetId: string; // 高亮显示部件的 ID
+	highlightWidgetDimensions: DimensionResults; // 高亮显示部件的位置和大小信息等
 }
 
 // 有三类数据
