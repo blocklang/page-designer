@@ -16,7 +16,7 @@ const activeWidgetCommand = commandFactory<{ activeWidgetId: string }>(({ get, p
 		console.error("设置获取焦点的部件时，在页面的部件列表中没有找到该部件");
 		selectedWidgetIndex = 0;
 	}
-	return [replace(path("activeWidgetId"), activeWidgetId), replace(path("selectedWidgetIndex"), selectedWidgetIndex)];
+	return [replace(path("selectedWidgetIndex"), selectedWidgetIndex)];
 });
 
 const insertWidgetsCommand = commandFactory<{ widgets: Widget[] }>(({ get, at, path, state, payload: { widgets } }) => {
@@ -119,10 +119,7 @@ const activeParentWidgetCommand = commandFactory<{}>(({ get, path }) => {
 	const pageWidgets = get(path("pageModel", "widgets"));
 	const parentNodeIndex = getParentIndex(pageWidgets, selectedWidgetIndex);
 	if (parentNodeIndex > -1) {
-		return [
-			replace(path("activeWidgetId"), pageWidgets[parentNodeIndex].id),
-			replace(path("selectedWidgetIndex"), parentNodeIndex)
-		];
+		return [replace(path("selectedWidgetIndex"), parentNodeIndex)];
 	}
 });
 
@@ -186,13 +183,8 @@ const removeActiveWidgetCommand = commandFactory<{}>(({ at, get, path }) => {
 	}
 
 	// 重新设置聚焦的部件
-	const {
-		selectedWidgetIndex: newSelectedWidgetIndex,
-		activeWidgetId: newActiveWidgetId
-	} = inferNextSelectedWidgetInfo(pageWidgets, selectedWidgetIndex);
-
+	const newSelectedWidgetIndex = inferNextSelectedWidgetInfo(pageWidgets, selectedWidgetIndex);
 	if (newSelectedWidgetIndex > -1) {
-		result.push(replace(path("activeWidgetId"), newActiveWidgetId));
 		result.push(replace(path("selectedWidgetIndex"), newSelectedWidgetIndex));
 	}
 
@@ -205,19 +197,13 @@ const removeActiveWidgetCommand = commandFactory<{}>(({ at, get, path }) => {
  * @param pageWidgets          页面所有部件
  * @param selectedWidgetIndex  当前选中的部件索引
  *
- * @returns                     新获取焦点的部件信息
+ * @returns                     新获取焦点的部件索引，索引是基于全页面的
  */
-function inferNextSelectedWidgetInfo(
-	pageWidgets: AttachedWidget[],
-	selectedWidgetIndex: number
-): { selectedWidgetIndex: number; activeWidgetId: string } {
+function inferNextSelectedWidgetInfo(pageWidgets: AttachedWidget[], selectedWidgetIndex: number): number {
 	// 寻找前一个兄弟节点
 	const previousNodeIndex = getPreviousIndex(pageWidgets, selectedWidgetIndex);
 	if (previousNodeIndex > -1) {
-		return {
-			selectedWidgetIndex: previousNodeIndex,
-			activeWidgetId: pageWidgets[previousNodeIndex].id
-		};
+		return previousNodeIndex;
 	}
 
 	// 寻找后一个兄弟节点
@@ -225,19 +211,13 @@ function inferNextSelectedWidgetInfo(
 	if (nextNodeIndex > 0 /* 不需要与 -1 比较，因为前面已有一个兄弟节点 */) {
 		// 要考虑在计算索引时还没有实际删除，所以索引的位置还需要再移动一次的
 		// 因为会删除前一个兄弟节点，所以需要再减去 1，但是获取部件时还不能减 1，因为还没有真正删除。
-		return {
-			selectedWidgetIndex: nextNodeIndex - 1,
-			activeWidgetId: pageWidgets[nextNodeIndex].id
-		};
+		return nextNodeIndex - 1;
 	}
 
 	// 寻找父节点
 	const parentNodeIndex = getParentIndex(pageWidgets, selectedWidgetIndex);
 	if (parentNodeIndex > -1) {
-		return {
-			selectedWidgetIndex: parentNodeIndex,
-			activeWidgetId: pageWidgets[parentNodeIndex].id
-		};
+		return parentNodeIndex;
 	}
 
 	// 如果依然没有找到，则抛出异常

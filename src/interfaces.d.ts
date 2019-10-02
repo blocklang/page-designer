@@ -226,11 +226,10 @@ export interface State {
 	ideRepos: ComponentRepo[]; // 项目依赖的 ide 组件库信息
 	pageModel: PageModel; // 页面模型
 	// ui 的焦点信息
-	activeWidgetId: string; // 当前选中部件的 ID
 	selectedWidgetIndex: number; // 当前选中的部件索引，是相对于全页面的索引
 	activeWidgetDimensions: DimensionResults; // 当前选中部件的位置和大小信息等
 	// 页面中高亮显示部件的信息
-	// highlightWidgetId: string; // 高亮显示部件的 ID
+	highlightWidgetIndex: number; // 高亮显示部件的索引，是相对于全页面的索引
 	highlightWidgetDimensions: DimensionResults; // 高亮显示部件的位置和大小信息等
 }
 

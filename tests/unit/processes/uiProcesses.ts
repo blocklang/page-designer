@@ -48,18 +48,15 @@ describe("processes/uiProcesses", () => {
 			])
 		]);
 
-		assert.isUndefined(store.get(store.path("activeWidgetId")));
 		assert.isUndefined(store.get(store.path("selectedWidgetIndex")));
 
 		activeWidgetProcess(store)({ activeWidgetId: "1" });
 
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 0);
-		assert.equal(store.get(store.path("activeWidgetId")), "1");
 
 		activeWidgetProcess(store)({ activeWidgetId: "2" });
 
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
-		assert.equal(store.get(store.path("activeWidgetId")), "2");
 	});
 
 	it("insert one widget below root node", () => {
@@ -77,7 +74,6 @@ describe("processes/uiProcesses", () => {
 					properties: []
 				}
 			]),
-			add(store.path("activeWidgetId"), "1"),
 			add(store.path("selectedWidgetIndex"), 0)
 		]);
 
@@ -138,7 +134,6 @@ describe("processes/uiProcesses", () => {
 					properties: []
 				}
 			]),
-			add(store.path("activeWidgetId"), "2"),
 			add(store.path("selectedWidgetIndex"), 1)
 		]);
 
@@ -178,7 +173,6 @@ describe("processes/uiProcesses", () => {
 					properties: []
 				}
 			]),
-			add(store.path("activeWidgetId"), "1"),
 			add(store.path("selectedWidgetIndex"), 0)
 		]);
 
@@ -242,7 +236,6 @@ describe("processes/uiProcesses", () => {
 					properties: []
 				}
 			]),
-			add(store.path("activeWidgetId"), "2"),
 			add(store.path("selectedWidgetIndex"), 1)
 		]);
 
@@ -306,7 +299,6 @@ describe("processes/uiProcesses", () => {
 					properties: []
 				}
 			]),
-			add(store.path("activeWidgetId"), "2"),
 			add(store.path("selectedWidgetIndex"), 1)
 		]);
 		removeActiveWidgetProcess(store)({});
@@ -314,7 +306,6 @@ describe("processes/uiProcesses", () => {
 		assert.equal(widgets.length, 1);
 		assert.equal(widgets[0].id, "1");
 
-		assert.equal(store.get(store.path("activeWidgetId")), "1");
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 0);
 	});
 
@@ -355,7 +346,6 @@ describe("processes/uiProcesses", () => {
 					properties: []
 				}
 			]),
-			add(store.path("activeWidgetId"), "3"),
 			add(store.path("selectedWidgetIndex"), 2)
 		]);
 		removeActiveWidgetProcess(store)({});
@@ -363,7 +353,6 @@ describe("processes/uiProcesses", () => {
 		assert.equal(widgets.length, 2);
 
 		// node1 是 node11 的父节点，所以删除 node11 后，让 node1 获取焦点
-		assert.equal(store.get(store.path("activeWidgetId")), "2");
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
 	});
 
@@ -404,7 +393,6 @@ describe("processes/uiProcesses", () => {
 					properties: []
 				}
 			]),
-			add(store.path("activeWidgetId"), "3"),
 			add(store.path("selectedWidgetIndex"), 2)
 		]);
 		removeActiveWidgetProcess(store)({});
@@ -412,7 +400,6 @@ describe("processes/uiProcesses", () => {
 		assert.equal(widgets.length, 2);
 
 		// node1 是 node2 的前一个兄弟节点，所以删除 node2 后，让 node1 获取焦点
-		assert.equal(store.get(store.path("activeWidgetId")), "2");
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
 	});
 
@@ -453,7 +440,6 @@ describe("processes/uiProcesses", () => {
 					properties: []
 				}
 			]),
-			add(store.path("activeWidgetId"), "2"),
 			add(store.path("selectedWidgetIndex"), 1)
 		]);
 		removeActiveWidgetProcess(store)({});
@@ -461,7 +447,6 @@ describe("processes/uiProcesses", () => {
 		assert.equal(widgets.length, 2);
 
 		// node2 是 node1 的后一个兄弟节点，所以删除 node1 后，让 node2 获取焦点
-		assert.equal(store.get(store.path("activeWidgetId")), "3");
 		// 要考虑在计算索引时还没有实际删除，所以索引的位置还需要再移动一次的
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
 	});
@@ -482,7 +467,6 @@ describe("processes/uiProcesses", () => {
 					properties: []
 				}
 			]),
-			add(store.path("activeWidgetId"), "1"),
 			add(store.path("selectedWidgetIndex"), 0)
 		]);
 		removeActiveWidgetProcess(store)({});
@@ -518,13 +502,11 @@ describe("processes/uiProcesses", () => {
 					properties: []
 				}
 			]),
-			add(store.path("activeWidgetId"), "2"),
 			add(store.path("selectedWidgetIndex"), 1)
 		]);
 		moveActiveWidgetPreviousProcess(store)({});
 
 		// 没有前一个兄弟节点，所以没有移动
-		assert.equal(store.get(store.path("activeWidgetId")), "2");
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
 	});
 
@@ -565,12 +547,10 @@ describe("processes/uiProcesses", () => {
 					properties: []
 				}
 			]),
-			add(store.path("activeWidgetId"), "3"),
 			add(store.path("selectedWidgetIndex"), 2)
 		]);
 		moveActiveWidgetPreviousProcess(store)({});
 
-		assert.equal(store.get(store.path("activeWidgetId")), "3");
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
 		// 判断位置已互换
 		const pageWidgets = store.get(store.path("pageModel", "widgets"));
@@ -638,12 +618,10 @@ describe("processes/uiProcesses", () => {
 					properties: []
 				}
 			]),
-			add(store.path("activeWidgetId"), "4"),
 			add(store.path("selectedWidgetIndex"), 3)
 		]);
 		moveActiveWidgetPreviousProcess(store)({});
 
-		assert.equal(store.get(store.path("activeWidgetId")), "4");
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
 		// 判断位置已互换
 		const pageWidgets = store.get(store.path("pageModel", "widgets"));
@@ -691,13 +669,11 @@ describe("processes/uiProcesses", () => {
 					properties: []
 				}
 			]),
-			add(store.path("activeWidgetId"), "2"),
 			add(store.path("selectedWidgetIndex"), 1)
 		]);
 		moveActiveWidgetNextProcess(store)({});
 
 		// 没有前一个兄弟节点，所以没有移动
-		assert.equal(store.get(store.path("activeWidgetId")), "2");
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
 	});
 
@@ -738,12 +714,10 @@ describe("processes/uiProcesses", () => {
 					properties: []
 				}
 			]),
-			add(store.path("activeWidgetId"), "2"),
 			add(store.path("selectedWidgetIndex"), 1)
 		]);
 		moveActiveWidgetNextProcess(store)({});
 
-		assert.equal(store.get(store.path("activeWidgetId")), "2");
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 2);
 		// 判断位置已互换
 		const pageWidgets = store.get(store.path("pageModel", "widgets"));
@@ -811,12 +785,10 @@ describe("processes/uiProcesses", () => {
 					properties: []
 				}
 			]),
-			add(store.path("activeWidgetId"), "2"),
 			add(store.path("selectedWidgetIndex"), 1)
 		]);
 		moveActiveWidgetNextProcess(store)({});
 
-		assert.equal(store.get(store.path("activeWidgetId")), "2");
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 3);
 		// 判断位置已互换
 		const pageWidgets = store.get(store.path("pageModel", "widgets"));
@@ -875,12 +847,10 @@ describe("processes/uiProcesses", () => {
 					properties: []
 				}
 			]),
-			add(store.path("activeWidgetId"), "2"),
 			add(store.path("selectedWidgetIndex"), 1)
 		]);
 		moveActiveWidgetNextProcess(store)({});
 
-		assert.equal(store.get(store.path("activeWidgetId")), "2");
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 2);
 		// 判断位置已互换
 		const pageWidgets = store.get(store.path("pageModel", "widgets"));
@@ -905,13 +875,11 @@ describe("processes/uiProcesses", () => {
 					properties: []
 				}
 			]),
-			add(store.path("activeWidgetId"), "1"),
 			add(store.path("selectedWidgetIndex"), 0)
 		]);
 		activeParentWidgetProcess(store)({});
 
 		// 没有父节点节点，所以没有移动
-		assert.equal(store.get(store.path("activeWidgetId")), "1");
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 0);
 	});
 
@@ -941,12 +909,10 @@ describe("processes/uiProcesses", () => {
 					properties: []
 				}
 			]),
-			add(store.path("activeWidgetId"), "2"),
 			add(store.path("selectedWidgetIndex"), 1)
 		]);
 		activeParentWidgetProcess(store)({});
 
-		assert.equal(store.get(store.path("activeWidgetId")), "1");
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 0);
 	});
 
@@ -987,12 +953,10 @@ describe("processes/uiProcesses", () => {
 					properties: []
 				}
 			]),
-			add(store.path("activeWidgetId"), "3"),
 			add(store.path("selectedWidgetIndex"), 2)
 		]);
 		activeParentWidgetProcess(store)({});
 
-		assert.equal(store.get(store.path("activeWidgetId")), "1");
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 0);
 	});
 });
