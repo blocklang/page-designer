@@ -156,7 +156,7 @@ const getPageModelCommand = commandFactory(async ({ path, payload: { pageId } })
 	const url = format(config.fetchPageModelUrl, { pageId });
 	const response = await fetch(url);
 	const json = await response.json();
-	return [add(path("pageModel"), json)];
+	return [add(path("pageModel"), json), add(path("selectedWidgetIndex"), 0)];
 });
 
 /**

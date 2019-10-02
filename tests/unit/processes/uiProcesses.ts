@@ -1,7 +1,9 @@
 const { describe, it, beforeEach } = intern.getInterface("bdd");
 const { assert } = intern.getPlugin("chai");
 import Store from "@dojo/framework/stores/Store";
-import { State } from "../../../src/interfaces";
+import { State, PageModel } from "../../../src/interfaces";
+import global from "@dojo/framework/shim/global";
+import * as sinon from "sinon";
 
 import {
 	activeWidgetProcess,
@@ -9,7 +11,8 @@ import {
 	removeActiveWidgetProcess,
 	moveActiveWidgetPreviousProcess,
 	moveActiveWidgetNextProcess,
-	activeParentWidgetProcess
+	activeParentWidgetProcess,
+	getPageModelProcess
 } from "../../../src/processes/uiProcesses";
 import { add } from "@dojo/framework/stores/state/operations";
 
@@ -20,7 +23,36 @@ describe("processes/uiProcesses", () => {
 		store = new Store<State>();
 	});
 
-	it("select widget", () => {
+	it("getPageModelProcess - get page model, default focus root node", async () => {
+		const pageModel: PageModel = {
+			pageInfo: {
+				id: 1,
+				key: "page1",
+				name: "Page 1",
+				appType: "01"
+			},
+			widgets: [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			]
+		};
+		global.fetch = sinon.stub().returns(Promise.resolve({ json: () => Promise.resolve(pageModel) }));
+
+		await getPageModelProcess(store)({ pageId: 1 });
+		assert.deepEqual(store.get(store.path("pageModel")), pageModel);
+		assert.equal(store.get(store.path("selectedWidgetIndex")), 0);
+	});
+
+	it("activeWidgetProcess - select widget", () => {
 		store.apply([
 			add(store.path("pageModel", "widgets"), [
 				{
@@ -59,7 +91,7 @@ describe("processes/uiProcesses", () => {
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
 	});
 
-	it("insert one widget below root node", () => {
+	it("insertWidgetsProcess - insert one widget below root node", () => {
 		store.apply([
 			add(store.path("pageModel", "widgets"), [
 				{
@@ -97,7 +129,7 @@ describe("processes/uiProcesses", () => {
 
 	// -> 表示上下级
 	// _ 表示同一级
-	it("root->node1, node1 is not a container, so insert after node1", () => {
+	it("insertWidgetsProcess - root->node1, node1 is not a container, so insert after node1", () => {
 		store.apply([
 			add(store.path("pageModel", "widgets"), [
 				{
@@ -158,7 +190,7 @@ describe("processes/uiProcesses", () => {
 		assert.equal(thirdWidget.widgetCode, "0003");
 	});
 
-	it("insert two widget below root node", () => {
+	it("insertWidgetsProcess - insert two widget below root node", () => {
 		store.apply([
 			add(store.path("pageModel", "widgets"), [
 				{
@@ -199,7 +231,7 @@ describe("processes/uiProcesses", () => {
 		assert.equal(widgets.length, 3);
 	});
 
-	it("root->node1_node2, insert node11 after node1", () => {
+	it("insertWidgetsProcess - root->node1_node2, insert node11 after node1", () => {
 		store.apply([
 			add(store.path("pageModel", "widgets"), [
 				{
