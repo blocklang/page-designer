@@ -4,25 +4,32 @@ import global from "@dojo/framework/shim/global";
 import { find } from "@dojo/framework/shim/array";
 import { w } from "@dojo/framework/core/vdom";
 import { WNode } from "@dojo/framework/core/interfaces";
-import { EditableWidgetProperties, InstWidgetProperties } from "designer-core/interfaces";
+import { EditableWidgetProperties, InstWidgetProperties, EditableProperties } from "designer-core/interfaces";
 import { config } from "../../../config";
 import UndefinedWidget from "../UndefinedWidget";
 
-// 在此处缓存 widgets 和 ideRepos 的值，这样就不需要在每个函数中多次传递
-// 或者将其他函数作为 renderPage 的内嵌函数。
-// 这里缓存的数据，必须是只读的
+// 有两种方式共享 widgets 和 ideRepos 的值，以避免在每个函数中多次传递
+// 1. 在此处缓存 widgets 和 ideRepos 的值
+// 2. 将其他函数作为 renderPage 的内嵌函数
+// 这里使用缓存数据的方式，且必须是只读的
 let roWidgets: ReadonlyArray<AttachedWidget>;
 let roIdeRepos: ReadonlyArray<ComponentRepo>;
+let roEditableProperties: Readonly<EditableProperties>;
 
 /**
  * @function renderPage
  *
  * 返回渲染页面的节点，只能有一个根节点。
  *
- * @param widgets
- * @param ideRepos
+ * @param widgets                页面部件列表
+ * @param ideRepos               项目引用的 ide 版组件库
+ * @param editableProperties     为部件扩展的属性，支持在设计器中交互
  */
-export function renderPage(widgets: AttachedWidget[], ideRepos: ComponentRepo[]): WNode {
+export function renderPage(
+	widgets: AttachedWidget[],
+	ideRepos: ComponentRepo[],
+	editableProperties: EditableProperties
+): WNode {
 	if (widgets.length === 0) {
 		throw new Error("页面中的部件个数不能为0，至少要包含一个根部件！");
 	}
@@ -35,6 +42,7 @@ export function renderPage(widgets: AttachedWidget[], ideRepos: ComponentRepo[])
 	// 缓存数据
 	roWidgets = widgets;
 	roIdeRepos = ideRepos;
+	roEditableProperties = editableProperties;
 
 	return renderWidget(rootWidget, 0);
 }
@@ -92,13 +100,11 @@ function renderWidget(widget: AttachedWidget, index: number): WNode {
 			canHasChildren: widget.canHasChildren
 		},
 		originalProperties,
-		extendProperties: {
-			onFocus: () => {},
-			activeWidgetId: ""
-		},
+		extendProperties: roEditableProperties,
 		...originalProperties
 	};
 
+	// index 指向的是选中的部件，这里要获取选中部件的第一个子节点，所以要 + 1
 	const firstChildIndex = index + 1;
 	let childWNodes: WNode[] = renderChildWidgets(firstChildIndex, getChildrenIndex(widget.id, firstChildIndex));
 
