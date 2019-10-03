@@ -47,15 +47,16 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 		// 在 store 中存储项目基本信息
 		executor(initProjectProcess)({ project });
 		// 获取项目的 ide 依赖
-		executor(getProjectIdeDependencesProcess)({ get, path }).then(() => {
+		// TODO: 要考虑如何避免重复加载，以及漏加载
+		const ideRepos = get(path("ideRepos"));
+		if (!ideRepos) {
+			executor(getProjectIdeDependencesProcess)({});
+		} else {
 			// 获取完依赖之后要加载相应的 js 脚本
-			const ideRepos = get(path("ideRepos"));
-			if (!ideRepos) {
-				return;
-			}
 			// 去除掉标准库，因为已默认引用标准库
 			loadExternalResources(ideRepos.filter((item) => item.std === false));
-		});
+		}
+
 		executor(getPageModelProcess)({ pageId: page.id });
 	}
 

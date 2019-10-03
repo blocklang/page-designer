@@ -6,10 +6,15 @@ import * as c from "bootstrap-classes";
 import * as css from "../../src/styles/PageDesigner.m.css";
 import PageDesigner from "../../src/PageDesigner";
 import Header from "../../src/widgets/Header";
-import { User, Project, Path, Page, Permission, RequestUrl } from "../../src/interfaces";
+import { User, Project, Path, Page, Permission, RequestUrl, State } from "../../src/interfaces";
 import Preview from "../../src/widgets/preview";
 import UIView from "../../src/widgets/ui-view";
 import BehaviorView from "../../src/widgets/behavior-view";
+import { stub } from "sinon";
+import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
+import store from "../../src/store";
+import { getProjectIdeDependencesProcess } from "../../src/processes/projectProcesses";
+import { beforeEach } from "intern/lib/interfaces/bdd";
 
 // login user
 const user: User = {
@@ -45,17 +50,25 @@ const urls: RequestUrl = {
 };
 
 describe("PageDesigner", () => {
+	let mockStore: any;
+	beforeEach(() => {
+		mockStore = createMockStoreMiddleware<State>();
+	});
+
 	it("default properties", () => {
-		const h = harness(() => (
-			<PageDesigner
-				user={user}
-				project={project}
-				permission={permission}
-				page={page}
-				pathes={pathes}
-				urls={urls}
-			/>
-		));
+		const h = harness(
+			() => (
+				<PageDesigner
+					user={user}
+					project={project}
+					permission={permission}
+					page={page}
+					pathes={pathes}
+					urls={urls}
+				/>
+			),
+			{ middleware: [[store, mockStore]] }
+		);
 
 		h.expect(() => (
 			<div classes={[c.container_fluid, css.root]}>
@@ -76,16 +89,19 @@ describe("PageDesigner", () => {
 	});
 
 	it("onChangeEditMode should be switch between edit and preview", () => {
-		const h = harness(() => (
-			<PageDesigner
-				user={user}
-				project={project}
-				permission={permission}
-				page={page}
-				pathes={pathes}
-				urls={urls}
-			/>
-		));
+		const h = harness(
+			() => (
+				<PageDesigner
+					user={user}
+					project={project}
+					permission={permission}
+					page={page}
+					pathes={pathes}
+					urls={urls}
+				/>
+			),
+			{ middleware: [[store, mockStore]] }
+		);
 
 		h.expect(() => (
 			<div classes={[c.container_fluid, css.root]}>
@@ -144,16 +160,19 @@ describe("PageDesigner", () => {
 	});
 
 	it("onChangeViewMode should be switch between ui and behavior", () => {
-		const h = harness(() => (
-			<PageDesigner
-				user={user}
-				project={project}
-				permission={permission}
-				page={page}
-				pathes={pathes}
-				urls={urls}
-			/>
-		));
+		const h = harness(
+			() => (
+				<PageDesigner
+					user={user}
+					project={project}
+					permission={permission}
+					page={page}
+					pathes={pathes}
+					urls={urls}
+				/>
+			),
+			{ middleware: [[store, mockStore]] }
+		);
 
 		h.expect(() => (
 			<div classes={[c.container_fluid, css.root]}>

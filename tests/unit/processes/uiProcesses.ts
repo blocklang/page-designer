@@ -15,12 +15,17 @@ import {
 	getPageModelProcess
 } from "../../../src/processes/uiProcesses";
 import { add } from "@dojo/framework/stores/state/operations";
+import { afterEach } from "intern/lib/interfaces/tdd";
 
 describe("processes/uiProcesses", () => {
 	let store: Store<State>;
 
 	beforeEach(() => {
 		store = new Store<State>();
+	});
+
+	afterEach(() => {
+		sinon.restore();
 	});
 
 	it("getPageModelProcess - get page model, default focus root node", async () => {

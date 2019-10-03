@@ -27,11 +27,8 @@ export default factory(function Editor({ properties, middleware: { store } }) {
 	const highlightWidgetIndex = get(path("highlightWidgetIndex"));
 	const highlightWidget = widgets[highlightWidgetIndex];
 
-	console.log("---------pageModel =", get(path("pageModel")));
-	console.log("----------- pageModel.widgets =", widgets);
 	if (widgets && widgets.length > 0) {
 		const ideRepos = get(path("ideRepos"));
-		console.log("----------- ideRepos =", ideRepos);
 		return v("div", {}, [
 			renderPage(widgets, ideRepos, {
 				onFocus: () => {},
