@@ -4,7 +4,7 @@ import harness from "@dojo/framework/testing/harness";
 import { create, tsx } from "@dojo/framework/core/vdom";
 import Editor from "../../../../../src/widgets/ui-view/editor";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
-import { State, ComponentRepo, PageModel } from "../../../../../src/interfaces";
+import { State, ComponentRepo, PageModel, AttachedWidget } from "../../../../../src/interfaces";
 import store from "../../../../../src/store";
 import * as c from "bootstrap-classes";
 import { replace } from "@dojo/framework/stores/state/operations";
@@ -345,6 +345,27 @@ describe("ui-view/editor", () => {
 			replace(path("selectedWidgetIndex"), 0)
 		]);
 
+		const pageWidgets: AttachedWidget[] = [
+			{
+				id: "1",
+				parentId: "-1",
+				componentRepoId: 1,
+				widgetId: 1,
+				widgetName: "Page",
+				widgetCode: "0001",
+				iconClass: "",
+				canHasChildren: true,
+				properties: [
+					{
+						id: "1",
+						parentId: "-1",
+						name: "onLoad",
+						value: undefined
+					}
+				]
+			}
+		];
+
 		const widget: InstWidget = {
 			id: "1",
 			parentId: "-1",
@@ -367,7 +388,7 @@ describe("ui-view/editor", () => {
 					// 原始属性的值，是必须要展开的
 					onLoad={() => {}}
 				/>
-				<FocusBox widgetName="Page" />
+				<FocusBox widgetName="Page" selectedWidgetIndex={0} widgets={pageWidgets} />
 			</div>
 		));
 	});

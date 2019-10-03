@@ -25,7 +25,9 @@ import {
 describe("ui-view/editor/FocusBox", () => {
 	it("default properties", () => {
 		const properties: FocusBoxProperties = {
-			widgetName: "A"
+			widgetName: "A",
+			selectedWidgetIndex: 0,
+			widgets: []
 		};
 		const h = harness(() => <FocusBox {...properties} />);
 
@@ -40,16 +42,9 @@ describe("ui-view/editor/FocusBox", () => {
 
 	it("when root node focused, not show operate bar", () => {
 		const properties: FocusBoxProperties = {
-			widgetName: "A"
-		};
-		const mockStore = createMockStoreMiddleware<State>();
-		const h = harness(() => <FocusBox {...properties} />, { middleware: [[store, mockStore]] });
-
-		const documentScrollTop = document.documentElement.scrollTop;
-		const documentScrollLeft = document.documentElement.scrollLeft;
-
-		mockStore((path) => [
-			add(path("pageModel", "widgets"), [
+			widgetName: "A",
+			selectedWidgetIndex: 0,
+			widgets: [
 				{
 					id: "1",
 					parentId: "-1",
@@ -61,9 +56,13 @@ describe("ui-view/editor/FocusBox", () => {
 					canHasChildren: true,
 					properties: []
 				}
-			]),
-			add(path("selectedWidgetIndex"), 0)
-		]);
+			]
+		};
+		const mockStore = createMockStoreMiddleware<State>();
+		const h = harness(() => <FocusBox {...properties} />, { middleware: [[store, mockStore]] });
+
+		const documentScrollTop = document.documentElement.scrollTop;
+		const documentScrollLeft = document.documentElement.scrollLeft;
 
 		h.expect(() => (
 			<Box left={documentScrollLeft + 0} top={documentScrollTop + 0} height={0} width={0}>
@@ -76,7 +75,9 @@ describe("ui-view/editor/FocusBox", () => {
 
 	it("set active widget dimensions", () => {
 		const properties: FocusBoxProperties = {
-			widgetName: "A"
+			widgetName: "A",
+			selectedWidgetIndex: 0,
+			widgets: []
 		};
 		const mockStore = createMockStoreMiddleware<State>();
 		const h = harness(() => <FocusBox {...properties} />, { middleware: [[store, mockStore]] });
@@ -128,13 +129,9 @@ describe("ui-view/editor/FocusBox", () => {
 
 	it("custom properties - enable move previous and move next buttons", () => {
 		const properties: FocusBoxProperties = {
-			widgetName: "A"
-		};
-		const mockStore = createMockStoreMiddleware<State>();
-		const h = harness(() => <FocusBox {...properties} />, { middleware: [[store, mockStore]] });
-
-		mockStore((path) => [
-			add(path("pageModel", "widgets"), [
+			widgetName: "A",
+			selectedWidgetIndex: 2,
+			widgets: [
 				{
 					id: "1",
 					parentId: "-1",
@@ -179,9 +176,10 @@ describe("ui-view/editor/FocusBox", () => {
 					canHasChildren: true,
 					properties: []
 				}
-			]),
-			add(path("selectedWidgetIndex"), 2)
-		]);
+			]
+		};
+		const mockStore = createMockStoreMiddleware<State>();
+		const h = harness(() => <FocusBox {...properties} />, { middleware: [[store, mockStore]] });
 
 		h.expect(() => (
 			<Box left={0} top={0} width={0} height={0}>
@@ -236,13 +234,9 @@ describe("ui-view/editor/FocusBox", () => {
 
 	it("custom properties - disable move previous and move next buttons", () => {
 		const properties: FocusBoxProperties = {
-			widgetName: "A"
-		};
-		const mockStore = createMockStoreMiddleware<State>();
-		const h = harness(() => <FocusBox {...properties} />, { middleware: [[store, mockStore]] });
-
-		mockStore((path) => [
-			add(path("pageModel", "widgets"), [
+			widgetName: "A",
+			selectedWidgetIndex: 1,
+			widgets: [
 				{
 					id: "1",
 					parentId: "-1",
@@ -265,9 +259,10 @@ describe("ui-view/editor/FocusBox", () => {
 					canHasChildren: true,
 					properties: []
 				}
-			]),
-			add(path("selectedWidgetIndex"), 1)
-		]);
+			]
+		};
+		const mockStore = createMockStoreMiddleware<State>();
+		const h = harness(() => <FocusBox {...properties} />, { middleware: [[store, mockStore]] });
 
 		h.expect(() => (
 			<Box left={0} top={0} width={0} height={0}>
@@ -322,15 +317,9 @@ describe("ui-view/editor/FocusBox", () => {
 
 	it("active parent widget", () => {
 		const properties: FocusBoxProperties = {
-			widgetName: "A"
-		};
-
-		const activeParentProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[activeParentWidgetProcess, activeParentProcessStub]]);
-		const h = harness(() => <FocusBox {...properties} />, { middleware: [[store, mockStore]] });
-
-		mockStore((path) => [
-			add(path("pageModel", "widgets"), [
+			widgetName: "A",
+			selectedWidgetIndex: 1,
+			widgets: [
 				{
 					id: "1",
 					parentId: "-1",
@@ -353,9 +342,12 @@ describe("ui-view/editor/FocusBox", () => {
 					canHasChildren: true,
 					properties: []
 				}
-			]),
-			add(path("selectedWidgetIndex"), 1)
-		]);
+			]
+		};
+
+		const activeParentProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[activeParentWidgetProcess, activeParentProcessStub]]);
+		const h = harness(() => <FocusBox {...properties} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@active-parent", "onclick");
 		assert.isTrue(activeParentProcessStub.calledOnce);
@@ -363,7 +355,44 @@ describe("ui-view/editor/FocusBox", () => {
 
 	it("move active widget to previous", () => {
 		const properties: FocusBoxProperties = {
-			widgetName: "A"
+			widgetName: "A",
+			selectedWidgetIndex: 2,
+			// 触发之前必须要先激活按钮
+			widgets: [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "3",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			]
 		};
 
 		const moveActiveWidgetPreviousProcessStub = stub();
@@ -372,9 +401,16 @@ describe("ui-view/editor/FocusBox", () => {
 		]);
 		const h = harness(() => <FocusBox {...properties} />, { middleware: [[store, mockStore]] });
 
-		// 触发之前必须要先激活按钮
-		mockStore((path) => [
-			add(path("pageModel", "widgets"), [
+		h.trigger("@move-previous", "onclick");
+		assert.isTrue(moveActiveWidgetPreviousProcessStub.calledOnce);
+	});
+
+	it("move active widget to next", () => {
+		const properties: FocusBoxProperties = {
+			widgetName: "A",
+			selectedWidgetIndex: 1,
+			// 触发之前必须要先激活按钮
+			widgets: [
 				{
 					id: "1",
 					parentId: "-1",
@@ -408,17 +444,7 @@ describe("ui-view/editor/FocusBox", () => {
 					canHasChildren: true,
 					properties: []
 				}
-			]),
-			add(path("selectedWidgetIndex"), 2)
-		]);
-
-		h.trigger("@move-previous", "onclick");
-		assert.isTrue(moveActiveWidgetPreviousProcessStub.calledOnce);
-	});
-
-	it("move active widget to next", () => {
-		const properties: FocusBoxProperties = {
-			widgetName: "A"
+			]
 		};
 
 		const moveActiveWidgetNextProcessStub = stub();
@@ -427,9 +453,15 @@ describe("ui-view/editor/FocusBox", () => {
 		]);
 		const h = harness(() => <FocusBox {...properties} />, { middleware: [[store, mockStore]] });
 
-		// 触发之前必须要先激活按钮
-		mockStore((path) => [
-			add(path("pageModel", "widgets"), [
+		h.trigger("@move-next", "onclick");
+		assert.isTrue(moveActiveWidgetNextProcessStub.calledOnce);
+	});
+
+	it("remove active widget", () => {
+		const properties: FocusBoxProperties = {
+			widgetName: "A",
+			selectedWidgetIndex: 1,
+			widgets: [
 				{
 					id: "1",
 					parentId: "-1",
@@ -451,29 +483,8 @@ describe("ui-view/editor/FocusBox", () => {
 					iconClass: "",
 					canHasChildren: true,
 					properties: []
-				},
-				{
-					id: "3",
-					parentId: "1",
-					widgetId: 2,
-					widgetCode: "0002",
-					widgetName: "Widget2",
-					componentRepoId: 1,
-					iconClass: "",
-					canHasChildren: true,
-					properties: []
 				}
-			]),
-			add(path("selectedWidgetIndex"), 1)
-		]);
-
-		h.trigger("@move-next", "onclick");
-		assert.isTrue(moveActiveWidgetNextProcessStub.calledOnce);
-	});
-
-	it("remove active widget", () => {
-		const properties: FocusBoxProperties = {
-			widgetName: "A"
+			]
 		};
 
 		const removeActiveWidgetProcessStub = stub();
@@ -481,33 +492,6 @@ describe("ui-view/editor/FocusBox", () => {
 			[removeActiveWidgetProcess, removeActiveWidgetProcessStub]
 		]);
 		const h = harness(() => <FocusBox {...properties} />, { middleware: [[store, mockStore]] });
-		mockStore((path) => [
-			add(path("pageModel", "widgets"), [
-				{
-					id: "1",
-					parentId: "-1",
-					widgetId: 1,
-					widgetCode: "0001",
-					widgetName: "Widget1",
-					componentRepoId: 1,
-					iconClass: "",
-					canHasChildren: true,
-					properties: []
-				},
-				{
-					id: "2",
-					parentId: "1",
-					widgetId: 2,
-					widgetCode: "0002",
-					widgetName: "Widget2",
-					componentRepoId: 1,
-					iconClass: "",
-					canHasChildren: true,
-					properties: []
-				}
-			]),
-			add(path("selectedWidgetIndex"), 1)
-		]);
 
 		h.trigger("@remove", "onclick");
 		assert.isTrue(removeActiveWidgetProcessStub.calledOnce);

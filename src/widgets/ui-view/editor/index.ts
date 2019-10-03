@@ -34,7 +34,7 @@ export default factory(function Editor({ properties, middleware: { store } }) {
 				onFocus: () => {},
 				onHighlight: () => {}
 			}),
-			activeWidget && w(FocusBox, { widgetName: activeWidget.widgetName }),
+			activeWidget && w(FocusBox, { widgets, selectedWidgetIndex, widgetName: activeWidget.widgetName }),
 			highlightWidget && w(HighlightBox, { widgetName: highlightWidget.widgetName })
 		]);
 	}

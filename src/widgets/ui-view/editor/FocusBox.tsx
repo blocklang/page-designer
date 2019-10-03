@@ -13,17 +13,20 @@ import {
 	moveActiveWidgetNextProcess,
 	removeActiveWidgetProcess
 } from "../../../processes/uiProcesses";
+import { AttachedWidget } from "../../../interfaces";
 
-export interface FocusBoxProperties extends HighlightBoxProperties {}
+export interface FocusBoxProperties extends HighlightBoxProperties {
+	selectedWidgetIndex: number;
+	widgets: AttachedWidget[];
+}
 
 const factory = create({ store }).properties<FocusBoxProperties>();
 
 export default factory(function FocusBox({ properties, middleware: { store } }) {
-	const { widgetName } = properties();
+	const { widgetName, widgets: pageWidgets, selectedWidgetIndex } = properties();
 	const { get, path, executor } = store;
 	const activeWidgetDimensions = get(path("activeWidgetDimensions"));
-	const pageWidgets = get(path("pageModel", "widgets"));
-	const selectedWidgetIndex = get(path("selectedWidgetIndex"));
+
 	// 如果选中的是根节点，则不显示操作栏
 	const showOperateBar = selectedWidgetIndex > 0;
 
