@@ -34,47 +34,41 @@ describe("ui-view/editor/FocusBox", () => {
 				<div key="name-bar" classes={[css.nameBar]}>
 					A
 				</div>
-				<div key="operate-bar" classes={[css.operateBar]}>
-					<div classes={[c.btn_group, c.btn_group_sm]} role="group">
-						<button
-							key="active-parent"
-							type="button"
-							title="选择父部件"
-							classes={[c.btn, c.btn_primary]}
-							onclick={() => {}}
-						>
-							<FontAwesomeIcon icon="level-up-alt" />
-						</button>
-						<button
-							key="move-previous"
-							type="button"
-							title="前移"
-							classes={[c.btn, c.btn_primary]}
-							disabled
-							onclick={undefined}
-						>
-							<FontAwesomeIcon icon="step-forward" />
-						</button>
-						<button
-							key="move-next"
-							type="button"
-							title="后移"
-							classes={[c.btn, c.btn_primary]}
-							disabled
-							onclick={undefined}
-						>
-							<FontAwesomeIcon icon="step-backward" />
-						</button>
-						<button
-							key="remove"
-							type="button"
-							title="删除"
-							classes={[c.btn, c.btn_primary]}
-							onclick={() => {}}
-						>
-							<FontAwesomeIcon icon="trash-alt" />
-						</button>
-					</div>
+			</Box>
+		));
+	});
+
+	it("when root node focused, not show operate bar", () => {
+		const properties: FocusBoxProperties = {
+			widgetName: "A"
+		};
+		const mockStore = createMockStoreMiddleware<State>();
+		const h = harness(() => <FocusBox {...properties} />, { middleware: [[store, mockStore]] });
+
+		const documentScrollTop = document.documentElement.scrollTop;
+		const documentScrollLeft = document.documentElement.scrollLeft;
+
+		mockStore((path) => [
+			add(path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			]),
+			add(path("selectedWidgetIndex"), 0)
+		]);
+
+		h.expect(() => (
+			<Box left={documentScrollLeft + 0} top={documentScrollTop + 0} height={0} width={0}>
+				<div key="name-bar" classes={[css.nameBar]}>
+					A
 				</div>
 			</Box>
 		));
@@ -127,48 +121,6 @@ describe("ui-view/editor/FocusBox", () => {
 			<Box left={documentScrollLeft + 1} top={documentScrollTop + 2} height={9} width={10}>
 				<div key="name-bar" classes={[css.nameBar]}>
 					A
-				</div>
-				<div key="operate-bar" classes={[css.operateBar]}>
-					<div classes={[c.btn_group, c.btn_group_sm]} role="group">
-						<button
-							key="active-parent"
-							type="button"
-							title="选择父部件"
-							classes={[c.btn, c.btn_primary]}
-							onclick={() => {}}
-						>
-							<FontAwesomeIcon icon="level-up-alt" />
-						</button>
-						<button
-							key="move-previous"
-							type="button"
-							title="前移"
-							classes={[c.btn, c.btn_primary]}
-							disabled
-							onclick={undefined}
-						>
-							<FontAwesomeIcon icon="step-forward" />
-						</button>
-						<button
-							key="move-next"
-							type="button"
-							title="后移"
-							classes={[c.btn, c.btn_primary]}
-							disabled
-							onclick={undefined}
-						>
-							<FontAwesomeIcon icon="step-backward" />
-						</button>
-						<button
-							key="remove"
-							type="button"
-							title="删除"
-							classes={[c.btn, c.btn_primary]}
-							onclick={() => {}}
-						>
-							<FontAwesomeIcon icon="trash-alt" />
-						</button>
-					</div>
 				</div>
 			</Box>
 		));
@@ -228,7 +180,6 @@ describe("ui-view/editor/FocusBox", () => {
 					properties: []
 				}
 			]),
-			add(path("activeWidgetId"), "3"),
 			add(path("selectedWidgetIndex"), 2)
 		]);
 
@@ -315,7 +266,6 @@ describe("ui-view/editor/FocusBox", () => {
 					properties: []
 				}
 			]),
-			add(path("activeWidgetId"), "2"),
 			add(path("selectedWidgetIndex"), 1)
 		]);
 
@@ -379,6 +329,34 @@ describe("ui-view/editor/FocusBox", () => {
 		const mockStore = createMockStoreMiddleware<State>([[activeParentWidgetProcess, activeParentProcessStub]]);
 		const h = harness(() => <FocusBox {...properties} />, { middleware: [[store, mockStore]] });
 
+		mockStore((path) => [
+			add(path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			]),
+			add(path("selectedWidgetIndex"), 1)
+		]);
+
 		h.trigger("@active-parent", "onclick");
 		assert.isTrue(activeParentProcessStub.calledOnce);
 	});
@@ -431,7 +409,6 @@ describe("ui-view/editor/FocusBox", () => {
 					properties: []
 				}
 			]),
-			add(path("activeWidgetId"), "3"),
 			add(path("selectedWidgetIndex"), 2)
 		]);
 
@@ -487,7 +464,6 @@ describe("ui-view/editor/FocusBox", () => {
 					properties: []
 				}
 			]),
-			add(path("activeWidgetId"), "2"),
 			add(path("selectedWidgetIndex"), 1)
 		]);
 
@@ -505,6 +481,33 @@ describe("ui-view/editor/FocusBox", () => {
 			[removeActiveWidgetProcess, removeActiveWidgetProcessStub]
 		]);
 		const h = harness(() => <FocusBox {...properties} />, { middleware: [[store, mockStore]] });
+		mockStore((path) => [
+			add(path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			]),
+			add(path("selectedWidgetIndex"), 1)
+		]);
 
 		h.trigger("@remove", "onclick");
 		assert.isTrue(removeActiveWidgetProcessStub.calledOnce);
