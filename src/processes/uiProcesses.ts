@@ -7,16 +7,43 @@ import { add, replace, remove } from "@dojo/framework/stores/state/operations";
 import { findIndex } from "@dojo/framework/shim/array";
 import { uuid } from "@dojo/framework/core/util";
 import { getAllChildCount, getPreviousIndex, getNextIndex, getParentIndex } from "./pageTree";
+import { DimensionResults } from "@dojo/framework/core/meta/Dimensions";
 
-const activeWidgetCommand = commandFactory<{ activeWidgetId: string }>(({ get, path, payload: { activeWidgetId } }) => {
-	const pageWidgets = get(path("pageModel", "widgets"));
-	let selectedWidgetIndex = findIndex(pageWidgets, (item) => item.id === activeWidgetId);
-	// 如果值为 -1，说明根据 id 没有找到，则先设置为选中根部件
-	if (selectedWidgetIndex < 0) {
-		console.error("设置获取焦点的部件时，在页面的部件列表中没有找到该部件");
-		selectedWidgetIndex = 0;
+const activeWidgetCommand = commandFactory<{ activeWidgetId: string; activeWidgetDimensions: DimensionResults }>(
+	({ get, path, payload: { activeWidgetId, activeWidgetDimensions } }) => {
+		const pageWidgets = get(path("pageModel", "widgets"));
+		let selectedWidgetIndex = findIndex(pageWidgets, (item) => item.id === activeWidgetId);
+		// 如果值为 -1，说明根据 id 没有找到，则先设置为选中根部件
+		if (selectedWidgetIndex < 0) {
+			console.error("设置获取焦点的部件时，在页面的部件列表中没有找到该部件");
+			selectedWidgetIndex = 0;
+		}
+		return [
+			replace(path("selectedWidgetIndex"), selectedWidgetIndex),
+			replace(path("activeWidgetDimensions"), activeWidgetDimensions)
+		];
 	}
-	return [replace(path("selectedWidgetIndex"), selectedWidgetIndex)];
+);
+
+const highlightWidgetCommand = commandFactory<{
+	highlightWidgetId?: string;
+	highlightWidgetDimensions?: DimensionResults;
+}>(({ get, path, payload: { highlightWidgetId, highlightWidgetDimensions } }) => {
+	if (!highlightWidgetId) {
+		return [remove(path("highlightWidgetIndex")), remove(path("highlightWidgetDimensions"))];
+	}
+
+	const pageWidgets = get(path("pageModel", "widgets"));
+	let highlightWidgetIndex = findIndex(pageWidgets, (item) => item.id === highlightWidgetId);
+	// 如果值为 -1，说明根据 id 没有找到，则先设置为高亮根部件
+	if (highlightWidgetIndex < 0) {
+		console.error("设置获取焦点的部件时，在页面的部件列表中没有找到该部件");
+		highlightWidgetIndex = 0;
+	}
+	return [
+		replace(path("highlightWidgetIndex"), highlightWidgetIndex),
+		replace(path("highlightWidgetDimensions"), highlightWidgetDimensions)
+	];
 });
 
 const insertWidgetsCommand = commandFactory<{ widgets: Widget[] }>(({ get, at, path, state, payload: { widgets } }) => {
@@ -226,6 +253,7 @@ function inferNextSelectedWidgetInfo(pageWidgets: AttachedWidget[], selectedWidg
 
 export const getPageModelProcess = createProcess("get-page-model", [getPageModelCommand]);
 export const activeWidgetProcess = createProcess("active-widget", [activeWidgetCommand]);
+export const highlightWidgetProcess = createProcess("highlight-widget", [highlightWidgetCommand]);
 export const insertWidgetsProcess = createProcess("insert-widgets", [insertWidgetsCommand]);
 export const moveActiveWidgetPreviousProcess = createProcess("move-active-widget-previous", [
 	moveActiveWidgetPreviousCommand

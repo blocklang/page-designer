@@ -12,10 +12,12 @@ import {
 	moveActiveWidgetPreviousProcess,
 	moveActiveWidgetNextProcess,
 	activeParentWidgetProcess,
-	getPageModelProcess
+	getPageModelProcess,
+	highlightWidgetProcess
 } from "../../../src/processes/uiProcesses";
 import { add } from "@dojo/framework/stores/state/operations";
 import { afterEach } from "intern/lib/interfaces/tdd";
+import { DimensionResults } from "@dojo/framework/core/meta/Dimensions";
 
 describe("processes/uiProcesses", () => {
 	let store: Store<State>;
@@ -87,13 +89,91 @@ describe("processes/uiProcesses", () => {
 
 		assert.isUndefined(store.get(store.path("selectedWidgetIndex")));
 
-		activeWidgetProcess(store)({ activeWidgetId: "1" });
-
+		activeWidgetProcess(store)({ activeWidgetId: "1", activeWidgetDimensions: {} as DimensionResults });
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 0);
+		assert.isNotNull(store.get(store.path("activeWidgetDimensions")));
 
-		activeWidgetProcess(store)({ activeWidgetId: "2" });
-
+		activeWidgetProcess(store)({ activeWidgetId: "2", activeWidgetDimensions: {} as DimensionResults });
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
+		assert.isNotNull(store.get(store.path("activeWidgetDimensions")));
+	});
+
+	it("highlightWidgetProcess - add highlight", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 2,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			])
+		]);
+
+		assert.isUndefined(store.get(store.path("highlightWidgetIndex")));
+
+		highlightWidgetProcess(store)({ highlightWidgetId: "1", highlightWidgetDimensions: {} as DimensionResults });
+		assert.equal(store.get(store.path("highlightWidgetIndex")), 0);
+		assert.isNotNull(store.get(store.path("highlightWidgetDimensions")));
+
+		highlightWidgetProcess(store)({ highlightWidgetId: "2", highlightWidgetDimensions: {} as DimensionResults });
+		assert.equal(store.get(store.path("highlightWidgetIndex")), 1);
+		assert.isNotNull(store.get(store.path("highlightWidgetDimensions")));
+	});
+
+	it("highlightWidgetProcess - remove highlight", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 2,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			])
+		]);
+
+		assert.isUndefined(store.get(store.path("highlightWidgetIndex")));
+
+		highlightWidgetProcess(store)({ highlightWidgetId: "1", highlightWidgetDimensions: {} as DimensionResults });
+		assert.equal(store.get(store.path("highlightWidgetIndex")), 0);
+		assert.isNotNull(store.get(store.path("highlightWidgetDimensions")));
+
+		highlightWidgetProcess(store)({});
+		assert.isUndefined(store.get(store.path("highlightWidgetIndex")));
+		assert.isUndefined(store.get(store.path("highlightWidgetDimensions")));
 	});
 
 	it("insertWidgetsProcess - insert one widget below root node", () => {

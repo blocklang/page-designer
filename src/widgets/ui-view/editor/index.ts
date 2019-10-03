@@ -4,13 +4,14 @@ import * as c from "bootstrap-classes";
 import store from "../../../store";
 import FocusBox from "./FocusBox";
 import HighlightBox from "./HighlightBox";
+import { activeWidgetProcess, highlightWidgetProcess } from "../../../processes/uiProcesses";
 
 export interface EditorProperties {}
 
 const factory = create({ store }).properties<EditorProperties>();
 
 export default factory(function Editor({ properties, middleware: { store } }) {
-	const { get, path } = store;
+	const { get, path, executor } = store;
 
 	const {} = properties();
 
@@ -31,8 +32,12 @@ export default factory(function Editor({ properties, middleware: { store } }) {
 		const ideRepos = get(path("ideRepos"));
 		return v("div", {}, [
 			renderPage(widgets, ideRepos, {
-				onFocus: () => {},
-				onHighlight: () => {}
+				onFocus: ({ activeWidgetId, activeWidgetDimensions }) => {
+					executor(activeWidgetProcess)({ activeWidgetId, activeWidgetDimensions });
+				},
+				onHighlight: ({ highlightWidgetId, highlightWidgetDimensions }) => {
+					executor(highlightWidgetProcess)({ highlightWidgetId, highlightWidgetDimensions });
+				}
 			}),
 			activeWidget && w(FocusBox, { widgets, selectedWidgetIndex, widgetName: activeWidget.widgetName }),
 			highlightWidget && w(HighlightBox, { widgetName: highlightWidget.widgetName })
