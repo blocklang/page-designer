@@ -37,7 +37,8 @@ export default factory(function Editor({ properties, middleware: { store } }) {
 				},
 				onHighlight: ({ highlightWidgetId, highlightWidgetDimensions }) => {
 					executor(highlightWidgetProcess)({ highlightWidgetId, highlightWidgetDimensions });
-				}
+				},
+				autoFocus: (widgetId) => widgetId === activeWidget.id
 			}),
 			activeWidget && w(FocusBox, { widgets, selectedWidgetIndex, widgetName: activeWidget.widgetName }),
 			highlightWidget && w(HighlightBox, { widgetName: highlightWidget.widgetName })
