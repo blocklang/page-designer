@@ -44,7 +44,7 @@ export default factory(function WidgetsTab({ properties, middleware: { store, ic
 
 	// 为什么使用 _ 表示未分类
 	// 1. 在 rust 语言中，使用 _ 模式来匹配任何值
-	// 2. 如果直接写为“未分类”，在国际化时，没有使用 _ 更直观
+	// 2. 如果直接写为“未分类”，在国际化时，使用 _ 更直观
 	return (
 		<div>
 			<div classes={[c.m_1]}>

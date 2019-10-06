@@ -1,4 +1,5 @@
 import "./Header";
+import "./ui-view/UndefinedWidget";
 import "./ui-view/editor";
 import "./ui-view/editor/Box";
 import "./ui-view/editor/FocusBox";

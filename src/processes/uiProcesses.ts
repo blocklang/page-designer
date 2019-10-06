@@ -219,6 +219,27 @@ const removeActiveWidgetCommand = commandFactory<{}>(({ at, get, path }) => {
 });
 
 /**
+ * 根据指定的 widgetId 来删除对应的 Widget。这里要删除的只是 UndefinedWidget。
+ *
+ * UndefinedWidget 部件不会获取焦点，且没有子部件。
+ *
+ * 注意，这里只是删除某个部件，且这个部件不能是聚焦部件，因为这里没有重设聚焦部件。
+ */
+const removeUndefinedWidgetCommand = commandFactory<{ widgetId: string }>(
+	({ at, get, path, payload: { widgetId } }) => {
+		const pageWidgets = get(path("pageModel", "widgets"));
+		const undefinedWidgetIndex = findIndex(pageWidgets, (item) => item.id === widgetId);
+
+		if (undefinedWidgetIndex <= 0) {
+			// 根节点是系统默认添加的，不允许删除。
+			return;
+		}
+
+		return [remove(at(path("pageModel", "widgets"), undefinedWidgetIndex))];
+	}
+);
+
+/**
  * 当选中的节点被删除后，推断出下一个获取焦点的部件信息
  *
  * @param pageWidgets          页面所有部件
@@ -261,3 +282,4 @@ export const moveActiveWidgetPreviousProcess = createProcess("move-active-widget
 export const moveActiveWidgetNextProcess = createProcess("move-active-widget-next", [moveActiveWidgetNextCommand]);
 export const activeParentWidgetProcess = createProcess("active-parent-widget", [activeParentWidgetCommand]);
 export const removeActiveWidgetProcess = createProcess("remove-active-widget", [removeActiveWidgetCommand]);
+export const removeUndefinedWidgetProcess = createProcess("remove-undefined-widget", [removeUndefinedWidgetCommand]);

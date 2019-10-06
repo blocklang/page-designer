@@ -104,7 +104,8 @@ describe("ui-view/editor", () => {
 					originalProperties={{ onLoad: () => {} }} // 原始属性值
 					extendProperties={{
 						onFocus: () => {},
-						onHighlight: () => {}
+						onHighlight: () => {},
+						autoFocus: () => true
 					}}
 					// 原始属性的值，是必须要展开的
 					onLoad={() => {}}
@@ -249,7 +250,8 @@ describe("ui-view/editor", () => {
 					originalProperties={{ onLoad: () => {} }} // 原始属性值
 					extendProperties={{
 						onFocus: () => {},
-						onHighlight: () => {}
+						onHighlight: () => {},
+						autoFocus: () => false
 					}}
 					// 原始属性的值，是必须要展开的
 					onLoad={() => {}}
@@ -261,7 +263,8 @@ describe("ui-view/editor", () => {
 						originalProperties={{}}
 						extendProperties={{
 							onFocus: () => {},
-							onHighlight: () => {}
+							onHighlight: () => {},
+							autoFocus: () => false
 						}}
 					>
 						<Container
@@ -270,7 +273,8 @@ describe("ui-view/editor", () => {
 							originalProperties={{}}
 							extendProperties={{
 								onFocus: () => {},
-								onHighlight: () => {}
+								onHighlight: () => {},
+								autoFocus: () => false
 							}}
 						></Container>
 					</Container>
@@ -281,7 +285,8 @@ describe("ui-view/editor", () => {
 						originalProperties={{}}
 						extendProperties={{
 							onFocus: () => {},
-							onHighlight: () => {}
+							onHighlight: () => {},
+							autoFocus: () => false
 						}}
 					/>
 				</Page>
@@ -383,7 +388,8 @@ describe("ui-view/editor", () => {
 					originalProperties={{ onLoad: () => {} }} // 原始属性值
 					extendProperties={{
 						onFocus: () => {},
-						onHighlight: () => {}
+						onHighlight: () => {},
+						autoFocus: () => false
 					}}
 					// 原始属性的值，是必须要展开的
 					onLoad={() => {}}
@@ -465,7 +471,8 @@ describe("ui-view/editor", () => {
 					originalProperties={{ onLoad: () => {} }} // 原始属性值
 					extendProperties={{
 						onFocus: () => {},
-						onHighlight: () => {}
+						onHighlight: () => {},
+						autoFocus: () => false
 					}}
 					// 原始属性的值，是必须要展开的
 					onLoad={() => {}}

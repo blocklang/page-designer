@@ -13,7 +13,8 @@ import {
 	moveActiveWidgetNextProcess,
 	activeParentWidgetProcess,
 	getPageModelProcess,
-	highlightWidgetProcess
+	highlightWidgetProcess,
+	removeUndefinedWidgetProcess
 } from "../../../src/processes/uiProcesses";
 import { add } from "@dojo/framework/stores/state/operations";
 import { afterEach } from "intern/lib/interfaces/tdd";
@@ -589,6 +590,64 @@ describe("processes/uiProcesses", () => {
 		removeActiveWidgetProcess(store)({});
 
 		// 未删除根节点
+		const widgets = store.get(store.path("pageModel", "widgets"));
+		assert.equal(widgets.length, 1);
+	});
+
+	it("removeUndefinedWidgetProcess - can not remove root node", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			])
+		]);
+
+		removeUndefinedWidgetProcess(store)({ widgetId: "1" });
+
+		// 未删除根节点
+		const widgets = store.get(store.path("pageModel", "widgets"));
+		assert.equal(widgets.length, 1);
+	});
+
+	it("removeUndefinedWidgetProcess - remove success", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			])
+		]);
+
+		removeUndefinedWidgetProcess(store)({ widgetId: "2" });
+
 		const widgets = store.get(store.path("pageModel", "widgets"));
 		assert.equal(widgets.length, 1);
 	});
