@@ -67,6 +67,8 @@ const insertWidgetsCommand = commandFactory<{ widgets: Widget[] }>(({ get, at, p
 		insertedIndex++;
 	}
 
+	result.push(replace(path("dirty"), true));
+
 	return result;
 });
 
@@ -97,6 +99,8 @@ const moveActiveWidgetPreviousCommand = commandFactory<{}>(({ at, get, path }) =
 	}
 	// activeWidgetId 的值没有改变
 	result.push(replace(path("selectedWidgetIndex"), previousNodeIndex));
+
+	result.push(replace(path("dirty"), true));
 	return result;
 });
 
@@ -132,6 +136,8 @@ const moveActiveWidgetNextCommand = commandFactory<{}>(({ at, get, path }) => {
 	result.push(
 		replace(path("selectedWidgetIndex"), selectedWidgetIndex + 1 /*表示 next node*/ + allNextNodeChildCount)
 	);
+
+	result.push(replace(path("dirty"), true));
 	return result;
 });
 
@@ -232,10 +238,15 @@ const removeActiveWidgetCommand = commandFactory<{}>(({ at, get, path }) => {
 		result.push(replace(path("selectedWidgetIndex"), newSelectedWidgetIndex));
 	}
 
+	result.push(replace(path("dirty"), true));
+
 	return result;
 });
 
 /**
+ *
+ * @deprecated 通过 toast 给出提示，不再添加到页面中，所以就不需要该方法。
+ *
  * 根据指定的 widgetId 来删除对应的 Widget。这里要删除的只是 UndefinedWidget。
  *
  * UndefinedWidget 部件不会获取焦点，且没有子部件。
@@ -299,5 +310,6 @@ export const moveActiveWidgetPreviousProcess = createProcess("move-active-widget
 ]);
 export const moveActiveWidgetNextProcess = createProcess("move-active-widget-next", [moveActiveWidgetNextCommand]);
 export const activeParentWidgetProcess = createProcess("active-parent-widget", [activeParentWidgetCommand]);
+// 不能直接调用 dirtyCommand，因为当当前选中的是根节点时，不会做删除，如果使用 dirtyCommand，就错误的修改了 dirty 的值
 export const removeActiveWidgetProcess = createProcess("remove-active-widget", [removeActiveWidgetCommand]);
 export const removeUndefinedWidgetProcess = createProcess("remove-undefined-widget", [removeUndefinedWidgetCommand]);

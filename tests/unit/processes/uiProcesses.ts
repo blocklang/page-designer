@@ -230,6 +230,8 @@ describe("processes/uiProcesses", () => {
 		assert.equal(widgets.length, 2);
 		assert.isNotNull(widgets[1].id);
 		assert.equal(widgets[1].parentId, "1");
+
+		assert.isTrue(store.get(store.path("dirty")));
 	});
 
 	// -> 表示上下级
@@ -293,6 +295,8 @@ describe("processes/uiProcesses", () => {
 		assert.isNotNull(thirdWidget.id);
 		assert.equal(thirdWidget.parentId, "1");
 		assert.equal(thirdWidget.widgetCode, "0003");
+
+		assert.isTrue(store.get(store.path("dirty")));
 	});
 
 	it("insertWidgetsProcess - insert two widget below root node", () => {
@@ -334,6 +338,8 @@ describe("processes/uiProcesses", () => {
 
 		const widgets = store.get(store.path("pageModel", "widgets"));
 		assert.equal(widgets.length, 3);
+
+		assert.isTrue(store.get(store.path("dirty")));
 	});
 
 	it("insertWidgetsProcess - root->node1_node2, insert node11 after node1", () => {
@@ -397,6 +403,8 @@ describe("processes/uiProcesses", () => {
 		assert.isNotNull(thirdWidget.id);
 		assert.equal(thirdWidget.widgetId, 3);
 		assert.equal(thirdWidget.widgetCode, "0003");
+
+		assert.isTrue(store.get(store.path("dirty")));
 	});
 
 	it("removeActiveWidgetProcess - root->node1->node11, remove node1 and node11", () => {
@@ -444,6 +452,8 @@ describe("processes/uiProcesses", () => {
 		assert.equal(widgets[0].id, "1");
 
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 0);
+
+		assert.isTrue(store.get(store.path("dirty")));
 	});
 
 	it("removeActiveWidgetProcess - root->node1->node11, remove node11 then node1 focused", () => {
@@ -491,6 +501,8 @@ describe("processes/uiProcesses", () => {
 
 		// node1 是 node11 的父节点，所以删除 node11 后，让 node1 获取焦点
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
+
+		assert.isTrue(store.get(store.path("dirty")));
 	});
 
 	it("removeActiveWidgetProcess - root->node1_node2, remove node2 then node1 focused", () => {
@@ -538,6 +550,8 @@ describe("processes/uiProcesses", () => {
 
 		// node1 是 node2 的前一个兄弟节点，所以删除 node2 后，让 node1 获取焦点
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
+
+		assert.isTrue(store.get(store.path("dirty")));
 	});
 
 	it("removeActiveWidgetProcess - root->node1_node2, remove node1 then node2 focused", () => {
@@ -586,6 +600,8 @@ describe("processes/uiProcesses", () => {
 		// node2 是 node1 的后一个兄弟节点，所以删除 node1 后，让 node2 获取焦点
 		// 要考虑在计算索引时还没有实际删除，所以索引的位置还需要再移动一次的
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
+
+		assert.isTrue(store.get(store.path("dirty")));
 	});
 
 	// 此处不允许移除根节点
@@ -611,8 +627,11 @@ describe("processes/uiProcesses", () => {
 		// 未删除根节点
 		const widgets = store.get(store.path("pageModel", "widgets"));
 		assert.equal(widgets.length, 1);
+
+		assert.isUndefined(store.get(store.path("dirty")));
 	});
 
+	// TODO: 删除 removeUndefinedWidgetProcess 相关的测试用例
 	it("removeUndefinedWidgetProcess - can not remove root node", () => {
 		store.apply([
 			add(store.path("pageModel", "widgets"), [
@@ -703,6 +722,8 @@ describe("processes/uiProcesses", () => {
 
 		// 没有前一个兄弟节点，所以没有移动
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
+
+		assert.isUndefined(store.get(store.path("dirty")));
 	});
 
 	it("moveActiveWidgetPreviousProcess - root->node1_node2, move node2 previous, then become root->node2_node1", () => {
@@ -752,6 +773,8 @@ describe("processes/uiProcesses", () => {
 
 		assert.equal(pageWidgets[1].id, "3");
 		assert.equal(pageWidgets[2].id, "2");
+
+		assert.equal(store.get(store.path("dirty")), true);
 	});
 
 	it("moveActiveWidgetPreviousProcess - root->node1->node11 root->node2->node21, move node2 previous, then become root->node2->node21 root->node1->node11", () => {
@@ -825,6 +848,8 @@ describe("processes/uiProcesses", () => {
 		assert.equal(pageWidgets[2].id, "5");
 		assert.equal(pageWidgets[3].id, "2");
 		assert.equal(pageWidgets[4].id, "3");
+
+		assert.equal(store.get(store.path("dirty")), true);
 	});
 
 	it("moveActiveWidgetNextProcess - has no next widget", () => {
@@ -870,6 +895,8 @@ describe("processes/uiProcesses", () => {
 
 		// 没有前一个兄弟节点，所以没有移动
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
+
+		assert.isUndefined(store.get(store.path("dirty")));
 	});
 
 	it("moveActiveWidgetNextProcess - root->node1_node2, move node1 next, then become root->node2_node1", () => {
@@ -919,6 +946,8 @@ describe("processes/uiProcesses", () => {
 
 		assert.equal(pageWidgets[1].id, "3");
 		assert.equal(pageWidgets[2].id, "2");
+
+		assert.isTrue(store.get(store.path("dirty")));
 	});
 
 	it("moveActiveWidgetNextProcess - root->node1->node11 root->node2->node21, move node1 next, then become root->node2->node21 root->node1->node11", () => {
@@ -992,6 +1021,8 @@ describe("processes/uiProcesses", () => {
 		assert.equal(pageWidgets[2].id, "5");
 		assert.equal(pageWidgets[3].id, "2");
 		assert.equal(pageWidgets[4].id, "3");
+
+		assert.isTrue(store.get(store.path("dirty")));
 	});
 
 	it("moveActiveWidgetNextProcess - root->node1->node11 root->node2, move node1 next, then become root->node2 root->node1->node11", () => {
@@ -1053,6 +1084,8 @@ describe("processes/uiProcesses", () => {
 		assert.equal(pageWidgets[1].id, "4");
 		assert.equal(pageWidgets[2].id, "2");
 		assert.equal(pageWidgets[3].id, "3");
+
+		assert.isTrue(store.get(store.path("dirty")));
 	});
 
 	it("activeParentWidgetProcess - root, no parent node", () => {
