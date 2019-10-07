@@ -4,11 +4,15 @@ import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import Header from "../../../src/widgets/Header";
-import { Project, Path, Permission, User, EditMode, ViewType } from "../../../src/interfaces";
+import { Project, Path, Permission, User, EditMode, ViewType, State } from "../../../src/interfaces";
 import * as c from "bootstrap-classes";
 
 import { stub } from "sinon";
 import { assert } from "chai";
+import store from "../../../src/store";
+import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
+import { replace } from "@dojo/framework/stores/state/operations";
+import { savePageModelProcess } from "../../../src/processes/uiProcesses";
 
 describe("Header", () => {
 	it("header when anonymous user access, has read permission", () => {
@@ -207,7 +211,7 @@ describe("Header", () => {
 						</button>
 					</div>
 					<div>
-						<button key="saveButton" type="button" disabled={true}>
+						<button key="saveButton" type="button" disabled={true} onclick={undefined}>
 							<FontAwesomeIcon icon={["far", "save"]} />
 							<span>保存</span>
 						</button>
@@ -305,7 +309,7 @@ describe("Header", () => {
 						</button>
 					</div>
 					<div>
-						<button key="saveButton" type="button" disabled={true}>
+						<button key="saveButton" type="button" disabled={true} onclick={undefined}>
 							<FontAwesomeIcon icon={["far", "save"]} />
 							<span>保存</span>
 						</button>
@@ -337,5 +341,145 @@ describe("Header", () => {
 
 		h.trigger("@toUIViewButton", "onclick");
 		assert.isTrue(changeView.calledOnce);
+	});
+
+	// 1. 根据 dirty 状态修改按钮的状态
+	it("save button, active save button if dirty is true", () => {
+		const user: User = {
+			name: "jack",
+			avatar: "url"
+		};
+
+		const project: Project = {
+			id: 1,
+			name: "project",
+			createUserName: "tom"
+		};
+
+		const permission: Permission = {
+			canRead: true,
+			canWrite: true
+		};
+
+		const editMode: EditMode = "Edit";
+
+		const pathes: Path[] = [{ name: "page1", path: "page1" }];
+
+		const mockStore = createMockStoreMiddleware<State>();
+		const h = harness(
+			() => (
+				<Header
+					user={user}
+					project={project}
+					permission={permission}
+					pathes={pathes}
+					editMode={editMode}
+					onChangeEditMode={() => {}}
+					onChangeView={() => {}}
+				/>
+			),
+			{ middleware: [[store, mockStore]] }
+		);
+
+		mockStore((path) => [replace(path("dirty"), true)]);
+
+		h.expectPartial("@saveButton", () => (
+			<button key="saveButton" type="button" disabled={false} onclick={() => {}}>
+				<FontAwesomeIcon icon={["far", "save"]} />
+				<span>保存</span>
+			</button>
+		));
+	});
+
+	it("save button, disable save button if dirty is false", () => {
+		const user: User = {
+			name: "jack",
+			avatar: "url"
+		};
+
+		const project: Project = {
+			id: 1,
+			name: "project",
+			createUserName: "tom"
+		};
+
+		const permission: Permission = {
+			canRead: true,
+			canWrite: true
+		};
+
+		const editMode: EditMode = "Edit";
+
+		const pathes: Path[] = [{ name: "page1", path: "page1" }];
+
+		const mockStore = createMockStoreMiddleware<State>();
+		const h = harness(
+			() => (
+				<Header
+					user={user}
+					project={project}
+					permission={permission}
+					pathes={pathes}
+					editMode={editMode}
+					onChangeEditMode={() => {}}
+					onChangeView={() => {}}
+				/>
+			),
+			{ middleware: [[store, mockStore]] }
+		);
+
+		mockStore((path) => [replace(path("dirty"), false)]);
+
+		h.expectPartial("@saveButton", () => (
+			<button key="saveButton" type="button" disabled={true} onclick={undefined}>
+				<FontAwesomeIcon icon={["far", "save"]} />
+				<span>保存</span>
+			</button>
+		));
+	});
+
+	// 2. 触发保存按钮
+	it("save button, trigger save button", () => {
+		const user: User = {
+			name: "jack",
+			avatar: "url"
+		};
+
+		const project: Project = {
+			id: 1,
+			name: "project",
+			createUserName: "tom"
+		};
+
+		const permission: Permission = {
+			canRead: true,
+			canWrite: true
+		};
+
+		const editMode: EditMode = "Edit";
+
+		const pathes: Path[] = [{ name: "page1", path: "page1" }];
+
+		const savePageModelProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[savePageModelProcess, savePageModelProcessStub]]);
+		const h = harness(
+			() => (
+				<Header
+					user={user}
+					project={project}
+					permission={permission}
+					pathes={pathes}
+					editMode={editMode}
+					onChangeEditMode={() => {}}
+					onChangeView={() => {}}
+				/>
+			),
+			{ middleware: [[store, mockStore]] }
+		);
+
+		mockStore((path) => [replace(path("dirty"), true)]);
+
+		h.trigger("@saveButton", "onclick");
+		assert.isTrue(savePageModelProcessStub.calledOnce);
 	});
 });

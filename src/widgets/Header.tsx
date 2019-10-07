@@ -3,6 +3,8 @@ import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import { User, Project, Path, Permission, EditMode, ViewType } from "../interfaces";
 import * as c from "bootstrap-classes";
 import { DNode } from "@dojo/framework/core/interfaces";
+import store from "../store";
+import { savePageModelProcess } from "../processes/uiProcesses";
 
 export interface HeaderProperties {
 	user?: User;
@@ -15,9 +17,9 @@ export interface HeaderProperties {
 	onChangeView: () => void;
 }
 
-const factory = create().properties<HeaderProperties>();
+const factory = create({ store }).properties<HeaderProperties>();
 
-export default factory(function Header({ properties }) {
+export default factory(function Header({ properties, middleware: { store } }) {
 	const {
 		user,
 		project,
@@ -80,13 +82,26 @@ export default factory(function Header({ properties }) {
 	}
 
 	if (editMode === "Edit") {
+		// 因为没有为 dirty 设置默认值，所以这里多了一个判断
+		const canSave = store.get(store.path("dirty")) || false;
 		centerBlock = (
 			<div key="center" classes={[c.d_inline_flex, c.align_items_center]}>
 				<div classes={[c.btn_group, c.btn_group_sm]} role="group" aria-label="视图">
 					{switchViewActionButtons}
 				</div>
 				<div>
-					<button key="saveButton" type="button" disabled={true}>
+					<button
+						key="saveButton"
+						type="button"
+						disabled={canSave ? false : true}
+						onclick={
+							canSave
+								? () => {
+										store.executor(savePageModelProcess)({});
+								  }
+								: undefined
+						}
+					>
 						<FontAwesomeIcon icon={["far", "save"]} />
 						<span>保存</span>
 					</button>
