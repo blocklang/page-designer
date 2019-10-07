@@ -220,17 +220,34 @@ export interface PageModel {
 	widgets: AttachedWidget[];
 }
 
+/**
+ * @type State
+ *
+ * 设计器的共享状态
+ *
+ * @property project                       项目基本信息
+ * @property widgetRepos                   项目依赖的所有 widget，类型为 widget 的 API 库，按 API 库分组。
+ * @property ideRepos                      项目依赖的 ide 组件库信息
+ * @property pageModel                     页面模型
+ * @property selectedWidgetIndex           当前选中的部件索引，是相对于全页面的索引
+ * @property activeWidgetDimensions        当前选中部件的位置和大小信息等
+ * @property highlightWidgetIndex          高亮显示部件的索引，是相对于全页面的索引
+ * @property highlightWidgetDimensions     高亮显示部件的位置和大小信息等
+ * @property dirty                         判断是否有未保存的内容，如果有则 dirty 的值为 true，否则 dirty 的值为 false，默认为 false
+ */
 export interface State {
-	project: Project; // 项目基本信息
-	widgetRepos: WidgetRepo[]; // 项目依赖的所有 widget。类型为 widget 的 API 库。
-	ideRepos: ComponentRepo[]; // 项目依赖的 ide 组件库信息
-	pageModel: PageModel; // 页面模型
+	project: Project;
+	widgetRepos: WidgetRepo[];
+	ideRepos: ComponentRepo[];
+	pageModel: PageModel;
 	// ui 的焦点信息
-	selectedWidgetIndex: number; // 当前选中的部件索引，是相对于全页面的索引
-	activeWidgetDimensions: DimensionResults; // 当前选中部件的位置和大小信息等
+	selectedWidgetIndex: number;
+	activeWidgetDimensions: DimensionResults;
 	// 页面中高亮显示部件的信息
-	highlightWidgetIndex: number; // 高亮显示部件的索引，是相对于全页面的索引
-	highlightWidgetDimensions: DimensionResults; // 高亮显示部件的位置和大小信息等
+	highlightWidgetIndex: number;
+	highlightWidgetDimensions: DimensionResults;
+	// 数据操作状态：保存
+	dirty: boolean;
 }
 
 // 有三类数据

@@ -14,7 +14,8 @@ import {
 	activeParentWidgetProcess,
 	getPageModelProcess,
 	highlightWidgetProcess,
-	removeUndefinedWidgetProcess
+	removeUndefinedWidgetProcess,
+	savePageModelProcess
 } from "../../../src/processes/uiProcesses";
 import { add } from "@dojo/framework/stores/state/operations";
 import { afterEach } from "intern/lib/interfaces/tdd";
@@ -53,11 +54,29 @@ describe("processes/uiProcesses", () => {
 				}
 			]
 		};
-		global.fetch = sinon.stub().returns(Promise.resolve({ json: () => Promise.resolve(pageModel) }));
+		global.fetch = sinon.stub().returns(
+			Promise.resolve({
+				json: () => Promise.resolve(pageModel)
+			})
+		);
 
 		await getPageModelProcess(store)({ pageId: 1 });
 		assert.deepEqual(store.get(store.path("pageModel")), pageModel);
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 0);
+	});
+
+	it("savePageModelProcess - save failed", async () => {
+		store.apply([add(store.path("dirty"), true)]);
+		global.fetch = sinon.stub().returns(Promise.resolve({ ok: false }));
+		await savePageModelProcess(store)({});
+		assert.equal(store.get(store.path("dirty")), true);
+	});
+
+	it("savePageModelProcess - save success", async () => {
+		store.apply([add(store.path("dirty"), true)]);
+		global.fetch = sinon.stub().returns(Promise.resolve({ ok: true }));
+		await savePageModelProcess(store)({});
+		assert.equal(store.get(store.path("dirty")), false);
 	});
 
 	it("activeWidgetProcess - select widget", () => {

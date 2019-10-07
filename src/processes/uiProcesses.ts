@@ -186,6 +186,23 @@ const getPageModelCommand = commandFactory(async ({ path, payload: { pageId } })
 	return [add(path("pageModel"), json), add(path("selectedWidgetIndex"), 0)];
 });
 
+const savePageModelCommand = commandFactory(async ({ path, get }) => {
+	const pageModel = get(path("pageModel"));
+	let dirty = get(path("dirty"));
+	const response = await fetch(config.savePageModelUrl, {
+		method: "PUT",
+		credentials: "same-origin",
+		headers: { "Content-type": "application/json;charset=UTF-8" },
+		body: JSON.stringify(pageModel)
+	});
+
+	if (response.ok) {
+		dirty = false;
+	}
+
+	return [replace(path("dirty"), dirty)];
+});
+
 /**
  * 删除选定的部件。
  *
@@ -273,6 +290,7 @@ function inferNextSelectedWidgetInfo(pageWidgets: AttachedWidget[], selectedWidg
 }
 
 export const getPageModelProcess = createProcess("get-page-model", [getPageModelCommand]);
+export const savePageModelProcess = createProcess("save-page-model", [savePageModelCommand]);
 export const activeWidgetProcess = createProcess("active-widget", [activeWidgetCommand]);
 export const highlightWidgetProcess = createProcess("highlight-widget", [highlightWidgetCommand]);
 export const insertWidgetsProcess = createProcess("insert-widgets", [insertWidgetsCommand]);
