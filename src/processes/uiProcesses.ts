@@ -1,5 +1,5 @@
-import { createProcess } from "@dojo/framework/stores/process";
-import { commandFactory } from "./utils";
+import { createProcess, ProcessCallback } from "@dojo/framework/stores/process";
+import { commandFactory, uiHistoryManager } from "./utils";
 import { Widget, AttachedWidget } from "../interfaces";
 import { config } from "../config";
 import * as format from "string-format";
@@ -300,16 +300,42 @@ function inferNextSelectedWidgetInfo(pageWidgets: AttachedWidget[], selectedWidg
 	throw "没有找到下一个获取焦点的节点";
 }
 
+const undoCallback: ProcessCallback = () => ({
+	after(error, result) {
+		uiHistoryManager.undo(result.store);
+		result.store.invalidate();
+	}
+});
+
+const redoCallback: ProcessCallback = () => ({
+	after(error, result) {
+		uiHistoryManager.redo(result.store);
+		result.store.invalidate();
+	}
+});
+
 export const getPageModelProcess = createProcess("get-page-model", [getPageModelCommand]);
 export const savePageModelProcess = createProcess("save-page-model", [savePageModelCommand]);
 export const activeWidgetProcess = createProcess("active-widget", [activeWidgetCommand]);
 export const highlightWidgetProcess = createProcess("highlight-widget", [highlightWidgetCommand]);
-export const insertWidgetsProcess = createProcess("insert-widgets", [insertWidgetsCommand]);
-export const moveActiveWidgetPreviousProcess = createProcess("move-active-widget-previous", [
-	moveActiveWidgetPreviousCommand
-]);
-export const moveActiveWidgetNextProcess = createProcess("move-active-widget-next", [moveActiveWidgetNextCommand]);
+export const insertWidgetsProcess = createProcess("insert-widgets", [insertWidgetsCommand], uiHistoryManager.callback);
+export const moveActiveWidgetPreviousProcess = createProcess(
+	"move-active-widget-previous",
+	[moveActiveWidgetPreviousCommand],
+	uiHistoryManager.callback
+);
+export const moveActiveWidgetNextProcess = createProcess(
+	"move-active-widget-next",
+	[moveActiveWidgetNextCommand],
+	uiHistoryManager.callback
+);
 export const activeParentWidgetProcess = createProcess("active-parent-widget", [activeParentWidgetCommand]);
 // 不能直接调用 dirtyCommand，因为当当前选中的是根节点时，不会做删除，如果使用 dirtyCommand，就错误的修改了 dirty 的值
-export const removeActiveWidgetProcess = createProcess("remove-active-widget", [removeActiveWidgetCommand]);
+export const removeActiveWidgetProcess = createProcess(
+	"remove-active-widget",
+	[removeActiveWidgetCommand],
+	uiHistoryManager.callback
+);
 export const removeUndefinedWidgetProcess = createProcess("remove-undefined-widget", [removeUndefinedWidgetCommand]);
+export const undoProcess = createProcess("undo", [], undoCallback);
+export const redoProcess = createProcess("redo", [], redoCallback);

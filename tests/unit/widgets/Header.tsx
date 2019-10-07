@@ -215,11 +215,11 @@ describe("Header", () => {
 							<FontAwesomeIcon icon={["far", "save"]} />
 							<span>保存</span>
 						</button>
-						<button key="undoButton" type="button" disabled={true}>
+						<button key="undoButton" type="button" disabled={true} onclick={undefined}>
 							<FontAwesomeIcon icon="undo" />
 							<span>撤销</span>
 						</button>
-						<button key="redoButton" type="button" disabled={true}>
+						<button key="redoButton" type="button" disabled={true} onclick={undefined}>
 							<FontAwesomeIcon icon="redo" />
 							<span>恢复</span>
 						</button>
@@ -313,11 +313,11 @@ describe("Header", () => {
 							<FontAwesomeIcon icon={["far", "save"]} />
 							<span>保存</span>
 						</button>
-						<button key="undoButton" type="button" disabled={true}>
+						<button key="undoButton" type="button" disabled={true} onclick={undefined}>
 							<FontAwesomeIcon icon="undo" />
 							<span>撤销</span>
 						</button>
-						<button key="redoButton" type="button" disabled={true}>
+						<button key="redoButton" type="button" disabled={true} onclick={undefined}>
 							<FontAwesomeIcon icon="redo" />
 							<span>恢复</span>
 						</button>
@@ -482,4 +482,8 @@ describe("Header", () => {
 		h.trigger("@saveButton", "onclick");
 		assert.isTrue(savePageModelProcessStub.calledOnce);
 	});
+
+	// TODO:
+	// undo button, active undo button if history manager can undo
+	// 因为在测试用例中无法为 store 设置值，所以无法判断 HistoryManager 的 canUndo
 });

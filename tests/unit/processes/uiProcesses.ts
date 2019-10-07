@@ -20,6 +20,7 @@ import {
 import { add } from "@dojo/framework/stores/state/operations";
 import { afterEach } from "intern/lib/interfaces/tdd";
 import { DimensionResults } from "@dojo/framework/core/meta/Dimensions";
+import { uiHistoryManager } from "../../../src/processes/utils";
 
 describe("processes/uiProcesses", () => {
 	let store: Store<State>;
@@ -1186,5 +1187,178 @@ describe("processes/uiProcesses", () => {
 		activeParentWidgetProcess(store)({});
 
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 0);
+	});
+
+	it("history manager - insertWidgetsProcess", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			]),
+			add(store.path("selectedWidgetIndex"), 0)
+		]);
+
+		assert.isFalse(uiHistoryManager.canUndo(store));
+		assert.isFalse(uiHistoryManager.canRedo(store));
+
+		insertWidgetsProcess(store)({
+			widgets: [
+				{
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					iconClass: "",
+					canHasChildren: true
+				}
+			]
+		});
+
+		assert.isTrue(uiHistoryManager.canUndo(store));
+		assert.isFalse(uiHistoryManager.canRedo(store));
+	});
+
+	it("history manager - moveActiveWidgetPreviousProcess", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "3",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			]),
+			add(store.path("selectedWidgetIndex"), 2)
+		]);
+
+		assert.isFalse(uiHistoryManager.canUndo(store));
+		assert.isFalse(uiHistoryManager.canRedo(store));
+
+		moveActiveWidgetPreviousProcess(store)({});
+
+		assert.isTrue(uiHistoryManager.canUndo(store));
+		assert.isFalse(uiHistoryManager.canRedo(store));
+	});
+
+	it("history manager - moveActiveWidgetNextProcess", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "3",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			]),
+			add(store.path("selectedWidgetIndex"), 1)
+		]);
+
+		assert.isFalse(uiHistoryManager.canUndo(store));
+		assert.isFalse(uiHistoryManager.canRedo(store));
+
+		moveActiveWidgetNextProcess(store)({});
+
+		assert.isTrue(uiHistoryManager.canUndo(store));
+		assert.isFalse(uiHistoryManager.canRedo(store));
+	});
+
+	it("history manager - removeActiveWidgetProcess", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				}
+			]),
+			add(store.path("selectedWidgetIndex"), 1)
+		]);
+
+		assert.isFalse(uiHistoryManager.canUndo(store));
+		assert.isFalse(uiHistoryManager.canRedo(store));
+
+		removeActiveWidgetProcess(store)({});
+
+		assert.isTrue(uiHistoryManager.canUndo(store));
+		assert.isFalse(uiHistoryManager.canRedo(store));
 	});
 });

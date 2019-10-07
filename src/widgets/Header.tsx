@@ -1,10 +1,12 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
-import { User, Project, Path, Permission, EditMode, ViewType } from "../interfaces";
+import { User, Project, Path, Permission, EditMode, ViewType, State } from "../interfaces";
 import * as c from "bootstrap-classes";
 import { DNode } from "@dojo/framework/core/interfaces";
 import store from "../store";
-import { savePageModelProcess } from "../processes/uiProcesses";
+import { savePageModelProcess, undoProcess, redoProcess } from "../processes/uiProcesses";
+import { uiHistoryManager } from "../processes/utils";
+import Store from "@dojo/framework/stores/Store";
 
 export interface HeaderProperties {
 	user?: User;
@@ -84,6 +86,9 @@ export default factory(function Header({ properties, middleware: { store } }) {
 	if (editMode === "Edit") {
 		// 因为没有为 dirty 设置默认值，所以这里多了一个判断
 		const canSave = store.get(store.path("dirty")) || false;
+
+		const canUndo = store.executor((storeObject: Store<State>) => uiHistoryManager.canUndo(storeObject) as any);
+		const canRedo = store.executor((storeObject: Store<State>) => uiHistoryManager.canRedo(storeObject) as any);
 		centerBlock = (
 			<div key="center" classes={[c.d_inline_flex, c.align_items_center]}>
 				<div classes={[c.btn_group, c.btn_group_sm]} role="group" aria-label="视图">
@@ -93,7 +98,7 @@ export default factory(function Header({ properties, middleware: { store } }) {
 					<button
 						key="saveButton"
 						type="button"
-						disabled={canSave ? false : true}
+						disabled={!canSave}
 						onclick={
 							canSave
 								? () => {
@@ -105,11 +110,33 @@ export default factory(function Header({ properties, middleware: { store } }) {
 						<FontAwesomeIcon icon={["far", "save"]} />
 						<span>保存</span>
 					</button>
-					<button key="undoButton" type="button" disabled={true}>
+					<button
+						key="undoButton"
+						type="button"
+						disabled={!canUndo}
+						onclick={
+							canUndo
+								? () => {
+										store.executor(undoProcess)({});
+								  }
+								: undefined
+						}
+					>
 						<FontAwesomeIcon icon="undo" />
 						<span>撤销</span>
 					</button>
-					<button key="redoButton" type="button" disabled={true}>
+					<button
+						key="redoButton"
+						type="button"
+						disabled={!canRedo}
+						onclick={
+							canRedo
+								? () => {
+										store.executor(redoProcess)({});
+								  }
+								: undefined
+						}
+					>
 						<FontAwesomeIcon icon="redo" />
 						<span>恢复</span>
 					</button>
