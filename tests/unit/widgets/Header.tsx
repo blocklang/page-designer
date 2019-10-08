@@ -514,26 +514,23 @@ describe("Header", () => {
 
 		const pathes: Path[] = [{ name: "page1", path: "page1" }];
 
-		const mockStore = createMockStoreMiddleware<State>();
-		const h = harness(
-			() => (
-				<Header
-					user={user}
-					project={project}
-					permission={permission}
-					pathes={pathes}
-					editMode={editMode}
-					onChangeEditMode={() => {}}
-					onChangeView={() => {}}
-				/>
-			),
-			{ middleware: [[store, mockStore]] }
-		);
+		const h = harness(() => (
+			<Header
+				user={user}
+				project={project}
+				permission={permission}
+				pathes={pathes}
+				editMode={editMode}
+				onChangeEditMode={() => {}}
+				onChangeView={() => {}}
+			/>
+		));
 
-		uiHistoryManager.canUndo = stub().returns(false);
+		// 注意，此处不能使用 mockStore，因为需要调用 widget 中的 store.executor
+		uiHistoryManager.canUndo = () => false;
 
 		h.expectPartial("@undoButton", () => (
-			<button key="undoButton" type="button" disabled={false} onclick={() => {}}>
+			<button key="undoButton" type="button" disabled={true} onclick={undefined}>
 				<FontAwesomeIcon icon="undo" />
 				<span>撤销</span>
 			</button>
@@ -561,23 +558,20 @@ describe("Header", () => {
 
 		const pathes: Path[] = [{ name: "page1", path: "page1" }];
 
-		const mockStore = createMockStoreMiddleware<State>();
-		const h = harness(
-			() => (
-				<Header
-					user={user}
-					project={project}
-					permission={permission}
-					pathes={pathes}
-					editMode={editMode}
-					onChangeEditMode={() => {}}
-					onChangeView={() => {}}
-				/>
-			),
-			{ middleware: [[store, mockStore]] }
-		);
+		const h = harness(() => (
+			<Header
+				user={user}
+				project={project}
+				permission={permission}
+				pathes={pathes}
+				editMode={editMode}
+				onChangeEditMode={() => {}}
+				onChangeView={() => {}}
+			/>
+		));
 
-		uiHistoryManager.canUndo = stub().returns(true);
+		// 注意，此处不能使用 mockStore，因为需要调用 widget 中的 store.executor
+		uiHistoryManager.canUndo = () => true;
 
 		h.expectPartial("@undoButton", () => (
 			<button key="undoButton" type="button" disabled={false} onclick={() => {}}>
@@ -650,26 +644,23 @@ describe("Header", () => {
 
 		const pathes: Path[] = [{ name: "page1", path: "page1" }];
 
-		const mockStore = createMockStoreMiddleware<State>();
-		const h = harness(
-			() => (
-				<Header
-					user={user}
-					project={project}
-					permission={permission}
-					pathes={pathes}
-					editMode={editMode}
-					onChangeEditMode={() => {}}
-					onChangeView={() => {}}
-				/>
-			),
-			{ middleware: [[store, mockStore]] }
-		);
+		const h = harness(() => (
+			<Header
+				user={user}
+				project={project}
+				permission={permission}
+				pathes={pathes}
+				editMode={editMode}
+				onChangeEditMode={() => {}}
+				onChangeView={() => {}}
+			/>
+		));
 
-		uiHistoryManager.canRedo = stub().returns(false);
+		// 注意，此处不能使用 mockStore，因为需要调用 widget 中的 store.executor
+		uiHistoryManager.canRedo = () => false;
 
 		h.expectPartial("@redoButton", () => (
-			<button key="redoButton" type="button" disabled={false} onclick={() => {}}>
+			<button key="redoButton" type="button" disabled={true} onclick={undefined}>
 				<FontAwesomeIcon icon="redo" />
 				<span>恢复</span>
 			</button>
@@ -697,23 +688,20 @@ describe("Header", () => {
 
 		const pathes: Path[] = [{ name: "page1", path: "page1" }];
 
-		const mockStore = createMockStoreMiddleware<State>();
-		const h = harness(
-			() => (
-				<Header
-					user={user}
-					project={project}
-					permission={permission}
-					pathes={pathes}
-					editMode={editMode}
-					onChangeEditMode={() => {}}
-					onChangeView={() => {}}
-				/>
-			),
-			{ middleware: [[store, mockStore]] }
-		);
+		const h = harness(() => (
+			<Header
+				user={user}
+				project={project}
+				permission={permission}
+				pathes={pathes}
+				editMode={editMode}
+				onChangeEditMode={() => {}}
+				onChangeView={() => {}}
+			/>
+		));
 
-		uiHistoryManager.canRedo = stub().returns(true);
+		// 注意，此处不能使用 mockStore，因为需要调用 widget 中的 store.executor
+		uiHistoryManager.canRedo = () => true;
 
 		h.expectPartial("@redoButton", () => (
 			<button key="redoButton" type="button" disabled={false} onclick={() => {}}>
