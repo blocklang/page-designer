@@ -12,9 +12,19 @@ import { assert } from "chai";
 import store from "../../../src/store";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
 import { replace } from "@dojo/framework/stores/state/operations";
-import { savePageModelProcess } from "../../../src/processes/uiProcesses";
+import { savePageModelProcess, undoProcess, redoProcess } from "../../../src/processes/uiProcesses";
+import { uiHistoryManager } from "../../../src/processes/utils";
+import { afterEach } from "intern/lib/interfaces/bdd";
+import { deepMixin } from "@dojo/framework/core/util";
 
 describe("Header", () => {
+	const cachedUiHistoryManager = deepMixin({}, uiHistoryManager);
+
+	afterEach(() => {
+		uiHistoryManager.canUndo = cachedUiHistoryManager.canUndo;
+		uiHistoryManager.canRedo = cachedUiHistoryManager.canRedo;
+	});
+
 	it("header when anonymous user access, has read permission", () => {
 		const project: Project = {
 			id: 1,
@@ -483,7 +493,275 @@ describe("Header", () => {
 		assert.isTrue(savePageModelProcessStub.calledOnce);
 	});
 
-	// TODO:
-	// undo button, active undo button if history manager can undo
-	// 因为在测试用例中无法为 store 设置值，所以无法判断 HistoryManager 的 canUndo
+	it("undo button - disable undo button if historyManager canUndo return false", () => {
+		const user: User = {
+			name: "jack",
+			avatar: "url"
+		};
+
+		const project: Project = {
+			id: 1,
+			name: "project",
+			createUserName: "tom"
+		};
+
+		const permission: Permission = {
+			canRead: true,
+			canWrite: true
+		};
+
+		const editMode: EditMode = "Edit";
+
+		const pathes: Path[] = [{ name: "page1", path: "page1" }];
+
+		const mockStore = createMockStoreMiddleware<State>();
+		const h = harness(
+			() => (
+				<Header
+					user={user}
+					project={project}
+					permission={permission}
+					pathes={pathes}
+					editMode={editMode}
+					onChangeEditMode={() => {}}
+					onChangeView={() => {}}
+				/>
+			),
+			{ middleware: [[store, mockStore]] }
+		);
+
+		uiHistoryManager.canUndo = stub().returns(false);
+
+		h.expectPartial("@undoButton", () => (
+			<button key="undoButton" type="button" disabled={false} onclick={() => {}}>
+				<FontAwesomeIcon icon="undo" />
+				<span>撤销</span>
+			</button>
+		));
+	});
+
+	it("undo button - active undo button if historyManager canUndo return true", () => {
+		const user: User = {
+			name: "jack",
+			avatar: "url"
+		};
+
+		const project: Project = {
+			id: 1,
+			name: "project",
+			createUserName: "tom"
+		};
+
+		const permission: Permission = {
+			canRead: true,
+			canWrite: true
+		};
+
+		const editMode: EditMode = "Edit";
+
+		const pathes: Path[] = [{ name: "page1", path: "page1" }];
+
+		const mockStore = createMockStoreMiddleware<State>();
+		const h = harness(
+			() => (
+				<Header
+					user={user}
+					project={project}
+					permission={permission}
+					pathes={pathes}
+					editMode={editMode}
+					onChangeEditMode={() => {}}
+					onChangeView={() => {}}
+				/>
+			),
+			{ middleware: [[store, mockStore]] }
+		);
+
+		uiHistoryManager.canUndo = stub().returns(true);
+
+		h.expectPartial("@undoButton", () => (
+			<button key="undoButton" type="button" disabled={false} onclick={() => {}}>
+				<FontAwesomeIcon icon="undo" />
+				<span>撤销</span>
+			</button>
+		));
+	});
+
+	it("undo button - trigger undo button", () => {
+		const user: User = {
+			name: "jack",
+			avatar: "url"
+		};
+
+		const project: Project = {
+			id: 1,
+			name: "project",
+			createUserName: "tom"
+		};
+
+		const permission: Permission = {
+			canRead: true,
+			canWrite: true
+		};
+
+		const editMode: EditMode = "Edit";
+
+		const pathes: Path[] = [{ name: "page1", path: "page1" }];
+
+		const undoProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[undoProcess, undoProcessStub]]);
+		const h = harness(
+			() => (
+				<Header
+					user={user}
+					project={project}
+					permission={permission}
+					pathes={pathes}
+					editMode={editMode}
+					onChangeEditMode={() => {}}
+					onChangeView={() => {}}
+				/>
+			),
+			{ middleware: [[store, mockStore]] }
+		);
+
+		h.trigger("@undoButton", "onclick");
+		assert.isTrue(undoProcessStub.calledOnce);
+	});
+
+	it("redo button - disable redo button if historyManager canRedo return false", () => {
+		const user: User = {
+			name: "jack",
+			avatar: "url"
+		};
+
+		const project: Project = {
+			id: 1,
+			name: "project",
+			createUserName: "tom"
+		};
+
+		const permission: Permission = {
+			canRead: true,
+			canWrite: true
+		};
+
+		const editMode: EditMode = "Edit";
+
+		const pathes: Path[] = [{ name: "page1", path: "page1" }];
+
+		const mockStore = createMockStoreMiddleware<State>();
+		const h = harness(
+			() => (
+				<Header
+					user={user}
+					project={project}
+					permission={permission}
+					pathes={pathes}
+					editMode={editMode}
+					onChangeEditMode={() => {}}
+					onChangeView={() => {}}
+				/>
+			),
+			{ middleware: [[store, mockStore]] }
+		);
+
+		uiHistoryManager.canRedo = stub().returns(false);
+
+		h.expectPartial("@redoButton", () => (
+			<button key="redoButton" type="button" disabled={false} onclick={() => {}}>
+				<FontAwesomeIcon icon="redo" />
+				<span>恢复</span>
+			</button>
+		));
+	});
+
+	it("redo button - active redo button if historyManager canRedo return true", () => {
+		const user: User = {
+			name: "jack",
+			avatar: "url"
+		};
+
+		const project: Project = {
+			id: 1,
+			name: "project",
+			createUserName: "tom"
+		};
+
+		const permission: Permission = {
+			canRead: true,
+			canWrite: true
+		};
+
+		const editMode: EditMode = "Edit";
+
+		const pathes: Path[] = [{ name: "page1", path: "page1" }];
+
+		const mockStore = createMockStoreMiddleware<State>();
+		const h = harness(
+			() => (
+				<Header
+					user={user}
+					project={project}
+					permission={permission}
+					pathes={pathes}
+					editMode={editMode}
+					onChangeEditMode={() => {}}
+					onChangeView={() => {}}
+				/>
+			),
+			{ middleware: [[store, mockStore]] }
+		);
+
+		uiHistoryManager.canRedo = stub().returns(true);
+
+		h.expectPartial("@redoButton", () => (
+			<button key="redoButton" type="button" disabled={false} onclick={() => {}}>
+				<FontAwesomeIcon icon="redo" />
+				<span>恢复</span>
+			</button>
+		));
+	});
+
+	it("redo button - trigger redo button", () => {
+		const user: User = {
+			name: "jack",
+			avatar: "url"
+		};
+
+		const project: Project = {
+			id: 1,
+			name: "project",
+			createUserName: "tom"
+		};
+
+		const permission: Permission = {
+			canRead: true,
+			canWrite: true
+		};
+
+		const editMode: EditMode = "Edit";
+
+		const pathes: Path[] = [{ name: "page1", path: "page1" }];
+
+		const redoProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[redoProcess, redoProcessStub]]);
+		const h = harness(
+			() => (
+				<Header
+					user={user}
+					project={project}
+					permission={permission}
+					pathes={pathes}
+					editMode={editMode}
+					onChangeEditMode={() => {}}
+					onChangeView={() => {}}
+				/>
+			),
+			{ middleware: [[store, mockStore]] }
+		);
+
+		h.trigger("@redoButton", "onclick");
+		assert.isTrue(redoProcessStub.calledOnce);
+	});
 });

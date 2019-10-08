@@ -15,7 +15,9 @@ import {
 	getPageModelProcess,
 	highlightWidgetProcess,
 	removeUndefinedWidgetProcess,
-	savePageModelProcess
+	savePageModelProcess,
+	undoProcess,
+	redoProcess
 } from "../../../src/processes/uiProcesses";
 import { add } from "@dojo/framework/stores/state/operations";
 import { afterEach } from "intern/lib/interfaces/tdd";
@@ -1360,5 +1362,21 @@ describe("processes/uiProcesses", () => {
 
 		assert.isTrue(uiHistoryManager.canUndo(store));
 		assert.isFalse(uiHistoryManager.canRedo(store));
+	});
+
+	it("undoProcess - historyManager#undo method was called", () => {
+		const undoStub = sinon.stub();
+		uiHistoryManager.undo = undoStub;
+		assert.isTrue(undoStub.notCalled);
+		undoProcess(store)({});
+		assert.isTrue(undoStub.calledOnce);
+	});
+
+	it("redoProcess - historyManager#redo method was called", () => {
+		const redoStub = sinon.stub();
+		uiHistoryManager.redo = redoStub;
+		assert.isTrue(redoStub.notCalled);
+		redoProcess(store)({});
+		assert.isTrue(redoStub.calledOnce);
 	});
 });
