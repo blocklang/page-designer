@@ -17,7 +17,8 @@ import {
 	removeUndefinedWidgetProcess,
 	savePageModelProcess,
 	undoProcess,
-	redoProcess
+	redoProcess,
+	changeActiveWidgetPropertiesProcess
 } from "../../../src/processes/uiProcesses";
 import { add } from "@dojo/framework/stores/state/operations";
 import { afterEach } from "intern/lib/interfaces/tdd";
@@ -399,15 +400,162 @@ describe("processes/uiProcesses", () => {
 
 		const widgets = store.get(store.path("pageModel", "widgets"));
 		assert.equal(4, widgets.length);
+
 		const thirdWidget = widgets[2];
-		console.log("==================");
-		console.log(thirdWidget);
 		assert.equal(thirdWidget.parentId, "2");
 		assert.isNotNull(thirdWidget.id);
 		assert.equal(thirdWidget.widgetId, 3);
 		assert.equal(thirdWidget.widgetCode, "0003");
 
 		assert.isTrue(store.get(store.path("dirty")));
+	});
+
+	it("changeActiveWidgetPropertiesProcess - pass zero changed property", () => {
+		const widgets = [
+			{
+				id: "1",
+				parentId: "-1",
+				widgetId: 1,
+				widgetCode: "0001",
+				widgetName: "Widget1",
+				componentRepoId: 1,
+				iconClass: "",
+				canHasChildren: true,
+				properties: []
+			},
+			{
+				id: "2",
+				parentId: "1",
+				widgetId: 2,
+				widgetCode: "0002",
+				widgetName: "Widget2",
+				componentRepoId: 1,
+				iconClass: "",
+				canHasChildren: true,
+				properties: [
+					{
+						id: "1",
+						name: "prop1"
+					}
+				]
+			}
+		];
+
+		store.apply([add(store.path("pageModel", "widgets"), widgets), add(store.path("selectedWidgetIndex"), 1)]);
+
+		changeActiveWidgetPropertiesProcess(store)({
+			changedProperties: []
+		});
+
+		const secondWidget = store.get(store.path("pageModel", "widgets"))[1];
+		// 断言选中部件的属性值未发生变化
+		assert.deepEqual(secondWidget.properties, widgets[1].properties);
+	});
+
+	it("changeActiveWidgetPropertiesProcess - change one property value", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: [
+						{
+							id: "1",
+							name: "prop1"
+						}
+					]
+				}
+			]),
+			add(store.path("selectedWidgetIndex"), 1)
+		]);
+
+		changeActiveWidgetPropertiesProcess(store)({
+			changedProperties: [
+				{
+					index: 0,
+					newValue: "1",
+					isChanging: false
+				}
+			]
+		});
+
+		const widgets = store.get(store.path("pageModel", "widgets"));
+		assert.equal(widgets[1].properties[0].value, "1");
+	});
+
+	it("changeActiveWidgetPropertiesProcess - change two property value", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					componentRepoId: 1,
+					iconClass: "",
+					canHasChildren: true,
+					properties: [
+						{
+							id: "1",
+							name: "prop1"
+						},
+						{
+							id: "2",
+							name: "prop2"
+						}
+					]
+				}
+			]),
+			add(store.path("selectedWidgetIndex"), 1)
+		]);
+
+		changeActiveWidgetPropertiesProcess(store)({
+			changedProperties: [
+				{
+					index: 0,
+					newValue: "1",
+					isChanging: false
+				},
+				{
+					index: 1,
+					newValue: "2",
+					isChanging: false
+				}
+			]
+		});
+
+		const widgets = store.get(store.path("pageModel", "widgets"));
+		assert.equal(widgets[1].properties[0].value, "1");
+		assert.equal(widgets[1].properties[1].value, "2");
 	});
 
 	it("removeActiveWidgetProcess - root->node1->node11, remove node1 and node11", () => {
