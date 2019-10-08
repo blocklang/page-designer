@@ -86,12 +86,9 @@ export default factory(function Header({ properties, middleware: { store } }) {
 	if (editMode === "Edit") {
 		// 因为没有为 dirty 设置默认值，所以这里多了一个判断
 		const canSave = store.get(store.path("dirty")) || false;
-
-		console.log("uiHistoryManager.canUndo", uiHistoryManager.canUndo);
-
 		const canUndo = store.executor(((storeObject: Store<State>) => uiHistoryManager.canUndo(storeObject)) as any);
-		console.log("canUndo", canUndo);
 		const canRedo = store.executor(((storeObject: Store<State>) => uiHistoryManager.canRedo(storeObject)) as any);
+
 		centerBlock = (
 			<div key="center" classes={[c.d_inline_flex, c.align_items_center]}>
 				<div classes={[c.btn_group, c.btn_group_sm]} role="group" aria-label="视图">
