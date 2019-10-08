@@ -8,6 +8,7 @@ import { findIndex } from "@dojo/framework/shim/array";
 import { uuid } from "@dojo/framework/core/util";
 import { getAllChildCount, getPreviousIndex, getNextIndex, getParentIndex } from "./pageTree";
 import { DimensionResults } from "@dojo/framework/core/meta/Dimensions";
+import { ChangedPropertyValue } from "../interfaces";
 
 const activeWidgetCommand = commandFactory<{ activeWidgetId: string; activeWidgetDimensions: DimensionResults }>(
 	({ get, path, payload: { activeWidgetId, activeWidgetDimensions } }) => {
@@ -71,6 +72,40 @@ const insertWidgetsCommand = commandFactory<{ widgets: Widget[] }>(({ get, at, p
 
 	return result;
 });
+
+/**
+ * 修改当前选中部件的属性值，支持一次修改多个属性
+ */
+const changeActiveWidgetPropertiesCommand = commandFactory<{ changedProperties: ChangedPropertyValue[] }>(
+	({ get, at, path, payload: { changedProperties } }) => {
+		if (changedProperties.length === 0) {
+			return;
+		}
+
+		// 获取当前选中部件
+		const selectedWidgetIndex = get(path("selectedWidgetIndex"));
+
+		const result = [];
+		for (let i = 0; i < changedProperties.length; i++) {
+			const changedProperty = changedProperties[i];
+			result.push(
+				replace(
+					path(
+						at(
+							path(at(path("pageModel", "widgets"), selectedWidgetIndex), "properties"),
+							changedProperty.index
+						),
+						"value"
+					),
+					changedProperty.newValue
+				)
+			);
+		}
+
+		result.push(replace(path("dirty"), true));
+		return result;
+	}
+);
 
 /**
  * 移动部件
@@ -319,6 +354,9 @@ export const savePageModelProcess = createProcess("save-page-model", [savePageMo
 export const activeWidgetProcess = createProcess("active-widget", [activeWidgetCommand]);
 export const highlightWidgetProcess = createProcess("highlight-widget", [highlightWidgetCommand]);
 export const insertWidgetsProcess = createProcess("insert-widgets", [insertWidgetsCommand], uiHistoryManager.callback);
+export const changeActiveWidgetPropertiesProcess = createProcess("change-active-widget-properties", [
+	changeActiveWidgetPropertiesCommand
+]);
 export const moveActiveWidgetPreviousProcess = createProcess(
 	"move-active-widget-previous",
 	[moveActiveWidgetPreviousCommand],
