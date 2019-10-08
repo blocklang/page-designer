@@ -101,6 +101,8 @@ const changeActiveWidgetPropertiesCommand = commandFactory<{ changedProperties: 
 				)
 			);
 		}
+
+		result.push(replace(path("dirty"), true));
 		return result;
 	}
 );

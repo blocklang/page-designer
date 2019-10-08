@@ -450,6 +450,8 @@ describe("processes/uiProcesses", () => {
 		const secondWidget = store.get(store.path("pageModel", "widgets"))[1];
 		// 断言选中部件的属性值未发生变化
 		assert.deepEqual(secondWidget.properties, widgets[1].properties);
+
+		assert.isUndefined(store.get(store.path("dirty")));
 	});
 
 	it("changeActiveWidgetPropertiesProcess - change one property value", () => {
@@ -498,6 +500,8 @@ describe("processes/uiProcesses", () => {
 
 		const widgets = store.get(store.path("pageModel", "widgets"));
 		assert.equal(widgets[1].properties[0].value, "1");
+
+		assert.isTrue(store.get(store.path("dirty")));
 	});
 
 	it("changeActiveWidgetPropertiesProcess - change two property value", () => {
@@ -556,6 +560,8 @@ describe("processes/uiProcesses", () => {
 		const widgets = store.get(store.path("pageModel", "widgets"));
 		assert.equal(widgets[1].properties[0].value, "1");
 		assert.equal(widgets[1].properties[1].value, "2");
+
+		assert.isTrue(store.get(store.path("dirty")));
 	});
 
 	it("removeActiveWidgetProcess - root->node1->node11, remove node1 and node11", () => {
