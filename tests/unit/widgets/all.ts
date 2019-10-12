@@ -7,3 +7,4 @@ import "./ui-view/editor/HighlightBox";
 import "./ui-view/operate-pane";
 import "./ui-view/operate-pane/Header";
 import "./ui-view/operate-pane/widgets-tab";
+import "./ui-view/operate-pane/properties-tab";
