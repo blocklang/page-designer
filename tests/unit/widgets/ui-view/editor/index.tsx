@@ -63,7 +63,6 @@ describe("ui-view/editor", () => {
 					properties: [
 						{
 							id: "1",
-							parentId: "-1",
 							name: "onLoad",
 							value: undefined // TODO: 需进一步细化
 						}
@@ -141,7 +140,6 @@ describe("ui-view/editor", () => {
 					properties: [
 						{
 							id: "1",
-							parentId: "-1",
 							name: "onLoad",
 							value: undefined // TODO: 需进一步细化
 						}
@@ -322,7 +320,6 @@ describe("ui-view/editor", () => {
 					properties: [
 						{
 							id: "1",
-							parentId: "-1",
 							name: "onLoad",
 							value: undefined // TODO: 需进一步细化
 						}
@@ -363,7 +360,6 @@ describe("ui-view/editor", () => {
 				properties: [
 					{
 						id: "1",
-						parentId: "-1",
 						name: "onLoad",
 						value: undefined
 					}
@@ -426,7 +422,6 @@ describe("ui-view/editor", () => {
 					properties: [
 						{
 							id: "1",
-							parentId: "-1",
 							name: "onLoad",
 							value: undefined // TODO: 需进一步细化
 						}
