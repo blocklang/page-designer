@@ -9,12 +9,13 @@
     "dev": "dojo build --mode dev --watch --serve",
     "build": "dojo build --mode dist",
     "build:dev": "dojo build --mode dev",
+    "build:widget": "dojo build widget --mode dist --target lib",
     "test": "dojo test",
     "test:unit": "dojo build --mode unit && dojo test --unit --config local",
     "test:functional": "dojo build --mode functional && dojo test --functional --config local",
     "test:all": "dojo build --mode unit && dojo build --mode functional && dojo test --all --config local",
     "precommit": "lint-staged",
-    "prettier": "prettier --write 'src/**/*.{ts,tsx}' 'src/**/*.css' 'tests/**/*.ts'",
+    "prettier": "prettier --write 'src/**/*.{ts,tsx}' 'src/**/*.css' 'tests/**/*.{ts,tsx}'",
     "uploadCoverage": "codecov --file=output/coverage/lcov/coverage.lcov -t 29c87b14-9b8a-43e1-a43d-a94f51b0538e",
     "json-server": "json-server --watch json-server/db.json --routes json-server/routes.json",
     "serve": "cd serve && serve -l 3001"
@@ -22,18 +23,19 @@
   "dependencies": {
     "@types/diff": "^4.0.2",
     "@types/scriptjs": "^0.0.2",
-    "@types/string-format": "~2.0.0",
+    "@types/string-format": "^2.0.0",
     "bootstrap-classes": "~0.0.2",
     "diff": "^4.0.1",
     "dojo-fontawesome": "~0.0.2",
     "scriptjs": "^2.5.9",
-    "std-ide-widget": "~0.0.3-alpha.10",
-    "string-format": "~2.0.0",
+    "std-ide-widget": "0.0.3-alpha.13",
+    "string-format": "^2.0.0",
     "tslib": "~1.9.1"
   },
   "peerDependencies": {
     "@dojo/framework": "^6.0.2",
-    "bootstrap": "^4.3.1"
+    "bootstrap": "^4.3.1",
+    "designer-core": "~0.0.1-alpha.11"
   },
   "devDependencies": {
     "@dojo/cli": "^6.0.0",
@@ -47,7 +49,7 @@
     "bootstrap": "^4.3.1",
     "codecov": "^3.6.1",
     "husky": "^3.0.8",
-    "lint-staged": "^9.4.1",
+    "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
     "sinon": "~7.5.0",
     "typescript": "~3.4.5"
