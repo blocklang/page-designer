@@ -35,8 +35,9 @@ export default factory(function PropertiesTab({ properties, middleware: { store 
 		return _renderMessageNode("当前没有焦点获取部件");
 	}
 
+	// 因为属性的布局信息是存在 ide 仓库中的，所以这里需要找到组件所在的 ide 仓库
 	const ideRepos = get(path("ideRepos")) || [];
-	const ideRepo = find(ideRepos, (item) => item.id === activeWidget!.componentRepoId);
+	const ideRepo = find(ideRepos, (item) => item.apiRepoId === activeWidget!.apiRepoId);
 	if (!ideRepo) {
 		return _renderMessageNode("没有找到聚焦部件所属的 ide 组件仓库信息");
 	}

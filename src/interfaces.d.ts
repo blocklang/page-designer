@@ -100,6 +100,7 @@ export interface WidgetCategory {
  * @property widgetCode         部件编码
  * @property iconClass          部件图标样式类
  * @property canHasChildren     是否可以包含子部件
+ * @property apiRepoId          部件所属的 API 库标识
  */
 export interface Widget {
 	widgetId: number;
@@ -107,15 +108,12 @@ export interface Widget {
 	widgetCode: string;
 	iconClass: string;
 	canHasChildren: boolean;
+	apiRepoId: number;
 }
 
 export interface AttachedWidget extends Widget {
 	id: string;
 	parentId: string;
-
-	// 以下是部件对应的 IDE 版组件库信息
-	// 根据 componentRepoId 从 ideRepos 中获取 gitRepoWebsite、gitRepoOwner、gitRepoName 和 version 等信息
-	componentRepoId: number;
 
 	properties: AttachedWidgetProperty[];
 }
@@ -196,8 +194,24 @@ export interface RequestUrl {
 	externalScriptAndCssWebsite: string;
 }
 
+/**
+ * @interface ComponentRepo
+ *
+ * 组件仓库
+ *
+ * @property id                 组件仓库标识
+ * @property apiRepoId          该组件仓库实现的 API 仓库标识
+ * @property gitRepoWebsite     托管该组件仓库的域名或者 ip 地址
+ * @property gitRepoOwner       组件仓库的拥有者，是在托管网站上注册用户的登录名
+ * @property gitRepoName        组件仓库的仓库名
+ * @property name               组件仓库的名称，是在 component.json 中配置的名称
+ * @property category           组件库分类
+ * @property version            组件库的版本号，此版本不是组件库的最新版本，而是项目当前依赖的版本
+ * @property std                是否标准库
+ */
 export interface ComponentRepo {
 	id: number;
+	apiRepoId: number;
 	gitRepoWebsite: string;
 	gitRepoOwner: string;
 	gitRepoName: string;

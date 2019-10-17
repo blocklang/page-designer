@@ -73,7 +73,7 @@ export default factory(function App({ middleware: { theme } }) {
 		fetchApiRepoWidgets: "http://localhost:3000/designer/{owner}/{projectName}/dependences/widgets",
 		fetchPageModel: "http://localhost:3000/designer/pages/{pageId}/model",
 		fetchIdeDependenceInfos: "http://localhost:3000/designer/projects/{projectId}/dependences?category=ide",
-		externalScriptAndCssWebsite: "http://localhost:3001/"
+		externalScriptAndCssWebsite: "http://localhost:3001"
 	};
 
 	return (

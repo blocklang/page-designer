@@ -10,9 +10,9 @@ import * as c from "bootstrap-classes";
 import { replace } from "@dojo/framework/stores/state/operations";
 import Page from "std-ide-widget/page";
 import { InstWidget, EditableWidgetProperties } from "designer-core/interfaces";
-import global from "@dojo/framework/shim/global";
 import FocusBox from "../../../../../src/widgets/ui-view/editor/FocusBox";
 import HighlightBox from "../../../../../src/widgets/ui-view/editor/HighlightBox";
+import * as blocklang from "designer-core/blocklang";
 
 describe("ui-view/editor", () => {
 	// 创建一个在测试用例中使用的部件
@@ -54,7 +54,7 @@ describe("ui-view/editor", () => {
 				{
 					id: "1",
 					parentId: "-1",
-					componentRepoId: 1,
+					apiRepoId: 1,
 					widgetId: 1,
 					widgetName: "Page",
 					widgetCode: "0001",
@@ -74,6 +74,7 @@ describe("ui-view/editor", () => {
 		const ideRepos: ComponentRepo[] = [
 			{
 				id: 1,
+				apiRepoId: 1,
 				gitRepoWebsite: "github.com",
 				gitRepoOwner: "blocklang",
 				gitRepoName: "std-ide-widget",
@@ -131,7 +132,7 @@ describe("ui-view/editor", () => {
 				{
 					id: "1",
 					parentId: "-1",
-					componentRepoId: 1,
+					apiRepoId: 1,
 					widgetId: 1,
 					widgetName: "Page",
 					widgetCode: "0001",
@@ -148,7 +149,7 @@ describe("ui-view/editor", () => {
 				{
 					id: "2",
 					parentId: "1",
-					componentRepoId: 2,
+					apiRepoId: 2,
 					widgetId: 2,
 					widgetName: "Container",
 					widgetCode: "0002",
@@ -159,7 +160,7 @@ describe("ui-view/editor", () => {
 				{
 					id: "21",
 					parentId: "2",
-					componentRepoId: 2,
+					apiRepoId: 2,
 					widgetId: 2,
 					widgetName: "Container",
 					widgetCode: "0002",
@@ -170,7 +171,7 @@ describe("ui-view/editor", () => {
 				{
 					id: "3",
 					parentId: "1",
-					componentRepoId: 2,
+					apiRepoId: 2,
 					widgetId: 2,
 					widgetName: "Container",
 					widgetCode: "0002",
@@ -185,6 +186,7 @@ describe("ui-view/editor", () => {
 		const ideRepos: ComponentRepo[] = [
 			{
 				id: 1,
+				apiRepoId: 1,
 				gitRepoWebsite: "github.com",
 				gitRepoOwner: "blocklang",
 				gitRepoName: "std-ide-widget",
@@ -195,6 +197,7 @@ describe("ui-view/editor", () => {
 			},
 			{
 				id: 2,
+				apiRepoId: 2,
 				gitRepoWebsite: "github.com",
 				gitRepoOwner: "blocklang",
 				gitRepoName: "ide-widget",
@@ -205,7 +208,10 @@ describe("ui-view/editor", () => {
 			}
 		];
 
-		global._block_lang_widgets_ = { "github.com/blocklang/ide-widget": { Container: Container } };
+		blocklang.registerWidgets(
+			{ website: "github.com", owner: "blocklang", repoName: "ide-widget" },
+			{ Container: { widget: Container, propertiesLayout: [] } }
+		);
 
 		mockStore((path) => [replace(path("pageModel"), pageModel), replace(path("ideRepos"), ideRepos)]);
 
@@ -311,7 +317,7 @@ describe("ui-view/editor", () => {
 				{
 					id: "1",
 					parentId: "-1",
-					componentRepoId: 1,
+					apiRepoId: 1,
 					widgetId: 1,
 					widgetName: "Page",
 					widgetCode: "0001",
@@ -331,6 +337,7 @@ describe("ui-view/editor", () => {
 		const ideRepos: ComponentRepo[] = [
 			{
 				id: 1,
+				apiRepoId: 1,
 				gitRepoWebsite: "github.com",
 				gitRepoOwner: "blocklang",
 				gitRepoName: "std-ide-widget",
@@ -351,7 +358,7 @@ describe("ui-view/editor", () => {
 			{
 				id: "1",
 				parentId: "-1",
-				componentRepoId: 1,
+				apiRepoId: 1,
 				widgetId: 1,
 				widgetName: "Page",
 				widgetCode: "0001",
@@ -413,7 +420,7 @@ describe("ui-view/editor", () => {
 				{
 					id: "1",
 					parentId: "-1",
-					componentRepoId: 1,
+					apiRepoId: 1,
 					widgetId: 1,
 					widgetName: "Page",
 					widgetCode: "0001",
@@ -433,6 +440,7 @@ describe("ui-view/editor", () => {
 		const ideRepos: ComponentRepo[] = [
 			{
 				id: 1,
+				apiRepoId: 1,
 				gitRepoWebsite: "github.com",
 				gitRepoOwner: "blocklang",
 				gitRepoName: "std-ide-widget",

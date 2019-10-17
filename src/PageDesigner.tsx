@@ -12,6 +12,9 @@ import store from "./store";
 import { config } from "./config";
 import { initProjectProcess, getProjectIdeDependencesProcess } from "./processes/projectProcesses";
 import * as scriptjs from "scriptjs";
+import { widgetInstanceMap } from "@dojo/framework/core/vdom";
+import * as blocklang from "designer-core/blocklang";
+
 import { getPageModelProcess } from "./processes/uiProcesses";
 
 export interface PageDesignerProperties {
@@ -25,7 +28,7 @@ export interface PageDesignerProperties {
 
 const factory = create({ icache, store }).properties<PageDesignerProperties>();
 
-// 注意，根据职责单一原则，以及参数宜集中不宜分散的原则，在调用 PageDesigner 只有一个设置参数入口，
+// 注意，根据单一职责原则，以及参数宜集中不宜分散的原则，在调用 PageDesigner 只有一个设置参数入口，
 // 就是通过 PageDesignerProperties，不允许直接设置 config 对象。
 export default factory(function PageDesigner({ properties, middleware: { icache, store } }) {
 	const { user, project, page, permission, pathes, urls } = properties();
@@ -46,18 +49,18 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 	if (!savedProject || savedProject.id !== project.id) {
 		// 在 store 中存储项目基本信息
 		executor(initProjectProcess)({ project });
-		// 获取项目的 ide 依赖
-		// TODO: 要考虑如何避免重复加载，以及漏加载
-		const ideRepos = get(path("ideRepos"));
-		if (!ideRepos) {
-			executor(getProjectIdeDependencesProcess)({});
-		} else {
-			// 获取完依赖之后要加载相应的 js 脚本
-			// 去除掉标准库，因为已默认引用标准库
-			loadExternalResources(ideRepos.filter((item) => item.std === false));
-		}
-
 		executor(getPageModelProcess)({ pageId: page.id });
+	}
+
+	// 获取项目的 ide 依赖
+	// TODO: 要考虑如何避免重复加载，以及漏加载
+	const ideRepos = get(path("ideRepos"));
+	if (!ideRepos) {
+		executor(getProjectIdeDependencesProcess)({});
+	} else {
+		// 获取完依赖之后要加载相应的 js 脚本
+		// 去除掉标准库，因为已默认引用标准库
+		loadExternalResources(ideRepos.filter((item) => item.std === false));
 	}
 
 	let editMode = icache.getOrSet<EditMode>("editMode", "Preview");
@@ -108,6 +111,7 @@ function loadExternalResources(ideRepos: ComponentRepo[]) {
 		console.log("ideRepos 为 undefined");
 		return;
 	}
+
 	const jsUrls = ideRepos.map(
 		(item) =>
 			`/packages/${item.gitRepoWebsite}/${item.gitRepoOwner}/${item.gitRepoName}/${item.version}/main.bundle.js`
@@ -118,5 +122,6 @@ function loadExternalResources(ideRepos: ComponentRepo[]) {
 	// dojo 支持 single-bundle 命令
 	scriptjs.ready("extension_js", () => {
 		console.log("extension js ready");
+		blocklang.watchingWidgetInstanceMap(widgetInstanceMap);
 	});
 }

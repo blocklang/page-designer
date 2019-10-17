@@ -83,7 +83,9 @@ export default factory(function WidgetsTab({ properties, middleware: { store, ic
 																key={`${widget.widgetId}`}
 																onclick={(event: MouseEvent) => {
 																	// 注意，这里必须是复制的 widget，不然添加的新的同类部件都指向同一个对象。
-																	// const copyedWidget = { ...widget }; // 待测试
+																	// FIXME: const copyedWidget = { ...widget }; // 待测试
+
+																	widget.apiRepoId = repo.apiRepoId;
 																	executor(insertWidgetsProcess)({
 																		widgets: [widget]
 																	});

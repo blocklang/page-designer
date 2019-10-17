@@ -1,11 +1,11 @@
 import Page from "std-ide-widget/page";
 import { ComponentRepo, AttachedWidget } from "../../../interfaces";
-import global from "@dojo/framework/shim/global";
 import { find } from "@dojo/framework/shim/array";
 import { w } from "@dojo/framework/core/vdom";
 import { WNode } from "@dojo/framework/core/interfaces";
 import { EditableWidgetProperties, InstWidgetProperties, EditableProperties } from "designer-core/interfaces";
 import { config } from "../../../config";
+import * as blocklang from "designer-core/blocklang";
 import UndefinedWidget from "../UndefinedWidget";
 
 // 有两种方式共享 widgets 和 ideRepos 的值，以避免在每个函数中多次传递
@@ -58,13 +58,17 @@ export function renderPage(
  * @returns              返回指定的部件
  */
 function renderWidget(widget: AttachedWidget, index: number): WNode {
-	// 1. 根据 componentRepoId 获取到 componentRepo 信息
-	const ideRepo = find(roIdeRepos, (item) => item.id === widget.componentRepoId);
+	// 1. 将 widget 的 apiRepoId 与 ide 组件库的 apiRepoId 对比，找到第一个匹配的 ide 组件库
+	// 2. 根据 componentRepoId 获取到 componentRepo 信息
+	// 注意，页面模型中只存 api 组件库信息，不存任何实现相关的信息
+
+	const ideRepo = find(roIdeRepos, (item) => item.apiRepoId === widget.apiRepoId);
 	if (!ideRepo) {
 		return w(UndefinedWidget, { widget });
 	}
 
-	// 2. 根据 componentRepo 获取到组件
+	// 3. 根据 ide 获取到组件库
+	// 4. 根据部件名查找部件类
 	const widgetType = getWidgetType(ideRepo, widget.widgetName);
 	if (!widgetType) {
 		return w(UndefinedWidget, { widget, componentRepo: ideRepo });
@@ -108,6 +112,8 @@ function renderWidget(widget: AttachedWidget, index: number): WNode {
 	const firstChildIndex = index + 1;
 	let childWNodes: WNode[] = renderChildWidgets(firstChildIndex, getChildrenIndex(widget.id, firstChildIndex));
 
+	console.log("widgetType is:", widgetType);
+
 	return w(widgetType, properties, childWNodes);
 }
 
@@ -149,15 +155,6 @@ function renderChildWidgets(firstChildIndex: number, children: number[]): WNode[
 	return childWNodes;
 }
 
-// 标准库。标准库是在引用处显式指定的。而扩展库是由用户配置的。
-// TODO: 移到单独的文件中
-// 因为此处只加载了一个版本，所以不需要在路径中包含版本号。
-const stdMap: { [propName: string]: any } = {
-	"github.com/blocklang/std-ide-widget": {
-		Page: Page
-	}
-};
-
 /**
  * 根据部件的基本信息，获取对应的部件类型。
  *
@@ -172,20 +169,31 @@ const stdMap: { [propName: string]: any } = {
  */
 function getWidgetType(ideRepo: ComponentRepo, widgetName: string) {
 	// key 中不需要版本号，因为页面中只加载了一个版本。
-	const repoKey = `${ideRepo.gitRepoWebsite}/${ideRepo.gitRepoOwner}/${ideRepo.gitRepoName}`;
+	const repoKey = blocklang.getRepoUrl({
+		website: ideRepo.gitRepoWebsite,
+		owner: ideRepo.gitRepoOwner,
+		repoName: ideRepo.gitRepoName
+	});
 	console.log("repoKey: ", repoKey);
 	// 优先从标准库中查找
-	let widgetType = stdMap[repoKey] && stdMap[repoKey][widgetName];
+	const widgetType = findStdWidgetType(repoKey, widgetName);
 	if (widgetType) {
 		return widgetType;
 	}
 
 	// 从扩展库中查找
-	widgetType =
-		global._block_lang_widgets_ &&
-		global._block_lang_widgets_[repoKey] &&
-		global._block_lang_widgets_[repoKey][widgetName];
-	if (widgetType) {
-		return widgetType;
+	return blocklang.findWidgetType(repoKey, widgetName);
+}
+
+// 标准库。标准库是在引用处显式指定的。而扩展库是由用户配置的。
+// TODO: 移到单独的文件中
+// 因为此处只加载了一个版本，所以不需要在路径中包含版本号。
+const stdMap: { [propName: string]: any } = {
+	"github.com/blocklang/std-ide-widget": {
+		Page: { widget: Page, propertiesLayout: [] }
 	}
+};
+
+function findStdWidgetType(repoUrl: string, widgetName: string) {
+	return stdMap[repoUrl] && stdMap[repoUrl][widgetName] && stdMap[repoUrl][widgetName].widget;
 }
