@@ -20,14 +20,14 @@
     {
       "owner": "jack",
       "name": "project_1",
-      "apiRepoId": 1,
-      "apiRepoName": "api repo 1",
+      "apiRepoId": 2,
+      "apiRepoName": "ide-widgets-bootstrap",
       "widgetCategories": [{
         "name": "category 1",
         "widgets": [{
           "widgetId": 1,
           "widgetCode": "0001",
-          "widgetName": "Widget 1",
+          "widgetName": "TextInput",
           "iconClass": ""
         }]
       }]
@@ -35,8 +35,8 @@
     {
       "owner": "jack",
       "name": "project_1",
-      "apiRepoId": 2,
-      "apiRepoName": "api repo 2",
+      "apiRepoId": 3,
+      "apiRepoName": "api repo 3",
       "widgetCategories": []
     }
   ],
@@ -63,9 +63,9 @@
   ],
   "ideDependences": [
     {
-      "id": 1,
-      "componentRepoId": 1,
       "projectId": 1,
+      "id": 1,
+      "apiRepoId": 1,
       "gitRepoWebsite": "github.com",
       "gitRepoOwner": "blocklang",
       "gitRepoName": "std-ide-widget",
@@ -73,6 +73,18 @@
       "category": "Widget",
       "version": "0.1.0",
       "std": true
+    },
+    {
+      "projectId": 1,
+      "id": 2,
+      "apiRepoId": 2,
+      "gitRepoWebsite": "github.com",
+      "gitRepoOwner": "blocklang",
+      "gitRepoName": "ide-widgets-bootstrap",
+      "name": "ide-widgets-bootstrap",
+      "category": "Widget",
+      "version": "0.1.0",
+      "std": false
     }
   ]
 }
