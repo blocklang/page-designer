@@ -1,7 +1,7 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
 import icache from "@dojo/framework/core/middleware/icache";
 
-import * as css from "./styles/PageDesigner.m.css";
+import * as css from "./PageDesigner.m.css";
 import * as c from "bootstrap-classes";
 import Header from "./widgets/Header";
 import { User, Project, Page, Path, Permission, EditMode, ViewType, RequestUrl, ComponentRepo } from "./interfaces";

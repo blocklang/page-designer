@@ -1,20 +1,17 @@
-const { describe, it } = intern.getInterface("bdd");
+const { describe, it, beforeEach } = intern.getInterface("bdd");
 
 import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 import * as c from "bootstrap-classes";
-import * as css from "../../src/styles/PageDesigner.m.css";
+import * as css from "../../src/PageDesigner.m.css";
 import PageDesigner from "../../src/PageDesigner";
 import Header from "../../src/widgets/Header";
 import { User, Project, Path, Page, Permission, RequestUrl, State } from "../../src/interfaces";
 import Preview from "../../src/widgets/preview";
 import UIView from "../../src/widgets/ui-view";
 import BehaviorView from "../../src/widgets/behavior-view";
-import { stub } from "sinon";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
 import store from "../../src/store";
-import { getProjectIdeDependencesProcess } from "../../src/processes/projectProcesses";
-import { beforeEach } from "intern/lib/interfaces/bdd";
 
 // login user
 const user: User = {
