@@ -17,6 +17,8 @@ import * as blocklang from "designer-core/blocklang";
 
 import { getPageModelProcess } from "./processes/uiProcesses";
 
+declare function loadCSS(href: string): any;
+
 export interface PageDesignerProperties {
 	user?: User; // 如果是匿名用户，则值为 null
 	project: Project;
@@ -97,6 +99,7 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 	);
 });
 
+const cssLoaded: any = {};
 /**
  * 加载外部的 javascript 文件和 css 文件
  *
@@ -123,5 +126,18 @@ function loadExternalResources(ideRepos: ComponentRepo[]) {
 	scriptjs.ready("extension_js", () => {
 		console.log("extension js ready");
 		blocklang.watchingWidgetInstanceMap(widgetInstanceMap);
+	});
+
+	console.log("ide repos", ideRepos);
+
+	// 加载 css 文件
+	ideRepos.forEach((item) => {
+		const cssHref = `${config.externalScriptAndCssWebsite}/packages/${item.gitRepoWebsite}/${item.gitRepoOwner}/${item.gitRepoName}/${item.version}/main.bundle.css`;
+		if (!cssLoaded[cssHref]) {
+			// 如果已经加载过，则不重复加载
+			// FIXME: 添加此逻辑之后，同一个 css 文件依然会加载两次, 查找原因。
+			loadCSS(cssHref);
+			cssLoaded[cssHref] = true;
+		}
 	});
 }
