@@ -27,7 +27,6 @@
     "bootstrap-classes": "~0.0.2",
     "diff": "^4.0.1",
     "dojo-fontawesome": "~0.0.2",
-    "fg-loadcss": "^2.1.0",
     "scriptjs": "^2.5.9",
     "std-ide-widget": "~0.0.3-alpha.15",
     "string-format": "^2.0.0",

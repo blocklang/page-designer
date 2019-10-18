@@ -16,8 +16,7 @@ import { widgetInstanceMap } from "@dojo/framework/core/vdom";
 import * as blocklang from "designer-core/blocklang";
 
 import { getPageModelProcess } from "./processes/uiProcesses";
-
-declare function loadCSS(href: string): any;
+import { loadCSS } from "./utils/fg-loadcss/loadCSS";
 
 export interface PageDesignerProperties {
 	user?: User; // 如果是匿名用户，则值为 null
