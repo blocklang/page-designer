@@ -28,6 +28,9 @@ export default factory(function Editor({ properties, middleware: { store } }) {
 	const highlightWidgetIndex = get(path("highlightWidgetIndex"));
 	const highlightWidget = widgets[highlightWidgetIndex];
 
+	// 如果聚焦的部件和高亮显示的部件是同一个，则只显示聚焦框
+	const onlyShowFocusBox = selectedWidgetIndex === highlightWidgetIndex;
+
 	if (widgets && widgets.length > 0) {
 		const ideRepos = get(path("ideRepos"));
 		return v("div", {}, [
@@ -41,7 +44,7 @@ export default factory(function Editor({ properties, middleware: { store } }) {
 				autoFocus: (widgetId) => widgetId === activeWidget.id
 			}),
 			activeWidget && w(FocusBox, { widgets, selectedWidgetIndex, widgetName: activeWidget.widgetName }),
-			highlightWidget && w(HighlightBox, { widgetName: highlightWidget.widgetName })
+			!onlyShowFocusBox && highlightWidget && w(HighlightBox, { widgetName: highlightWidget.widgetName })
 		]);
 	}
 });

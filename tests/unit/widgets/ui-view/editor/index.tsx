@@ -402,6 +402,110 @@ describe("ui-view/editor", () => {
 		));
 	});
 
+	it("active widget - when focus a node and highlight it too, then only show focus box", () => {
+		const mockStore = createMockStoreMiddleware<State>();
+		const h = harness(() => <Editor />, { middleware: [[store, mockStore]] });
+
+		// 设置两个值：
+		// 1. pageModel
+		// 2. ideRepos
+		const pageModel: PageModel = {
+			pageInfo: {
+				id: 1,
+				key: "page1",
+				name: "页面1",
+				appType: "01"
+			},
+			widgets: [
+				{
+					id: "1",
+					parentId: "-1",
+					apiRepoId: 1,
+					widgetId: 1,
+					widgetName: "Page",
+					widgetCode: "0001",
+					iconClass: "",
+					canHasChildren: true,
+					properties: [
+						{
+							id: "1",
+							name: "onLoad",
+							value: undefined // TODO: 需进一步细化
+						}
+					]
+				}
+			]
+		};
+		// 默认包含标准库
+		const ideRepos: ComponentRepo[] = [
+			{
+				id: 1,
+				apiRepoId: 1,
+				gitRepoWebsite: "github.com",
+				gitRepoOwner: "blocklang",
+				gitRepoName: "std-ide-widget",
+				name: "std-ide-widget",
+				category: "widget",
+				version: "0.0.1",
+				std: true
+			}
+		];
+
+		mockStore((path) => [
+			replace(path("pageModel"), pageModel),
+			replace(path("ideRepos"), ideRepos),
+			replace(path("selectedWidgetIndex"), 0),
+			replace(path("highlightWidgetIndex"), 0)
+		]);
+
+		const pageWidgets: AttachedWidget[] = [
+			{
+				id: "1",
+				parentId: "-1",
+				apiRepoId: 1,
+				widgetId: 1,
+				widgetName: "Page",
+				widgetCode: "0001",
+				iconClass: "",
+				canHasChildren: true,
+				properties: [
+					{
+						id: "1",
+						name: "onLoad",
+						value: undefined
+					}
+				]
+			}
+		];
+
+		const widget: InstWidget = {
+			id: "1",
+			parentId: "-1",
+			widgetCode: "0001",
+			widgetName: "Page",
+			canHasChildren: true
+		};
+		// activeWidgetId 的作用是什么？可否用 focused 属性代替
+		// widget 属性是否可以替换或者精简？
+		h.expect(() => (
+			<div>
+				<Page
+					key="0_1"
+					widget={widget}
+					originalProperties={{ onLoad: () => {} }} // 原始属性值
+					extendProperties={{
+						onFocus: () => {},
+						onHighlight: () => {},
+						autoFocus: () => false
+					}}
+					// 原始属性的值，是必须要展开的
+					onLoad={() => {}}
+				/>
+				<FocusBox widgetName="Page" selectedWidgetIndex={0} widgets={pageWidgets} />
+			</div>
+		));
+	});
+
 	it("highlight widget - show a page contains a single root node, and highlight it", () => {
 		const mockStore = createMockStoreMiddleware<State>();
 		const h = harness(() => <Editor />, { middleware: [[store, mockStore]] });
