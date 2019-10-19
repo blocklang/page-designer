@@ -1,6 +1,17 @@
 .nameBar {
 	composes: nameBar from "./HighlightBox.m.css";
 }
+
+.nameBarPosition {
+	composes: nameBarPosition from "./HighlightBox.m.css";
+}
+
 .operateBar {
 	composes: nameBar from "./HighlightBox.m.css";
+}
+
+.operateBarPosition {
+	position: absolute;
+	right: 0px;
+	top: -32px;
 }

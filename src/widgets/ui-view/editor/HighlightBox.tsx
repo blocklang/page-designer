@@ -19,7 +19,7 @@ export default factory(function HighlightBox({ properties, middleware: { store }
 
 	return (
 		<Box left={left} top={top} width={width} height={height}>
-			<div classes={[css.nameBar]}>{widgetName}</div>
+			<div classes={[css.nameBar, css.nameBarPosition]}>{widgetName}</div>
 		</Box>
 	);
 });

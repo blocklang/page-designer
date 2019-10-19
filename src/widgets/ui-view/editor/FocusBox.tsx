@@ -41,11 +41,11 @@ export default factory(function FocusBox({ properties, middleware: { store } }) 
 
 	return (
 		<Box left={left} top={top} width={width} height={height}>
-			<div key="name-bar" classes={[css.nameBar]}>
+			<div key="name-bar" classes={[css.nameBar, css.nameBarPosition]}>
 				{widgetName}
 			</div>
 			{showOperateBar && (
-				<div key="operate-bar" classes={[css.operateBar]}>
+				<div key="operate-bar" classes={[css.operateBar, css.operateBarPosition]}>
 					<div classes={[c.btn_group, c.btn_group_sm]} role="group">
 						{/*选择父部件*/}
 						<button
