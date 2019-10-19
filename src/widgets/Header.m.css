@@ -1,0 +1,18 @@
+.root {
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	/*z-index: 9999;*/
+	border-bottom: 1px solid #cccccc;
+	font-size: 1em;
+}
+
+.btn {
+	border: none;
+	background-color: inherit;
+}
+
+.disabled {
+	cursor: not-allowed;
+	color: #c8cdd0;
+}

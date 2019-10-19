@@ -7,6 +7,7 @@ import store from "../store";
 import { savePageModelProcess, undoProcess, redoProcess } from "../processes/uiProcesses";
 import { uiHistoryManager } from "../processes/utils";
 import Store from "@dojo/framework/stores/Store";
+import * as css from "./Header.m.css";
 
 export interface HeaderProperties {
 	user?: User;
@@ -94,10 +95,11 @@ export default factory(function Header({ properties, middleware: { store } }) {
 				<div classes={[c.btn_group, c.btn_group_sm]} role="group" aria-label="视图">
 					{switchViewActionButtons}
 				</div>
-				<div>
+				<div classes={[c.ml_2]}>
 					<button
 						key="saveButton"
 						type="button"
+						classes={[css.btn, !canSave ? css.disabled : undefined]}
 						disabled={!canSave}
 						onclick={
 							canSave
@@ -108,11 +110,12 @@ export default factory(function Header({ properties, middleware: { store } }) {
 						}
 					>
 						<FontAwesomeIcon icon={["far", "save"]} />
-						<span>保存</span>
+						<span classes={[c.ml_1]}>保存</span>
 					</button>
 					<button
 						key="undoButton"
 						type="button"
+						classes={[css.btn, !canUndo ? css.disabled : undefined]}
 						disabled={!canUndo}
 						onclick={
 							canUndo
@@ -123,11 +126,12 @@ export default factory(function Header({ properties, middleware: { store } }) {
 						}
 					>
 						<FontAwesomeIcon icon="undo" />
-						<span>撤销</span>
+						<span classes={[c.ml_1]}>撤销</span>
 					</button>
 					<button
 						key="redoButton"
 						type="button"
+						classes={[css.btn, !canRedo ? css.disabled : undefined]}
 						disabled={!canRedo}
 						onclick={
 							canRedo
@@ -138,37 +142,34 @@ export default factory(function Header({ properties, middleware: { store } }) {
 						}
 					>
 						<FontAwesomeIcon icon="redo" />
-						<span>恢复</span>
+						<span classes={[c.ml_1]}>恢复</span>
 					</button>
 				</div>
 			</div>
 		);
 	}
 
-	const userBlock =
-		user !== undefined ? (
-			<span>
-				<img src={user.avatar} />
-				<span>{user.name}</span>
-			</span>
-		) : (
-			undefined
-		);
+	const userBlock = user && (
+		<span classes={[c.ml_2]}>
+			<img src={user.avatar} />
+			<span>{user.name}</span>
+		</span>
+	);
 
 	let switchEditModeBlock;
 	if (permission.canWrite) {
 		if (editMode === "Preview") {
 			switchEditModeBlock = (
-				<button key="toEditButton" onclick={() => onChangeEditMode()}>
+				<button type="button" classes={[css.btn]} key="toEditButton" onclick={() => onChangeEditMode()}>
 					<FontAwesomeIcon icon={["far", "edit"]} />
-					编辑
+					<span classes={[c.ml_1]}>编辑</span>
 				</button>
 			);
 		} else {
 			switchEditModeBlock = (
-				<button key="toPreviewButton" onclick={() => onChangeEditMode()}>
+				<button type="button" classes={[css.btn]} key="toPreviewButton" onclick={() => onChangeEditMode()}>
 					<FontAwesomeIcon icon={["far", "caret-square-right"]} />
-					浏览
+					<span classes={[c.ml_1]}>浏览</span>
 				</button>
 			);
 		}
@@ -187,7 +188,17 @@ export default factory(function Header({ properties, middleware: { store } }) {
 	}
 
 	return (
-		<div classes={[c.bg_light, c.d_flex, c.justify_content_between]}>
+		<div
+			classes={[
+				c.bg_light,
+				c.d_flex,
+				c.justify_content_between,
+				c.align_items_center,
+				c.p_2,
+				c.position_fixed,
+				css.root
+			]}
+		>
 			{leftBlock}
 			{centerBlock}
 			{rightBlock}

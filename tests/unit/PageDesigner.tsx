@@ -80,7 +80,9 @@ describe("PageDesigner", () => {
 					onChangeEditMode={() => {}}
 					onChangeView={() => {}}
 				/>
-				<Preview />
+				<div classes={[css.container]}>
+					<Preview />
+				</div>
 			</div>
 		));
 	});
@@ -113,7 +115,9 @@ describe("PageDesigner", () => {
 					onChangeEditMode={() => {}}
 					onChangeView={() => {}}
 				/>
-				<Preview />
+				<div classes={[css.container]}>
+					<Preview />
+				</div>
 			</div>
 		));
 
@@ -132,7 +136,9 @@ describe("PageDesigner", () => {
 					onChangeEditMode={() => {}}
 					onChangeView={() => {}}
 				/>
-				<UIView />
+				<div classes={[css.container]}>
+					<UIView />
+				</div>
 			</div>
 		));
 
@@ -151,7 +157,9 @@ describe("PageDesigner", () => {
 					onChangeEditMode={() => {}}
 					onChangeView={() => {}}
 				/>
-				<Preview />
+				<div classes={[css.container]}>
+					<Preview />
+				</div>
 			</div>
 		));
 	});
@@ -184,7 +192,9 @@ describe("PageDesigner", () => {
 					onChangeEditMode={() => {}}
 					onChangeView={() => {}}
 				/>
-				<Preview />
+				<div classes={[css.container]}>
+					<Preview />
+				</div>
 			</div>
 		));
 
@@ -205,7 +215,9 @@ describe("PageDesigner", () => {
 					onChangeEditMode={() => {}}
 					onChangeView={() => {}}
 				/>
-				<BehaviorView />
+				<div classes={[css.container]}>
+					<BehaviorView />
+				</div>
 			</div>
 		));
 
@@ -224,7 +236,9 @@ describe("PageDesigner", () => {
 					onChangeEditMode={() => {}}
 					onChangeView={() => {}}
 				/>
-				<UIView />
+				<div classes={[css.container]}>
+					<UIView />
+				</div>
 			</div>
 		));
 	});

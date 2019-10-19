@@ -16,6 +16,7 @@ import { savePageModelProcess, undoProcess, redoProcess } from "../../../src/pro
 import { uiHistoryManager } from "../../../src/processes/utils";
 import { afterEach } from "intern/lib/interfaces/bdd";
 import { deepMixin } from "@dojo/framework/core/util";
+import * as css from "../../../src/widgets/Header.m.css";
 
 describe("Header", () => {
 	const cachedUiHistoryManager = deepMixin({}, uiHistoryManager);
@@ -50,7 +51,17 @@ describe("Header", () => {
 		));
 
 		h.expect(() => (
-			<div classes={[c.bg_light, c.d_flex, c.justify_content_between]}>
+			<div
+				classes={[
+					c.bg_light,
+					c.d_flex,
+					c.justify_content_between,
+					c.align_items_center,
+					c.p_2,
+					c.position_fixed,
+					css.root
+				]}
+			>
 				<div key="left">
 					<a title="返回">
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
@@ -92,7 +103,17 @@ describe("Header", () => {
 		));
 
 		h.expect(() => (
-			<div classes={[c.bg_light, c.d_flex, c.justify_content_between]}>
+			<div
+				classes={[
+					c.bg_light,
+					c.d_flex,
+					c.justify_content_between,
+					c.align_items_center,
+					c.p_2,
+					c.position_fixed,
+					css.root
+				]}
+			>
 				<div key="left">
 					<a title="返回">
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
@@ -100,7 +121,7 @@ describe("Header", () => {
 					<span classes={[c.ml_1]}>tom/project/page1</span>
 				</div>
 				<div key="right">
-					<span>
+					<span classes={[c.ml_2]}>
 						<img src="url" />
 						<span>jack</span>
 					</span>
@@ -140,7 +161,17 @@ describe("Header", () => {
 		));
 
 		h.expect(() => (
-			<div classes={[c.bg_light, c.d_flex, c.justify_content_between]}>
+			<div
+				classes={[
+					c.bg_light,
+					c.d_flex,
+					c.justify_content_between,
+					c.align_items_center,
+					c.p_2,
+					c.position_fixed,
+					css.root
+				]}
+			>
 				<div key="left">
 					<a title="返回">
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
@@ -148,11 +179,11 @@ describe("Header", () => {
 					<span classes={[c.ml_1]}>tom/project/page1</span>
 				</div>
 				<div key="right">
-					<button key="toEditButton" onclick={() => {}}>
+					<button type="button" key="toEditButton" classes={[css.btn]} onclick={() => {}}>
 						<FontAwesomeIcon icon={["far", "edit"]} />
-						编辑
+						<span classes={[c.ml_1]}>编辑</span>
 					</button>
-					<span>
+					<span classes={[c.ml_2]}>
 						<img src="url" />
 						<span>jack</span>
 					</span>
@@ -199,7 +230,17 @@ describe("Header", () => {
 		));
 
 		h.expect(() => (
-			<div classes={[c.bg_light, c.d_flex, c.justify_content_between]}>
+			<div
+				classes={[
+					c.bg_light,
+					c.d_flex,
+					c.justify_content_between,
+					c.align_items_center,
+					c.p_2,
+					c.position_fixed,
+					css.root
+				]}
+			>
 				<div key="left">
 					<a title="返回">
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
@@ -220,27 +261,45 @@ describe("Header", () => {
 							交互
 						</button>
 					</div>
-					<div>
-						<button key="saveButton" type="button" disabled={true} onclick={undefined}>
+					<div classes={[c.ml_2]}>
+						<button
+							key="saveButton"
+							type="button"
+							classes={[css.btn, css.disabled]}
+							disabled={true}
+							onclick={undefined}
+						>
 							<FontAwesomeIcon icon={["far", "save"]} />
-							<span>保存</span>
+							<span classes={[c.ml_1]}>保存</span>
 						</button>
-						<button key="undoButton" type="button" disabled={true} onclick={undefined}>
+						<button
+							key="undoButton"
+							type="button"
+							classes={[css.btn, css.disabled]}
+							disabled={true}
+							onclick={undefined}
+						>
 							<FontAwesomeIcon icon="undo" />
-							<span>撤销</span>
+							<span classes={[c.ml_1]}>撤销</span>
 						</button>
-						<button key="redoButton" type="button" disabled={true} onclick={undefined}>
+						<button
+							key="redoButton"
+							type="button"
+							classes={[css.btn, css.disabled]}
+							disabled={true}
+							onclick={undefined}
+						>
 							<FontAwesomeIcon icon="redo" />
-							<span>恢复</span>
+							<span classes={[c.ml_1]}>恢复</span>
 						</button>
 					</div>
 				</div>
 				<div key="right">
-					<button key="toPreviewButton" onclick={() => {}}>
+					<button type="button" key="toPreviewButton" classes={[css.btn]} onclick={() => {}}>
 						<FontAwesomeIcon icon={["far", "caret-square-right"]} />
-						浏览
+						<span classes={[c.ml_1]}>浏览</span>
 					</button>
-					<span>
+					<span classes={[c.ml_2]}>
 						<img src="url" />
 						<span>jack</span>
 					</span>
@@ -293,7 +352,17 @@ describe("Header", () => {
 		));
 
 		h.expect(() => (
-			<div classes={[c.bg_light, c.d_flex, c.justify_content_between]}>
+			<div
+				classes={[
+					c.bg_light,
+					c.d_flex,
+					c.justify_content_between,
+					c.align_items_center,
+					c.p_2,
+					c.position_fixed,
+					css.root
+				]}
+			>
 				<div key="left">
 					<a title="返回">
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
@@ -318,27 +387,45 @@ describe("Header", () => {
 							交互
 						</button>
 					</div>
-					<div>
-						<button key="saveButton" type="button" disabled={true} onclick={undefined}>
+					<div classes={[c.ml_2]}>
+						<button
+							key="saveButton"
+							type="button"
+							classes={[css.btn, css.disabled]}
+							disabled={true}
+							onclick={undefined}
+						>
 							<FontAwesomeIcon icon={["far", "save"]} />
-							<span>保存</span>
+							<span classes={[c.ml_1]}>保存</span>
 						</button>
-						<button key="undoButton" type="button" disabled={true} onclick={undefined}>
+						<button
+							key="undoButton"
+							type="button"
+							classes={[css.btn, css.disabled]}
+							disabled={true}
+							onclick={undefined}
+						>
 							<FontAwesomeIcon icon="undo" />
-							<span>撤销</span>
+							<span classes={[c.ml_1]}>撤销</span>
 						</button>
-						<button key="redoButton" type="button" disabled={true} onclick={undefined}>
+						<button
+							key="redoButton"
+							type="button"
+							classes={[css.btn, css.disabled]}
+							disabled={true}
+							onclick={undefined}
+						>
 							<FontAwesomeIcon icon="redo" />
-							<span>恢复</span>
+							<span classes={[c.ml_1]}>恢复</span>
 						</button>
 					</div>
 				</div>
 				<div key="right">
-					<button key="toPreviewButton" onclick={() => {}}>
+					<button key="toPreviewButton" type="button" classes={[css.btn]} onclick={() => {}}>
 						<FontAwesomeIcon icon={["far", "caret-square-right"]} />
-						浏览
+						<span classes={[c.ml_1]}>浏览</span>
 					</button>
-					<span>
+					<span classes={[c.ml_2]}>
 						<img src="url" />
 						<span>jack</span>
 					</span>
@@ -394,9 +481,9 @@ describe("Header", () => {
 		mockStore((path) => [replace(path("dirty"), true)]);
 
 		h.expectPartial("@saveButton", () => (
-			<button key="saveButton" type="button" disabled={false} onclick={() => {}}>
+			<button key="saveButton" type="button" classes={[css.btn, undefined]} disabled={false} onclick={() => {}}>
 				<FontAwesomeIcon icon={["far", "save"]} />
-				<span>保存</span>
+				<span classes={[c.ml_1]}>保存</span>
 			</button>
 		));
 	});
@@ -441,9 +528,15 @@ describe("Header", () => {
 		mockStore((path) => [replace(path("dirty"), false)]);
 
 		h.expectPartial("@saveButton", () => (
-			<button key="saveButton" type="button" disabled={true} onclick={undefined}>
+			<button
+				key="saveButton"
+				type="button"
+				classes={[css.btn, css.disabled]}
+				disabled={true}
+				onclick={undefined}
+			>
 				<FontAwesomeIcon icon={["far", "save"]} />
-				<span>保存</span>
+				<span classes={[c.ml_1]}>保存</span>
 			</button>
 		));
 	});
@@ -530,9 +623,15 @@ describe("Header", () => {
 		uiHistoryManager.canUndo = () => false;
 
 		h.expectPartial("@undoButton", () => (
-			<button key="undoButton" type="button" disabled={true} onclick={undefined}>
+			<button
+				key="undoButton"
+				type="button"
+				classes={[css.btn, css.disabled]}
+				disabled={true}
+				onclick={undefined}
+			>
 				<FontAwesomeIcon icon="undo" />
-				<span>撤销</span>
+				<span classes={[c.ml_1]}>撤销</span>
 			</button>
 		));
 	});
@@ -574,9 +673,9 @@ describe("Header", () => {
 		uiHistoryManager.canUndo = () => true;
 
 		h.expectPartial("@undoButton", () => (
-			<button key="undoButton" type="button" disabled={false} onclick={() => {}}>
+			<button key="undoButton" type="button" classes={[css.btn, undefined]} disabled={false} onclick={() => {}}>
 				<FontAwesomeIcon icon="undo" />
-				<span>撤销</span>
+				<span classes={[c.ml_1]}>撤销</span>
 			</button>
 		));
 	});
@@ -660,9 +759,15 @@ describe("Header", () => {
 		uiHistoryManager.canRedo = () => false;
 
 		h.expectPartial("@redoButton", () => (
-			<button key="redoButton" type="button" disabled={true} onclick={undefined}>
+			<button
+				key="redoButton"
+				type="button"
+				classes={[css.btn, css.disabled]}
+				disabled={true}
+				onclick={undefined}
+			>
 				<FontAwesomeIcon icon="redo" />
-				<span>恢复</span>
+				<span classes={[c.ml_1]}>恢复</span>
 			</button>
 		));
 	});
@@ -704,9 +809,9 @@ describe("Header", () => {
 		uiHistoryManager.canRedo = () => true;
 
 		h.expectPartial("@redoButton", () => (
-			<button key="redoButton" type="button" disabled={false} onclick={() => {}}>
+			<button key="redoButton" type="button" classes={[css.btn, undefined]} disabled={false} onclick={() => {}}>
 				<FontAwesomeIcon icon="redo" />
-				<span>恢复</span>
+				<span classes={[c.ml_1]}>恢复</span>
 			</button>
 		));
 	});

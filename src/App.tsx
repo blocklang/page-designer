@@ -78,7 +78,6 @@ export default factory(function App({ middleware: { theme } }) {
 
 	return (
 		<div classes={[css.root]}>
-			<div>参数设置区</div>
 			<PageDesigner
 				user={user}
 				project={project}
