@@ -21,7 +21,7 @@ describe("ui-view/editor/HighlightBox", () => {
 
 		h.expect(() => (
 			<Box left={0} top={0} width={0} height={0}>
-				<div classes={[css.nameBar]}>A</div>
+				<div classes={[css.nameBar, css.nameBarPosition]}>A</div>
 			</Box>
 		));
 	});
@@ -71,7 +71,7 @@ describe("ui-view/editor/HighlightBox", () => {
 
 		h.expect(() => (
 			<Box left={documentScrollLeft + 1} top={documentScrollTop + 2} height={9} width={10}>
-				<div classes={[css.nameBar]}>A</div>
+				<div classes={[css.nameBar, css.nameBarPosition]}>A</div>
 			</Box>
 		));
 	});

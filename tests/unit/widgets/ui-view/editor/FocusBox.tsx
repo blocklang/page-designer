@@ -33,7 +33,7 @@ describe("ui-view/editor/FocusBox", () => {
 
 		h.expect(() => (
 			<Box left={0} top={0} width={0} height={0}>
-				<div key="name-bar" classes={[css.nameBar]}>
+				<div key="name-bar" classes={[css.nameBar, css.nameBarPosition]}>
 					A
 				</div>
 			</Box>
@@ -51,7 +51,7 @@ describe("ui-view/editor/FocusBox", () => {
 					widgetId: 1,
 					widgetCode: "0001",
 					widgetName: "Widget1",
-					componentRepoId: 1,
+					apiRepoId: 1,
 					iconClass: "",
 					canHasChildren: true,
 					properties: []
@@ -66,7 +66,7 @@ describe("ui-view/editor/FocusBox", () => {
 
 		h.expect(() => (
 			<Box left={documentScrollLeft + 0} top={documentScrollTop + 0} height={0} width={0}>
-				<div key="name-bar" classes={[css.nameBar]}>
+				<div key="name-bar" classes={[css.nameBar, css.nameBarPosition]}>
 					A
 				</div>
 			</Box>
@@ -120,7 +120,7 @@ describe("ui-view/editor/FocusBox", () => {
 
 		h.expect(() => (
 			<Box left={documentScrollLeft + 1} top={documentScrollTop + 2} height={9} width={10}>
-				<div key="name-bar" classes={[css.nameBar]}>
+				<div key="name-bar" classes={[css.nameBar, css.nameBarPosition]}>
 					A
 				</div>
 			</Box>
@@ -138,7 +138,7 @@ describe("ui-view/editor/FocusBox", () => {
 					widgetId: 1,
 					widgetCode: "0001",
 					widgetName: "Widget1",
-					componentRepoId: 1,
+					apiRepoId: 1,
 					iconClass: "",
 					canHasChildren: true,
 					properties: []
@@ -149,7 +149,7 @@ describe("ui-view/editor/FocusBox", () => {
 					widgetId: 2,
 					widgetCode: "0002",
 					widgetName: "Widget2",
-					componentRepoId: 1,
+					apiRepoId: 1,
 					iconClass: "",
 					canHasChildren: true,
 					properties: []
@@ -160,7 +160,7 @@ describe("ui-view/editor/FocusBox", () => {
 					widgetId: 2,
 					widgetCode: "0002",
 					widgetName: "Widget2",
-					componentRepoId: 1,
+					apiRepoId: 1,
 					iconClass: "",
 					canHasChildren: true,
 					properties: []
@@ -171,7 +171,7 @@ describe("ui-view/editor/FocusBox", () => {
 					widgetId: 2,
 					widgetCode: "0002",
 					widgetName: "Widget2",
-					componentRepoId: 1,
+					apiRepoId: 1,
 					iconClass: "",
 					canHasChildren: true,
 					properties: []
@@ -183,10 +183,10 @@ describe("ui-view/editor/FocusBox", () => {
 
 		h.expect(() => (
 			<Box left={0} top={0} width={0} height={0}>
-				<div key="name-bar" classes={[css.nameBar]}>
+				<div key="name-bar" classes={[css.nameBar, css.nameBarPosition]}>
 					A
 				</div>
-				<div key="operate-bar" classes={[css.operateBar]}>
+				<div key="operate-bar" classes={[css.operateBar, css.operateBarPosition]}>
 					<div classes={[c.btn_group, c.btn_group_sm]} role="group">
 						<button
 							key="active-parent"
@@ -243,7 +243,7 @@ describe("ui-view/editor/FocusBox", () => {
 					widgetId: 1,
 					widgetCode: "0001",
 					widgetName: "Widget1",
-					componentRepoId: 1,
+					apiRepoId: 1,
 					iconClass: "",
 					canHasChildren: true,
 					properties: []
@@ -254,7 +254,7 @@ describe("ui-view/editor/FocusBox", () => {
 					widgetId: 2,
 					widgetCode: "0002",
 					widgetName: "Widget2",
-					componentRepoId: 1,
+					apiRepoId: 1,
 					iconClass: "",
 					canHasChildren: true,
 					properties: []
@@ -266,10 +266,10 @@ describe("ui-view/editor/FocusBox", () => {
 
 		h.expect(() => (
 			<Box left={0} top={0} width={0} height={0}>
-				<div key="name-bar" classes={[css.nameBar]}>
+				<div key="name-bar" classes={[css.nameBar, css.nameBarPosition]}>
 					A
 				</div>
-				<div key="operate-bar" classes={[css.operateBar]}>
+				<div key="operate-bar" classes={[css.operateBar, css.operateBarPosition]}>
 					<div classes={[c.btn_group, c.btn_group_sm]} role="group">
 						<button
 							key="active-parent"
@@ -326,7 +326,7 @@ describe("ui-view/editor/FocusBox", () => {
 					widgetId: 1,
 					widgetCode: "0001",
 					widgetName: "Widget1",
-					componentRepoId: 1,
+					apiRepoId: 1,
 					iconClass: "",
 					canHasChildren: true,
 					properties: []
@@ -337,7 +337,7 @@ describe("ui-view/editor/FocusBox", () => {
 					widgetId: 2,
 					widgetCode: "0002",
 					widgetName: "Widget2",
-					componentRepoId: 1,
+					apiRepoId: 1,
 					iconClass: "",
 					canHasChildren: true,
 					properties: []
@@ -365,7 +365,7 @@ describe("ui-view/editor/FocusBox", () => {
 					widgetId: 1,
 					widgetCode: "0001",
 					widgetName: "Widget1",
-					componentRepoId: 1,
+					apiRepoId: 1,
 					iconClass: "",
 					canHasChildren: true,
 					properties: []
@@ -376,7 +376,7 @@ describe("ui-view/editor/FocusBox", () => {
 					widgetId: 2,
 					widgetCode: "0002",
 					widgetName: "Widget2",
-					componentRepoId: 1,
+					apiRepoId: 1,
 					iconClass: "",
 					canHasChildren: true,
 					properties: []
@@ -387,7 +387,7 @@ describe("ui-view/editor/FocusBox", () => {
 					widgetId: 2,
 					widgetCode: "0002",
 					widgetName: "Widget2",
-					componentRepoId: 1,
+					apiRepoId: 1,
 					iconClass: "",
 					canHasChildren: true,
 					properties: []
@@ -417,7 +417,7 @@ describe("ui-view/editor/FocusBox", () => {
 					widgetId: 1,
 					widgetCode: "0001",
 					widgetName: "Widget1",
-					componentRepoId: 1,
+					apiRepoId: 1,
 					iconClass: "",
 					canHasChildren: true,
 					properties: []
@@ -428,7 +428,7 @@ describe("ui-view/editor/FocusBox", () => {
 					widgetId: 2,
 					widgetCode: "0002",
 					widgetName: "Widget2",
-					componentRepoId: 1,
+					apiRepoId: 1,
 					iconClass: "",
 					canHasChildren: true,
 					properties: []
@@ -439,7 +439,7 @@ describe("ui-view/editor/FocusBox", () => {
 					widgetId: 2,
 					widgetCode: "0002",
 					widgetName: "Widget2",
-					componentRepoId: 1,
+					apiRepoId: 1,
 					iconClass: "",
 					canHasChildren: true,
 					properties: []
@@ -468,7 +468,7 @@ describe("ui-view/editor/FocusBox", () => {
 					widgetId: 1,
 					widgetCode: "0001",
 					widgetName: "Widget1",
-					componentRepoId: 1,
+					apiRepoId: 1,
 					iconClass: "",
 					canHasChildren: true,
 					properties: []
@@ -479,7 +479,7 @@ describe("ui-view/editor/FocusBox", () => {
 					widgetId: 2,
 					widgetCode: "0002",
 					widgetName: "Widget2",
-					componentRepoId: 1,
+					apiRepoId: 1,
 					iconClass: "",
 					canHasChildren: true,
 					properties: []
