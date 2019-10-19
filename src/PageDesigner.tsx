@@ -1,5 +1,6 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
 import icache from "@dojo/framework/core/middleware/icache";
+import cache from "@dojo/framework/core/middleware/cache";
 
 import * as css from "./PageDesigner.m.css";
 import * as c from "bootstrap-classes";
@@ -17,6 +18,7 @@ import * as blocklang from "designer-core/blocklang";
 
 import { getPageModelProcess } from "./processes/uiProcesses";
 import { loadCSS } from "./utils/fg-loadcss/loadCSS";
+import onloadCSS from "./utils/fg-loadcss/onloadCSS";
 
 export interface PageDesignerProperties {
 	user?: User; // 如果是匿名用户，则值为 null
@@ -27,11 +29,11 @@ export interface PageDesignerProperties {
 	urls: RequestUrl;
 }
 
-const factory = create({ icache, store }).properties<PageDesignerProperties>();
+const factory = create({ icache, store, cache }).properties<PageDesignerProperties>();
 
 // 注意，根据单一职责原则，以及参数宜集中不宜分散的原则，在调用 PageDesigner 只有一个设置参数入口，
 // 就是通过 PageDesignerProperties，不允许直接设置 config 对象。
-export default factory(function PageDesigner({ properties, middleware: { icache, store } }) {
+export default factory(function PageDesigner({ properties, middleware: { icache, store, cache } }) {
 	const { user, project, page, permission, pathes, urls } = properties();
 	const { executor, get, path } = store;
 
@@ -61,7 +63,16 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 	} else {
 		// 获取完依赖之后要加载相应的 js 脚本
 		// 去除掉标准库，因为已默认引用标准库
-		loadExternalResources(ideRepos.filter((item) => item.std === false));
+		const externalResourcesLoaded = cache.get<boolean>("externalResourcesLoaded") || false;
+		if (!externalResourcesLoaded) {
+			let loadCount = 0;
+			loadExternalResources(ideRepos.filter((item) => item.std === false), () => {
+				loadCount++;
+				if (loadCount === 2) {
+					cache.set("externalResourcesLoaded", true);
+				}
+			});
+		}
 	}
 
 	let editMode = icache.getOrSet<EditMode>("editMode", "Preview");
@@ -93,12 +104,13 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 					icache.set("activeView", activeView);
 				}}
 			/>
-			{editMode === "Preview" ? <Preview /> : activeView === "ui" ? <UIView /> : <BehaviorView />}
+			<div classes={[css.container]}>
+				{editMode === "Preview" ? <Preview /> : activeView === "ui" ? <UIView /> : <BehaviorView />}
+			</div>
 		</div>
 	);
 });
 
-const cssLoaded: any = {};
 /**
  * 加载外部的 javascript 文件和 css 文件
  *
@@ -107,7 +119,7 @@ const cssLoaded: any = {};
  *
  * @param ideRepos
  */
-function loadExternalResources(ideRepos: ComponentRepo[]) {
+function loadExternalResources(ideRepos: ComponentRepo[], loadSuccess: (resourceType: "js" | "css") => void) {
 	console.log("config.externalScriptAndCssWebsite:", config.externalScriptAndCssWebsite);
 	if (!ideRepos) {
 		console.log("ideRepos 为 undefined");
@@ -125,18 +137,28 @@ function loadExternalResources(ideRepos: ComponentRepo[]) {
 	scriptjs.ready("extension_js", () => {
 		console.log("extension js ready");
 		blocklang.watchingWidgetInstanceMap(widgetInstanceMap);
+		loadSuccess("js");
 	});
 
 	console.log("ide repos", ideRepos);
 
 	// 加载 css 文件
+	const cssFileCount = ideRepos.length;
+	console.log(`共需加载 ${cssFileCount} 个 css 文件。`);
+	let loadedCount = 0;
 	ideRepos.forEach((item) => {
 		const cssHref = `${config.externalScriptAndCssWebsite}/packages/${item.gitRepoWebsite}/${item.gitRepoOwner}/${item.gitRepoName}/${item.version}/main.bundle.css`;
-		if (!cssLoaded[cssHref]) {
-			// 如果已经加载过，则不重复加载
-			// FIXME: 添加此逻辑之后，同一个 css 文件依然会加载两次, 查找原因。
-			loadCSS(cssHref);
-			cssLoaded[cssHref] = true;
-		}
+		// 如果已经加载过，则不重复加载
+		// FIXME: 添加此逻辑之后，firefox 中同一个 css 文件依然会加载两次, 查找原因。
+		const stylesheet = loadCSS(cssHref);
+		console.log(onloadCSS);
+		onloadCSS(stylesheet, () => {
+			loadedCount++;
+			console.log(`加载第 ${loadedCount} 个 css 文件。`);
+			if (loadedCount === cssFileCount) {
+				console.log(`全部加载完成，共加载 ${loadedCount} 个文件。`);
+				loadSuccess("css");
+			}
+		});
 	});
 }
