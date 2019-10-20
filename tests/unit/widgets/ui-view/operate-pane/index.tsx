@@ -17,7 +17,9 @@ describe("ui-view/operate-pane", () => {
 
 		h.expect(() => (
 			<div key="root" classes={[css.root]} styles={{ right: "0px", top: "0px" }}>
-				<Header />
+				<div key="header">
+					<Header />
+				</div>
 				<ul classes={[c.nav, "nav-fill"]}>
 					<li classes={[c.nav_item]}>
 						<a key="nav-widgets" classes={[c.nav_link, c.active]} href="#" onclick={undefined}>
@@ -40,7 +42,9 @@ describe("ui-view/operate-pane", () => {
 
 		h.expect(() => (
 			<div key="root" classes={[css.root]} styles={{ right: "0px", top: "0px" }}>
-				<Header />
+				<div key="header">
+					<Header />
+				</div>
 				<ul classes={[c.nav, "nav-fill"]}>
 					<li classes={[c.nav_item]}>
 						<a key="nav-widgets" classes={[c.nav_link, c.active]} href="#" onclick={undefined}>
@@ -61,7 +65,9 @@ describe("ui-view/operate-pane", () => {
 
 		h.expect(() => (
 			<div key="root" classes={[css.root]} styles={{ right: "0px", top: "0px" }}>
-				<Header />
+				<div key="header">
+					<Header />
+				</div>
 				<ul classes={[c.nav, "nav-fill"]}>
 					<li classes={[c.nav_item]}>
 						<a key="nav-widgets" classes={[c.nav_link, c.text_muted]} href="#" onclick={() => {}}>
@@ -84,7 +90,9 @@ describe("ui-view/operate-pane", () => {
 
 		h.expect(() => (
 			<div key="root" classes={[css.root]} styles={{ right: "0px", top: "0px" }}>
-				<Header />
+				<div key="header">
+					<Header />
+				</div>
 				<ul classes={[c.nav, "nav-fill"]}>
 					<li classes={[c.nav_item]}>
 						<a key="nav-widgets" classes={[c.nav_link, c.active]} href="#" onclick={undefined}>
@@ -106,7 +114,9 @@ describe("ui-view/operate-pane", () => {
 
 		h.expect(() => (
 			<div key="root" classes={[css.root]} styles={{ right: "0px", top: "0px" }}>
-				<Header />
+				<div key="header">
+					<Header />
+				</div>
 				<ul classes={[c.nav, "nav-fill"]}>
 					<li classes={[c.nav_item]}>
 						<a key="nav-widgets" classes={[c.nav_link, c.active]} href="#" onclick={undefined}>
