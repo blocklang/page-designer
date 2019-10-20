@@ -205,7 +205,7 @@ describe("ui-view/editor/FocusBox", () => {
 							disabled={false}
 							onclick={() => {}}
 						>
-							<FontAwesomeIcon icon="step-forward" />
+							<FontAwesomeIcon icon="step-backward" />
 						</button>
 						<button
 							key="move-next"
@@ -215,7 +215,7 @@ describe("ui-view/editor/FocusBox", () => {
 							disabled={false}
 							onclick={() => {}}
 						>
-							<FontAwesomeIcon icon="step-backward" />
+							<FontAwesomeIcon icon="step-forward" />
 						</button>
 						<button
 							key="remove"
@@ -288,7 +288,7 @@ describe("ui-view/editor/FocusBox", () => {
 							disabled
 							onclick={undefined}
 						>
-							<FontAwesomeIcon icon="step-forward" />
+							<FontAwesomeIcon icon="step-backward" />
 						</button>
 						<button
 							key="move-next"
@@ -298,7 +298,7 @@ describe("ui-view/editor/FocusBox", () => {
 							disabled
 							onclick={undefined}
 						>
-							<FontAwesomeIcon icon="step-backward" />
+							<FontAwesomeIcon icon="step-forward" />
 						</button>
 						<button
 							key="remove"
