@@ -47,7 +47,7 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 	}
 
 	const savedProject = get(path("project"));
-	console.log("saved project is:", savedProject);
+
 	// 避免重复设置或重复请求远程数据
 	if (!savedProject || savedProject.id !== project.id) {
 		// 在 store 中存储项目基本信息
@@ -135,12 +135,10 @@ function loadExternalResources(ideRepos: ComponentRepo[], loadSuccess: (resource
 	scriptjs(jsUrls, "extension_js");
 	// dojo 支持 single-bundle 命令
 	scriptjs.ready("extension_js", () => {
-		console.log("extension js ready");
+		console.log("第三方 js 库加载完毕。");
 		blocklang.watchingWidgetInstanceMap(widgetInstanceMap);
 		loadSuccess("js");
 	});
-
-	console.log("ide repos", ideRepos);
 
 	// 加载 css 文件
 	const cssFileCount = ideRepos.length;
@@ -151,7 +149,6 @@ function loadExternalResources(ideRepos: ComponentRepo[], loadSuccess: (resource
 		// 如果已经加载过，则不重复加载
 		// FIXME: 添加此逻辑之后，firefox 中同一个 css 文件依然会加载两次, 查找原因。
 		const stylesheet = loadCSS(cssHref);
-		console.log(onloadCSS);
 		onloadCSS(stylesheet, () => {
 			loadedCount++;
 			console.log(`加载第 ${loadedCount} 个 css 文件。`);

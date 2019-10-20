@@ -112,8 +112,6 @@ function renderWidget(widget: AttachedWidget, index: number): WNode {
 	const firstChildIndex = index + 1;
 	let childWNodes: WNode[] = renderChildWidgets(firstChildIndex, getChildrenIndex(widget.id, firstChildIndex));
 
-	console.log("widgetType is:", widgetType);
-
 	return w(widgetType, properties, childWNodes);
 }
 
