@@ -59,8 +59,9 @@ const insertWidgetsCommand = commandFactory<{ widgets: Widget[] }>(({ get, at, p
 	const result = [];
 	for (let i = 0; i < widgets.length; i++) {
 		const widget = widgets[i];
+		// 此处通过展开生成一个新对象，否则会导致在 store 中的数组里面存储的是同一个对象的引用。
+		const attachedWidget = { ...widget } as AttachedWidget;
 		// 为传入的 widgets 补充 id 和 parentId 信息，其中 id 的值为 uuid
-		const attachedWidget = widget as AttachedWidget;
 		attachedWidget.id = uuid().replace(/-/g, "");
 		attachedWidget.parentId = parentId;
 
