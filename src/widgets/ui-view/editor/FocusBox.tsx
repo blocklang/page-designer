@@ -74,7 +74,7 @@ export default factory(function FocusBox({ properties, middleware: { store } }) 
 							}
 							disabled={disableMovePreviousButton}
 						>
-							<FontAwesomeIcon icon="step-forward" />
+							<FontAwesomeIcon icon="step-backward" />
 						</button>
 						{/*后移部件*/}
 						<button
@@ -91,7 +91,7 @@ export default factory(function FocusBox({ properties, middleware: { store } }) 
 							}
 							disabled={disableMoveNextButton}
 						>
-							<FontAwesomeIcon icon="step-backward" />
+							<FontAwesomeIcon icon="step-forward" />
 						</button>
 						{/*删除部件*/}
 						<button
