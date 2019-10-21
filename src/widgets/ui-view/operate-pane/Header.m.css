@@ -1,11 +1,17 @@
 .root {
-	/*暂不支持移动
-    cursor: move;
-    */
+	cursor: move;
 	background-color: #e9ecef;
 }
 
 .focusWidgetPath {
 	padding: 0.2rem 1rem;
-	margin-bottom: 0.4rem;
+	margin-bottom: 0px;
+}
+
+.breadcrumbItem + .breadcrumbItem {
+	padding-left: 0.2rem;
+}
+
+.breadcrumbItem + .breadcrumbItem::before {
+	padding-right: 0.2rem;
 }
