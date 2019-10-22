@@ -48,11 +48,7 @@ export default factory(function Header({ properties, middleware: { store } }) {
 										href="#"
 										onclick={(event: MouseEvent) => {
 											const activeWidgetId = item.id;
-											// FIXME: 将 dimensions 分开传，需要换一个 process
-											executor(activeWidgetProcess)({
-												activeWidgetId,
-												activeWidgetDimensions: {} as any
-											});
+											executor(activeWidgetProcess)({ activeWidgetId });
 										}}
 									>
 										{item.widgetName}

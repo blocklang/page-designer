@@ -10,30 +10,27 @@ import { getAllChildCount, getPreviousIndex, getNextIndex, getParentIndex } from
 import { DimensionResults } from "@dojo/framework/core/meta/Dimensions";
 import { ChangedPropertyValue } from "../interfaces";
 
-const activeWidgetCommand = commandFactory<{ activeWidgetId: string; activeWidgetDimensions: DimensionResults }>(
-	({ get, path, payload: { activeWidgetId, activeWidgetDimensions } }) => {
-		const pageWidgets = get(path("pageModel", "widgets"));
-		let selectedWidgetIndex = findIndex(pageWidgets, (item) => item.id === activeWidgetId);
-		// 如果值为 -1，说明根据 id 没有找到，则先设置为选中根部件
-		if (selectedWidgetIndex < 0) {
-			console.error("设置获取焦点的部件时，在页面的部件列表中没有找到该部件");
-			selectedWidgetIndex = 0;
-		}
-		return [
-			replace(path("selectedWidgetIndex"), selectedWidgetIndex),
-			replace(path("activeWidgetDimensions"), activeWidgetDimensions)
-		];
+const activeWidgetCommand = commandFactory<{ activeWidgetId: string }>(({ get, path, payload: { activeWidgetId } }) => {
+	const pageWidgets = get(path("pageModel", "widgets"));
+	let selectedWidgetIndex = findIndex(pageWidgets, (item) => item.id === activeWidgetId);
+	// 如果值为 -1，说明根据 id 没有找到，则先设置为选中根部件
+	if (selectedWidgetIndex < 0) {
+		console.error("设置获取焦点的部件时，在页面的部件列表中没有找到该部件");
+		selectedWidgetIndex = 0;
+	}
+	return [replace(path("selectedWidgetIndex"), selectedWidgetIndex)];
+});
+
+const changeActiveWidgetDimensionsCommand = commandFactory<{ activeWidgetDimensions: DimensionResults }>(
+	({ path, payload: { activeWidgetDimensions } }) => {
+		return [replace(path("activeWidgetDimensions"), activeWidgetDimensions)];
 	}
 );
 
 const highlightWidgetCommand = commandFactory<{
-	highlightWidgetId?: string;
-	highlightWidgetDimensions?: DimensionResults;
+	highlightWidgetId: string;
+	highlightWidgetDimensions: DimensionResults;
 }>(({ get, path, payload: { highlightWidgetId, highlightWidgetDimensions } }) => {
-	if (!highlightWidgetId) {
-		return [remove(path("highlightWidgetIndex")), remove(path("highlightWidgetDimensions"))];
-	}
-
 	const pageWidgets = get(path("pageModel", "widgets"));
 	let highlightWidgetIndex = findIndex(pageWidgets, (item) => item.id === highlightWidgetId);
 	// 如果值为 -1，说明根据 id 没有找到，则先设置为高亮根部件
@@ -45,6 +42,10 @@ const highlightWidgetCommand = commandFactory<{
 		replace(path("highlightWidgetIndex"), highlightWidgetIndex),
 		replace(path("highlightWidgetDimensions"), highlightWidgetDimensions)
 	];
+});
+
+const unhighlightWidgetCommand = commandFactory(({ get, path }) => {
+	return [remove(path("highlightWidgetIndex")), remove(path("highlightWidgetDimensions"))];
 });
 
 const insertWidgetsCommand = commandFactory<{ widgets: Widget[] }>(({ get, at, path, state, payload: { widgets } }) => {
@@ -353,7 +354,11 @@ const redoCallback: ProcessCallback = () => ({
 export const getPageModelProcess = createProcess("get-page-model", [getPageModelCommand]);
 export const savePageModelProcess = createProcess("save-page-model", [savePageModelCommand]);
 export const activeWidgetProcess = createProcess("active-widget", [activeWidgetCommand]);
+export const changeActiveWidgetDimensionsProcess = createProcess("change-active-widget-dimensions", [
+	changeActiveWidgetDimensionsCommand
+]);
 export const highlightWidgetProcess = createProcess("highlight-widget", [highlightWidgetCommand]);
+export const unhighlightWidgetProcess = createProcess("unhighlight-widget", [unhighlightWidgetCommand]);
 export const insertWidgetsProcess = createProcess("insert-widgets", [insertWidgetsCommand], uiHistoryManager.callback);
 export const changeActiveWidgetPropertiesProcess = createProcess("change-active-widget-properties", [
 	changeActiveWidgetPropertiesCommand

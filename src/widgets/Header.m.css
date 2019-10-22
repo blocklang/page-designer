@@ -2,7 +2,7 @@
 	left: 0px;
 	right: 0px;
 	top: 0px;
-	/*z-index: 9999;*/
+	z-index: 9999;
 	border-bottom: 1px solid #cccccc;
 	font-size: 1em;
 }
