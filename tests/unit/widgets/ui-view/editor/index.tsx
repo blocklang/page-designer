@@ -103,8 +103,10 @@ describe("ui-view/editor", () => {
 					widget={widget}
 					originalProperties={{ onLoad: () => {} }} // 原始属性值
 					extendProperties={{
-						onFocus: () => {},
+						onFocusing: () => {},
+						onFocused: () => {},
 						onHighlight: () => {},
+						onUnhighlight: () => {},
 						autoFocus: () => true
 					}}
 					// 原始属性的值，是必须要展开的
@@ -253,8 +255,10 @@ describe("ui-view/editor", () => {
 					widget={pageWidget}
 					originalProperties={{ onLoad: () => {} }} // 原始属性值
 					extendProperties={{
-						onFocus: () => {},
+						onFocusing: () => {},
+						onFocused: () => {},
 						onHighlight: () => {},
+						onUnhighlight: () => {},
 						autoFocus: () => false
 					}}
 					// 原始属性的值，是必须要展开的
@@ -266,8 +270,10 @@ describe("ui-view/editor", () => {
 						widget={containerWidget1}
 						originalProperties={{}}
 						extendProperties={{
-							onFocus: () => {},
+							onFocusing: () => {},
+							onFocused: () => {},
 							onHighlight: () => {},
+							onUnhighlight: () => {},
 							autoFocus: () => false
 						}}
 					>
@@ -276,8 +282,10 @@ describe("ui-view/editor", () => {
 							widget={containerWidget11}
 							originalProperties={{}}
 							extendProperties={{
-								onFocus: () => {},
+								onFocusing: () => {},
+								onFocused: () => {},
 								onHighlight: () => {},
+								onUnhighlight: () => {},
 								autoFocus: () => false
 							}}
 						></Container>
@@ -288,8 +296,10 @@ describe("ui-view/editor", () => {
 						widget={containerWidget2}
 						originalProperties={{}}
 						extendProperties={{
-							onFocus: () => {},
+							onFocusing: () => {},
+							onFocused: () => {},
 							onHighlight: () => {},
+							onUnhighlight: () => {},
 							autoFocus: () => false
 						}}
 					/>
@@ -390,8 +400,10 @@ describe("ui-view/editor", () => {
 					widget={widget}
 					originalProperties={{ onLoad: () => {} }} // 原始属性值
 					extendProperties={{
-						onFocus: () => {},
+						onFocusing: () => {},
+						onFocused: () => {},
 						onHighlight: () => {},
+						onUnhighlight: () => {},
 						autoFocus: () => false
 					}}
 					// 原始属性的值，是必须要展开的
@@ -494,8 +506,10 @@ describe("ui-view/editor", () => {
 					widget={widget}
 					originalProperties={{ onLoad: () => {} }} // 原始属性值
 					extendProperties={{
-						onFocus: () => {},
+						onFocusing: () => {},
+						onFocused: () => {},
 						onHighlight: () => {},
+						onUnhighlight: () => {},
 						autoFocus: () => false
 					}}
 					// 原始属性的值，是必须要展开的
@@ -577,8 +591,10 @@ describe("ui-view/editor", () => {
 					widget={widget}
 					originalProperties={{ onLoad: () => {} }} // 原始属性值
 					extendProperties={{
-						onFocus: () => {},
+						onFocusing: () => {},
+						onFocused: () => {},
 						onHighlight: () => {},
+						onUnhighlight: () => {},
 						autoFocus: () => false
 					}}
 					// 原始属性的值，是必须要展开的

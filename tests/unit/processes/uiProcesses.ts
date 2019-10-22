@@ -18,7 +18,8 @@ import {
 	savePageModelProcess,
 	undoProcess,
 	redoProcess,
-	changeActiveWidgetPropertiesProcess
+	changeActiveWidgetPropertiesProcess,
+	unhighlightWidgetProcess
 } from "../../../src/processes/uiProcesses";
 import { add } from "@dojo/framework/stores/state/operations";
 import { afterEach } from "intern/lib/interfaces/tdd";
@@ -161,7 +162,7 @@ describe("processes/uiProcesses", () => {
 		assert.isNotNull(store.get(store.path("highlightWidgetDimensions")));
 	});
 
-	it("highlightWidgetProcess - remove highlight", () => {
+	it("unhighlightWidgetProcess - remove highlight", () => {
 		store.apply([
 			add(store.path("pageModel", "widgets"), [
 				{
@@ -195,7 +196,7 @@ describe("processes/uiProcesses", () => {
 		assert.equal(store.get(store.path("highlightWidgetIndex")), 0);
 		assert.isNotNull(store.get(store.path("highlightWidgetDimensions")));
 
-		highlightWidgetProcess(store)({});
+		unhighlightWidgetProcess(store)({});
 		assert.isUndefined(store.get(store.path("highlightWidgetIndex")));
 		assert.isUndefined(store.get(store.path("highlightWidgetDimensions")));
 	});
