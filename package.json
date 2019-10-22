@@ -28,18 +28,18 @@
     "diff": "^4.0.1",
     "dojo-fontawesome": "~0.0.2",
     "scriptjs": "^2.5.9",
-    "std-ide-widget": "~0.0.3-alpha.15",
+    "std-ide-widget": "~0.0.3-alpha.17",
     "string-format": "^2.0.0",
     "tslib": "~1.9.1"
   },
   "peerDependencies": {
     "@dojo/framework": "^6.0.3",
     "bootstrap": "^4.3.1",
-    "designer-core": "~0.0.1-alpha.14"
+    "designer-core": "~0.0.1-alpha.16"
   },
   "devDependencies": {
     "@dojo/cli": "^6.0.0",
-    "@dojo/cli-build-app": "^6.0.8",
+    "@dojo/cli-build-app": "^6.0.9",
     "@dojo/cli-build-widget": "^6.0.2",
     "@dojo/cli-test-intern": "^6.0.1",
     "@dojo/framework": "^6.0.3",
