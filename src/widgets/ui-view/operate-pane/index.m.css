@@ -12,3 +12,7 @@
 	margin-right: 0.2rem;
 	user-select: none;
 }
+
+.tabBarActive {
+	border-bottom: 1px solid #007bff;
+}

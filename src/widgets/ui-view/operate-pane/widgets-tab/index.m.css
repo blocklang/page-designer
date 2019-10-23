@@ -1,0 +1,68 @@
+.searchInput {
+	border-radius: unset;
+	border-left: none;
+	border-right: none;
+}
+
+.repoNameBar {
+	background-color: #e9ecef;
+	cursor: pointer;
+}
+
+.categoryNameBar {
+	cursor: pointer;
+}
+
+.widgetGroup {
+	list-style-type: none;
+	padding-left: 0;
+
+	margin-right: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+
+	overflow: hidden;
+	text-align: center;
+	-webkit-tap-highlight-color: transparent;
+
+	border-top: 1px solid #eee;
+}
+
+.widgetItem {
+	float: left;
+	width: 25%;
+	height: 0;
+	padding-bottom: 25%;
+	box-sizing: border-box;
+	border-bottom: 1px solid #eee;
+	position: relative;
+	cursor: pointer;
+}
+
+.widgetItem:hover {
+	background-color: #f3f3f3;
+}
+
+.widgetItem:nth-child(n + 1) {
+	border-right: 1px solid #eee;
+}
+
+.widgetItemIcon {
+	width: 60px;
+	height: 40px;
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+.widgetItemlabel {
+	position: absolute;
+	bottom: 0.5em;
+	left: 0.5em;
+	right: 0.5em;
+	font-size: 0.8em;
+	color: #555;
+	max-height: 2.5em;
+}

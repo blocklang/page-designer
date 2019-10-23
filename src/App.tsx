@@ -18,6 +18,8 @@ import { faLevelUpAlt } from "@fortawesome/free-solid-svg-icons/faLevelUpAlt";
 import { faStepForward } from "@fortawesome/free-solid-svg-icons/faStepForward";
 import { faStepBackward } from "@fortawesome/free-solid-svg-icons/faStepBackward";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons/faTrashAlt";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons/faAngleDown";
+import { faAngleRight } from "@fortawesome/free-solid-svg-icons/faAngleRight";
 
 library.add(
 	faArrowAltCircleLeft,
@@ -30,7 +32,9 @@ library.add(
 	faLevelUpAlt,
 	faStepForward,
 	faStepBackward,
-	faTrashAlt
+	faTrashAlt,
+	faAngleDown,
+	faAngleRight
 );
 
 const factory = create({ theme });

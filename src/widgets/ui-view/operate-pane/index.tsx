@@ -69,7 +69,11 @@ export default factory(function UIOperatePane({ properties, middleware: { icache
 				<li classes={[c.nav_item]}>
 					<a
 						key="nav-widgets"
-						classes={[c.nav_link, activeNav === "widgets" ? c.active : c.text_muted]}
+						classes={[
+							c.nav_link,
+							activeNav === "widgets" ? c.active : c.text_muted,
+							activeNav === "widgets" ? css.tabBarActive : undefined
+						]}
 						href="#"
 						onclick={
 							activeNav === "widgets"
@@ -85,7 +89,12 @@ export default factory(function UIOperatePane({ properties, middleware: { icache
 				<li classes={[c.nav_item]}>
 					<a
 						key="nav-properties"
-						classes={[c.nav_link, activeNav === "properties" ? c.active : c.text_muted]}
+						classes={[
+							c.nav_link,
+							activeNav === "properties" ? c.active : c.text_muted,
+							,
+							activeNav === "properties" ? css.tabBarActive : undefined
+						]}
 						href="#"
 						onclick={
 							activeNav === "properties"

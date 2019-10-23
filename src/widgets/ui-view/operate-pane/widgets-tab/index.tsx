@@ -6,6 +6,9 @@ import { getWidgetsProcess } from "../../../../processes/widgetProcesses";
 import { WidgetRepo } from "../../../../interfaces";
 import { deepMixin } from "@dojo/framework/core/util";
 import { insertWidgetsProcess } from "../../../../processes/uiProcesses";
+import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
+import * as css from "./index.m.css";
+
 export interface WidgetsTabProperties {}
 
 const factory = create({ store, icache }).properties<WidgetsTabProperties>();
@@ -47,11 +50,11 @@ export default factory(function WidgetsTab({ properties, middleware: { store, ic
 	// 2. 如果直接写为“未分类”，在国际化时，使用 _ 更直观
 	return (
 		<div>
-			<div classes={[c.m_1]}>
+			<div classes={[c.mt_1]}>
 				<input
 					key="search"
 					value={searchText}
-					classes={[c.form_control]}
+					classes={[c.form_control, c.form_control_sm, css.searchInput]}
 					placeholder="搜索部件"
 					oninput={(event: KeyboardEvent) => {
 						const target = event.target as HTMLInputElement;
@@ -66,42 +69,85 @@ export default factory(function WidgetsTab({ properties, middleware: { store, ic
 							请在 <strong>DEPENDENCE.json</strong> 中添加部件仓库
 						</p>
 					) : (
-						filterWidgetRepos.map((repo) => (
-							<div key={`${repo.apiRepoId}`}>
-								<div>{repo.apiRepoName}</div>
-								<div>
-									{repo.widgetCategories.length === 0 ? (
-										<p classes={[c.text_muted, c.text_center]}>无部件</p>
-									) : (
-										repo.widgetCategories.map((category) => (
-											<div key={category.name}>
-												<div>{category.name === "_" ? "未分类" : category.name}</div>
-												<div>
-													<ul>
-														{category.widgets.map((widget) => (
-															<li
-																key={`${widget.widgetId}`}
-																onclick={(event: MouseEvent) => {
-																	// 注意，这里必须是复制的 widget，不然添加的新的同类部件都指向同一个对象。
-																	// FIXME: const copyedWidget = { ...widget }; // 待测试
-
-																	widget.apiRepoId = repo.apiRepoId;
-																	executor(insertWidgetsProcess)({
-																		widgets: [widget]
-																	});
+						filterWidgetRepos.map((repo) => {
+							// 默认是展开的
+							const apiRepoFold = icache.getOrSet<boolean>(`fold-repo-${repo.apiRepoId}`, false);
+							return (
+								<div key={`${repo.apiRepoId}`}>
+									<div
+										classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]}
+										onclick={() => {
+											icache.set<boolean>(`fold-repo-${repo.apiRepoId}`, !apiRepoFold);
+										}}
+									>
+										{apiRepoFold ? (
+											<FontAwesomeIcon icon="angle-right" />
+										) : (
+											<FontAwesomeIcon icon="angle-down" />
+										)}
+										<span classes={[c.ml_1]}>{repo.apiRepoName}</span>
+									</div>
+									{!apiRepoFold && (
+										<div>
+											{repo.widgetCategories.length === 0 ? (
+												<p classes={[c.text_muted, c.text_center]}>无部件</p>
+											) : (
+												repo.widgetCategories.map((category) => {
+													const categoryFold = icache.getOrSet<boolean>(
+														`fold-category-${repo.apiRepoId}`,
+														false
+													);
+													return (
+														<div key={category.name}>
+															<div
+																classes={[c.pl_1, c.text_muted, css.categoryNameBar]}
+																onclick={() => {
+																	icache.set<boolean>(
+																		`fold-category-${repo.apiRepoId}`,
+																		!categoryFold
+																	);
 																}}
 															>
-																<span>{widget.widgetName}</span>
-															</li>
-														))}
-													</ul>
-												</div>
-											</div>
-										))
+																{categoryFold ? (
+																	<FontAwesomeIcon icon="angle-right" />
+																) : (
+																	<FontAwesomeIcon icon="angle-down" />
+																)}
+																<span classes={[c.ml_1]}>
+																	{category.name === "_" ? "未分类" : category.name}
+																</span>
+															</div>
+															{!categoryFold && (
+																<div>
+																	<ul classes={[css.widgetGroup]}>
+																		{category.widgets.map((widget) => (
+																			<li
+																				key={`${widget.widgetId}`}
+																				classes={[css.widgetItem]}
+																				onclick={(event: MouseEvent) => {
+																					widget.apiRepoId = repo.apiRepoId;
+																					executor(insertWidgetsProcess)({
+																						widgets: [widget]
+																					});
+																				}}
+																			>
+																				<span classes={[css.widgetItemlabel]}>
+																					{widget.widgetName}
+																				</span>
+																			</li>
+																		))}
+																	</ul>
+																</div>
+															)}
+														</div>
+													);
+												})
+											)}
+										</div>
 									)}
 								</div>
-							</div>
-						))
+							);
+						})
 					)
 				) : (
 					<div classes={[c.text_muted, c.text_center]}>
