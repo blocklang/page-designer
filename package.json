@@ -24,7 +24,7 @@
     "@types/diff": "^4.0.2",
     "@types/scriptjs": "^0.0.2",
     "@types/string-format": "^2.0.0",
-    "bootstrap-classes": "~0.0.2",
+    "bootstrap-classes": "~0.0.3-alpha.1",
     "diff": "^4.0.1",
     "dojo-fontawesome": "~0.0.2",
     "scriptjs": "^2.5.9",
