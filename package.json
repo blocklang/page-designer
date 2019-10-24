@@ -30,7 +30,8 @@
     "scriptjs": "^2.5.9",
     "std-ide-widget": "~0.0.3-alpha.18",
     "string-format": "^2.0.0",
-    "tslib": "~1.9.1"
+    "tslib": "~1.9.1",
+    "@tanem/svg-injector": "^8.0.34"
   },
   "peerDependencies": {
     "@dojo/framework": "^6.0.3",
