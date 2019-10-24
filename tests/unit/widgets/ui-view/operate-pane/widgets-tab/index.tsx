@@ -1,7 +1,6 @@
 const { describe, it } = intern.getInterface("bdd");
 
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
-import createICacheMock from "@dojo/framework/testing/mocks/middleware/icache";
 import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 import { add, replace } from "@dojo/framework/stores/state/operations";
