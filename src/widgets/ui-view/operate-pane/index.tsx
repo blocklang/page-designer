@@ -31,8 +31,6 @@ export default factory(function UIOperatePane({ properties, middleware: { icache
 		dragTop += dragResults.delta.y;
 		dragRight -= dragResults.delta.x;
 
-		console.log("dragTop", dragTop, "dragRight", dragRight);
-
 		// 边界校验
 		// 注意，用户有时需要暂时移走属性面板，以查看设计区的全貌
 		// 所以，可以将属性面板的一部分移出视窗外
@@ -92,7 +90,6 @@ export default factory(function UIOperatePane({ properties, middleware: { icache
 						classes={[
 							c.nav_link,
 							activeNav === "properties" ? c.active : c.text_muted,
-							,
 							activeNav === "properties" ? css.tabBarActive : undefined
 						]}
 						href="#"

@@ -22,12 +22,22 @@ describe("ui-view/operate-pane", () => {
 				</div>
 				<ul classes={[c.nav, "nav-fill"]}>
 					<li classes={[c.nav_item]}>
-						<a key="nav-widgets" classes={[c.nav_link, c.active]} href="#" onclick={undefined}>
+						<a
+							key="nav-widgets"
+							classes={[c.nav_link, c.active, css.tabBarActive]}
+							href="#"
+							onclick={undefined}
+						>
 							部件
 						</a>
 					</li>
 					<li classes={[c.nav_item]}>
-						<a key="nav-properties" classes={[c.nav_link, c.text_muted]} href="#" onclick={() => {}}>
+						<a
+							key="nav-properties"
+							classes={[c.nav_link, c.text_muted, undefined]}
+							href="#"
+							onclick={() => {}}
+						>
 							属性
 						</a>
 					</li>
@@ -47,12 +57,22 @@ describe("ui-view/operate-pane", () => {
 				</div>
 				<ul classes={[c.nav, "nav-fill"]}>
 					<li classes={[c.nav_item]}>
-						<a key="nav-widgets" classes={[c.nav_link, c.active]} href="#" onclick={undefined}>
+						<a
+							key="nav-widgets"
+							classes={[c.nav_link, c.active, css.tabBarActive]}
+							href="#"
+							onclick={undefined}
+						>
 							部件
 						</a>
 					</li>
 					<li classes={[c.nav_item]}>
-						<a key="nav-properties" classes={[c.nav_link, c.text_muted]} href="#" onclick={() => {}}>
+						<a
+							key="nav-properties"
+							classes={[c.nav_link, c.text_muted, undefined]}
+							href="#"
+							onclick={() => {}}
+						>
 							属性
 						</a>
 					</li>
@@ -70,12 +90,22 @@ describe("ui-view/operate-pane", () => {
 				</div>
 				<ul classes={[c.nav, "nav-fill"]}>
 					<li classes={[c.nav_item]}>
-						<a key="nav-widgets" classes={[c.nav_link, c.text_muted]} href="#" onclick={() => {}}>
+						<a
+							key="nav-widgets"
+							classes={[c.nav_link, c.text_muted, undefined]}
+							href="#"
+							onclick={() => {}}
+						>
 							部件
 						</a>
 					</li>
 					<li classes={[c.nav_item]}>
-						<a key="nav-properties" classes={[c.nav_link, c.active]} href="#" onclick={undefined}>
+						<a
+							key="nav-properties"
+							classes={[c.nav_link, c.active, css.tabBarActive]}
+							href="#"
+							onclick={undefined}
+						>
 							属性
 						</a>
 					</li>
@@ -95,12 +125,22 @@ describe("ui-view/operate-pane", () => {
 				</div>
 				<ul classes={[c.nav, "nav-fill"]}>
 					<li classes={[c.nav_item]}>
-						<a key="nav-widgets" classes={[c.nav_link, c.active]} href="#" onclick={undefined}>
+						<a
+							key="nav-widgets"
+							classes={[c.nav_link, c.active, css.tabBarActive]}
+							href="#"
+							onclick={undefined}
+						>
 							部件
 						</a>
 					</li>
 					<li classes={[c.nav_item]}>
-						<a key="nav-properties" classes={[c.nav_link, c.text_muted]} href="#" onclick={() => {}}>
+						<a
+							key="nav-properties"
+							classes={[c.nav_link, c.text_muted, undefined]}
+							href="#"
+							onclick={() => {}}
+						>
 							属性
 						</a>
 					</li>
@@ -119,12 +159,22 @@ describe("ui-view/operate-pane", () => {
 				</div>
 				<ul classes={[c.nav, "nav-fill"]}>
 					<li classes={[c.nav_item]}>
-						<a key="nav-widgets" classes={[c.nav_link, c.active]} href="#" onclick={undefined}>
+						<a
+							key="nav-widgets"
+							classes={[c.nav_link, c.active, css.tabBarActive]}
+							href="#"
+							onclick={undefined}
+						>
 							部件
 						</a>
 					</li>
 					<li classes={[c.nav_item]}>
-						<a key="nav-properties" classes={[c.nav_link, c.text_muted]} href="#" onclick={() => {}}>
+						<a
+							key="nav-properties"
+							classes={[c.nav_link, c.text_muted, undefined]}
+							href="#"
+							onclick={() => {}}
+						>
 							属性
 						</a>
 					</li>

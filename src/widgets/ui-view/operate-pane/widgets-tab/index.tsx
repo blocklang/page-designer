@@ -46,7 +46,7 @@ export default factory(function WidgetsTab({ properties, middleware: { store, ic
 		);
 	}
 
-	const ideRepos = get(path("ideRepos"));
+	const ideRepos = get(path("ideRepos")) || [];
 
 	// 为什么使用 _ 表示未分类
 	// 1. 在 rust 语言中，使用 _ 模式来匹配任何值

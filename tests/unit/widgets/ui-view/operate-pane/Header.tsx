@@ -13,6 +13,7 @@ import { add } from "@dojo/framework/stores/state/operations";
 import { AttachedWidget } from "../../../../../src/interfaces";
 import { activeWidgetProcess } from "../../../../../src/processes/uiProcesses";
 import { stub } from "sinon";
+import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 
 describe("ui-view/operate-pane/Header", () => {
 	it("default properties", () => {
@@ -41,7 +42,8 @@ describe("ui-view/operate-pane/Header", () => {
 		const h = harness(() => <Header />, { middleware: [[store, mockStore]] });
 		h.expect(() => (
 			<div classes={[css.root]}>
-				<nav>
+				<FontAwesomeIcon icon="arrows-alt" classes={[c.text_muted, c.ml_1]} />
+				<nav classes={[c.d_inline_block]}>
 					<ol classes={[c.breadcrumb, css.focusWidgetPath]}>
 						<li key="fwp-1" classes={[c.breadcrumb_item, css.breadcrumbItem, c.active]}>
 							Page
@@ -84,7 +86,8 @@ describe("ui-view/operate-pane/Header", () => {
 		const h = harness(() => <Header />, { middleware: [[store, mockStore]] });
 		h.expect(() => (
 			<div classes={[css.root]}>
-				<nav>
+				<FontAwesomeIcon icon="arrows-alt" classes={[c.text_muted, c.ml_1]} />
+				<nav classes={[c.d_inline_block]}>
 					<ol classes={[c.breadcrumb, css.focusWidgetPath]}>
 						<li key="fwp-1" classes={[c.breadcrumb_item, css.breadcrumbItem]}>
 							<a href="#" onclick={() => {}}>

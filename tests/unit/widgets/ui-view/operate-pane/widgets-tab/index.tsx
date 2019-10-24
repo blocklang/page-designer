@@ -1,6 +1,7 @@
 const { describe, it } = intern.getInterface("bdd");
 
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
+import createICacheMock from "@dojo/framework/testing/mocks/middleware/icache";
 import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 import { add, replace } from "@dojo/framework/stores/state/operations";
@@ -8,9 +9,11 @@ import * as c from "bootstrap-classes";
 import { stub } from "sinon";
 
 import WidgetsTab from "../../../../../../src/widgets/ui-view/operate-pane/widgets-tab";
+import * as css from "../../../../../../src/widgets/ui-view/operate-pane/widgets-tab/index.m.css";
 import { State } from "../../../../../../src/interfaces";
 import { getWidgetsProcess } from "../../../../../../src/processes/widgetProcesses";
 import store from "../../../../../../src/store";
+import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 
 describe("ui-view/operate-pane/widgets-tab", () => {
 	it("No widget repo", () => {
@@ -20,8 +23,14 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 
 		h.expect(() => (
 			<div>
-				<div classes={[c.m_1]}>
-					<input key="search" classes={[c.form_control]} placeholder="搜索部件" oninput={() => {}} value="" />
+				<div classes={[c.mt_1]}>
+					<input
+						key="search"
+						classes={[c.form_control, c.form_control_sm, css.searchInput]}
+						placeholder="搜索部件"
+						oninput={() => {}}
+						value=""
+					/>
 				</div>
 				<div>
 					<div classes={[c.text_muted, c.text_center]}>
@@ -37,8 +46,14 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 		mockStore((path) => [add(path("widgetRepos"), [])]);
 		h.expect(() => (
 			<div>
-				<div classes={[c.m_1]}>
-					<input key="search" classes={[c.form_control]} placeholder="搜索部件" oninput={() => {}} value="" />
+				<div classes={[c.mt_1]}>
+					<input
+						key="search"
+						classes={[c.form_control, c.form_control_sm, css.searchInput]}
+						placeholder="搜索部件"
+						oninput={() => {}}
+						value=""
+					/>
 				</div>
 				<div>
 					<p classes={[c.text_muted, c.text_center]}>
@@ -61,21 +76,97 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 				{ apiRepoId: 2, apiRepoName: "widget api repo 2", widgetCategories: [] }
 			])
 		]);
-		// 如果 API 仓库下没有分类，则提示没有部件
+
 		h.expect(() => (
 			<div>
-				<div classes={[c.m_1]}>
-					<input key="search" classes={[c.form_control]} placeholder="搜索部件" oninput={() => {}} value="" />
+				<div classes={[c.mt_1]}>
+					<input
+						key="search"
+						classes={[c.form_control, c.form_control_sm, css.searchInput]}
+						placeholder="搜索部件"
+						oninput={() => {}}
+						value=""
+					/>
 				</div>
 				<div>
 					<div key="1">
-						<div>widget api repo 1</div>
+						<div classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
+							<FontAwesomeIcon icon="angle-down" />
+							<span classes={[c.ml_1]}>widget api repo 1</span>
+						</div>
 						<div>
 							<p classes={[c.text_muted, c.text_center]}>无部件</p>
 						</div>
 					</div>
 					<div key="2">
-						<div>widget api repo 2</div>
+						<div classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
+							<FontAwesomeIcon icon="angle-down" />
+							<span classes={[c.ml_1]}>widget api repo 2</span>
+						</div>
+						<div>
+							<p classes={[c.text_muted, c.text_center]}>无部件</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		));
+	});
+
+	it("fold repo pane", () => {
+		const processStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[getWidgetsProcess, processStub]]);
+
+		const h = harness(() => <WidgetsTab />, { middleware: [[store, mockStore]] });
+
+		// 加载完成，返回两个空的部件仓库
+		mockStore((path) => [
+			replace(path("widgetRepos"), [{ apiRepoId: 1, apiRepoName: "widget api repo 1", widgetCategories: [] }])
+		]);
+
+		h.trigger(`.${css.repoNameBar}`, "onclick");
+
+		// 如果 API 仓库下没有分类，则提示没有部件
+		h.expect(() => (
+			<div>
+				<div classes={[c.mt_1]}>
+					<input
+						key="search"
+						classes={[c.form_control, c.form_control_sm, css.searchInput]}
+						placeholder="搜索部件"
+						oninput={() => {}}
+						value=""
+					/>
+				</div>
+				<div>
+					<div key="1">
+						<div classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
+							<FontAwesomeIcon icon="angle-right" />
+							<span classes={[c.ml_1]}>widget api repo 1</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		));
+
+		h.trigger(`.${css.repoNameBar}`, "onclick");
+
+		h.expect(() => (
+			<div>
+				<div classes={[c.mt_1]}>
+					<input
+						key="search"
+						classes={[c.form_control, c.form_control_sm, css.searchInput]}
+						placeholder="搜索部件"
+						oninput={() => {}}
+						value=""
+					/>
+				</div>
+				<div>
+					<div key="1">
+						<div classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
+							<FontAwesomeIcon icon="angle-down" />
+							<span classes={[c.ml_1]}>widget api repo 1</span>
+						</div>
 						<div>
 							<p classes={[c.text_muted, c.text_center]}>无部件</p>
 						</div>
@@ -98,12 +189,21 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 
 		h.expect(() => (
 			<div>
-				<div classes={[c.m_1]}>
-					<input key="search" classes={[c.form_control]} placeholder="搜索部件" oninput={() => {}} value="" />
+				<div classes={[c.mt_1]}>
+					<input
+						key="search"
+						classes={[c.form_control, c.form_control_sm, css.searchInput]}
+						placeholder="搜索部件"
+						oninput={() => {}}
+						value=""
+					/>
 				</div>
 				<div>
 					<div key="1">
-						<div>widget api repo 1</div>
+						<div classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
+							<FontAwesomeIcon icon="angle-down" />
+							<span classes={[c.ml_1]}>widget api repo 1</span>
+						</div>
 						<div>
 							<p classes={[c.text_muted, c.text_center]}>无部件</p>
 						</div>
@@ -132,7 +232,8 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 									widgetId: 1,
 									widgetName: "widget 1",
 									iconClass: "",
-									canHasChildren: false
+									canHasChildren: false,
+									apiRepoId: 1
 								}
 							]
 						}
@@ -143,19 +244,139 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 
 		h.expect(() => (
 			<div>
-				<div classes={[c.m_1]}>
-					<input key="search" classes={[c.form_control]} placeholder="搜索部件" oninput={() => {}} value="" />
+				<div classes={[c.mt_1]}>
+					<input
+						key="search"
+						classes={[c.form_control, c.form_control_sm, css.searchInput]}
+						placeholder="搜索部件"
+						oninput={() => {}}
+						value=""
+					/>
 				</div>
 				<div>
 					<div key="1">
-						<div>widget api repo 1</div>
+						<div classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
+							<FontAwesomeIcon icon="angle-down" />
+							<span classes={[c.ml_1]}>widget api repo 1</span>
+						</div>
 						<div>
 							<div key="category 1">
-								<div>category 1</div>
+								<div classes={[c.pl_1, c.text_muted, css.categoryNameBar]} onclick={() => {}}>
+									<FontAwesomeIcon icon="angle-down" />
+									<span classes={[c.ml_1]}>category 1</span>
+								</div>
 								<div>
-									<ul>
-										<li key="1" onclick={() => {}}>
-											<span>widget 1</span>
+									<ul classes={[css.widgetGroup]}>
+										<li key="1" classes={[css.widgetItem]} onclick={() => {}}>
+											<svg classes={[css.widgetItemIcon]}>
+												<use href="#widget 1"></use>
+											</svg>
+											<span classes={[css.widgetItemlabel]}>widget 1</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		));
+	});
+
+	it("fold category pane", () => {
+		const processStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[getWidgetsProcess, processStub]]);
+		const h = harness(() => <WidgetsTab />, { middleware: [[store, mockStore]] });
+
+		mockStore((path) => [
+			replace(path("widgetRepos"), [
+				{
+					apiRepoId: 1,
+					apiRepoName: "widget api repo 1",
+					widgetCategories: [
+						{
+							name: "category 1",
+							widgets: [
+								{
+									widgetCode: "0001",
+									widgetId: 1,
+									widgetName: "widget 1",
+									iconClass: "",
+									canHasChildren: false,
+									apiRepoId: 1
+								}
+							]
+						}
+					]
+				}
+			])
+		]);
+
+		h.trigger(`.${css.categoryNameBar}`, "onclick");
+
+		h.expect(() => (
+			<div>
+				<div classes={[c.mt_1]}>
+					<input
+						key="search"
+						classes={[c.form_control, c.form_control_sm, css.searchInput]}
+						placeholder="搜索部件"
+						oninput={() => {}}
+						value=""
+					/>
+				</div>
+				<div>
+					<div key="1">
+						<div classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
+							<FontAwesomeIcon icon="angle-down" />
+							<span classes={[c.ml_1]}>widget api repo 1</span>
+						</div>
+						<div>
+							<div key="category 1">
+								<div classes={[c.pl_1, c.text_muted, css.categoryNameBar]} onclick={() => {}}>
+									<FontAwesomeIcon icon="angle-right" />
+									<span classes={[c.ml_1]}>category 1</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		));
+
+		// 切换
+		h.trigger(`.${css.categoryNameBar}`, "onclick");
+
+		h.expect(() => (
+			<div>
+				<div classes={[c.mt_1]}>
+					<input
+						key="search"
+						classes={[c.form_control, c.form_control_sm, css.searchInput]}
+						placeholder="搜索部件"
+						oninput={() => {}}
+						value=""
+					/>
+				</div>
+				<div>
+					<div key="1">
+						<div classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
+							<FontAwesomeIcon icon="angle-down" />
+							<span classes={[c.ml_1]}>widget api repo 1</span>
+						</div>
+						<div>
+							<div key="category 1">
+								<div classes={[c.pl_1, c.text_muted, css.categoryNameBar]} onclick={() => {}}>
+									<FontAwesomeIcon icon="angle-down" />
+									<span classes={[c.ml_1]}>category 1</span>
+								</div>
+								<div>
+									<ul classes={[css.widgetGroup]}>
+										<li key="1" classes={[css.widgetItem]} onclick={() => {}}>
+											<svg classes={[css.widgetItemIcon]}>
+												<use href="#widget 1"></use>
+											</svg>
+											<span classes={[css.widgetItemlabel]}>widget 1</span>
 										</li>
 									</ul>
 								</div>
@@ -186,7 +407,8 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 									widgetId: 1,
 									widgetName: "widget 1",
 									iconClass: "",
-									canHasChildren: false
+									canHasChildren: false,
+									apiRepoId: 1
 								}
 							]
 						}
@@ -197,19 +419,34 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 
 		h.expect(() => (
 			<div>
-				<div classes={[c.m_1]}>
-					<input key="search" classes={[c.form_control]} placeholder="搜索部件" oninput={() => {}} value="" />
+				<div classes={[c.mt_1]}>
+					<input
+						key="search"
+						classes={[c.form_control, c.form_control_sm, css.searchInput]}
+						placeholder="搜索部件"
+						oninput={() => {}}
+						value=""
+					/>
 				</div>
 				<div>
 					<div key="1">
-						<div>widget api repo 1</div>
+						<div classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
+							<FontAwesomeIcon icon="angle-down" />
+							<span classes={[c.ml_1]}>widget api repo 1</span>
+						</div>
 						<div>
 							<div key="_">
-								<div>未分类</div>
+								<div classes={[c.pl_1, c.text_muted, css.categoryNameBar]} onclick={() => {}}>
+									<FontAwesomeIcon icon="angle-down" />
+									<span classes={[c.ml_1]}>未分类</span>
+								</div>
 								<div>
-									<ul>
-										<li key="1" onclick={() => {}}>
-											<span>widget 1</span>
+									<ul classes={[css.widgetGroup]}>
+										<li key="1" classes={[css.widgetItem]} onclick={() => {}}>
+											<svg classes={[css.widgetItemIcon]}>
+												<use href="#widget 1"></use>
+											</svg>
+											<span classes={[css.widgetItemlabel]}>widget 1</span>
 										</li>
 									</ul>
 								</div>
@@ -240,7 +477,8 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 									widgetId: 1,
 									widgetName: "widget 1",
 									iconClass: "",
-									canHasChildren: false
+									canHasChildren: false,
+									apiRepoId: 1
 								}
 							]
 						}
@@ -253,10 +491,10 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 
 		h.expect(() => (
 			<div>
-				<div classes={[c.m_1]}>
+				<div classes={[c.mt_1]}>
 					<input
 						key="search"
-						classes={[c.form_control]}
+						classes={[c.form_control, c.form_control_sm, css.searchInput]}
 						placeholder="搜索部件"
 						oninput={() => {}}
 						value="a"
@@ -264,7 +502,10 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 				</div>
 				<div>
 					<div key="1">
-						<div>widget api repo 1</div>
+						<div classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
+							<FontAwesomeIcon icon="angle-down" />
+							<span classes={[c.ml_1]}>widget api repo 1</span>
+						</div>
 						<div>
 							<p classes={[c.text_muted, c.text_center]}>无部件</p>
 						</div>
@@ -277,10 +518,10 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 		h.trigger("@search", "oninput", { target: { value: "W" } });
 		h.expect(() => (
 			<div>
-				<div classes={[c.m_1]}>
+				<div classes={[c.mt_1]}>
 					<input
 						key="search"
-						classes={[c.form_control]}
+						classes={[c.form_control, c.form_control_sm, css.searchInput]}
 						placeholder="搜索部件"
 						oninput={() => {}}
 						value="W"
@@ -288,14 +529,23 @@ describe("ui-view/operate-pane/widgets-tab", () => {
 				</div>
 				<div>
 					<div key="1">
-						<div>widget api repo 1</div>
+						<div classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
+							<FontAwesomeIcon icon="angle-down" />
+							<span classes={[c.ml_1]}>widget api repo 1</span>
+						</div>
 						<div>
 							<div key="_">
-								<div>未分类</div>
+								<div classes={[c.pl_1, c.text_muted, css.categoryNameBar]} onclick={() => {}}>
+									<FontAwesomeIcon icon="angle-down" />
+									<span classes={[c.ml_1]}>未分类</span>
+								</div>
 								<div>
-									<ul>
-										<li key="1" onclick={() => {}}>
-											<span>widget 1</span>
+									<ul classes={[css.widgetGroup]}>
+										<li key="1" classes={[css.widgetItem]} onclick={() => {}}>
+											<svg classes={[css.widgetItemIcon]}>
+												<use href="#widget 1"></use>
+											</svg>
+											<span classes={[css.widgetItemlabel]}>widget 1</span>
 										</li>
 									</ul>
 								</div>
