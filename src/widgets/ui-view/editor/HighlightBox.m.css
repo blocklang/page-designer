@@ -4,6 +4,7 @@
 	background-color: #0080ff;
 	border-radius: 3px 3px 0px 0px;
 	pointer-events: auto;
+	z-index: 10000;
 }
 
 .nameBarPosition {
