@@ -8,6 +8,7 @@ import { deepMixin } from "@dojo/framework/core/util";
 import { insertWidgetsProcess } from "../../../../processes/uiProcesses";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import * as css from "./index.m.css";
+import { find } from "@dojo/framework/shim/array";
 
 export interface WidgetsTabProperties {}
 
@@ -45,6 +46,8 @@ export default factory(function WidgetsTab({ properties, middleware: { store, ic
 		);
 	}
 
+	const ideRepos = get(path("ideRepos"));
+
 	// 为什么使用 _ 表示未分类
 	// 1. 在 rust 语言中，使用 _ 模式来匹配任何值
 	// 2. 如果直接写为“未分类”，在国际化时，使用 _ 更直观
@@ -72,6 +75,15 @@ export default factory(function WidgetsTab({ properties, middleware: { store, ic
 						filterWidgetRepos.map((repo) => {
 							// 默认是展开的
 							const apiRepoFold = icache.getOrSet<boolean>(`fold-repo-${repo.apiRepoId}`, false);
+
+							const ideRepo = find(ideRepos, (item) => item.apiRepoId === repo.apiRepoId);
+
+							let symboIdPrefix = "";
+							if (ideRepo) {
+								symboIdPrefix = `${ideRepo.gitRepoWebsite}-${ideRepo.gitRepoOwner}-${ideRepo.gitRepoName}-`;
+							} else {
+								console.warn(repo, "没有找到对应的 ide 组件仓库");
+							}
 							return (
 								<div key={`${repo.apiRepoId}`}>
 									<div
@@ -131,6 +143,11 @@ export default factory(function WidgetsTab({ properties, middleware: { store, ic
 																					});
 																				}}
 																			>
+																				<svg classes={[css.widgetItemIcon]}>
+																					<use
+																						href={`#${symboIdPrefix}${widget.widgetName}`}
+																					></use>
+																				</svg>
 																				<span classes={[css.widgetItemlabel]}>
 																					{widget.widgetName}
 																				</span>

@@ -5,6 +5,7 @@ import * as css from "./Header.m.css";
 import { find } from "@dojo/framework/shim/array";
 import { config } from "../../../config";
 import { activeWidgetProcess } from "../../../processes/uiProcesses";
+import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 
 export interface HeaderProperties {}
 
@@ -38,7 +39,8 @@ export default factory(function Header({ properties, middleware: { store } }) {
 
 	return (
 		<div classes={[css.root]}>
-			<nav>
+			<FontAwesomeIcon icon="arrows-alt" classes={[c.text_muted, c.ml_1]} />
+			<nav classes={[c.d_inline_block]}>
 				<ol classes={[c.breadcrumb, css.focusWidgetPath]}>
 					{focusWidgetPath.map((item, index) => {
 						if (index < length - 1) {

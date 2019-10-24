@@ -20,6 +20,7 @@ import { faStepBackward } from "@fortawesome/free-solid-svg-icons/faStepBackward
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons/faTrashAlt";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons/faAngleDown";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons/faAngleRight";
+import { faArrowsAlt } from "@fortawesome/free-solid-svg-icons/faArrowsAlt";
 
 library.add(
 	faArrowAltCircleLeft,
@@ -34,7 +35,8 @@ library.add(
 	faStepBackward,
 	faTrashAlt,
 	faAngleDown,
-	faAngleRight
+	faAngleRight,
+	faArrowsAlt
 );
 
 const factory = create({ theme });

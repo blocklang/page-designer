@@ -19,6 +19,7 @@ import * as blocklang from "designer-core/blocklang";
 import { getPageModelProcess } from "./processes/uiProcesses";
 import { loadCSS } from "./utils/fg-loadcss/loadCSS";
 import onloadCSS from "./utils/fg-loadcss/onloadCSS";
+import { SVGInjector } from "@tanem/svg-injector";
 
 export interface PageDesignerProperties {
 	user?: User; // 如果是匿名用户，则值为 null
@@ -157,5 +158,35 @@ function loadExternalResources(ideRepos: ComponentRepo[], loadSuccess: (resource
 				loadSuccess("css");
 			}
 		});
+	});
+
+	ideRepos.forEach((item) => {
+		const svgHref = `${config.externalScriptAndCssWebsite}/packages/${item.gitRepoWebsite}/${item.gitRepoOwner}/${item.gitRepoName}/${item.version}/icons.svg`;
+		// 约定的前缀，注意使用的是 ide 版仓库信息，而不是 api 版的仓库信息
+		const idPrefix = `${item.gitRepoWebsite}-${item.gitRepoOwner}-${item.gitRepoName}-`;
+		insertSvgDiv(svgHref, idPrefix);
+	});
+}
+
+// <div class="inject-me" data-src="icon-two.svg"></div>
+function insertSvgDiv(svgPath: string, symbolIdPrefix: string) {
+	const svgInjectorDiv = document.createElement("div");
+	svgInjectorDiv.setAttribute("data-src", svgPath);
+	svgInjectorDiv.className = "inject-me";
+	// 因为 img 有默认高度，因此这里要将将 display 设置为 'none;
+	// 否则会造成初始聚焦框计算错位的问题。
+	svgInjectorDiv.style.display = "none";
+	document.body.appendChild(svgInjectorDiv);
+
+	SVGInjector(svgInjectorDiv, {
+		beforeEach(svg) {
+			const symbols = svg.children;
+			for (let i = 0; i < symbols.length; i++) {
+				const symbol = symbols[i];
+				const originId = symbol.getAttribute("id");
+				// 为了确保 symbol 的 id 全局唯一，在原有的 id 前加上了组件仓库信息
+				symbol.setAttribute("id", symbolIdPrefix + originId);
+			}
+		}
 	});
 }
