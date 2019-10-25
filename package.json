@@ -28,7 +28,7 @@
     "diff": "^4.0.1",
     "dojo-fontawesome": "~0.0.2",
     "scriptjs": "^2.5.9",
-    "std-ide-widget": "~0.0.3-alpha.18",
+    "std-ide-widget": "~0.0.3-alpha.19",
     "string-format": "^2.0.0",
     "tslib": "~1.9.1",
     "@tanem/svg-injector": "^8.0.34"
@@ -36,7 +36,8 @@
   "peerDependencies": {
     "@dojo/framework": "^6.0.3",
     "bootstrap": "^4.3.1",
-    "designer-core": "~0.0.1-alpha.17"
+    "designer-core": "~0.0.1-alpha.18",
+    "std-widget-web": "~0.0.4-alpha.3"
   },
   "devDependencies": {
     "@dojo/cli": "^6.0.0",
@@ -45,7 +46,7 @@
     "@dojo/cli-test-intern": "^6.0.1",
     "@dojo/framework": "^6.0.3",
     "@dojo/themes": "^6.0.0",
-    "@types/node": "^9.6.52",
+    "@types/node": "^9.6.53",
     "@types/sinon": "~7.0.13",
     "bootstrap": "^4.3.1",
     "codecov": "^3.6.1",
