@@ -8,8 +8,8 @@ import PageDesigner from "../../src/PageDesigner";
 import Header from "../../src/widgets/Header";
 import { User, Project, Path, Page, Permission, RequestUrl, State } from "../../src/interfaces";
 import Preview from "../../src/widgets/preview";
-import UIView from "../../src/widgets/ui-view";
-import BehaviorView from "../../src/widgets/behavior-view";
+import UIView from "../../src/widgets/edit/ui";
+import BehaviorView from "../../src/widgets/edit/behavior";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
 import store from "../../src/store";
 

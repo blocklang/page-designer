@@ -1,8 +1,8 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
 import * as css from "./HighlightBox.m.css";
 import Box from "./Box";
-import store from "../../../store";
-import { getWidgetPositionAndSize } from "../../util";
+import store from "../../../../store";
+import { getWidgetPositionAndSize } from "../../../util";
 
 export interface HighlightBoxProperties {
 	widgetName: string;

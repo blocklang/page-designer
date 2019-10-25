@@ -55,7 +55,6 @@
         "apiRepoId": 1,
         "widgetCode": "0001",
         "widgetName": "Page",
-        "componentRepoId": 1,
         "canHasChildren": true,
         "properties": [{}]
       }]

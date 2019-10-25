@@ -4,14 +4,14 @@ import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 
 import * as c from "bootstrap-classes";
-import * as css from "../../../../../src/widgets/ui-view/operate-pane/index.m.css";
+import * as css from "../../../../../../src/widgets/edit/ui/operate-pane/index.m.css";
 
-import UIOperatePane from "../../../../../src/widgets/ui-view/operate-pane";
-import Header from "../../../../../src/widgets/ui-view/operate-pane/Header";
-import WidgetsTab from "../../../../../src/widgets/ui-view/operate-pane/widgets-tab";
-import PropertiesTab from "../../../../../src/widgets/ui-view/operate-pane/properties-tab";
+import UIOperatePane from "../../../../../../src/widgets/edit/ui/operate-pane";
+import Header from "../../../../../../src/widgets/edit/ui/operate-pane/Header";
+import WidgetsTab from "../../../../../../src/widgets/edit/ui/operate-pane/widgets-tab";
+import PropertiesTab from "../../../../../../src/widgets/edit/ui/operate-pane/properties-tab";
 
-describe("ui-view/operate-pane", () => {
+describe("edit/ui/operate-pane", () => {
 	it("default properties", () => {
 		const h = harness(() => <UIOperatePane />);
 

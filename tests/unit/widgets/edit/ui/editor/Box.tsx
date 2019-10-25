@@ -3,10 +3,10 @@ const { describe, it } = intern.getInterface("bdd");
 import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 
-import Box from "../../../../../src/widgets/ui-view/editor/Box";
-import * as css from "../../../../../src/widgets/ui-view/editor/Box.m.css";
+import Box from "../../../../../../src/widgets/edit/ui/editor/Box";
+import * as css from "../../../../../../src/widgets/edit/ui/editor/Box.m.css";
 
-describe("ui-view/editor/Box", () => {
+describe("edit/ui/editor/Box", () => {
 	it("default properties", () => {
 		const properties = {
 			left: 0,

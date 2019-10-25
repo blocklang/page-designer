@@ -4,18 +4,18 @@ const { assert } = intern.getPlugin("chai");
 import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 import * as c from "bootstrap-classes";
-import * as css from "../../../../../src/widgets/ui-view/operate-pane/Header.m.css";
+import * as css from "../../../../../../src/widgets/edit/ui/operate-pane/Header.m.css";
 
-import Header from "../../../../../src/widgets/ui-view/operate-pane/Header";
-import store from "../../../../../src/store";
+import Header from "../../../../../../src/widgets/edit/ui/operate-pane/Header";
+import store from "../../../../../../src/store";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
 import { add } from "@dojo/framework/stores/state/operations";
-import { AttachedWidget } from "../../../../../src/interfaces";
-import { activeWidgetProcess } from "../../../../../src/processes/uiProcesses";
+import { AttachedWidget } from "../../../../../../src/interfaces";
+import { activeWidgetProcess } from "../../../../../../src/processes/uiProcesses";
 import { stub } from "sinon";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 
-describe("ui-view/operate-pane/Header", () => {
+describe("edit/ui/operate-pane/Header", () => {
 	it("default properties", () => {
 		const h = harness(() => <Header />);
 		h.expect(() => <div classes={[css.root]}></div>);

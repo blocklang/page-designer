@@ -1,7 +1,7 @@
 import { create, v, w } from "@dojo/framework/core/vdom";
 import { renderPage } from "./render";
 import * as c from "bootstrap-classes";
-import store from "../../../store";
+import store from "../../../../store";
 import FocusBox from "./FocusBox";
 import HighlightBox from "./HighlightBox";
 import {
@@ -9,7 +9,7 @@ import {
 	highlightWidgetProcess,
 	changeActiveWidgetDimensionsProcess,
 	unhighlightWidgetProcess
-} from "../../../processes/uiProcesses";
+} from "../../../../processes/uiProcesses";
 
 export interface EditorProperties {}
 

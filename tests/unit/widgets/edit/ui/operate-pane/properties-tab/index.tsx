@@ -3,11 +3,11 @@ const { describe, it, afterEach } = intern.getInterface("bdd");
 import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 import * as c from "bootstrap-classes";
-import PropertiesTab from "../../../../../../src/widgets/ui-view/operate-pane/properties-tab/";
-import * as css from "../../../../../../src/widgets/ui-view/operate-pane/properties-tab/index.m.css";
-import store from "../../../../../../src/store";
+import PropertiesTab from "../../../../../../../src/widgets/edit/ui/operate-pane/properties-tab";
+import * as css from "../../../../../../../src/widgets/edit/ui/operate-pane/properties-tab/index.m.css";
+import store from "../../../../../../../src/store";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
-import { State, AttachedWidget, ComponentRepo } from "../../../../../../src/interfaces";
+import { State, AttachedWidget, ComponentRepo } from "../../../../../../../src/interfaces";
 import { add } from "@dojo/framework/stores/state/operations";
 import WidgetBase from "@dojo/framework/core/WidgetBase";
 import { stub, SinonStub } from "sinon";
@@ -15,7 +15,7 @@ import * as blocklang from "designer-core/blocklang";
 
 let findWidgetPropertiesLayoutStub: SinonStub;
 
-describe("ui-view/operate-pane/properties-tab", () => {
+describe("edit/ui/operate-pane/properties-tab", () => {
 	afterEach(() => {
 		if (findWidgetPropertiesLayoutStub) {
 			findWidgetPropertiesLayoutStub.restore();
@@ -40,7 +40,7 @@ describe("ui-view/operate-pane/properties-tab", () => {
 			{
 				id: "1",
 				parentId: "-1",
-				componentRepoId: 1,
+				apiRepoId: 1,
 				widgetId: 1,
 				widgetName: "Page",
 				widgetCode: "0001",
@@ -66,7 +66,7 @@ describe("ui-view/operate-pane/properties-tab", () => {
 			{
 				id: "1",
 				parentId: "-1",
-				componentRepoId: 1,
+				apiRepoId: 1,
 				widgetId: 1,
 				widgetName: "Page",
 				widgetCode: "0001",
@@ -84,6 +84,7 @@ describe("ui-view/operate-pane/properties-tab", () => {
 		const ideRepos: ComponentRepo[] = [
 			{
 				id: 1,
+				apiRepoId: 1,
 				gitRepoWebsite: "github.com",
 				gitRepoOwner: "blocklang",
 				gitRepoName: "std-ide-widget",
@@ -117,7 +118,7 @@ describe("ui-view/operate-pane/properties-tab", () => {
 			{
 				id: "1",
 				parentId: "-1",
-				componentRepoId: 1,
+				apiRepoId: 1,
 				widgetId: 1,
 				widgetName: "Page",
 				widgetCode: "0001",
@@ -135,6 +136,7 @@ describe("ui-view/operate-pane/properties-tab", () => {
 		const ideRepos: ComponentRepo[] = [
 			{
 				id: 1,
+				apiRepoId: 1,
 				gitRepoWebsite: "github.com",
 				gitRepoOwner: "blocklang",
 				gitRepoName: "std-ide-widget",

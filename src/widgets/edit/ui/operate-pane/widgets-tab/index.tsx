@@ -1,11 +1,11 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
 import icache from "@dojo/framework/core/middleware/icache";
-import store from "../../../../store";
+import store from "../../../../../store";
 import * as c from "bootstrap-classes";
-import { getWidgetsProcess } from "../../../../processes/widgetProcesses";
-import { WidgetRepo } from "../../../../interfaces";
+import { getWidgetsProcess } from "../../../../../processes/widgetProcesses";
+import { WidgetRepo } from "../../../../../interfaces";
 import { deepMixin } from "@dojo/framework/core/util";
-import { insertWidgetsProcess } from "../../../../processes/uiProcesses";
+import { insertWidgetsProcess } from "../../../../../processes/uiProcesses";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import * as css from "./index.m.css";
 import { find } from "@dojo/framework/shim/array";

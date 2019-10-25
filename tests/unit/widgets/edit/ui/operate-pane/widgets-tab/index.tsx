@@ -7,14 +7,14 @@ import { add, replace } from "@dojo/framework/stores/state/operations";
 import * as c from "bootstrap-classes";
 import { stub } from "sinon";
 
-import WidgetsTab from "../../../../../../src/widgets/ui-view/operate-pane/widgets-tab";
-import * as css from "../../../../../../src/widgets/ui-view/operate-pane/widgets-tab/index.m.css";
-import { State } from "../../../../../../src/interfaces";
-import { getWidgetsProcess } from "../../../../../../src/processes/widgetProcesses";
-import store from "../../../../../../src/store";
+import WidgetsTab from "../../../../../../../src/widgets/edit/ui/operate-pane/widgets-tab";
+import * as css from "../../../../../../../src/widgets/edit/ui/operate-pane/widgets-tab/index.m.css";
+import { State } from "../../../../../../../src/interfaces";
+import { getWidgetsProcess } from "../../../../../../../src/processes/widgetProcesses";
+import store from "../../../../../../../src/store";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 
-describe("ui-view/operate-pane/widgets-tab", () => {
+describe("edit/ui/operate-pane/widgets-tab", () => {
 	it("No widget repo", () => {
 		const processStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([[getWidgetsProcess, processStub]]);

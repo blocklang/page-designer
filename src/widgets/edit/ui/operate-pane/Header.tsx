@@ -1,10 +1,10 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
-import store from "../../../store";
+import store from "../../../../store";
 import * as c from "bootstrap-classes";
 import * as css from "./Header.m.css";
 import { find } from "@dojo/framework/shim/array";
-import { config } from "../../../config";
-import { activeWidgetProcess } from "../../../processes/uiProcesses";
+import { config } from "../../../../config";
+import { activeWidgetProcess } from "../../../../processes/uiProcesses";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 
 export interface HeaderProperties {}

@@ -2,19 +2,19 @@ const { describe, it } = intern.getInterface("bdd");
 
 import harness from "@dojo/framework/testing/harness";
 import { create, tsx } from "@dojo/framework/core/vdom";
-import Editor from "../../../../../src/widgets/ui-view/editor";
+import Editor from "../../../../../../src/widgets/edit/ui/editor";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
-import { State, ComponentRepo, PageModel, AttachedWidget } from "../../../../../src/interfaces";
-import store from "../../../../../src/store";
+import { State, ComponentRepo, PageModel, AttachedWidget } from "../../../../../../src/interfaces";
+import store from "../../../../../../src/store";
 import * as c from "bootstrap-classes";
 import { replace } from "@dojo/framework/stores/state/operations";
 import Page from "std-ide-widget/page";
 import { InstWidget, EditableWidgetProperties } from "designer-core/interfaces";
-import FocusBox from "../../../../../src/widgets/ui-view/editor/FocusBox";
-import HighlightBox from "../../../../../src/widgets/ui-view/editor/HighlightBox";
+import FocusBox from "../../../../../../src/widgets/edit/ui/editor/FocusBox";
+import HighlightBox from "../../../../../../src/widgets/edit/ui/editor/HighlightBox";
 import * as blocklang from "designer-core/blocklang";
 
-describe("ui-view/editor", () => {
+describe("edit/ui/editor", () => {
 	// 创建一个在测试用例中使用的部件
 
 	interface ContainerProperties extends EditableWidgetProperties {}

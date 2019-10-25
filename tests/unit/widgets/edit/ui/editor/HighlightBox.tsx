@@ -3,16 +3,16 @@ const { describe, it } = intern.getInterface("bdd");
 import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 
-import HighlightBox from "../../../../../src/widgets/ui-view/editor/HighlightBox";
-import * as css from "../../../../../src/widgets/ui-view/editor/HighlightBox.m.css";
-import Box from "../../../../../src/widgets/ui-view/editor/Box";
+import HighlightBox from "../../../../../../src/widgets/edit/ui/editor/HighlightBox";
+import * as css from "../../../../../../src/widgets/edit/ui/editor/HighlightBox.m.css";
+import Box from "../../../../../../src/widgets/edit/ui/editor/Box";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
-import { State } from "../../../../../src/interfaces";
-import store from "../../../../../src/store";
+import { State } from "../../../../../../src/interfaces";
+import store from "../../../../../../src/store";
 import { add } from "@dojo/framework/stores/state/operations";
 import { DimensionResults } from "@dojo/framework/core/meta/Dimensions";
 
-describe("ui-view/editor/HighlightBox", () => {
+describe("edit/ui/editor/HighlightBox", () => {
 	it("default properties", () => {
 		const properties = {
 			widgetName: "A"

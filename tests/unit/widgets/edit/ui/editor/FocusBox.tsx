@@ -4,14 +4,14 @@ const { assert } = intern.getPlugin("chai");
 import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 
-import FocusBox, { FocusBoxProperties } from "../../../../../src/widgets/ui-view/editor/FocusBox";
-import * as css from "../../../../../src/widgets/ui-view/editor/FocusBox.m.css";
-import Box from "../../../../../src/widgets/ui-view/editor/Box";
+import FocusBox, { FocusBoxProperties } from "../../../../../../src/widgets/edit/ui/editor/FocusBox";
+import * as css from "../../../../../../src/widgets/edit/ui/editor/FocusBox.m.css";
+import Box from "../../../../../../src/widgets/edit/ui/editor/Box";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import * as c from "bootstrap-classes";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
-import { State } from "../../../../../src/interfaces";
-import store from "../../../../../src/store";
+import { State } from "../../../../../../src/interfaces";
+import store from "../../../../../../src/store";
 import { add } from "@dojo/framework/stores/state/operations";
 import { DimensionResults } from "@dojo/framework/core/meta/Dimensions";
 import { stub } from "sinon";
@@ -20,9 +20,9 @@ import {
 	moveActiveWidgetPreviousProcess,
 	moveActiveWidgetNextProcess,
 	removeActiveWidgetProcess
-} from "../../../../../src/processes/uiProcesses";
+} from "../../../../../../src/processes/uiProcesses";
 
-describe("ui-view/editor/FocusBox", () => {
+describe("edit/ui/editor/FocusBox", () => {
 	it("default properties", () => {
 		const properties: FocusBoxProperties = {
 			widgetName: "A",
