@@ -1,4 +1,4 @@
-const { describe, it } = intern.getInterface("bdd");
+const { describe, it, beforeEach } = intern.getInterface("bdd");
 
 import harness from "@dojo/framework/testing/harness";
 import { create, tsx } from "@dojo/framework/core/vdom";
@@ -22,6 +22,15 @@ describe("edit/ui/editor", () => {
 	const Container = factory(function Container({ properties }) {
 		const {} = properties();
 		return <div></div>;
+	});
+
+	const IdeContainer = factory(function Container({ properties }) {
+		const {} = properties();
+		return <div></div>;
+	});
+
+	beforeEach(() => {
+		blocklang.clearExtensionComponents();
 	});
 
 	it("show page when no root node", () => {
@@ -212,7 +221,7 @@ describe("edit/ui/editor", () => {
 
 		blocklang.registerWidgets(
 			{ website: "github.com", owner: "blocklang", repoName: "ide-widget" },
-			{ Container: { widget: Container, propertiesLayout: [] } }
+			{ Container: { widget: Container, ideWidget: IdeContainer, propertiesLayout: [] } }
 		);
 
 		mockStore((path) => [replace(path("pageModel"), pageModel), replace(path("ideRepos"), ideRepos)]);
@@ -264,7 +273,7 @@ describe("edit/ui/editor", () => {
 					// 原始属性的值，是必须要展开的
 					onLoad={() => {}}
 				>
-					<Container
+					<IdeContainer
 						// 注意，key 是以 0 开头，不是以 1 开头，因为 index 是基于子部件的，不是基于全局列表的
 						key={`0_${containerWidget1.id}`}
 						widget={containerWidget1}
@@ -277,7 +286,7 @@ describe("edit/ui/editor", () => {
 							autoFocus: () => false
 						}}
 					>
-						<Container
+						<IdeContainer
 							key={`0_${containerWidget11.id}`}
 							widget={containerWidget11}
 							originalProperties={{}}
@@ -288,9 +297,9 @@ describe("edit/ui/editor", () => {
 								onUnhighlight: () => {},
 								autoFocus: () => false
 							}}
-						></Container>
-					</Container>
-					<Container
+						></IdeContainer>
+					</IdeContainer>
+					<IdeContainer
 						// 注意，key 是以 0 开头，不是以 1 开头，因为 index 是基于子部件的，不是基于全局列表的
 						key={`1_${containerWidget2.id}`}
 						widget={containerWidget2}

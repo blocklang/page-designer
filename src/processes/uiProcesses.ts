@@ -6,7 +6,7 @@ import * as format from "string-format";
 import { add, replace, remove } from "@dojo/framework/stores/state/operations";
 import { findIndex } from "@dojo/framework/shim/array";
 import { uuid } from "@dojo/framework/core/util";
-import { getAllChildCount, getPreviousIndex, getNextIndex, getParentIndex } from "./pageTree";
+import { getAllChildCount, getPreviousIndex, getNextIndex, getParentIndex } from "../utils/pageTree";
 import { DimensionResults } from "@dojo/framework/core/meta/Dimensions";
 import { ChangedPropertyValue } from "../interfaces";
 

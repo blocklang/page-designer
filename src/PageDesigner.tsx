@@ -78,6 +78,16 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 
 	let editMode = icache.getOrSet<EditMode>("editMode", "Preview");
 	let activeView = icache.getOrSet<ViewType>("activeView", "ui");
+
+	const onChangeEditMode = () => {
+		if (editMode === "Preview") {
+			editMode = "Edit";
+		} else {
+			editMode = "Preview";
+		}
+		icache.set("editMode", editMode);
+	};
+
 	return (
 		<div classes={[c.container_fluid, css.root]}>
 			<Header
@@ -88,14 +98,7 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 				pathes={pathes}
 				editMode={editMode}
 				activeView={activeView}
-				onChangeEditMode={() => {
-					if (editMode === "Preview") {
-						editMode = "Edit";
-					} else {
-						editMode = "Preview";
-					}
-					icache.set("editMode", editMode);
-				}}
+				onChangeEditMode={onChangeEditMode}
 				onChangeView={() => {
 					if (activeView === "ui") {
 						activeView = "behavior";
@@ -106,7 +109,13 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 				}}
 			/>
 			<div classes={[css.container]}>
-				{editMode === "Preview" ? <Preview /> : activeView === "ui" ? <UIView /> : <BehaviorView />}
+				{editMode === "Preview" ? (
+					<Preview permission={permission} onChangeEditMode={onChangeEditMode} />
+				) : activeView === "ui" ? (
+					<UIView />
+				) : (
+					<BehaviorView />
+				)}
 			</div>
 		</div>
 	);

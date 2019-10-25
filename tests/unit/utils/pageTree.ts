@@ -1,8 +1,9 @@
 const { describe, it } = intern.getInterface("bdd");
 const { assert } = intern.getPlugin("chai");
-import { getAllChildCount, getPreviousIndex, getNextIndex, getParentIndex } from "../../../src/processes/pageTree";
+import { getAllChildCount, getPreviousIndex, getNextIndex, getParentIndex } from "../../../src/utils/pageTree";
+import { getChildrenIndex } from "../../../src/utils/pageTree";
 
-describe("processes/pageTree", () => {
+describe("utils/pageTree", () => {
 	it("getAllChildCount", () => {
 		assert.throw(() => getAllChildCount([{ id: "1", parentId: "-1" }], 1)); // 超出索引
 		assert.throw(() => getAllChildCount([{ id: "1", parentId: "-1" }], -1)); // 超出索引
@@ -24,6 +25,33 @@ describe("processes/pageTree", () => {
 				1
 			),
 			2
+		);
+	});
+
+	it("getChildrenIndex", () => {
+		assert.deepEqual(getChildrenIndex([{ id: "1", parentId: "-1" }], "1", 1), []);
+		assert.deepEqual(getChildrenIndex([{ id: "1", parentId: "-1" }, { id: "2", parentId: "1" }], "1", 1), [1]);
+		assert.deepEqual(
+			getChildrenIndex(
+				[{ id: "1", parentId: "-1" }, { id: "2", parentId: "1" }, { id: "3", parentId: "2" }],
+				"1",
+				1
+			),
+			[1]
+		);
+		assert.deepEqual(
+			getChildrenIndex(
+				[
+					{ id: "1", parentId: "-1" },
+					{ id: "2", parentId: "1" },
+					{ id: "3", parentId: "2" },
+					{ id: "4", parentId: "2" },
+					{ id: "5", parentId: "1" }
+				],
+				"2",
+				2
+			),
+			[2, 3]
 		);
 	});
 

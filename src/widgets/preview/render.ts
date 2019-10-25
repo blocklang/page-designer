@@ -1,13 +1,13 @@
-import Page from "std-ide-widget/page";
-import { ComponentRepo, AttachedWidget } from "../../../../interfaces";
+import Page from "std-widget-web/page";
+import { ComponentRepo, AttachedWidget } from "../../interfaces";
 import { find } from "@dojo/framework/shim/array";
 import { w } from "@dojo/framework/core/vdom";
 import { WNode } from "@dojo/framework/core/interfaces";
-import { EditableWidgetProperties, InstWidgetProperties, EditableProperties } from "designer-core/interfaces";
-import { config } from "../../../../config";
+import { InstWidgetProperties } from "designer-core/interfaces";
+import { config } from "../../config";
 import * as blocklang from "designer-core/blocklang";
-import UndefinedWidget from "../../../UndefinedWidget";
-import { getChildrenIndex } from "../../../../utils/pageTree";
+import UndefinedWidget from "../UndefinedWidget";
+import { getChildrenIndex } from "../../utils/pageTree";
 
 // 有两种方式共享 widgets 和 ideRepos 的值，以避免在每个函数中多次传递
 // 1. 在此处缓存 widgets 和 ideRepos 的值
@@ -15,7 +15,6 @@ import { getChildrenIndex } from "../../../../utils/pageTree";
 // 这里使用缓存数据的方式，且必须是只读的
 let roWidgets: ReadonlyArray<AttachedWidget>;
 let roIdeRepos: ReadonlyArray<ComponentRepo>;
-let roEditableProperties: Readonly<EditableProperties>;
 
 /**
  * @function renderPage
@@ -24,13 +23,8 @@ let roEditableProperties: Readonly<EditableProperties>;
  *
  * @param widgets                页面部件列表
  * @param ideRepos               项目引用的 ide 版组件库
- * @param editableProperties     为部件扩展的属性，支持在设计器中交互
  */
-export function renderPage(
-	widgets: AttachedWidget[],
-	ideRepos: ComponentRepo[],
-	editableProperties: EditableProperties
-): WNode {
+export function renderPage(widgets: AttachedWidget[], ideRepos: ComponentRepo[]): WNode {
 	if (widgets.length === 0) {
 		throw new Error("页面中的部件个数不能为0，至少要包含一个根部件！");
 	}
@@ -43,7 +37,6 @@ export function renderPage(
 	// 缓存数据
 	roWidgets = widgets;
 	roIdeRepos = ideRepos;
-	roEditableProperties = editableProperties;
 
 	return renderWidget(rootWidget, 0);
 }
@@ -65,26 +58,20 @@ function renderWidget(widget: AttachedWidget, index: number): WNode {
 
 	const ideRepo = find(roIdeRepos, (item) => item.apiRepoId === widget.apiRepoId);
 	if (!ideRepo) {
-		return w(UndefinedWidget, { widget });
+		return w(UndefinedWidget, { widget, editMode: "Preview" });
 	}
 
 	// 3. 根据 ide 获取到组件库
 	// 4. 根据部件名查找部件类
 	const widgetType = getWidgetType(ideRepo, widget.widgetName);
 	if (!widgetType) {
-		return w(UndefinedWidget, { widget, componentRepo: ideRepo });
+		return w(UndefinedWidget, { widget, componentRepo: ideRepo, editMode: "Preview" });
 	}
 
 	// 设置 Widget 的 key 值
 	// key 的值必须要包含位置索引，不然当子部件的位置发生变换时，通过 id 无法对比出差别
 	// 注意，index 的值是直属子部件的索引，不是全局列表的索引
 	const key = `${index}_${widget.id}`;
-
-	// FIXME: 这里需要进行数据转换，要逐个盘查数据项，删掉不需要的数据项！
-	// 最直接的方式，就是直接在这里将所有的属性展开并覆盖，但是是否可以这样做呢？
-	// 是在可编辑的部件外展开，还是在可编辑的部件内展开呢？哪种方式更妥？
-	// 先选择在部件外展开，然后随着开发的深入，再做调整。
-	// 不要一下子放开接口，要逐步增加和组合
 
 	let originalProperties: InstWidgetProperties = {};
 	widget.properties &&
@@ -95,17 +82,8 @@ function renderWidget(widget: AttachedWidget, index: number): WNode {
 			originalProperties[item.name] = value;
 		});
 
-	const properties: EditableWidgetProperties = {
+	const properties = {
 		key,
-		widget: {
-			id: widget.id,
-			parentId: widget.parentId,
-			widgetCode: widget.widgetCode,
-			widgetName: widget.widgetName,
-			canHasChildren: widget.canHasChildren
-		},
-		originalProperties,
-		extendProperties: roEditableProperties,
 		...originalProperties
 	};
 
@@ -155,7 +133,6 @@ function getWidgetType(ideRepo: ComponentRepo, widgetName: string) {
 		owner: ideRepo.gitRepoOwner,
 		repoName: ideRepo.gitRepoName
 	});
-	console.log("repoKey: ", repoKey);
 	// 优先从标准库中查找
 	const widgetType = findStdWidgetType(repoKey, widgetName);
 	if (widgetType) {
@@ -163,7 +140,7 @@ function getWidgetType(ideRepo: ComponentRepo, widgetName: string) {
 	}
 
 	// 从扩展库中查找
-	return blocklang.findIdeWidgetType(repoKey, widgetName);
+	return blocklang.findWidgetType(repoKey, widgetName);
 }
 
 // 标准库。标准库是在引用处显式指定的。而扩展库是由用户配置的。
@@ -171,10 +148,10 @@ function getWidgetType(ideRepo: ComponentRepo, widgetName: string) {
 // 因为此处只加载了一个版本，所以不需要在路径中包含版本号。
 const stdMap: { [propName: string]: any } = {
 	"github.com/blocklang/std-ide-widget": {
-		Page: { ideWidget: Page, propertiesLayout: [] }
+		Page: { widget: Page, propertiesLayout: [] }
 	}
 };
 
 function findStdWidgetType(repoUrl: string, widgetName: string) {
-	return stdMap[repoUrl] && stdMap[repoUrl][widgetName] && stdMap[repoUrl][widgetName].ideWidget;
+	return stdMap[repoUrl] && stdMap[repoUrl][widgetName] && stdMap[repoUrl][widgetName].widget;
 }
