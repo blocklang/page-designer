@@ -1,8 +1,8 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
-import { ComponentRepo, AttachedWidget } from "../../interfaces";
+import { ComponentRepo, AttachedWidget } from "../../../interfaces";
 import * as c from "bootstrap-classes";
-import store from "../../store";
-import { removeUndefinedWidgetProcess } from "../../processes/uiProcesses";
+import store from "../../../store";
+import { removeUndefinedWidgetProcess } from "../../../processes/uiProcesses";
 
 export interface UndefinedWidgetProperties {
 	componentRepo?: ComponentRepo;

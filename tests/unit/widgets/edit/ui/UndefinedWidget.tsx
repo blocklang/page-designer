@@ -3,15 +3,15 @@ const { assert } = intern.getPlugin("chai");
 import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 
-import UndefinedWidget from "../../../../src/widgets/ui-view/UndefinedWidget";
-import { AttachedWidget, ComponentRepo, State } from "../../../../src/interfaces";
+import UndefinedWidget from "../../../../../src/widgets/edit/ui/UndefinedWidget";
+import { AttachedWidget, ComponentRepo, State } from "../../../../../src/interfaces";
 import * as c from "bootstrap-classes";
-import store from "../../../../src/store";
+import store from "../../../../../src/store";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
-import { removeUndefinedWidgetProcess } from "../../../../src/processes/uiProcesses";
+import { removeUndefinedWidgetProcess } from "../../../../../src/processes/uiProcesses";
 import { stub } from "sinon";
 
-describe("ui-view/UndefinedWidget", () => {
+describe("edit/ui/UndefinedWidget", () => {
 	it("no component repo", () => {
 		const widget: AttachedWidget = {
 			id: "2",
@@ -21,7 +21,7 @@ describe("ui-view/UndefinedWidget", () => {
 			widgetCode: "0001",
 			canHasChildren: false,
 			iconClass: "",
-			componentRepoId: 1,
+			apiRepoId: 1,
 			properties: []
 		};
 		const h = harness(() => <UndefinedWidget widget={widget} />);
@@ -55,11 +55,12 @@ describe("ui-view/UndefinedWidget", () => {
 			widgetCode: "0001",
 			canHasChildren: false,
 			iconClass: "",
-			componentRepoId: 1,
+			apiRepoId: 1,
 			properties: []
 		};
 		const componentRepo: ComponentRepo = {
 			id: 1,
+			apiRepoId: 1,
 			gitRepoWebsite: "A",
 			gitRepoOwner: "B",
 			gitRepoName: "C",
@@ -99,11 +100,12 @@ describe("ui-view/UndefinedWidget", () => {
 			widgetCode: "0001",
 			canHasChildren: false,
 			iconClass: "",
-			componentRepoId: 1,
+			apiRepoId: 1,
 			properties: []
 		};
 		const componentRepo: ComponentRepo = {
 			id: 1,
+			apiRepoId: 1,
 			gitRepoWebsite: "A",
 			gitRepoOwner: "B",
 			gitRepoName: "C",

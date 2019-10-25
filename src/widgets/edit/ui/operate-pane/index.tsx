@@ -6,7 +6,7 @@ import Header from "./Header";
 import icache from "@dojo/framework/core/middleware/icache";
 import WidgetsTab from "./widgets-tab";
 import PropertiesTab from "./properties-tab";
-import { drag } from "../../../middleware/drag";
+import { drag } from "../../../../middleware/drag";
 
 export interface UIOperatePaneProperties {
 	top?: number; // 设置初始化位置

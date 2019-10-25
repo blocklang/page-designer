@@ -4,16 +4,16 @@ import Box from "./Box";
 import * as css from "./FocusBox.m.css";
 import * as c from "bootstrap-classes";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
-import store from "../../../store";
-import { getPreviousIndex, getNextIndex } from "../../../processes/pageTree";
-import { getWidgetPositionAndSize } from "../../util";
+import store from "../../../../store";
+import { getPreviousIndex, getNextIndex } from "../../../../processes/pageTree";
+import { getWidgetPositionAndSize } from "../../../util";
 import {
 	activeParentWidgetProcess,
 	moveActiveWidgetPreviousProcess,
 	moveActiveWidgetNextProcess,
 	removeActiveWidgetProcess
-} from "../../../processes/uiProcesses";
-import { AttachedWidget } from "../../../interfaces";
+} from "../../../../processes/uiProcesses";
+import { AttachedWidget } from "../../../../interfaces";
 
 export interface FocusBoxProperties extends HighlightBoxProperties {
 	selectedWidgetIndex: number;
