@@ -76,7 +76,8 @@ export default factory(function UIOperatePane({ properties, middleware: { icache
 						onclick={
 							activeNav === "widgets"
 								? undefined
-								: () => {
+								: (event: MouseEvent) => {
+										event.preventDefault();
 										icache.set("activeNav", "widgets");
 								  }
 						}
@@ -96,7 +97,8 @@ export default factory(function UIOperatePane({ properties, middleware: { icache
 						onclick={
 							activeNav === "properties"
 								? undefined
-								: () => {
+								: (event: MouseEvent) => {
+										event.preventDefault();
 										icache.set("activeNav", "properties");
 								  }
 						}

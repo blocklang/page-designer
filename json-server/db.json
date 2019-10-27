@@ -28,7 +28,13 @@
           "widgetId": 1,
           "widgetCode": "0001",
           "widgetName": "TextInput",
-          "iconClass": ""
+          "iconClass": "",
+          "properties": [
+            {
+              "id": "1",
+              "name": "value"
+            }
+          ]
         }]
       }]
     },

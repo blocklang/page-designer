@@ -1,4 +1,5 @@
 const { describe, it, afterEach } = intern.getInterface("bdd");
+const { assert } = intern.getPlugin("chai");
 
 import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
@@ -12,6 +13,8 @@ import { add } from "@dojo/framework/stores/state/operations";
 import WidgetBase from "@dojo/framework/core/WidgetBase";
 import { stub, SinonStub } from "sinon";
 import * as blocklang from "designer-core/blocklang";
+import { SingleProperty } from "designer-core/interfaces";
+import { changeActiveWidgetPropertiesProcess } from "../../../../../../../src/processes/uiProcesses";
 
 let findWidgetPropertiesLayoutStub: SinonStub;
 
@@ -111,7 +114,10 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 	});
 
 	it("active widget has one property and show the property", () => {
-		const mockStore = createMockStoreMiddleware<State>();
+		const changeActiveWidgetPropertiesProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[changeActiveWidgetPropertiesProcess, changeActiveWidgetPropertiesProcessStub]
+		]);
 		const h = harness(() => <PropertiesTab />, { middleware: [[store, mockStore]] });
 
 		const widgets: AttachedWidget[] = [
@@ -128,6 +134,10 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 					{
 						id: "1",
 						name: "Prop1"
+					},
+					{
+						id: "2",
+						name: "Prop2"
 					}
 				]
 			}
@@ -153,22 +163,37 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 			add(path("ideRepos"), ideRepos)
 		]);
 
-		class Prop1 extends WidgetBase {}
+		class Prop1 extends WidgetBase<SingleProperty> {}
+		class Prop2 extends WidgetBase<SingleProperty> {}
 
-		const propertiesLayout = {
-			propertyName: "Prop1",
-			propertyLabel: "属性1",
-			propertyWidget: Prop1
-		};
-		findWidgetPropertiesLayoutStub = stub(blocklang, "findWidgetPropertiesLayout").returns([propertiesLayout]);
+		const propertiesLayout = [
+			{
+				propertyName: "Prop1",
+				propertyLabel: "属性1",
+				propertyWidget: Prop1
+			},
+			{
+				propertyName: "Prop2",
+				propertyLabel: "属性2",
+				propertyWidget: Prop2
+			}
+		];
+		findWidgetPropertiesLayoutStub = stub(blocklang, "findWidgetPropertiesLayout").returns(propertiesLayout);
 
 		h.expect(() => (
 			<div classes={[css.root]}>
 				<div>
 					<div>属性1</div>
-					<Prop1 />
+					<Prop1 key="Prop1" index={0} onPropertyChanged={() => {}} />
+				</div>
+				<div>
+					<div>属性2</div>
+					<Prop2 key="Prop2" index={1} onPropertyChanged={() => {}} />
 				</div>
 			</div>
 		));
+
+		h.trigger("@Prop1", "onPropertyChanged");
+		assert.isTrue(changeActiveWidgetPropertiesProcessStub.calledOnce);
 	});
 });

@@ -6,7 +6,8 @@ import * as blocklang from "designer-core/blocklang";
 import { AttachedWidget } from "../../../../../interfaces";
 import { find } from "@dojo/framework/shim/array";
 import * as layoutParser from "./layoutParser";
-import { PropertyLayout } from "designer-core/interfaces";
+import { PropertyLayout, ChangedPropertyValue } from "designer-core/interfaces";
+import { changeActiveWidgetPropertiesProcess } from "../../../../../processes/uiProcesses";
 
 export interface PropertiesTabProperties {}
 
@@ -17,7 +18,7 @@ export default factory(function PropertiesTab({ properties, middleware: { store 
 
 	let activeWidget: AttachedWidget | undefined;
 	// 获取当前聚焦的部件
-	const { get, path } = store;
+	const { get, path, executor } = store;
 	const widgets = get(path("pageModel", "widgets"));
 	if (widgets) {
 		const selectedWidgetIndex = get(path("selectedWidgetIndex"));
@@ -50,6 +51,33 @@ export default factory(function PropertiesTab({ properties, middleware: { store 
 		return _renderMessageNode("没有属性");
 	}
 
-	const propertyWidgets = layoutParser.parse(layoutMeta);
+	if (!activeWidget.properties) {
+		console.error("部件的属性列表必须是数组类型，但现在的值是 undefined");
+	}
+
+	// 关于部件实例中属性值的格式要求
+	//
+	// 必须按顺序加载属性，确保每次加载，同一个部件属性顺序都是一致的（如果不遵循此约定，不会影响程序逻辑）
+	// 必须确保部件的属性列表全部加载，不论该属性是否有设置值，不然计算 index 时找不到对应的属性
+	// 如果有父子属性，则子属性的属性名中要包含父属性名，格式为 ${parent}.${child}
+
+	// 关于往属性部件中传入属性名还是属性在属性列表中的索引
+	//
+	// 即，传 name 合适，还是传 index 更合适
+	// 这个问题，其实是一个计算时机的选择问题
+	// 如果传 name 的话，则需要在 process 中根据 name 计算出 index
+	// 如果传 index 的话，则需要在实例化属性部件之前根据 name 计算出 index
+	// 在实例化属性部件之前计算 index，属性面板与当前部件实例的属性列表（属性位置）会绑定
+	// 但如果传入 index，则不需要每次修改值时，都在 process 中重新计算 index
+	// 所以，决定依然是传入 index，而不传入 name。
+
+	const propertyWidgets = layoutParser.parse(
+		layoutMeta,
+		activeWidget.properties,
+		(changedProperty: ChangedPropertyValue) => {
+			const changedProperties: ChangedPropertyValue[] = [changedProperty];
+			executor(changeActiveWidgetPropertiesProcess)({ changedProperties });
+		}
+	);
 	return v("div", { classes: [css.root] }, propertyWidgets);
 });

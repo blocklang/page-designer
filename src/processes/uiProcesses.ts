@@ -8,7 +8,7 @@ import { findIndex } from "@dojo/framework/shim/array";
 import { uuid } from "@dojo/framework/core/util";
 import { getAllChildCount, getPreviousIndex, getNextIndex, getParentIndex } from "../utils/pageTree";
 import { DimensionResults } from "@dojo/framework/core/meta/Dimensions";
-import { ChangedPropertyValue } from "../interfaces";
+import { ChangedPropertyValue } from "designer-core/interfaces";
 
 const activeWidgetCommand = commandFactory<{ activeWidgetId: string }>(({ get, path, payload: { activeWidgetId } }) => {
 	const pageWidgets = get(path("pageModel", "widgets"));
