@@ -1,15 +1,18 @@
 {
   "name": "page-designer",
-  "version": "0.0.2",
+  "version": "0.0.3-alpha.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/blocklang/page-designer.git"
   },
   "scripts": {
     "dev": "dojo build --mode dev --watch --serve",
-    "build": "dojo build --mode dist",
+    "build:app": "dojo build --mode dist",
     "build:dev": "dojo build --mode dev",
-    "build:widget": "dojo build widget --mode dist --target lib",
+    "build:lib": "dojo build widget --mode dist --target lib && shx cp -r output/dist/* dist/",
+    "build:lib:legacy": "dojo build widget --mode dist --target lib -l && shx cp -r output/dist/* dist/",
+    "clean": "shx rm -rf dist && shx mkdir dist",
+    "build": "npm run clean && npm run build:lib && npm run build:lib:legacy && shx cp package.json dist/ && shx cp README.md dist/",
     "test": "dojo test",
     "test:unit": "dojo build --mode unit && dojo test --unit --config local",
     "test:functional": "dojo build --mode functional && dojo test --functional --config local",
@@ -54,7 +57,8 @@
     "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
     "sinon": "~7.5.0",
-    "typescript": "~3.4.5"
+    "typescript": "~3.4.5",
+    "shx": "^0.3.2"
   },
   "lint-staged": {
     "*.{ts,tsx,css}": [
