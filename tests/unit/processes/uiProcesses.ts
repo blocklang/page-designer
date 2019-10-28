@@ -114,11 +114,11 @@ describe("processes/uiProcesses", () => {
 
 		assert.isUndefined(store.get(store.path("selectedWidgetIndex")));
 
-		activeWidgetProcess(store)({ activeWidgetId: "1", activeWidgetDimensions: {} as DimensionResults });
+		activeWidgetProcess(store)({ activeWidgetId: "1" });
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 0);
 		assert.isNotNull(store.get(store.path("activeWidgetDimensions")));
 
-		activeWidgetProcess(store)({ activeWidgetId: "2", activeWidgetDimensions: {} as DimensionResults });
+		activeWidgetProcess(store)({ activeWidgetId: "2" });
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
 		assert.isNotNull(store.get(store.path("activeWidgetDimensions")));
 	});

@@ -5,39 +5,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import * as css from "./App.m.css";
 import PageDesigner from "./PageDesigner";
 import { User, Project, Permission, Page, Path, RequestUrl } from "./interfaces";
-import { library } from "@fortawesome/fontawesome-svg-core";
-
-import { faArrowAltCircleLeft } from "@fortawesome/free-regular-svg-icons/faArrowAltCircleLeft";
-import { faEdit } from "@fortawesome/free-regular-svg-icons/faEdit";
-import { faCaretSquareRight } from "@fortawesome/free-regular-svg-icons/faCaretSquareRight";
-import { faSave } from "@fortawesome/free-regular-svg-icons/faSave";
-import { faCube } from "@fortawesome/free-solid-svg-icons/faCube";
-import { faUndo } from "@fortawesome/free-solid-svg-icons/faUndo";
-import { faRedo } from "@fortawesome/free-solid-svg-icons/faRedo";
-import { faLevelUpAlt } from "@fortawesome/free-solid-svg-icons/faLevelUpAlt";
-import { faStepForward } from "@fortawesome/free-solid-svg-icons/faStepForward";
-import { faStepBackward } from "@fortawesome/free-solid-svg-icons/faStepBackward";
-import { faTrashAlt } from "@fortawesome/free-solid-svg-icons/faTrashAlt";
-import { faAngleDown } from "@fortawesome/free-solid-svg-icons/faAngleDown";
-import { faAngleRight } from "@fortawesome/free-solid-svg-icons/faAngleRight";
-import { faArrowsAlt } from "@fortawesome/free-solid-svg-icons/faArrowsAlt";
-
-library.add(
-	faArrowAltCircleLeft,
-	faEdit,
-	faCaretSquareRight,
-	faSave,
-	faCube,
-	faUndo,
-	faRedo,
-	faLevelUpAlt,
-	faStepForward,
-	faStepBackward,
-	faTrashAlt,
-	faAngleDown,
-	faAngleRight,
-	faArrowsAlt
-);
 
 const factory = create({ theme });
 

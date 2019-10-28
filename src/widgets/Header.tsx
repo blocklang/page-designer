@@ -4,6 +4,7 @@ import { User, Project, Path, Permission, EditMode, ViewType, State } from "../i
 import * as c from "bootstrap-classes";
 import { DNode } from "@dojo/framework/core/interfaces";
 import store from "../store";
+import { invalidator } from "@dojo/framework/core/vdom";
 import { savePageModelProcess, undoProcess, redoProcess } from "../processes/uiProcesses";
 import { uiHistoryManager } from "../processes/utils";
 import Store from "@dojo/framework/stores/Store";
@@ -20,9 +21,9 @@ export interface HeaderProperties {
 	onChangeView: () => void;
 }
 
-const factory = create({ store }).properties<HeaderProperties>();
+const factory = create({ store, invalidator }).properties<HeaderProperties>();
 
-export default factory(function Header({ properties, middleware: { store } }) {
+export default factory(function Header({ properties, middleware: { store, invalidator } }) {
 	const {
 		user,
 		project,
@@ -89,7 +90,7 @@ export default factory(function Header({ properties, middleware: { store } }) {
 		const canSave = store.get(store.path("dirty")) || false;
 		const canUndo = store.executor(((storeObject: Store<State>) => uiHistoryManager.canUndo(storeObject)) as any);
 		const canRedo = store.executor(((storeObject: Store<State>) => uiHistoryManager.canRedo(storeObject)) as any);
-
+		console.log("canRedo", canRedo);
 		centerBlock = (
 			<div key="center" classes={[c.d_inline_flex, c.align_items_center]}>
 				<div classes={[c.btn_group, c.btn_group_sm]} role="group" aria-label="视图">
@@ -121,6 +122,9 @@ export default factory(function Header({ properties, middleware: { store } }) {
 							canUndo
 								? () => {
 										store.executor(undoProcess)({});
+										// 注意，必须要在部件中失效，才会每次都刷新 Header
+										// 只使用 store 的 middleware 中使用 store.invalidate()，在一些情况下不刷页面
+										invalidator();
 								  }
 								: undefined
 						}
@@ -137,6 +141,9 @@ export default factory(function Header({ properties, middleware: { store } }) {
 							canRedo
 								? () => {
 										store.executor(redoProcess)({});
+										// 注意，必须要在部件中失效，才会每次都刷新 Header
+										// 只使用 store 的 middleware 中使用 store.invalidate()，在一些情况下不刷页面
+										invalidator();
 								  }
 								: undefined
 						}

@@ -21,6 +21,10 @@ const activeWidgetCommand = commandFactory<{ activeWidgetId: string }>(({ get, p
 	return [replace(path("selectedWidgetIndex"), selectedWidgetIndex)];
 });
 
+const activeRootWidgetCommand = commandFactory(({ path }) => {
+	return [replace(path("selectedWidgetIndex"), 0)];
+});
+
 const changeActiveWidgetDimensionsCommand = commandFactory<{ activeWidgetDimensions: DimensionResults }>(
 	({ path, payload: { activeWidgetDimensions } }) => {
 		return [replace(path("activeWidgetDimensions"), activeWidgetDimensions)];
@@ -381,5 +385,8 @@ export const removeActiveWidgetProcess = createProcess(
 	uiHistoryManager.callback
 );
 export const removeUndefinedWidgetProcess = createProcess("remove-undefined-widget", [removeUndefinedWidgetCommand]);
-export const undoProcess = createProcess("undo", [], undoCallback);
+
+// 在 undo 之前，先将焦点设置到根部件上
+export const undoProcess = createProcess("undo", [activeRootWidgetCommand], undoCallback);
+// 当 redo 时，不重新设置焦点，逻辑上还没有遇到不通的地方
 export const redoProcess = createProcess("redo", [], redoCallback);
