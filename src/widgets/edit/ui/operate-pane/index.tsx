@@ -70,7 +70,7 @@ export default factory(function UIOperatePane({ properties, middleware: { icache
 						classes={[
 							c.nav_link,
 							activeNav === "widgets" ? c.active : c.text_muted,
-							activeNav === "widgets" ? css.tabBarActive : undefined
+							activeNav === "widgets" ? css.tabBarActive : css.tabBar
 						]}
 						href="#"
 						onclick={
@@ -91,7 +91,7 @@ export default factory(function UIOperatePane({ properties, middleware: { icache
 						classes={[
 							c.nav_link,
 							activeNav === "properties" ? c.active : c.text_muted,
-							activeNav === "properties" ? css.tabBarActive : undefined
+							activeNav === "properties" ? css.tabBarActive : css.tabBar
 						]}
 						href="#"
 						onclick={

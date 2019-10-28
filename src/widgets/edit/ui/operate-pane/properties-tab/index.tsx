@@ -26,7 +26,9 @@ export default factory(function PropertiesTab({ properties, middleware: { store 
 	}
 
 	let _renderMessageNode = (errorMessage: string) =>
-		v("div", { classes: [css.root] }, [v("div", { classes: [c.text_center, c.text_muted] }, [`${errorMessage}`])]);
+		v("div", { classes: [css.root] }, [
+			v("div", { classes: [c.text_center, c.text_muted, c.py_2] }, [`${errorMessage}`])
+		]);
 
 	// 判断是否存在属性，是基于 layout 判断，而不是基于 widgets.properties
 	// 因为 layout 不是严格对应每个属性的，而是会将多个属性组合在一起显示
@@ -79,5 +81,5 @@ export default factory(function PropertiesTab({ properties, middleware: { store 
 			executor(changeActiveWidgetPropertiesProcess)({ changedProperties });
 		}
 	);
-	return v("div", { classes: [css.root] }, propertyWidgets);
+	return v("div", { classes: [css.root, c.py_1, c.px_2] }, propertyWidgets);
 });
