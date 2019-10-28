@@ -4,3 +4,4 @@ output/
 .cert/
 .project
 serve/packages/
+dist/
