@@ -1,6 +1,6 @@
 {
   "name": "page-designer",
-  "version": "0.0.3-alpha.1",
+  "version": "0.0.3-alpha.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/blocklang/page-designer.git"
@@ -27,14 +27,12 @@
     "@tanem/svg-injector": "^8.0.34",
     "@types/diff": "^4.0.2",
     "@types/scriptjs": "^0.0.2",
-    "@types/string-format": "^2.0.0",
     "bootstrap-classes": "~0.0.3-alpha.1",
     "designer-core": "0.0.1-alpha.21",
     "diff": "^4.0.1",
-    "dojo-fontawesome": "~0.0.2",
+    "dojo-fontawesome": "~0.0.3-alpha.1",
     "scriptjs": "^2.5.9",
     "std-ide-widget": "~0.0.3-alpha.19",
-    "string-format": "^2.0.0",
     "tslib": "~1.9.1"
   },
   "peerDependencies": {
@@ -49,16 +47,16 @@
     "@dojo/cli-test-intern": "^6.0.1",
     "@dojo/framework": "^6.0.3",
     "@dojo/themes": "^6.0.0",
-    "@types/node": "^9.6.53",
+    "@types/node": "^9.6.55",
     "@types/sinon": "~7.0.13",
     "bootstrap": "^4.3.1",
     "codecov": "^3.6.1",
     "husky": "^3.0.9",
     "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
+    "shx": "^0.3.2",
     "sinon": "~7.5.0",
-    "typescript": "~3.4.5",
-    "shx": "^0.3.2"
+    "typescript": "~3.4.5"
   },
   "lint-staged": {
     "*.{ts,tsx,css}": [
