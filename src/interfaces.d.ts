@@ -118,6 +118,8 @@ export interface AttachedWidget extends Widget {
 	properties: AttachedWidgetProperty[];
 }
 
+type PropertyValueType = "string" | "int" | "float" | "date" | "boolean" | "function";
+
 /**
  * @type AttachedWidgetProperty
  *
@@ -126,12 +128,14 @@ export interface AttachedWidget extends Widget {
  * @property id         属性标识，是部件添加到页面之后重新生成的 id
  * @property name       属性名
  * @property value      属性值
+ * @property valueType  属性值类型,支持 string、int、float、date、boolean 和 function 类型
  */
 export interface AttachedWidgetProperty {
 	id: string;
 
 	name: string;
 	value?: string; // 有些属性可能未设置值
+	valueType: PropertyValueType;
 }
 
 // 部件列表中显示的是组件的 API，但是在页面中使用的是 ide 版的组件，两者之间怎么关联？

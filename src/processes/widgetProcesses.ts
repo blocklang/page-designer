@@ -1,14 +1,11 @@
 import { commandFactory } from "./utils";
 import { createProcess } from "@dojo/framework/stores/process";
 import { config } from "../config";
-import * as format from "string-format";
 import { add } from "@dojo/framework/stores/state/operations";
 
-const getWidgetsCommand = commandFactory<{}>(async ({ get, path }) => {
-	const project = get(path("project"));
+const getWidgetsCommand = commandFactory<{}>(async ({ path }) => {
 	console.log("get widgets command");
-	const url = format(config.fetchApiRepoWidgetsUrl, { owner: project.createUserName, projectName: project.name });
-	const response = await fetch(url);
+	const response = await fetch(config.fetchApiRepoWidgetsUrl);
 	const json = await response.json();
 	return [add(path("widgetRepos"), json)];
 });

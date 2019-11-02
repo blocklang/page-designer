@@ -73,7 +73,8 @@ describe("edit/ui/editor", () => {
 						{
 							id: "1",
 							name: "onLoad",
-							value: undefined // TODO: 需进一步细化
+							value: undefined, // TODO: 需进一步细化
+							valueType: "function"
 						}
 					]
 				}
@@ -153,7 +154,8 @@ describe("edit/ui/editor", () => {
 						{
 							id: "1",
 							name: "onLoad",
-							value: undefined // TODO: 需进一步细化
+							value: undefined, // TODO: 需进一步细化
+							valueType: "function"
 						}
 					]
 				},
@@ -346,7 +348,8 @@ describe("edit/ui/editor", () => {
 						{
 							id: "1",
 							name: "onLoad",
-							value: undefined // TODO: 需进一步细化
+							value: undefined, // TODO: 需进一步细化
+							valueType: "function"
 						}
 					]
 				}
@@ -387,7 +390,8 @@ describe("edit/ui/editor", () => {
 					{
 						id: "1",
 						name: "onLoad",
-						value: undefined
+						value: undefined, // TODO: 需进一步细化
+						valueType: "function"
 					}
 				]
 			}
@@ -451,7 +455,8 @@ describe("edit/ui/editor", () => {
 						{
 							id: "1",
 							name: "onLoad",
-							value: undefined // TODO: 需进一步细化
+							value: undefined, // TODO: 需进一步细化
+							valueType: "function"
 						}
 					]
 				}
@@ -493,7 +498,8 @@ describe("edit/ui/editor", () => {
 					{
 						id: "1",
 						name: "onLoad",
-						value: undefined
+						value: undefined, // TODO: 需进一步细化
+						valueType: "function"
 					}
 				]
 			}
@@ -557,7 +563,8 @@ describe("edit/ui/editor", () => {
 						{
 							id: "1",
 							name: "onLoad",
-							value: undefined // TODO: 需进一步细化
+							value: undefined, // TODO: 需进一步细化
+							valueType: "function"
 						}
 					]
 				}

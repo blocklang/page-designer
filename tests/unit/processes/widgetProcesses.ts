@@ -25,8 +25,9 @@ describe("widgetProcesses", () => {
 		const mockResponse = {
 			json: stub().returns([])
 		};
-		config.fetchApiRepoWidgetsUrl = "/{owner}/{projectName}/widgets";
-		const url = "/jack/project1/widgets";
+		const url = "designer/projects/1/widgets";
+		config.fetchApiRepoWidgetsUrl = url;
+
 		fetchStub.withArgs(url).returns(mockResponse);
 		const executor = getWidgetsProcess(store);
 		await executor({});

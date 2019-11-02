@@ -18,8 +18,7 @@
   },
   "widgets": [
     {
-      "owner": "jack",
-      "name": "project_1",
+      "projectId": 1,
       "apiRepoId": 2,
       "apiRepoName": "ide-widgets-bootstrap",
       "widgetCategories": [{
@@ -39,8 +38,7 @@
       }]
     },
     {
-      "owner": "jack",
-      "name": "project_1",
+      "projectId": 1,
       "apiRepoId": 3,
       "apiRepoName": "api repo 3",
       "widgetCategories": []

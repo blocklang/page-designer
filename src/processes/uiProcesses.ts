@@ -2,7 +2,6 @@ import { createProcess, ProcessCallback } from "@dojo/framework/stores/process";
 import { commandFactory, uiHistoryManager } from "./utils";
 import { Widget, AttachedWidget } from "../interfaces";
 import { config } from "../config";
-import * as format from "string-format";
 import { add, replace, remove } from "@dojo/framework/stores/state/operations";
 import { findIndex } from "@dojo/framework/shim/array";
 import { uuid } from "@dojo/framework/core/util";
@@ -225,10 +224,9 @@ function getInsertPosition(widgets: AttachedWidget[], selectedWidgetIndex: numbe
 	return insertedIndex + 1;
 }
 
-const getPageModelCommand = commandFactory(async ({ path, payload: { pageId } }) => {
+const getPageModelCommand = commandFactory(async ({ path }) => {
 	console.log("get page model command");
-	const url = format(config.fetchPageModelUrl, { pageId });
-	const response = await fetch(url);
+	const response = await fetch(config.fetchPageModelUrl);
 	const json = await response.json();
 	return [add(path("pageModel"), json), add(path("selectedWidgetIndex"), 0)];
 });

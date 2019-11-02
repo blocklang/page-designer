@@ -30,7 +30,7 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 
 		h.expect(() => (
 			<div classes={[css.root]}>
-				<div classes={[c.text_center, c.text_muted]}>当前没有焦点获取部件</div>
+				<div classes={[c.text_center, c.text_muted, c.py_2]}>当前没有焦点获取部件</div>
 			</div>
 		));
 	});
@@ -56,7 +56,7 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 
 		h.expect(() => (
 			<div classes={[css.root]}>
-				<div classes={[c.text_center, c.text_muted]}>没有找到聚焦部件所属的 ide 组件仓库信息</div>
+				<div classes={[c.text_center, c.text_muted, c.py_2]}>没有找到聚焦部件所属的 ide 组件仓库信息</div>
 			</div>
 		));
 	});
@@ -78,7 +78,8 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 				properties: [
 					{
 						id: "1",
-						name: "Prop1"
+						name: "Prop1",
+						valueType: "string"
 					}
 				]
 			}
@@ -108,7 +109,7 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 
 		h.expect(() => (
 			<div classes={[css.root]}>
-				<div classes={[c.text_center, c.text_muted]}>没有属性</div>
+				<div classes={[c.text_center, c.text_muted, c.py_2]}>没有属性</div>
 			</div>
 		));
 	});
@@ -133,11 +134,13 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 				properties: [
 					{
 						id: "1",
-						name: "Prop1"
+						name: "Prop1",
+						valueType: "string"
 					},
 					{
 						id: "2",
-						name: "Prop2"
+						name: "Prop2",
+						valueType: "string"
 					}
 				]
 			}
@@ -181,14 +184,14 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 		findWidgetPropertiesLayoutStub = stub(blocklang, "findWidgetPropertiesLayout").returns(propertiesLayout);
 
 		h.expect(() => (
-			<div classes={[css.root]}>
-				<div>
+			<div classes={[css.root, c.py_1, c.px_2]}>
+				<div classes={[css.propertyItem]}>
 					<div>属性1</div>
-					<Prop1 key="Prop1" index={0} onPropertyChanged={() => {}} />
+					<Prop1 key="Prop1" index={0} value={undefined} onPropertyChanged={() => {}} />
 				</div>
-				<div>
+				<div classes={[css.propertyItem]}>
 					<div>属性2</div>
-					<Prop2 key="Prop2" index={1} onPropertyChanged={() => {}} />
+					<Prop2 key="Prop2" index={1} value={undefined} onPropertyChanged={() => {}} />
 				</div>
 			</div>
 		));

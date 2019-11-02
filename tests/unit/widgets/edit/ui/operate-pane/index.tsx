@@ -34,7 +34,7 @@ describe("edit/ui/operate-pane", () => {
 					<li classes={[c.nav_item]}>
 						<a
 							key="nav-properties"
-							classes={[c.nav_link, c.text_muted, undefined]}
+							classes={[c.nav_link, c.text_muted, css.tabBar]}
 							href="#"
 							onclick={() => {}}
 						>
@@ -69,7 +69,7 @@ describe("edit/ui/operate-pane", () => {
 					<li classes={[c.nav_item]}>
 						<a
 							key="nav-properties"
-							classes={[c.nav_link, c.text_muted, undefined]}
+							classes={[c.nav_link, c.text_muted, css.tabBar]}
 							href="#"
 							onclick={() => {}}
 						>
@@ -81,7 +81,7 @@ describe("edit/ui/operate-pane", () => {
 			</div>
 		));
 
-		h.trigger("@nav-properties", "onclick");
+		h.trigger("@nav-properties", "onclick", { preventDefault: () => {} });
 
 		h.expect(() => (
 			<div key="root" classes={[css.root]} styles={{ right: "0px", top: "0px" }}>
@@ -92,7 +92,7 @@ describe("edit/ui/operate-pane", () => {
 					<li classes={[c.nav_item]}>
 						<a
 							key="nav-widgets"
-							classes={[c.nav_link, c.text_muted, undefined]}
+							classes={[c.nav_link, c.text_muted, css.tabBar]}
 							href="#"
 							onclick={() => {}}
 						>
@@ -137,7 +137,7 @@ describe("edit/ui/operate-pane", () => {
 					<li classes={[c.nav_item]}>
 						<a
 							key="nav-properties"
-							classes={[c.nav_link, c.text_muted, undefined]}
+							classes={[c.nav_link, c.text_muted, css.tabBar]}
 							href="#"
 							onclick={() => {}}
 						>
@@ -149,8 +149,8 @@ describe("edit/ui/operate-pane", () => {
 			</div>
 		));
 
-		h.trigger("@nav-properties", "onclick");
-		h.trigger("@nav-widgets", "onclick");
+		h.trigger("@nav-properties", "onclick", { preventDefault: () => {} });
+		h.trigger("@nav-widgets", "onclick", { preventDefault: () => {} });
 
 		h.expect(() => (
 			<div key="root" classes={[css.root]} styles={{ right: "0px", top: "0px" }}>
@@ -171,7 +171,7 @@ describe("edit/ui/operate-pane", () => {
 					<li classes={[c.nav_item]}>
 						<a
 							key="nav-properties"
-							classes={[c.nav_link, c.text_muted, undefined]}
+							classes={[c.nav_link, c.text_muted, css.tabBar]}
 							href="#"
 							onclick={() => {}}
 						>
