@@ -53,12 +53,7 @@ describe("edit/ui/editor", () => {
 		// 1. pageModel
 		// 2. ideRepos
 		const pageModel: PageModel = {
-			pageInfo: {
-				id: 1,
-				key: "page1",
-				name: "页面1",
-				appType: "01"
-			},
+			pageId: 1,
 			widgets: [
 				{
 					id: "1",
@@ -134,12 +129,7 @@ describe("edit/ui/editor", () => {
 		// 1. pageModel
 		// 2. ideRepos
 		const pageModel: PageModel = {
-			pageInfo: {
-				id: 1,
-				key: "page1",
-				name: "页面1",
-				appType: "01"
-			},
+			pageId: 1,
 			widgets: [
 				{
 					id: "1",
@@ -328,12 +318,7 @@ describe("edit/ui/editor", () => {
 		// 1. pageModel
 		// 2. ideRepos
 		const pageModel: PageModel = {
-			pageInfo: {
-				id: 1,
-				key: "page1",
-				name: "页面1",
-				appType: "01"
-			},
+			pageId: 1,
 			widgets: [
 				{
 					id: "1",
@@ -435,12 +420,7 @@ describe("edit/ui/editor", () => {
 		// 1. pageModel
 		// 2. ideRepos
 		const pageModel: PageModel = {
-			pageInfo: {
-				id: 1,
-				key: "page1",
-				name: "页面1",
-				appType: "01"
-			},
+			pageId: 1,
 			widgets: [
 				{
 					id: "1",
@@ -543,12 +523,7 @@ describe("edit/ui/editor", () => {
 		// 1. pageModel
 		// 2. ideRepos
 		const pageModel: PageModel = {
-			pageInfo: {
-				id: 1,
-				key: "page1",
-				name: "页面1",
-				appType: "01"
-			},
+			pageId: 1,
 			widgets: [
 				{
 					id: "1",

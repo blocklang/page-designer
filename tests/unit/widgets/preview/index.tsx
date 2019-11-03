@@ -78,12 +78,7 @@ describe("preview", () => {
 		// 1. pageModel
 		// 2. ideRepos
 		const pageModel: PageModel = {
-			pageInfo: {
-				id: 1,
-				key: "page1",
-				name: "页面1",
-				appType: "01"
-			},
+			pageId: 1,
 			widgets: [
 				{
 					id: "1",
@@ -127,12 +122,7 @@ describe("preview", () => {
 		// 1. pageModel
 		// 2. ideRepos
 		const pageModel: PageModel = {
-			pageInfo: {
-				id: 1,
-				key: "page1",
-				name: "页面1",
-				appType: "01"
-			},
+			pageId: 1,
 			widgets: [
 				{
 					id: "1",
@@ -184,12 +174,7 @@ describe("preview", () => {
 		// 1. pageModel
 		// 2. ideRepos
 		const pageModel: PageModel = {
-			pageInfo: {
-				id: 1,
-				key: "page1",
-				name: "页面1",
-				appType: "01"
-			},
+			pageId: 1,
 			widgets: [
 				{
 					id: "1",
@@ -204,7 +189,8 @@ describe("preview", () => {
 						{
 							id: "1",
 							name: "onLoad",
-							value: undefined // TODO: 需进一步细化
+							value: undefined, // TODO: 需进一步细化
+							valueType: "function"
 						}
 					]
 				},

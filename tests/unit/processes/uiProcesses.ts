@@ -39,12 +39,7 @@ describe("processes/uiProcesses", () => {
 
 	it("getPageModelProcess - get page model, default focus root node", async () => {
 		const pageModel: PageModel = {
-			pageInfo: {
-				id: 1,
-				key: "page1",
-				name: "Page 1",
-				appType: "01"
-			},
+			pageId: 1,
 			widgets: [
 				{
 					id: "1",
@@ -487,7 +482,8 @@ describe("processes/uiProcesses", () => {
 					properties: [
 						{
 							id: "1",
-							name: "prop1"
+							name: "prop1",
+							valueType: "string"
 						}
 					]
 				}
@@ -537,11 +533,13 @@ describe("processes/uiProcesses", () => {
 					properties: [
 						{
 							id: "1",
-							name: "prop1"
+							name: "prop1",
+							valueType: "string"
 						},
 						{
 							id: "2",
-							name: "prop2"
+							name: "prop2",
+							valueType: "string"
 						}
 					]
 				}

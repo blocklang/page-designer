@@ -47,12 +47,7 @@
   "pages": [
     {
       "id": 1,
-      "pageInfo": {
-        "id": 1,
-        "key": "page1",
-        "name": "页面1",
-        "appType": ""
-      },
+      "pageId": 1,
       "widgets": [{
         "id":"1",
         "parentId": "-1",

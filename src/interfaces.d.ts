@@ -226,7 +226,9 @@ export interface ComponentRepo {
 }
 
 /**
+ * 页面模型
  *
+ * @property pageId      页面标识
  * @property widgets     页面中的部件列表，widgets 的排列结构如下：
  *
  * 1. 一个页面只能有一个根节点；
@@ -243,7 +245,7 @@ export interface ComponentRepo {
  *
  */
 export interface PageModel {
-	pageInfo: Page;
+	pageId: number;
 	widgets: AttachedWidget[];
 }
 
