@@ -230,7 +230,6 @@ describe("edit/ui/operate-pane/widgets-tab", () => {
 									widgetCode: "0001",
 									widgetId: 1,
 									widgetName: "widget 1",
-									iconClass: "",
 									canHasChildren: false,
 									apiRepoId: 1
 								}
@@ -300,7 +299,6 @@ describe("edit/ui/operate-pane/widgets-tab", () => {
 									widgetCode: "0001",
 									widgetId: 1,
 									widgetName: "widget 1",
-									iconClass: "",
 									canHasChildren: false,
 									apiRepoId: 1
 								}
@@ -405,7 +403,6 @@ describe("edit/ui/operate-pane/widgets-tab", () => {
 									widgetCode: "0001",
 									widgetId: 1,
 									widgetName: "widget 1",
-									iconClass: "",
 									canHasChildren: false,
 									apiRepoId: 1
 								}
@@ -475,7 +472,6 @@ describe("edit/ui/operate-pane/widgets-tab", () => {
 									widgetCode: "0001",
 									widgetId: 1,
 									widgetName: "widget 1",
-									iconClass: "",
 									canHasChildren: false,
 									apiRepoId: 1
 								}

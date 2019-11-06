@@ -48,7 +48,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -89,7 +88,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -100,7 +98,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 2,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -128,7 +125,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -139,7 +135,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 2,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -167,7 +162,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -178,7 +172,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 2,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -206,7 +199,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -220,7 +212,6 @@ describe("processes/uiProcesses", () => {
 					widgetId: 2,
 					widgetCode: "0002",
 					widgetName: "Widget2",
-					iconClass: "",
 					canHasChildren: true,
 					apiRepoId: 1
 				}
@@ -247,7 +238,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -258,7 +248,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: false,
 					properties: []
 				},
@@ -269,7 +258,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: false,
 					properties: []
 				}
@@ -283,7 +271,6 @@ describe("processes/uiProcesses", () => {
 					widgetId: 3,
 					widgetCode: "0003",
 					widgetName: "Widget3",
-					iconClass: "",
 					canHasChildren: false,
 					apiRepoId: 3
 				}
@@ -312,7 +299,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -326,7 +312,6 @@ describe("processes/uiProcesses", () => {
 					widgetId: 2,
 					widgetCode: "0002",
 					widgetName: "Widget2",
-					iconClass: "",
 					canHasChildren: true,
 					apiRepoId: 1
 				},
@@ -334,7 +319,6 @@ describe("processes/uiProcesses", () => {
 					widgetId: 2,
 					widgetCode: "0002",
 					widgetName: "Widget2",
-					iconClass: "",
 					canHasChildren: true,
 					apiRepoId: 1
 				}
@@ -357,7 +341,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -368,7 +351,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -379,7 +361,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -393,7 +374,6 @@ describe("processes/uiProcesses", () => {
 					widgetId: 3,
 					widgetCode: "0003",
 					widgetName: "Widget3",
-					iconClass: "",
 					canHasChildren: true,
 					apiRepoId: 1
 				}
@@ -421,7 +401,6 @@ describe("processes/uiProcesses", () => {
 				widgetCode: "0001",
 				widgetName: "Widget1",
 				apiRepoId: 1,
-				iconClass: "",
 				canHasChildren: true,
 				properties: []
 			},
@@ -432,7 +411,6 @@ describe("processes/uiProcesses", () => {
 				widgetCode: "0002",
 				widgetName: "Widget2",
 				apiRepoId: 1,
-				iconClass: "",
 				canHasChildren: true,
 				properties: [
 					{
@@ -466,7 +444,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -477,7 +454,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: [
 						{
@@ -517,7 +493,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -528,7 +503,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: [
 						{
@@ -579,7 +553,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -590,7 +563,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -601,7 +573,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -628,7 +599,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -639,7 +609,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -650,7 +619,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -677,7 +645,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -688,7 +655,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -699,7 +665,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -726,7 +691,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -737,7 +701,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -748,7 +711,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -777,7 +739,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -804,7 +765,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -828,7 +788,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -839,7 +798,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -862,7 +820,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -873,7 +830,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -898,7 +854,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -909,7 +864,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -920,7 +874,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -949,7 +902,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -960,7 +912,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -971,7 +922,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -982,7 +932,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -993,7 +942,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -1024,7 +972,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -1035,7 +982,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -1046,7 +992,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -1071,7 +1016,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -1082,7 +1026,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -1093,7 +1036,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -1122,7 +1064,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -1133,7 +1074,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -1144,7 +1084,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -1155,7 +1094,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -1166,7 +1104,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -1197,7 +1134,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -1208,7 +1144,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -1219,7 +1154,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -1230,7 +1164,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -1260,7 +1193,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -1283,7 +1215,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -1294,7 +1225,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -1316,7 +1246,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -1327,7 +1256,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -1338,7 +1266,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -1360,7 +1287,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -1377,7 +1303,6 @@ describe("processes/uiProcesses", () => {
 					widgetId: 2,
 					widgetCode: "0002",
 					widgetName: "Widget2",
-					iconClass: "",
 					canHasChildren: true,
 					apiRepoId: 1
 				}
@@ -1398,7 +1323,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -1409,7 +1333,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -1420,7 +1343,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -1447,7 +1369,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -1458,7 +1379,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -1469,7 +1389,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -1496,7 +1415,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -1507,7 +1425,6 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}

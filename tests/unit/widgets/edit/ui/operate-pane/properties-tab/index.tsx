@@ -48,7 +48,6 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 				widgetName: "Page",
 				widgetCode: "0001",
 				canHasChildren: true,
-				iconClass: "",
 				properties: []
 			}
 		];
@@ -74,7 +73,6 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 				widgetName: "Page",
 				widgetCode: "0001",
 				canHasChildren: true,
-				iconClass: "",
 				properties: [
 					{
 						id: "1",
@@ -130,7 +128,6 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 				widgetName: "Page",
 				widgetCode: "0001",
 				canHasChildren: true,
-				iconClass: "",
 				properties: [
 					{
 						id: "1",

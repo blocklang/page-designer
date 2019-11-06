@@ -32,7 +32,6 @@ describe("edit/ui/operate-pane/Header", () => {
 				widgetId: 1,
 				widgetName: "Page",
 				widgetCode: "0001",
-				iconClass: "",
 				canHasChildren: true,
 				properties: []
 			}
@@ -65,7 +64,6 @@ describe("edit/ui/operate-pane/Header", () => {
 				widgetId: 1,
 				widgetName: "Page",
 				widgetCode: "0001",
-				iconClass: "",
 				canHasChildren: true,
 				properties: []
 			},
@@ -76,7 +74,6 @@ describe("edit/ui/operate-pane/Header", () => {
 				widgetId: 2,
 				widgetName: "Widget1",
 				widgetCode: "0002",
-				iconClass: "",
 				canHasChildren: true,
 				properties: []
 			}
@@ -115,7 +112,6 @@ describe("edit/ui/operate-pane/Header", () => {
 				widgetId: 1,
 				widgetName: "Page",
 				widgetCode: "0001",
-				iconClass: "",
 				canHasChildren: true,
 				properties: []
 			},
@@ -126,7 +122,6 @@ describe("edit/ui/operate-pane/Header", () => {
 				widgetId: 2,
 				widgetName: "Widget1",
 				widgetCode: "0002",
-				iconClass: "",
 				canHasChildren: true,
 				properties: []
 			}

@@ -75,18 +75,33 @@ export type EditMode = "Preview" | "Edit";
  * 视图类型
  *
  * 1. ui: 界面
- * 2. behavior: 交互
+ * 2. behavior: 行为或交互
  */
 export type ViewType = "ui" | "behavior";
 
+/**
+ * @interface WidgetRepo
+ *
+ * 主要描述 API 部件仓库中的部件信息
+ *
+ * @property apiRepoId         API 仓库标识
+ * @property apiRepoName       API 仓库名称，对应于 api.json 中的 name 属性
+ * @property widgetCategories  分组的部件信息
+ */
 export interface WidgetRepo {
 	apiRepoId: number;
 	apiRepoName: string;
 	widgetCategories: WidgetCategory[];
 }
 
+/**
+ * @interface WidgetCategory
+ *
+ * @property name      分类名称，如果未分类，则值为 “_”
+ * @property widgets   部件列表
+ */
 export interface WidgetCategory {
-	name: string; // 如果未分类，则值为 _
+	name: string;
 	widgets: Widget[];
 }
 
@@ -98,7 +113,6 @@ export interface WidgetCategory {
  * @property widgetId           部件标识
  * @property widgetName         部件名称
  * @property widgetCode         部件编码
- * @property iconClass          部件图标样式类
  * @property canHasChildren     是否可以包含子部件
  * @property apiRepoId          部件所属的 API 库标识
  */
@@ -106,7 +120,6 @@ export interface Widget {
 	widgetId: number;
 	widgetName: string;
 	widgetCode: string;
-	iconClass: string;
 	canHasChildren: boolean;
 	apiRepoId: number;
 }

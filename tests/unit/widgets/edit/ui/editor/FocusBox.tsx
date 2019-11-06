@@ -52,7 +52,6 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -139,7 +138,6 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -150,7 +148,6 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -161,7 +158,6 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -172,7 +168,6 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -244,7 +239,6 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -255,7 +249,6 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -327,7 +320,6 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -338,7 +330,6 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -366,7 +357,6 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -377,7 +367,6 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -388,7 +377,6 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -418,7 +406,6 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -429,7 +416,6 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -440,7 +426,6 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -469,7 +454,6 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetCode: "0001",
 					widgetName: "Widget1",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -480,7 +464,6 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					apiRepoId: 1,
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}

@@ -87,7 +87,6 @@ describe("preview", () => {
 					widgetId: 1,
 					widgetName: "Page",
 					widgetCode: "0001",
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -131,7 +130,6 @@ describe("preview", () => {
 					widgetId: 1,
 					widgetName: "Page",
 					widgetCode: "0001",
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}
@@ -183,7 +181,6 @@ describe("preview", () => {
 					widgetId: 1,
 					widgetName: "Page",
 					widgetCode: "0001",
-					iconClass: "",
 					canHasChildren: true,
 					properties: [
 						{
@@ -201,7 +198,6 @@ describe("preview", () => {
 					widgetId: 2,
 					widgetName: "Container",
 					widgetCode: "0002",
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -212,7 +208,6 @@ describe("preview", () => {
 					widgetId: 2,
 					widgetName: "Container",
 					widgetCode: "0002",
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				},
@@ -223,7 +218,6 @@ describe("preview", () => {
 					widgetId: 2,
 					widgetName: "Container",
 					widgetCode: "0002",
-					iconClass: "",
 					canHasChildren: true,
 					properties: []
 				}

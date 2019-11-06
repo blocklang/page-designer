@@ -20,7 +20,6 @@ describe("edit/ui/UndefinedWidget", () => {
 			widgetName: "A",
 			widgetCode: "0001",
 			canHasChildren: false,
-			iconClass: "",
 			apiRepoId: 1,
 			properties: []
 		};
@@ -54,7 +53,6 @@ describe("edit/ui/UndefinedWidget", () => {
 			widgetName: "A",
 			widgetCode: "0001",
 			canHasChildren: false,
-			iconClass: "",
 			apiRepoId: 1,
 			properties: []
 		};
@@ -78,7 +76,6 @@ describe("edit/ui/UndefinedWidget", () => {
 			widgetName: "WidgetA",
 			widgetCode: "0001",
 			canHasChildren: false,
-			iconClass: "",
 			apiRepoId: 1,
 			properties: []
 		};
@@ -123,7 +120,6 @@ describe("edit/ui/UndefinedWidget", () => {
 			widgetName: "WidgetA",
 			widgetCode: "0001",
 			canHasChildren: false,
-			iconClass: "",
 			apiRepoId: 1,
 			properties: []
 		};
