@@ -115,6 +115,7 @@ export interface WidgetCategory {
  * @property widgetCode         部件编码
  * @property canHasChildren     是否可以包含子部件
  * @property apiRepoId          部件所属的 API 库标识
+ * @property properties         部件的属性列表，要按顺序加载全部属性
  */
 export interface Widget {
 	widgetId: number;
@@ -122,8 +123,35 @@ export interface Widget {
 	widgetCode: string;
 	canHasChildren: boolean;
 	apiRepoId: number;
+	properties: WidgetProperty[];
 }
 
+type PropertyValueType = "string" | "int" | "float" | "date" | "boolean" | "function";
+
+/**
+ * @interface WidgetProperty
+ *
+ * @property code           属性编码，是属性的基本信息，此字段要存入到页面模型中
+ * @property name           属性名，此字段仅做显示用，如果 label 有值则优先使用 label 的值
+ * @property defaultValue   属性的默认值
+ * @property valueType      属性值类型,支持 string、int、float、date、boolean 和 function 类型
+ */
+export interface WidgetProperty {
+	code: string;
+	name: string;
+	defaultValue?: string;
+	valueType: PropertyValueType;
+}
+
+/**
+ * @interface AttachedWidget
+ *
+ * 添加到页面中的部件信息
+ *
+ * @property id          部件 id，部件添加到页面中后，新生成的 id
+ * @property parentId    部件的父 id，也是添加到页面中后，之前生成的 id
+ * @property properties  部件的属性列表，不论是否有值，都要加载全部属性
+ */
 export interface AttachedWidget extends Widget {
 	id: string;
 	parentId: string;
@@ -131,24 +159,17 @@ export interface AttachedWidget extends Widget {
 	properties: AttachedWidgetProperty[];
 }
 
-type PropertyValueType = "string" | "int" | "float" | "date" | "boolean" | "function";
-
 /**
- * @type AttachedWidgetProperty
+ * @interface AttachedWidgetProperty
  *
  * 部件添加到页面后，部件的属性信息
  *
  * @property id         属性标识，是部件添加到页面之后重新生成的 id
- * @property name       属性名
  * @property value      属性值
- * @property valueType  属性值类型,支持 string、int、float、date、boolean 和 function 类型
  */
-export interface AttachedWidgetProperty {
+export interface AttachedWidgetProperty extends WidgetProperty {
 	id: string;
-
-	name: string;
-	value?: string; // 有些属性可能未设置值
-	valueType: PropertyValueType;
+	value?: string;
 }
 
 // 部件列表中显示的是组件的 API，但是在页面中使用的是 ide 版的组件，两者之间怎么关联？
