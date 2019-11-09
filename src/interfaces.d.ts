@@ -166,10 +166,12 @@ export interface AttachedWidget extends Widget {
  *
  * @property id         属性标识，是部件添加到页面之后重新生成的 id
  * @property value      属性值
+ * @property isExpr     属性值是不是包含表达式，默认为 false
  */
 export interface AttachedWidgetProperty extends WidgetProperty {
 	id: string;
 	value?: string;
+	isExpr: boolean;
 }
 
 // 部件列表中显示的是组件的 API，但是在页面中使用的是 ide 版的组件，两者之间怎么关联？
