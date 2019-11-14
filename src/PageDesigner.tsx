@@ -172,7 +172,7 @@ function loadExternalResources(ideRepos: ComponentRepo[], loadSuccess: (resource
 
 	const jsUrls = ideRepos.map(
 		(item) =>
-			`/packages/${item.gitRepoWebsite}/${item.gitRepoOwner}/${item.gitRepoName}/${item.version}/main.bundle.js`
+			`/designer/assets/${item.gitRepoWebsite}/${item.gitRepoOwner}/${item.gitRepoName}/${item.version}/main.bundle.js`
 	);
 
 	scriptjs.path(config.externalScriptAndCssWebsite);
@@ -189,7 +189,7 @@ function loadExternalResources(ideRepos: ComponentRepo[], loadSuccess: (resource
 	console.log(`共需加载 ${cssFileCount} 个 css 文件。`);
 	let loadedCount = 0;
 	ideRepos.forEach((item) => {
-		const cssHref = `${config.externalScriptAndCssWebsite}/packages/${item.gitRepoWebsite}/${item.gitRepoOwner}/${item.gitRepoName}/${item.version}/main.bundle.css`;
+		const cssHref = `${config.externalScriptAndCssWebsite}/designer/assets/${item.gitRepoWebsite}/${item.gitRepoOwner}/${item.gitRepoName}/${item.version}/main.bundle.css`;
 		// 如果已经加载过，则不重复加载
 		// FIXME: 添加此逻辑之后，firefox 中同一个 css 文件依然会加载两次, 查找原因。
 		const stylesheet = loadCSS(cssHref);
@@ -204,7 +204,7 @@ function loadExternalResources(ideRepos: ComponentRepo[], loadSuccess: (resource
 	});
 
 	ideRepos.forEach((item) => {
-		const svgHref = `${config.externalScriptAndCssWebsite}/packages/${item.gitRepoWebsite}/${item.gitRepoOwner}/${item.gitRepoName}/${item.version}/icons.svg`;
+		const svgHref = `${config.externalScriptAndCssWebsite}/designer/assets/${item.gitRepoWebsite}/${item.gitRepoOwner}/${item.gitRepoName}/${item.version}/icons.svg`;
 		// 约定的前缀，注意使用的是 ide 版仓库信息，而不是 api 版的仓库信息
 		const idPrefix = `${item.gitRepoWebsite}-${item.gitRepoOwner}-${item.gitRepoName}-`;
 		insertSvgDiv(svgHref, idPrefix);

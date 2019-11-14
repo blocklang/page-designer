@@ -175,6 +175,7 @@ function getWidgetType(ideRepo: ComponentRepo, widgetName: string) {
 // 标准库。标准库是在引用处显式指定的。而扩展库是由用户配置的。
 // TODO: 移到单独的文件中
 // 因为此处只加载了一个版本，所以不需要在路径中包含版本号。
+// 注意，需要在服务端同步指定这里配置的标准库。
 const stdMap: { [propName: string]: any } = {
 	"github.com/blocklang/std-ide-widget": {
 		Page: { ideWidget: Page, propertiesLayout: [] }

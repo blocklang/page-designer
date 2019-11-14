@@ -3,5 +3,5 @@ _build/
 output/
 .cert/
 .project
-serve/packages/
+serve/designer/
 dist/
