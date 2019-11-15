@@ -6,7 +6,7 @@ import * as c from "bootstrap-classes";
 import * as css from "../../src/PageDesigner.m.css";
 import PageDesigner from "../../src/PageDesigner";
 import Header from "../../src/widgets/Header";
-import { User, Project, Path, Page, Permission, RequestUrl, State } from "../../src/interfaces";
+import { User, Project, Path, Page, Permission, RequestUrl, State, RouteName } from "../../src/interfaces";
 import Preview from "../../src/widgets/preview";
 import UIView from "../../src/widgets/edit/ui";
 import BehaviorView from "../../src/widgets/edit/behavior";
@@ -46,6 +46,11 @@ const urls: RequestUrl = {
 	externalScriptAndCssWebsite: ""
 };
 
+const routes: RouteName = {
+	profile: "a",
+	parentGroup: "b"
+};
+
 describe("PageDesigner", () => {
 	let mockStore: any;
 	beforeEach(() => {
@@ -62,6 +67,7 @@ describe("PageDesigner", () => {
 					page={page}
 					pathes={pathes}
 					urls={urls}
+					routes={routes}
 				/>
 			),
 			{ middleware: [[store, mockStore]] }
@@ -97,6 +103,7 @@ describe("PageDesigner", () => {
 					page={page}
 					pathes={pathes}
 					urls={urls}
+					routes={routes}
 				/>
 			),
 			{ middleware: [[store, mockStore]] }
@@ -174,6 +181,7 @@ describe("PageDesigner", () => {
 					page={page}
 					pathes={pathes}
 					urls={urls}
+					routes={routes}
 				/>
 			),
 			{ middleware: [[store, mockStore]] }

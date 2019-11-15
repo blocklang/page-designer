@@ -4,7 +4,7 @@ import dojo from "@dojo/themes/dojo";
 import "bootstrap/dist/css/bootstrap.min.css";
 import * as css from "./App.m.css";
 import PageDesigner from "./PageDesigner";
-import { User, Project, Permission, Page, Path, RequestUrl } from "./interfaces";
+import { User, Project, Permission, Page, Path, RequestUrl, RouteName } from "./interfaces";
 
 const factory = create({ theme });
 
@@ -45,6 +45,11 @@ export default factory(function App({ middleware: { theme } }) {
 		externalScriptAndCssWebsite: "http://localhost:3001"
 	};
 
+	const routes: RouteName = {
+		profile: "",
+		parentGroup: ""
+	};
+
 	return (
 		<div classes={[css.root]}>
 			<PageDesigner
@@ -54,6 +59,7 @@ export default factory(function App({ middleware: { theme } }) {
 				page={page}
 				pathes={pathes}
 				urls={urls}
+				routes={routes}
 			/>
 		</div>
 	);

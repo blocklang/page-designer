@@ -235,6 +235,17 @@ export interface RequestUrl {
 }
 
 /**
+ * 设计器中跳转到其他页面时使用的路由
+ *
+ * @property profile       跳转到用户个人首页
+ * @property parentGroup   跳转到父分组页面
+ */
+export interface RouteName {
+	profile: string;
+	parentGroup: string;
+}
+
+/**
  * @interface ComponentRepo
  *
  * 组件仓库

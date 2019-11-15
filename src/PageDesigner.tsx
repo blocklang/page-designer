@@ -5,7 +5,18 @@ import cache from "@dojo/framework/core/middleware/cache";
 import * as css from "./PageDesigner.m.css";
 import * as c from "bootstrap-classes";
 import Header from "./widgets/Header";
-import { User, Project, Page, Path, Permission, EditMode, ViewType, RequestUrl, ComponentRepo } from "./interfaces";
+import {
+	User,
+	Project,
+	Page,
+	Path,
+	Permission,
+	EditMode,
+	ViewType,
+	RequestUrl,
+	ComponentRepo,
+	RouteName
+} from "./interfaces";
 import Preview from "./widgets/preview";
 import UIView from "./widgets/edit/ui";
 import BehaviorView from "./widgets/edit/behavior";
@@ -62,6 +73,7 @@ export interface PageDesignerProperties {
 	page: Page;
 	pathes: Path[];
 	urls: RequestUrl;
+	routes: RouteName;
 }
 
 const factory = create({ icache, store, cache }).properties<PageDesignerProperties>();
@@ -69,7 +81,7 @@ const factory = create({ icache, store, cache }).properties<PageDesignerProperti
 // 注意，根据单一职责原则，以及参数宜集中不宜分散的原则，在调用 PageDesigner 只有一个设置参数入口，
 // 就是通过 PageDesignerProperties，不允许直接设置 config 对象。
 export default factory(function PageDesigner({ properties, middleware: { icache, store, cache } }) {
-	const { user, project, page, permission, pathes, urls } = properties();
+	const { user, project, page, permission, pathes, urls, routes } = properties();
 	const { executor, get, path } = store;
 
 	// 初始化数据
@@ -80,6 +92,8 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 	if (urls.externalScriptAndCssWebsite) {
 		config.externalScriptAndCssWebsite = urls.externalScriptAndCssWebsite;
 	}
+	config.routeProfile = routes.profile;
+	config.routeParentGroup = routes.parentGroup;
 
 	const savedProject = get(path("project"));
 
@@ -101,12 +115,15 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 		const externalResourcesLoaded = cache.get<boolean>("externalResourcesLoaded") || false;
 		if (!externalResourcesLoaded) {
 			let loadCount = 0;
-			loadExternalResources(ideRepos.filter((item) => item.std === false), () => {
-				loadCount++;
-				if (loadCount === 2) {
-					cache.set("externalResourcesLoaded", true);
+			loadExternalResources(
+				ideRepos.filter((item) => item.std === false),
+				() => {
+					loadCount++;
+					if (loadCount === 2) {
+						cache.set("externalResourcesLoaded", true);
+					}
 				}
-			});
+			);
 		}
 	}
 

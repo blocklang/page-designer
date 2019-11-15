@@ -9,6 +9,8 @@ import { savePageModelProcess, undoProcess, redoProcess } from "../processes/uiP
 import { uiHistoryManager } from "../processes/utils";
 import Store from "@dojo/framework/stores/Store";
 import * as css from "./Header.m.css";
+import Link from "@dojo/framework/routing/Link";
+import { config } from "../config";
 
 export interface HeaderProperties {
 	user?: User;
@@ -43,11 +45,12 @@ export default factory(function Header({ properties, middleware: { store, invali
 		path = pathes[pathes.length - 1].name;
 	}
 
+	// 返回到分组，当前只支持存放在根目录下的
 	const leftBlock = (
 		<div key="left">
-			<a title="返回">
+			<Link title="到上级目录" to={config.routeParentGroup} params={{}}>
 				<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
-			</a>
+			</Link>
 			<span classes={[c.ml_1]}>{path}</span>
 		</div>
 	);
@@ -158,8 +161,10 @@ export default factory(function Header({ properties, middleware: { store, invali
 
 	const userBlock = user && (
 		<span classes={[c.ml_2]}>
-			<img src={user.avatar} />
-			<span>{user.name}</span>
+			<Link to={config.routeProfile} params={{ user: user.name }}>
+				<img src={user.avatar} />
+				<span>{user.name}</span>
+			</Link>
 		</span>
 	);
 

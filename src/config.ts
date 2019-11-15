@@ -14,5 +14,8 @@ export let config = {
 	// 值为空字符串时，表示第三方资源与设计器部署在同一个服务器
 	externalScriptAndCssWebsite: "",
 	// 界面中根部件的父 id
-	rootWidgetParentId: "-1"
+	rootWidgetParentId: "-1",
+	// route
+	routeProfile: "",
+	routeParentGroup: ""
 };

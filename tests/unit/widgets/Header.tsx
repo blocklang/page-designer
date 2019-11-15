@@ -17,6 +17,7 @@ import { uiHistoryManager } from "../../../src/processes/utils";
 import { afterEach } from "intern/lib/interfaces/bdd";
 import { deepMixin } from "@dojo/framework/core/util";
 import * as css from "../../../src/widgets/Header.m.css";
+import Link from "@dojo/framework/routing/Link";
 
 describe("Header", () => {
 	const cachedUiHistoryManager = deepMixin({}, uiHistoryManager);
@@ -63,9 +64,9 @@ describe("Header", () => {
 				]}
 			>
 				<div key="left">
-					<a title="返回">
+					<Link title={"到上级目录"} params={{}} to={""}>
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
-					</a>
+					</Link>
 					<span classes={[c.ml_1]}>tom/project/page1</span>
 				</div>
 			</div>
@@ -115,15 +116,17 @@ describe("Header", () => {
 				]}
 			>
 				<div key="left">
-					<a title="返回">
+					<Link title={"到上级目录"} params={{}} to={""}>
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
-					</a>
+					</Link>
 					<span classes={[c.ml_1]}>tom/project/page1</span>
 				</div>
 				<div key="right">
 					<span classes={[c.ml_2]}>
-						<img src="url" />
-						<span>jack</span>
+						<Link to={""} params={{ user: "jack" }}>
+							<img src="url" />
+							<span>jack</span>
+						</Link>
 					</span>
 				</div>
 			</div>
@@ -173,9 +176,9 @@ describe("Header", () => {
 				]}
 			>
 				<div key="left">
-					<a title="返回">
+					<Link title={"到上级目录"} params={{}} to={""}>
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
-					</a>
+					</Link>
 					<span classes={[c.ml_1]}>tom/project/page1</span>
 				</div>
 				<div key="right">
@@ -184,8 +187,10 @@ describe("Header", () => {
 						<span classes={[c.ml_1]}>编辑</span>
 					</button>
 					<span classes={[c.ml_2]}>
-						<img src="url" />
-						<span>jack</span>
+						<Link to={""} params={{ user: "jack" }}>
+							<img src="url" />
+							<span>jack</span>
+						</Link>
 					</span>
 				</div>
 			</div>
@@ -242,9 +247,9 @@ describe("Header", () => {
 				]}
 			>
 				<div key="left">
-					<a title="返回">
+					<Link title={"到上级目录"} params={{}} to={""}>
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
-					</a>
+					</Link>
 					<span classes={[c.ml_1]}>page1</span>
 				</div>
 				<div key="center" classes={[c.d_inline_flex, c.align_items_center]}>
@@ -300,8 +305,10 @@ describe("Header", () => {
 						<span classes={[c.ml_1]}>浏览</span>
 					</button>
 					<span classes={[c.ml_2]}>
-						<img src="url" />
-						<span>jack</span>
+						<Link to={""} params={{ user: "jack" }}>
+							<img src="url" />
+							<span>jack</span>
+						</Link>
 					</span>
 				</div>
 			</div>
@@ -364,9 +371,9 @@ describe("Header", () => {
 				]}
 			>
 				<div key="left">
-					<a title="返回">
+					<Link title={"到上级目录"} params={{}} to={""}>
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
-					</a>
+					</Link>
 					<span classes={[c.ml_1]}>page1</span>
 				</div>
 				<div key="center" classes={[c.d_inline_flex, c.align_items_center]}>
@@ -426,8 +433,10 @@ describe("Header", () => {
 						<span classes={[c.ml_1]}>浏览</span>
 					</button>
 					<span classes={[c.ml_2]}>
-						<img src="url" />
-						<span>jack</span>
+						<Link to={""} params={{ user: "jack" }}>
+							<img src="url" />
+							<span>jack</span>
+						</Link>
 					</span>
 				</div>
 			</div>
