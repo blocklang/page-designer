@@ -1,7 +1,7 @@
 const { describe, it, beforeEach } = intern.getInterface("bdd");
 const { assert } = intern.getPlugin("chai");
 import Store from "@dojo/framework/stores/Store";
-import { State, PageModel } from "../../../src/interfaces";
+import { State, PageModel, AttachedWidget } from "../../../src/interfaces";
 import global from "@dojo/framework/shim/global";
 import * as sinon from "sinon";
 
@@ -480,7 +480,10 @@ describe("processes/uiProcesses", () => {
 		});
 
 		const widgets = store.get(store.path("pageModel", "widgets"));
-		assert.equal(widgets[1].properties[0].value, "default_value");
+		const prop1 = widgets[1].properties[0];
+		assert.equal(prop1.code, "0001");
+		assert.equal(prop1.name, "prop1");
+		assert.equal(prop1.value, "default_value");
 		assert.isTrue(store.get(store.path("dirty")));
 	});
 
@@ -550,8 +553,10 @@ describe("processes/uiProcesses", () => {
 					properties: [
 						{
 							id: "1",
+							code: "0001",
 							name: "prop1",
-							valueType: "string"
+							valueType: "string",
+							isExpr: false
 						}
 					]
 				}
@@ -601,8 +606,10 @@ describe("processes/uiProcesses", () => {
 					properties: [
 						{
 							id: "1",
+							code: "0001",
 							name: "prop1",
-							valueType: "string"
+							valueType: "string",
+							isExpr: false
 						}
 					]
 				}
@@ -629,40 +636,46 @@ describe("processes/uiProcesses", () => {
 	});
 
 	it("changeActiveWidgetPropertiesProcess - change two property value", () => {
+		const attachedWidgets: AttachedWidget[] = [
+			{
+				id: "1",
+				parentId: "-1",
+				widgetId: 1,
+				widgetCode: "0001",
+				widgetName: "Widget1",
+				apiRepoId: 1,
+				canHasChildren: true,
+				properties: []
+			},
+			{
+				id: "2",
+				parentId: "1",
+				widgetId: 2,
+				widgetCode: "0002",
+				widgetName: "Widget2",
+				apiRepoId: 1,
+				canHasChildren: true,
+				properties: [
+					{
+						id: "1",
+						code: "0001",
+						name: "prop1",
+						valueType: "string",
+						isExpr: false
+					},
+					{
+						id: "2",
+						code: "0002",
+						name: "prop2",
+						valueType: "string",
+						isExpr: false
+					}
+				]
+			}
+		];
+
 		store.apply([
-			add(store.path("pageModel", "widgets"), [
-				{
-					id: "1",
-					parentId: "-1",
-					widgetId: 1,
-					widgetCode: "0001",
-					widgetName: "Widget1",
-					apiRepoId: 1,
-					canHasChildren: true,
-					properties: []
-				},
-				{
-					id: "2",
-					parentId: "1",
-					widgetId: 2,
-					widgetCode: "0002",
-					widgetName: "Widget2",
-					apiRepoId: 1,
-					canHasChildren: true,
-					properties: [
-						{
-							id: "1",
-							name: "prop1",
-							valueType: "string"
-						},
-						{
-							id: "2",
-							name: "prop2",
-							valueType: "string"
-						}
-					]
-				}
-			]),
+			add(store.path("pageModel", "widgets"), attachedWidgets),
 			add(store.path("selectedWidgetIndex"), 1)
 		]);
 
