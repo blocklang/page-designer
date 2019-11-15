@@ -69,6 +69,14 @@ const insertWidgetsCommand = commandFactory<{ widgets: Widget[] }>(({ get, at, p
 		attachedWidget.id = uuid().replace(/-/g, "");
 		attachedWidget.parentId = parentId;
 
+		// 为每个属性设置值
+		attachedWidget.properties.forEach((item) => {
+			item.id = uuid().replace(/-/g, "");
+			if (item.defaultValue) {
+				item.value = item.defaultValue;
+			}
+		});
+
 		result.push(add(at(path("pageModel", "widgets"), insertedIndex), attachedWidget));
 		insertedIndex++;
 	}

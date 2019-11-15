@@ -397,6 +397,93 @@ describe("processes/uiProcesses", () => {
 		assert.isTrue(store.get(store.path("dirty")));
 	});
 
+	// 在新增部件时，要默认包含部件的所有属性，并为每个属性的 id 生成一个 uuid
+	it("insertWidgetsProcess - insert one widget and generate id for property", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					apiRepoId: 1,
+					canHasChildren: true,
+					properties: []
+				}
+			]),
+			add(store.path("selectedWidgetIndex"), 0)
+		]);
+
+		insertWidgetsProcess(store)({
+			widgets: [
+				{
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					canHasChildren: true,
+					apiRepoId: 1,
+					properties: [
+						{
+							code: "0001",
+							name: "prop1",
+							valueType: "string"
+						}
+					]
+				}
+			]
+		});
+
+		const widgets = store.get(store.path("pageModel", "widgets"));
+		// 为属性的 id 设置一个 32 位的 uuid
+		assert.isTrue(widgets[1].properties[0].id.length === 32);
+		assert.isUndefined(widgets[1].properties[0].value);
+		assert.isTrue(store.get(store.path("dirty")));
+	});
+
+	// 为属性设置默认值
+	it("insertWidgetsProcess - insert one widget and set default value for property", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					apiRepoId: 1,
+					canHasChildren: true,
+					properties: []
+				}
+			]),
+			add(store.path("selectedWidgetIndex"), 0)
+		]);
+
+		insertWidgetsProcess(store)({
+			widgets: [
+				{
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					canHasChildren: true,
+					apiRepoId: 1,
+					properties: [
+						{
+							code: "0001",
+							name: "prop1",
+							valueType: "string",
+							defaultValue: "default_value"
+						}
+					]
+				}
+			]
+		});
+
+		const widgets = store.get(store.path("pageModel", "widgets"));
+		assert.equal(widgets[1].properties[0].value, "default_value");
+		assert.isTrue(store.get(store.path("dirty")));
+	});
+
 	it("changeActiveWidgetPropertiesProcess - pass zero changed property", () => {
 		const widgets = [
 			{
