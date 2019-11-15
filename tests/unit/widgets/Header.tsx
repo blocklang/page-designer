@@ -64,7 +64,7 @@ describe("Header", () => {
 				]}
 			>
 				<div key="left">
-					<Link title={"到上级目录"} params={{}} to={""}>
+					<Link title={"到上级目录"} params={{ owner: "tom", project: "project" }} to={""}>
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
 					</Link>
 					<span classes={[c.ml_1]}>tom/project/page1</span>
@@ -116,7 +116,7 @@ describe("Header", () => {
 				]}
 			>
 				<div key="left">
-					<Link title={"到上级目录"} params={{}} to={""}>
+					<Link title={"到上级目录"} params={{ owner: "tom", project: "project" }} to={""}>
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
 					</Link>
 					<span classes={[c.ml_1]}>tom/project/page1</span>
@@ -176,7 +176,7 @@ describe("Header", () => {
 				]}
 			>
 				<div key="left">
-					<Link title={"到上级目录"} params={{}} to={""}>
+					<Link title={"到上级目录"} params={{ owner: "tom", project: "project" }} to={""}>
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
 					</Link>
 					<span classes={[c.ml_1]}>tom/project/page1</span>
@@ -247,7 +247,7 @@ describe("Header", () => {
 				]}
 			>
 				<div key="left">
-					<Link title={"到上级目录"} params={{}} to={""}>
+					<Link title={"到上级目录"} params={{ owner: "tom", project: "project" }} to={""}>
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
 					</Link>
 					<span classes={[c.ml_1]}>page1</span>
@@ -371,7 +371,7 @@ describe("Header", () => {
 				]}
 			>
 				<div key="left">
-					<Link title={"到上级目录"} params={{}} to={""}>
+					<Link title={"到上级目录"} params={{ owner: "tom", project: "project" }} to={""}>
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
 					</Link>
 					<span classes={[c.ml_1]}>page1</span>

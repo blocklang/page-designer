@@ -21,6 +21,8 @@ export interface HeaderProperties {
 	activeView?: ViewType;
 	onChangeEditMode: () => void;
 	onChangeView: () => void;
+	// FIXME: 当 dojo route 支持通配符后，去除此函数
+	onGotoGroup?: (payload: {}) => void;
 }
 
 const factory = create({ store, invalidator }).properties<HeaderProperties>();
@@ -34,7 +36,8 @@ export default factory(function Header({ properties, middleware: { store, invali
 		editMode = "Preview",
 		activeView = "ui",
 		onChangeEditMode,
-		onChangeView
+		onChangeView,
+		onGotoGroup
 	} = properties();
 
 	let path;
@@ -45,12 +48,32 @@ export default factory(function Header({ properties, middleware: { store, invali
 		path = pathes[pathes.length - 1].name;
 	}
 
+	let gotoGroupNodes: DNode;
+	if (pathes.length === 1) {
+		gotoGroupNodes = (
+			<Link
+				title="到上级目录"
+				to={config.routeParentGroup}
+				params={{ owner: project.createUserName, project: project.name }}
+			>
+				<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
+			</Link>
+		);
+	} else {
+		const parentPath = pathes[pathes.length - 2].path.substring(1);
+		gotoGroupNodes = (
+			<a
+				title="到上级目录"
+				onclick={onGotoGroup}
+				href={`/${project.createUserName}/${project.name}/groups/${parentPath}`}
+			></a>
+		);
+	}
+
 	// 返回到分组，当前只支持存放在根目录下的
 	const leftBlock = (
 		<div key="left">
-			<Link title="到上级目录" to={config.routeParentGroup} params={{}}>
-				<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
-			</Link>
+			{gotoGroupNodes}
 			<span classes={[c.ml_1]}>{path}</span>
 		</div>
 	);
