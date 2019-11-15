@@ -126,7 +126,7 @@ export interface Widget {
 	properties: WidgetProperty[];
 }
 
-type PropertyValueType = "string" | "int" | "float" | "date" | "boolean" | "function";
+export type PropertyValueType = "string" | "int" | "float" | "date" | "boolean" | "function";
 
 /**
  * @interface WidgetProperty

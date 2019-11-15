@@ -213,7 +213,8 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					canHasChildren: true,
-					apiRepoId: 1
+					apiRepoId: 1,
+					properties: []
 				}
 			]
 		});
@@ -272,7 +273,8 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0003",
 					widgetName: "Widget3",
 					canHasChildren: false,
-					apiRepoId: 3
+					apiRepoId: 3,
+					properties: []
 				}
 			]
 		});
@@ -313,14 +315,16 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					canHasChildren: true,
-					apiRepoId: 1
+					apiRepoId: 1,
+					properties: []
 				},
 				{
 					widgetId: 2,
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					canHasChildren: true,
-					apiRepoId: 1
+					apiRepoId: 1,
+					properties: []
 				}
 			]
 		});
@@ -375,7 +379,8 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0003",
 					widgetName: "Widget3",
 					canHasChildren: true,
-					apiRepoId: 1
+					apiRepoId: 1,
+					properties: []
 				}
 			]
 		});
@@ -472,13 +477,66 @@ describe("processes/uiProcesses", () => {
 				{
 					index: 0,
 					newValue: "1",
-					isChanging: false
+					isChanging: false,
+					isExpr: false
 				}
 			]
 		});
 
 		const widgets = store.get(store.path("pageModel", "widgets"));
 		assert.equal(widgets[1].properties[0].value, "1");
+		assert.isFalse(widgets[1].properties[0].isExpr);
+
+		assert.isTrue(store.get(store.path("dirty")));
+	});
+
+	it("changeActiveWidgetPropertiesProcess - change one property's isExpr", () => {
+		store.apply([
+			add(store.path("pageModel", "widgets"), [
+				{
+					id: "1",
+					parentId: "-1",
+					widgetId: 1,
+					widgetCode: "0001",
+					widgetName: "Widget1",
+					apiRepoId: 1,
+					canHasChildren: true,
+					properties: []
+				},
+				{
+					id: "2",
+					parentId: "1",
+					widgetId: 2,
+					widgetCode: "0002",
+					widgetName: "Widget2",
+					apiRepoId: 1,
+					canHasChildren: true,
+					properties: [
+						{
+							id: "1",
+							name: "prop1",
+							valueType: "string"
+						}
+					]
+				}
+			]),
+			add(store.path("selectedWidgetIndex"), 1)
+		]);
+
+		changeActiveWidgetPropertiesProcess(store)({
+			changedProperties: [
+				{
+					index: 0,
+					newValue: "1",
+					isChanging: false,
+					isExpr: true
+				}
+			]
+		});
+
+		const widgets = store.get(store.path("pageModel", "widgets"));
+		assert.equal(widgets[1].properties[0].value, "1");
+		assert.isTrue(widgets[1].properties[0].isExpr);
 
 		assert.isTrue(store.get(store.path("dirty")));
 	});
@@ -526,12 +584,14 @@ describe("processes/uiProcesses", () => {
 				{
 					index: 0,
 					newValue: "1",
-					isChanging: false
+					isChanging: false,
+					isExpr: false
 				},
 				{
 					index: 1,
 					newValue: "2",
-					isChanging: false
+					isChanging: false,
+					isExpr: false
 				}
 			]
 		});
@@ -1304,7 +1364,8 @@ describe("processes/uiProcesses", () => {
 					widgetCode: "0002",
 					widgetName: "Widget2",
 					canHasChildren: true,
-					apiRepoId: 1
+					apiRepoId: 1,
+					properties: []
 				}
 			]
 		});

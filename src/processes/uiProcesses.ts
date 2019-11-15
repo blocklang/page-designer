@@ -93,16 +93,21 @@ const changeActiveWidgetPropertiesCommand = commandFactory<{ changedProperties: 
 		const result = [];
 		for (let i = 0; i < changedProperties.length; i++) {
 			const changedProperty = changedProperties[i];
+			const originProperty = get(
+				at(path(at(path("pageModel", "widgets"), selectedWidgetIndex), "properties"), changedProperty.index)
+			);
+			const targetProperty = {
+				...originProperty,
+				value: changedProperty.newValue,
+				isExpr: changedProperty.isExpr
+			};
 			result.push(
 				replace(
-					path(
-						at(
-							path(at(path("pageModel", "widgets"), selectedWidgetIndex), "properties"),
-							changedProperty.index
-						),
-						"value"
+					at(
+						path(at(path("pageModel", "widgets"), selectedWidgetIndex), "properties"),
+						changedProperty.index
 					),
-					changedProperty.newValue
+					targetProperty
 				)
 			);
 		}
