@@ -24,11 +24,11 @@
     "serve": "cd serve && serve -l 3001"
   },
   "dependencies": {
-    "@tanem/svg-injector": "^8.0.34",
+    "@tanem/svg-injector": "^8.0.35",
     "@types/diff": "^4.0.2",
     "@types/scriptjs": "^0.0.2",
     "bootstrap-classes": "~0.0.3-alpha.1",
-    "designer-core": "0.0.1-alpha.21",
+    "designer-core": "~0.0.1-alpha.22",
     "diff": "^4.0.1",
     "dojo-fontawesome": "~0.0.3-alpha.1",
     "scriptjs": "^2.5.9",
@@ -48,14 +48,14 @@
     "@dojo/framework": "^6.0.3",
     "@dojo/themes": "^6.0.0",
     "@types/node": "^9.6.55",
-    "@types/sinon": "~7.0.13",
+    "@types/sinon": "^7.0.13",
     "bootstrap": "^4.3.1",
     "codecov": "^3.6.1",
     "husky": "^3.0.9",
-    "lint-staged": "^9.4.2",
-    "prettier": "^1.18.2",
+    "lint-staged": "^9.4.3",
+    "prettier": "^1.19.1",
     "shx": "^0.3.2",
-    "sinon": "~7.5.0",
+    "sinon": "^7.5.0",
     "typescript": "~3.4.5"
   },
   "lint-staged": {
