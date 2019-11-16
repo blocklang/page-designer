@@ -71,7 +71,9 @@ export default factory(function Header({ properties, middleware: { store, invali
 					return false;
 				}}
 				href={`/${project.createUserName}/${project.name}/groups/${parentPath}`}
-			></a>
+			>
+				<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
+			</a>
 		);
 	}
 
