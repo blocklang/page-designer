@@ -85,6 +85,7 @@ describe("PageDesigner", () => {
 					pathes={pathes}
 					onChangeEditMode={() => {}}
 					onChangeView={() => {}}
+					onGotoGroup={() => {}}
 				/>
 				<div classes={[css.container]}>
 					<Preview permission={permission} onChangeEditMode={() => {}} />
@@ -121,6 +122,7 @@ describe("PageDesigner", () => {
 					pathes={pathes}
 					onChangeEditMode={() => {}}
 					onChangeView={() => {}}
+					onGotoGroup={() => {}}
 				/>
 				<div classes={[css.container]}>
 					<Preview permission={permission} onChangeEditMode={() => {}} />
@@ -142,6 +144,7 @@ describe("PageDesigner", () => {
 					pathes={pathes}
 					onChangeEditMode={() => {}}
 					onChangeView={() => {}}
+					onGotoGroup={() => {}}
 				/>
 				<div classes={[css.container]}>
 					<UIView />
@@ -163,6 +166,7 @@ describe("PageDesigner", () => {
 					pathes={pathes}
 					onChangeEditMode={() => {}}
 					onChangeView={() => {}}
+					onGotoGroup={() => {}}
 				/>
 				<div classes={[css.container]}>
 					<Preview permission={permission} onChangeEditMode={() => {}} />
@@ -199,6 +203,7 @@ describe("PageDesigner", () => {
 					pathes={pathes}
 					onChangeEditMode={() => {}}
 					onChangeView={() => {}}
+					onGotoGroup={() => {}}
 				/>
 				<div classes={[css.container]}>
 					<Preview permission={permission} onChangeEditMode={() => {}} />
@@ -222,6 +227,7 @@ describe("PageDesigner", () => {
 					pathes={pathes}
 					onChangeEditMode={() => {}}
 					onChangeView={() => {}}
+					onGotoGroup={() => {}}
 				/>
 				<div classes={[css.container]}>
 					<BehaviorView />
@@ -243,6 +249,7 @@ describe("PageDesigner", () => {
 					pathes={pathes}
 					onChangeEditMode={() => {}}
 					onChangeView={() => {}}
+					onGotoGroup={() => {}}
 				/>
 				<div classes={[css.container]}>
 					<UIView />

@@ -158,6 +158,10 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 					}
 					icache.set("activeView", activeView);
 				}}
+				// 当路由支持通配符后删除此段代码
+				onGotoGroup={(owner: string, project: string, parentPath: string) => {
+					routes.gotoGroup && routes.gotoGroup(owner, project, parentPath);
+				}}
 			/>
 			<div classes={[css.container]}>
 				{editMode === "Preview" ? (

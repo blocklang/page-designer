@@ -22,7 +22,7 @@ export interface HeaderProperties {
 	onChangeEditMode: () => void;
 	onChangeView: () => void;
 	// FIXME: 当 dojo route 支持通配符后，去除此函数
-	onGotoGroup?: (payload: {}) => void;
+	onGotoGroup?: (owner: string, project: string, parentPath: string) => void;
 }
 
 const factory = create({ store, invalidator }).properties<HeaderProperties>();
@@ -64,7 +64,12 @@ export default factory(function Header({ properties, middleware: { store, invali
 		gotoGroupNodes = (
 			<a
 				title="到上级目录"
-				onclick={onGotoGroup}
+				onclick={(event: MouseEvent) => {
+					event.stopPropagation();
+					event.preventDefault();
+					onGotoGroup && onGotoGroup(project.createUserName, project.name, parentPath);
+					return false;
+				}}
 				href={`/${project.createUserName}/${project.name}/groups/${parentPath}`}
 			></a>
 		);

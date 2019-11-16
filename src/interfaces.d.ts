@@ -245,7 +245,7 @@ export interface RouteName {
 	parentGroup: string;
 	// 因为目前 dojo route 不支持通配符，所以在此处加入自定义逻辑
 	// 当支持时去除该逻辑
-	gotoGroup?: (payload: { owner: string; project: string; parentPath: string }) => void;
+	gotoGroup?: (owner: string, project: string, parentPath: string) => void;
 }
 
 /**
