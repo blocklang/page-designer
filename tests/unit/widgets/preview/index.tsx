@@ -185,9 +185,11 @@ describe("preview", () => {
 					properties: [
 						{
 							id: "1",
+							code: "0001",
 							name: "onLoad",
 							value: undefined, // TODO: 需进一步细化
-							valueType: "function"
+							valueType: "function",
+							isExpr: false // TODO: 函数名算不算表达式？
 						}
 					]
 				},
@@ -267,6 +269,109 @@ describe("preview", () => {
 						<Container key="0_21"></Container>
 					</Container>
 					<Container key="1_3" />
+				</Page>
+			</div>
+		));
+	});
+
+	it("show a page, root->node1, node1 has a property", () => {
+		class TextInput extends WidgetBase<{ prop1: string }> {}
+		class IdeTextInput extends WidgetBase {}
+
+		const mockStore = createMockStoreMiddleware<State>();
+
+		const permission: Permission = {
+			canRead: true,
+			canWrite: false
+		};
+		const h = harness(() => <Preview permission={permission} onChangeEditMode={() => {}} />, {
+			middleware: [[store, mockStore]]
+		});
+
+		// 设置两个值：
+		// 1. pageModel
+		// 2. ideRepos
+		const pageModel: PageModel = {
+			pageId: 1,
+			widgets: [
+				{
+					id: "1",
+					parentId: "-1",
+					apiRepoId: 1,
+					widgetId: 1,
+					widgetName: "Page",
+					widgetCode: "0001",
+					canHasChildren: true,
+					properties: [
+						{
+							id: "1",
+							code: "0001",
+							name: "onLoad",
+							value: undefined, // TODO: 需进一步细化
+							valueType: "function",
+							isExpr: false // TODO: 函数名算不算表达式？
+						}
+					]
+				},
+				{
+					id: "2",
+					parentId: "1",
+					apiRepoId: 2,
+					widgetId: 2,
+					widgetName: "TextInput",
+					widgetCode: "0002",
+					canHasChildren: true,
+					properties: [
+						{
+							id: "1",
+							code: "0001",
+							name: "prop1",
+							value: undefined, // TODO: 需进一步细化
+							valueType: "string",
+							isExpr: false // TODO: 函数名算不算表达式？
+						}
+					]
+				}
+			]
+		};
+
+		// 默认包含标准库
+		const ideRepos: ComponentRepo[] = [
+			{
+				id: 1,
+				apiRepoId: 1,
+				gitRepoWebsite: "github.com",
+				gitRepoOwner: "blocklang",
+				gitRepoName: "std-ide-widget",
+				name: "std-ide-widget",
+				category: "widget",
+				version: "0.0.1",
+				std: true
+			},
+			{
+				id: 2,
+				apiRepoId: 2,
+				gitRepoWebsite: "github.com",
+				gitRepoOwner: "blocklang",
+				gitRepoName: "ide-widget",
+				name: "ide-widget",
+				category: "widget",
+				version: "0.0.1",
+				std: false
+			}
+		];
+
+		blocklang.registerWidgets(
+			{ website: "github.com", owner: "blocklang", repoName: "ide-widget" },
+			{ TextInput: { widget: TextInput, ideWidget: IdeTextInput, propertiesLayout: [] } }
+		);
+
+		mockStore((path) => [replace(path("pageModel"), pageModel), replace(path("ideRepos"), ideRepos)]);
+
+		h.expect(() => (
+			<div>
+				<Page key="0_1" onLoad={() => {}}>
+					<TextInput key="0_2" prop1=""></TextInput>
 				</Page>
 			</div>
 		));

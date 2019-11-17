@@ -78,7 +78,17 @@ function renderWidget(widget: AttachedWidget, index: number): WNode {
 		widget.properties.forEach((item) => {
 			// 如果 item 的 type 为 function，且值为 undefined，则设置为 ()=>{}
 			// 注意，从服务器端返回的是字符串类型，这里需要转换。
-			const value = item.value ? item.value : () => {};
+			let value;
+			if (item.valueType === "function") {
+				if (!item.value) {
+					value = () => {};
+				} else {
+					throw "未实现";
+				}
+			} else {
+				value = item.value || "";
+			}
+
 			originalProperties[item.name] = value;
 		});
 
