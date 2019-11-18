@@ -1,6 +1,6 @@
 {
   "name": "page-designer",
-  "version": "0.0.3-alpha.6",
+  "version": "0.0.3-alpha.8",
   "repository": {
     "type": "git",
     "url": "https://github.com/blocklang/page-designer.git"
@@ -11,15 +11,18 @@
     "build:dev": "dojo build --mode dev",
     "build:lib": "dojo build widget --mode dist --target lib && shx cp -r output/dist/* dist/",
     "build:lib:legacy": "dojo build widget --mode dist --target lib -l && shx cp -r output/dist/* dist/",
+    "build:test": "dojo build widget -m unit",
     "clean": "shx rm -rf dist && shx mkdir dist",
     "build": "npm run clean && npm run build:lib && npm run build:lib:legacy && shx cp package.json dist/ && shx cp README.md dist/",
     "test": "dojo test",
     "test:unit": "dojo build --mode unit && dojo test --unit --config local",
     "test:functional": "dojo build --mode functional && dojo test --functional --config local",
     "test:all": "dojo build --mode unit && dojo build --mode functional && dojo test --all --config local",
+    "test:headless": "dojo test -u -c headless",
+    "test:ci": "run-s build:test test:headless",
     "precommit": "lint-staged",
     "prettier": "prettier --write 'src/**/*.{ts,tsx}' 'src/**/*.css' 'tests/**/*.{ts,tsx}'",
-    "uploadCoverage": "codecov --file=output/coverage/lcov/coverage.lcov -t 29c87b14-9b8a-43e1-a43d-a94f51b0538e",
+    "uploadCoverage": "codecov --file=coverage/coverage.json",
     "json-server": "json-server --watch json-server/db.json --routes json-server/routes.json",
     "serve": "cd serve && serve -l 3001"
   },
@@ -49,6 +52,7 @@
     "@dojo/themes": "^6.0.0",
     "@types/node": "^9.6.55",
     "@types/sinon": "^7.0.13",
+    "npm-run-all": "4.1.5",
     "bootstrap": "^4.3.1",
     "codecov": "^3.6.1",
     "husky": "^3.0.9",
