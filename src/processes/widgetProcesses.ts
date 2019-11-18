@@ -5,7 +5,7 @@ import { add } from "@dojo/framework/stores/state/operations";
 
 const getWidgetsCommand = commandFactory<{}>(async ({ path }) => {
 	console.log("get widgets command");
-	const response = await fetch(config.fetchApiRepoWidgetsUrl);
+	const response = await fetch(config.fetchApiRepoWidgetsUrl, { headers: config.customFetchHeaders() });
 	const json = await response.json();
 	return [add(path("widgetRepos"), json)];
 });

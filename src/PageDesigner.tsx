@@ -92,6 +92,10 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 	if (urls.externalScriptAndCssWebsite) {
 		config.externalScriptAndCssWebsite = urls.externalScriptAndCssWebsite;
 	}
+	if (urls.customFetchHeaders) {
+		config.customFetchHeaders = urls.customFetchHeaders;
+	}
+
 	config.routeProfile = routes.profile;
 	config.routeParentGroup = routes.parentGroup;
 
@@ -101,6 +105,9 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 	if (!savedProject || savedProject.id !== project.id) {
 		// 在 store 中存储项目基本信息
 		executor(initProjectProcess)({ project });
+	}
+
+	if (!get(path("pageModel"))) {
 		executor(getPageModelProcess)({ pageId: page.id });
 	}
 

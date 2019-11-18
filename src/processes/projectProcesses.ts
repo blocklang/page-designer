@@ -11,7 +11,7 @@ const initProjectCommand = commandFactory<{ project: Project }>(({ path, payload
 
 const getProjectIdeDependencesCommand = commandFactory(async ({ path }) => {
 	console.log("run get project ide dependences command(如果此文本多次出现，则要考虑去除多余的设置)");
-	const response = await fetch(config.fetchIdeDependenceInfosUrl);
+	const response = await fetch(config.fetchIdeDependenceInfosUrl, { headers: config.customFetchHeaders() });
 	const json = await response.json();
 	return [add(path("ideRepos"), json)];
 });

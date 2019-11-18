@@ -13,6 +13,7 @@ export let config = {
 	// 第三方静态资源，即组件市场中的 js 文件和 css 文件的根网址
 	// 值为空字符串时，表示第三方资源与设计器部署在同一个服务器
 	externalScriptAndCssWebsite: "",
+	customFetchHeaders: (): any => {},
 	// 界面中根部件的父 id
 	rootWidgetParentId: "-1",
 	// route

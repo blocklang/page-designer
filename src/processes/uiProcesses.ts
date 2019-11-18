@@ -239,7 +239,7 @@ function getInsertPosition(widgets: AttachedWidget[], selectedWidgetIndex: numbe
 
 const getPageModelCommand = commandFactory(async ({ path }) => {
 	console.log("get page model command");
-	const response = await fetch(config.fetchPageModelUrl);
+	const response = await fetch(config.fetchPageModelUrl, { headers: config.customFetchHeaders() });
 	const json = await response.json();
 	return [add(path("pageModel"), json), add(path("selectedWidgetIndex"), 0)];
 });
@@ -250,7 +250,7 @@ const savePageModelCommand = commandFactory(async ({ path, get }) => {
 	const response = await fetch(config.savePageModelUrl, {
 		method: "PUT",
 		credentials: "same-origin",
-		headers: { "Content-type": "application/json;charset=UTF-8" },
+		headers: { "Content-type": "application/json;charset=UTF-8", ...config.customFetchHeaders() },
 		body: JSON.stringify(pageModel)
 	});
 

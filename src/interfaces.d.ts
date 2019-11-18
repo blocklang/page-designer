@@ -226,12 +226,14 @@ export interface AttachedWidgetProperty extends WidgetProperty {
  * 从服务器端请求数据的 url
  *
  * @property fetchApiRepoWidgets  用户获取 API 仓库中的部件列表
+ * @function customFetchHeaders   自定义 fetch 请求的 header 信息
  */
 export interface RequestUrl {
 	fetchApiRepoWidgets: string;
 	fetchPageModel: string;
 	fetchIdeDependenceInfos: string;
 	externalScriptAndCssWebsite: string;
+	customFetchHeaders?: () => { [key: string]: string };
 }
 
 /**
