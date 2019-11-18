@@ -124,7 +124,7 @@ describe("Header", () => {
 				<div key="right">
 					<span classes={[c.ml_2]}>
 						<Link to={""} params={{ user: "jack" }}>
-							<img src="url" />
+							<img src="url" classes={[c.mr_1, css.avatar]} />
 							<span>jack</span>
 						</Link>
 					</span>
@@ -188,7 +188,7 @@ describe("Header", () => {
 					</button>
 					<span classes={[c.ml_2]}>
 						<Link to={""} params={{ user: "jack" }}>
-							<img src="url" />
+							<img src="url" classes={[c.mr_1, css.avatar]} />
 							<span>jack</span>
 						</Link>
 					</span>
@@ -306,7 +306,7 @@ describe("Header", () => {
 					</button>
 					<span classes={[c.ml_2]}>
 						<Link to={""} params={{ user: "jack" }}>
-							<img src="url" />
+							<img src="url" classes={[c.mr_1, css.avatar]} />
 							<span>jack</span>
 						</Link>
 					</span>
@@ -434,7 +434,7 @@ describe("Header", () => {
 					</button>
 					<span classes={[c.ml_2]}>
 						<Link to={""} params={{ user: "jack" }}>
-							<img src="url" />
+							<img src="url" classes={[c.mr_1, css.avatar]} />
 							<span>jack</span>
 						</Link>
 					</span>
