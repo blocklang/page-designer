@@ -16,3 +16,9 @@
 	cursor: not-allowed;
 	color: #c8cdd0;
 }
+
+.avatar {
+	height: 20px;
+	width: 20px;
+	border-radius: 3px;
+}

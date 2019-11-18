@@ -192,7 +192,7 @@ export default factory(function Header({ properties, middleware: { store, invali
 	const userBlock = user && (
 		<span classes={[c.ml_2]}>
 			<Link to={config.routeProfile} params={{ user: user.name }}>
-				<img src={user.avatar} />
+				<img src={user.avatar} classes={[c.mr_1, css.avatar]} />
 				<span>{user.name}</span>
 			</Link>
 		</span>
