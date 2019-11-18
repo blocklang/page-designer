@@ -67,8 +67,10 @@ describe("edit/ui/editor", () => {
 						{
 							id: "1",
 							name: "onLoad",
+							code: "0001",
 							value: undefined, // TODO: 需进一步细化
-							valueType: "function"
+							valueType: "function",
+							isExpr: false
 						}
 					]
 				}
@@ -141,9 +143,11 @@ describe("edit/ui/editor", () => {
 					properties: [
 						{
 							id: "1",
+							code: "0001",
 							name: "onLoad",
 							value: undefined, // TODO: 需进一步细化
-							valueType: "function"
+							valueType: "function",
+							isExpr: false
 						}
 					]
 				},
@@ -326,9 +330,11 @@ describe("edit/ui/editor", () => {
 					properties: [
 						{
 							id: "1",
+							code: "0001",
 							name: "onLoad",
 							value: undefined, // TODO: 需进一步细化
-							valueType: "function"
+							valueType: "function",
+							isExpr: false
 						}
 					]
 				}
@@ -367,9 +373,11 @@ describe("edit/ui/editor", () => {
 				properties: [
 					{
 						id: "1",
+						code: "0001",
 						name: "onLoad",
 						value: undefined, // TODO: 需进一步细化
-						valueType: "function"
+						valueType: "function",
+						isExpr: false
 					}
 				]
 			}
@@ -426,9 +434,11 @@ describe("edit/ui/editor", () => {
 					properties: [
 						{
 							id: "1",
+							code: "0001",
 							name: "onLoad",
 							value: undefined, // TODO: 需进一步细化
-							valueType: "function"
+							valueType: "function",
+							isExpr: false
 						}
 					]
 				}
@@ -468,9 +478,11 @@ describe("edit/ui/editor", () => {
 				properties: [
 					{
 						id: "1",
+						code: "0001",
 						name: "onLoad",
 						value: undefined, // TODO: 需进一步细化
-						valueType: "function"
+						valueType: "function",
+						isExpr: false
 					}
 				]
 			}
@@ -527,9 +539,11 @@ describe("edit/ui/editor", () => {
 					properties: [
 						{
 							id: "1",
+							code: "0001",
 							name: "onLoad",
 							value: undefined, // TODO: 需进一步细化
-							valueType: "function"
+							valueType: "function",
+							isExpr: false
 						}
 					]
 				}

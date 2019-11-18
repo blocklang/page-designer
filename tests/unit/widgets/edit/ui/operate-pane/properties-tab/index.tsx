@@ -76,8 +76,10 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 				properties: [
 					{
 						id: "1",
+						code: "0001",
 						name: "Prop1",
-						valueType: "string"
+						valueType: "string",
+						isExpr: false
 					}
 				]
 			}
@@ -131,13 +133,17 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 				properties: [
 					{
 						id: "1",
+						code: "0001",
 						name: "Prop1",
-						valueType: "string"
+						valueType: "string",
+						isExpr: false
 					},
 					{
 						id: "2",
+						code: "0001",
 						name: "Prop2",
-						valueType: "string"
+						valueType: "string",
+						isExpr: false
 					}
 				]
 			}
