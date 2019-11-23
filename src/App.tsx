@@ -42,7 +42,8 @@ export default factory(function App({ middleware: { theme } }) {
 		fetchApiRepoWidgets: "http://localhost:3000/designer/projects/1/dependences/widgets",
 		fetchPageModel: "http://localhost:3000/designer/pages/1/model",
 		fetchIdeDependenceInfos: "http://localhost:3000/designer/projects/1/dependences?category=dev",
-		externalScriptAndCssWebsite: "http://localhost:3001"
+		externalScriptAndCssWebsite: "http://localhost:3001",
+		savePageModel: ""
 	};
 
 	const routes: RouteName = {
