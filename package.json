@@ -1,6 +1,6 @@
 {
   "name": "page-designer",
-  "version": "0.0.3-alpha.9",
+  "version": "0.0.3-alpha.10",
   "repository": {
     "type": "git",
     "url": "https://github.com/blocklang/page-designer.git"
@@ -51,12 +51,12 @@
     "@dojo/framework": "^6.0.3",
     "@dojo/themes": "^6.0.0",
     "@types/node": "^9.6.55",
-    "@types/sinon": "^7.0.13",
-    "npm-run-all": "4.1.5",
+    "@types/sinon": "^7.5.1",
     "bootstrap": "^4.3.1",
     "codecov": "^3.6.1",
-    "husky": "^3.0.9",
+    "husky": "^3.1.0",
     "lint-staged": "^9.4.3",
+    "npm-run-all": "4.1.5",
     "prettier": "^1.19.1",
     "shx": "^0.3.2",
     "sinon": "^7.5.0",
