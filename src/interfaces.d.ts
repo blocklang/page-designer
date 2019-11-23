@@ -232,6 +232,7 @@ export interface RequestUrl {
 	fetchApiRepoWidgets: string;
 	fetchPageModel: string;
 	fetchIdeDependenceInfos: string;
+	savePageModel: string;
 	externalScriptAndCssWebsite: string;
 	customFetchHeaders?: () => { [key: string]: string };
 }

@@ -89,6 +89,7 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 	config.fetchApiRepoWidgetsUrl = urls.fetchApiRepoWidgets;
 	config.fetchPageModelUrl = urls.fetchPageModel;
 	config.fetchIdeDependenceInfosUrl = urls.fetchIdeDependenceInfos;
+	config.savePageModelUrl = urls.savePageModel;
 	if (urls.externalScriptAndCssWebsite) {
 		config.externalScriptAndCssWebsite = urls.externalScriptAndCssWebsite;
 	}
