@@ -100,6 +100,7 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 	config.routeProfile = routes.profile;
 	config.routeParentGroup = routes.parentGroup;
 
+	// 如果应用程序的 store 中存在 project，则使用应用程序 store 中的值
 	const savedProject = get(path("project"));
 
 	// 避免重复设置或重复请求远程数据
@@ -108,30 +109,42 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 		executor(initProjectProcess)({ project });
 	}
 
-	if (!get(path("pageModel"))) {
+	const pageModelIsLoading = cache.get<boolean>("pageModelIsLoading") || false;
+	// 页面模型不能缓存，原因有二：
+	// 1. 如果第二次加载的是另一个页面，则依然会使用第一次加载时的模型
+	// 2. 如果页面模型在另一个浏览器中修改，则使用的依然是本地缓存的数据
+	// 所以，每次进入页面都要初始化加载页面模型，
+	// 但同时要避免进入页面后多次加载页面模型。
+	if (!pageModelIsLoading) {
+		cache.set<boolean>("pageModelIsLoading", true);
 		executor(getPageModelProcess)({ pageId: page.id });
 	}
 
 	// 获取项目的 ide 依赖
 	// TODO: 要考虑如何避免重复加载，以及漏加载
-	const ideRepos = get(path("ideRepos"));
-	if (!ideRepos) {
+	const ideReposIsLoading = cache.get<boolean>("ideReposIsLoading") || false;
+	if (!ideReposIsLoading) {
+		cache.set<boolean>("ideReposIsLoading", true);
 		executor(getProjectIdeDependencesProcess)({});
 	} else {
-		// 获取完依赖之后要加载相应的 js 脚本
-		// 去除掉标准库，因为已默认引用标准库
-		const externalResourcesLoaded = cache.get<boolean>("externalResourcesLoaded") || false;
-		if (!externalResourcesLoaded) {
-			let loadCount = 0;
-			loadExternalResources(
-				ideRepos.filter((item) => item.std === false),
-				() => {
-					loadCount++;
-					if (loadCount === 2) {
-						cache.set("externalResourcesLoaded", true);
+		const ideRepos = get(path("ideRepos"));
+		// 此处不需要使用 executor()().then(); 直接判断 store 中是否存在值，存在时则执行即可
+		if (ideRepos) {
+			// 获取完依赖之后要加载相应的 js 脚本
+			// 去除掉标准库，因为已默认引用标准库
+			const externalResourcesLoaded = cache.get<boolean>("externalResourcesLoaded") || false;
+			if (!externalResourcesLoaded) {
+				let loadCount = 0;
+				loadExternalResources(
+					ideRepos.filter((item) => item.std === false),
+					() => {
+						loadCount++;
+						if (loadCount === 2) {
+							cache.set("externalResourcesLoaded", true);
+						}
 					}
-				}
-			);
+				);
+			}
 		}
 	}
 

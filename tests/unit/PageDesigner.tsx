@@ -43,6 +43,7 @@ const urls: RequestUrl = {
 	fetchApiRepoWidgets: "",
 	fetchIdeDependenceInfos: "",
 	fetchPageModel: "",
+	savePageModel: "",
 	externalScriptAndCssWebsite: ""
 };
 
