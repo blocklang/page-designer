@@ -4,7 +4,7 @@ import { Widget, AttachedWidget } from "../interfaces";
 import { config } from "../config";
 import { add, replace, remove } from "@dojo/framework/stores/state/operations";
 import { findIndex } from "@dojo/framework/shim/array";
-import { uuid } from "@dojo/framework/core/util";
+import { uuid, deepMixin } from "@dojo/framework/core/util";
 import { getAllChildCount, getPreviousIndex, getNextIndex, getParentIndex } from "../utils/pageTree";
 import { DimensionResults } from "@dojo/framework/core/meta/Dimensions";
 import { ChangedPropertyValue } from "designer-core/interfaces";
@@ -64,7 +64,9 @@ const insertWidgetsCommand = commandFactory<{ widgets: Widget[] }>(({ get, at, p
 	for (let i = 0; i < widgets.length; i++) {
 		const widget = widgets[i];
 		// 此处通过展开生成一个新对象，否则会导致在 store 中的数组里面存储的是同一个对象的引用。
-		const attachedWidget = { ...widget } as AttachedWidget;
+		// TypeScript spread creates a shallow copy，此时拷贝的是 properties 的引用，所以不能使用
+		const attachedWidget = deepMixin({}, widget) as AttachedWidget;
+		console.log("attachedWidget", attachedWidget);
 		// 为传入的 widgets 补充 id 和 parentId 信息，其中 id 的值为 uuid
 		attachedWidget.id = uuid().replace(/-/g, "");
 		attachedWidget.parentId = parentId;
