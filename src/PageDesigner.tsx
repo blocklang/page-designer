@@ -124,30 +124,49 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 	// TODO: 要考虑如何避免重复加载，以及漏加载
 	const ideReposIsLoading = cache.get<boolean>("ideReposIsLoading") || false;
 	if (!ideReposIsLoading) {
-		cache.set<boolean>("ideReposIsLoading", true);
 		executor(getProjectIdeDependencesProcess)({});
-	} else {
-		const ideRepos = get(path("ideRepos"));
-		// 此处不需要使用 executor()().then(); 直接判断 store 中是否存在值，存在时则执行即可
-		if (ideRepos) {
-			// 获取完依赖之后要加载相应的 js 脚本
-			// 去除掉标准库，因为已默认引用标准库
-			const externalResourcesLoaded = cache.get<boolean>("externalResourcesLoaded") || false;
-			if (!externalResourcesLoaded) {
-				let loadCount = 0;
-				loadExternalResources(
-					ideRepos.filter((item) => item.std === false),
-					() => {
-						loadCount++;
-						if (loadCount === 2) {
-							cache.set("externalResourcesLoaded", true);
-						}
+		cache.set<boolean>("ideReposIsLoading", true);
+	}
+
+	const ideRepos = get(path("ideRepos"));
+	if (!ideRepos) {
+		return (
+			<div classes={[c.text_muted, c.text_center, c.mt_5]}>
+				<div classes={[c.spinner_border]} role="status">
+					<span classes={[c.sr_only]}>Loading...</span>
+				</div>
+			</div>
+		);
+	}
+
+	// 此处不需要使用 executor()().then(); 直接判断 store 中是否存在值，存在时则执行即可
+	// 获取完依赖之后要加载相应的 js 脚本
+	// 去除掉标准库，因为已默认引用标准库
+	if (ideRepos.length > 0) {
+		const externalResourcesLoaded = icache.getOrSet<boolean>("externalResourcesLoaded", false);
+		if (!externalResourcesLoaded) {
+			let loadCount = 0;
+			loadExternalResources(
+				ideRepos.filter((item) => item.std === false),
+				() => {
+					loadCount++;
+					if (loadCount === 2) {
+						icache.set("externalResourcesLoaded", true);
 					}
-				);
-			}
+				}
+			);
+
+			return (
+				<div classes={[c.text_muted, c.text_center, c.mt_5]}>
+					<div classes={[c.spinner_border]} role="status">
+						<span classes={[c.sr_only]}>Loading...</span>
+					</div>
+				</div>
+			);
 		}
 	}
 
+	// 只有当加载完外部资源之后才渲染
 	let editMode = icache.getOrSet<EditMode>("editMode", "Preview");
 	let activeView = icache.getOrSet<ViewType>("activeView", "ui");
 

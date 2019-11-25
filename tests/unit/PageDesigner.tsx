@@ -1,4 +1,4 @@
-const { describe, it, beforeEach } = intern.getInterface("bdd");
+const { describe, it } = intern.getInterface("bdd");
 
 import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
@@ -12,6 +12,7 @@ import UIView from "../../src/widgets/edit/ui";
 import BehaviorView from "../../src/widgets/edit/behavior";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
 import store from "../../src/store";
+import { replace } from "@dojo/framework/stores/state/operations";
 
 // login user
 const user: User = {
@@ -53,12 +54,31 @@ const routes: RouteName = {
 };
 
 describe("PageDesigner", () => {
-	let mockStore: any;
-	beforeEach(() => {
-		mockStore = createMockStoreMiddleware<State>();
+	it("default properties", () => {
+		const h = harness(() => (
+			<PageDesigner
+				user={user}
+				project={project}
+				permission={permission}
+				page={page}
+				pathes={pathes}
+				urls={urls}
+				routes={routes}
+			/>
+		));
+
+		h.expect(() => (
+			<div classes={[c.text_muted, c.text_center, c.mt_5]}>
+				<div classes={[c.spinner_border]} role="status">
+					<span classes={[c.sr_only]}>Loading...</span>
+				</div>
+			</div>
+		));
 	});
 
-	it("default properties", () => {
+	it("ide repos has loaded but was empty", () => {
+		const mockStore = createMockStoreMiddleware<State>();
+
 		const h = harness(
 			() => (
 				<PageDesigner
@@ -73,6 +93,8 @@ describe("PageDesigner", () => {
 			),
 			{ middleware: [[store, mockStore]] }
 		);
+
+		mockStore((path) => [replace(path("ideRepos"), [])]);
 
 		h.expect(() => (
 			<div classes={[c.container_fluid, css.root]}>
@@ -96,6 +118,8 @@ describe("PageDesigner", () => {
 	});
 
 	it("onChangeEditMode should be switch between edit and preview", () => {
+		const mockStore = createMockStoreMiddleware<State>();
+
 		const h = harness(
 			() => (
 				<PageDesigner
@@ -110,6 +134,8 @@ describe("PageDesigner", () => {
 			),
 			{ middleware: [[store, mockStore]] }
 		);
+
+		mockStore((path) => [replace(path("ideRepos"), [])]);
 
 		h.expect(() => (
 			<div classes={[c.container_fluid, css.root]}>
@@ -177,6 +203,8 @@ describe("PageDesigner", () => {
 	});
 
 	it("onChangeViewMode should be switch between ui and behavior", () => {
+		const mockStore = createMockStoreMiddleware<State>();
+
 		const h = harness(
 			() => (
 				<PageDesigner
@@ -191,6 +219,8 @@ describe("PageDesigner", () => {
 			),
 			{ middleware: [[store, mockStore]] }
 		);
+
+		mockStore((path) => [replace(path("ideRepos"), [])]);
 
 		h.expect(() => (
 			<div classes={[c.container_fluid, css.root]}>

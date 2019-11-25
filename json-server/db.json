@@ -55,6 +55,14 @@
         "widgetName": "Page",
         "canHasChildren": true,
         "properties": [{}]
+      },{
+        "id":"2",
+        "parentId": "1",
+        "apiRepoId": 2,
+        "widgetCode": "0001",
+        "widgetName": "TextInput",
+        "canHasChildren": false,
+        "properties": [{}]
       }]
     }
   ],
