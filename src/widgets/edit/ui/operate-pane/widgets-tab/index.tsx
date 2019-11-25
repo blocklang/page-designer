@@ -1,5 +1,6 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
 import icache from "@dojo/framework/core/middleware/icache";
+import cache from "@dojo/framework/core/middleware/cache";
 import store from "../../../../../store";
 import * as c from "bootstrap-classes";
 import { getWidgetsProcess } from "../../../../../processes/widgetProcesses";
@@ -12,15 +13,21 @@ import { find } from "@dojo/framework/shim/array";
 
 export interface WidgetsTabProperties {}
 
-const factory = create({ store, icache }).properties<WidgetsTabProperties>();
+const factory = create({ store, icache, cache }).properties<WidgetsTabProperties>();
 
-export default factory(function WidgetsTab({ properties, middleware: { store, icache } }) {
+export default factory(function WidgetsTab({ properties, middleware: { store, icache, cache } }) {
 	const {} = properties();
 	const { path, get, executor } = store;
 
+	// 1. 每次进入新页面，都要刷新(所以要在 PageDesigner 清空部件列表)
+	// 2. 在属性和部件之间切换时，不要刷新
 	const widgetRepos = get(path("widgetRepos"));
 	if (!widgetRepos) {
-		executor(getWidgetsProcess)({});
+		const widgetRepoIsLoading = cache.get<boolean>("widgetRepoIsLoading") || false;
+		if (!widgetRepoIsLoading) {
+			executor(getWidgetsProcess)({});
+			cache.set<boolean>("widgetRepoIsLoading", true);
+		}
 	}
 
 	let filterWidgetRepos: WidgetRepo[] | undefined;

@@ -3,6 +3,7 @@ import { commandFactory } from "./utils";
 import { Project } from "../interfaces";
 import { add } from "@dojo/framework/stores/state/operations";
 import { config } from "../config";
+import { clearWidgetsCommand } from "./widgetProcesses";
 
 const initProjectCommand = commandFactory<{ project: Project }>(({ path, payload: { project } }) => {
 	console.log("run init project command(如果此文本多次出现，则要考虑去除多余的设置)");
@@ -18,5 +19,6 @@ const getProjectIdeDependencesCommand = commandFactory(async ({ path }) => {
 
 export const initProjectProcess = createProcess("init-project", [initProjectCommand]);
 export const getProjectIdeDependencesProcess = createProcess("get-project-ide-dependences", [
+	clearWidgetsCommand,
 	getProjectIdeDependencesCommand
 ]);

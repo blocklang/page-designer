@@ -1,7 +1,11 @@
 import { commandFactory } from "./utils";
 import { createProcess } from "@dojo/framework/stores/process";
 import { config } from "../config";
-import { add } from "@dojo/framework/stores/state/operations";
+import { add, replace } from "@dojo/framework/stores/state/operations";
+
+export const clearWidgetsCommand = commandFactory(({ path }) => {
+	return [replace(path("widgetRepos"), undefined)];
+});
 
 const getWidgetsCommand = commandFactory<{}>(async ({ path }) => {
 	console.log("get widgets command");
