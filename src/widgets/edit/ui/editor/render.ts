@@ -121,7 +121,7 @@ function renderWidget(widget: AttachedWidget, index: number): WNode {
 
 	// index 指向的是选中的部件，这里要获取选中部件的第一个子节点，所以要 + 1
 	const firstChildIndex = index + 1;
-	let childWNodes: WNode[] = renderChildWidgets(getChildrenIndex(roWidgets, widget.id, firstChildIndex));
+	let childWNodes: WNode[] = renderChildWidgets(widget.id, firstChildIndex);
 
 	return w(widgetType, properties, childWNodes);
 }
@@ -131,9 +131,11 @@ function renderWidget(widget: AttachedWidget, index: number): WNode {
  *
  * 渲染子部件
  *
- * @param children          父部件直属子部件的索引集合
+ * @param widgetId          部件 id
+ * @param firstChildIndex   部件的第一个子部件的索引
  */
-function renderChildWidgets(children: number[]): WNode[] {
+function renderChildWidgets(widgetId: string, firstChildIndex: number): WNode[] {
+	const children = getChildrenIndex(roWidgets, widgetId, firstChildIndex);
 	const childWNodes: WNode[] = [];
 	for (let i = 0; i < children.length; i++) {
 		const eachWidget = roWidgets[children[i]];
