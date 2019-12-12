@@ -73,14 +73,12 @@ export default factory(function UIOperatePane({ properties, middleware: { icache
 							activeNav === "widgets" ? css.tabBarActive : css.tabBar
 						]}
 						href="#"
-						onclick={
-							activeNav === "widgets"
-								? undefined
-								: (event: MouseEvent) => {
-										event.preventDefault();
-										icache.set("activeNav", "widgets");
-								  }
-						}
+						onclick={(event: MouseEvent) => {
+							event.preventDefault();
+							if (activeNav === "properties") {
+								icache.set("activeNav", "widgets");
+							}
+						}}
 					>
 						部件
 					</a>
@@ -94,14 +92,12 @@ export default factory(function UIOperatePane({ properties, middleware: { icache
 							activeNav === "properties" ? css.tabBarActive : css.tabBar
 						]}
 						href="#"
-						onclick={
-							activeNav === "properties"
-								? undefined
-								: (event: MouseEvent) => {
-										event.preventDefault();
-										icache.set("activeNav", "properties");
-								  }
-						}
+						onclick={(event: MouseEvent) => {
+							event.preventDefault();
+							if (activeNav === "widgets") {
+								icache.set("activeNav", "properties");
+							}
+						}}
 					>
 						属性
 					</a>

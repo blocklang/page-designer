@@ -26,7 +26,7 @@ describe("edit/ui/operate-pane", () => {
 							key="nav-widgets"
 							classes={[c.nav_link, c.active, css.tabBarActive]}
 							href="#"
-							onclick={undefined}
+							onclick={() => {}}
 						>
 							部件
 						</a>
@@ -61,7 +61,7 @@ describe("edit/ui/operate-pane", () => {
 							key="nav-widgets"
 							classes={[c.nav_link, c.active, css.tabBarActive]}
 							href="#"
-							onclick={undefined}
+							onclick={() => {}}
 						>
 							部件
 						</a>
@@ -104,7 +104,7 @@ describe("edit/ui/operate-pane", () => {
 							key="nav-properties"
 							classes={[c.nav_link, c.active, css.tabBarActive]}
 							href="#"
-							onclick={undefined}
+							onclick={() => {}}
 						>
 							属性
 						</a>
@@ -129,7 +129,7 @@ describe("edit/ui/operate-pane", () => {
 							key="nav-widgets"
 							classes={[c.nav_link, c.active, css.tabBarActive]}
 							href="#"
-							onclick={undefined}
+							onclick={() => {}}
 						>
 							部件
 						</a>
@@ -163,7 +163,7 @@ describe("edit/ui/operate-pane", () => {
 							key="nav-widgets"
 							classes={[c.nav_link, c.active, css.tabBarActive]}
 							href="#"
-							onclick={undefined}
+							onclick={() => {}}
 						>
 							部件
 						</a>
