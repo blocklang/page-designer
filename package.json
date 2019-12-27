@@ -30,13 +30,16 @@
     "@tanem/svg-injector": "^8.0.35",
     "@types/diff": "^4.0.2",
     "@types/scriptjs": "^0.0.2",
+    "@types/jquery": "^3.3.31",
     "bootstrap-classes": "~0.0.3-alpha.1",
     "designer-core": "~0.0.1-alpha.22",
     "diff": "^4.0.1",
     "dojo-fontawesome": "~0.0.3-alpha.1",
     "scriptjs": "^2.5.9",
     "std-ide-widget": "~0.0.3-alpha.19",
-    "tslib": "~1.9.1"
+    "tslib": "~1.9.1",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.16.0"
   },
   "peerDependencies": {
     "@dojo/framework": "^6.0.3",
