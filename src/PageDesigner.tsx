@@ -48,6 +48,7 @@ import { faTrashAlt } from "@fortawesome/free-solid-svg-icons/faTrashAlt";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons/faAngleDown";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons/faAngleRight";
 import { faArrowsAlt } from "@fortawesome/free-solid-svg-icons/faArrowsAlt";
+import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 
 library.add(
 	faArrowAltCircleLeft,
@@ -63,7 +64,8 @@ library.add(
 	faTrashAlt,
 	faAngleDown,
 	faAngleRight,
-	faArrowsAlt
+	faArrowsAlt,
+	faPlus
 );
 
 export interface PageDesignerProperties {

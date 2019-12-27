@@ -51,7 +51,8 @@ describe("processes/uiProcesses", () => {
 					canHasChildren: true,
 					properties: []
 				}
-			]
+			],
+			data: []
 		};
 		global.fetch = sinon.stub().returns(
 			Promise.resolve({

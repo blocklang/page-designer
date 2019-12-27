@@ -8,4 +8,6 @@ import "./edit/ui/operate-pane";
 import "./edit/ui/operate-pane/Header";
 import "./edit/ui/operate-pane/widgets-tab";
 import "./edit/ui/operate-pane/properties-tab";
+import "./edit/behavior";
+import "./edit/behavior/Data";
 import "./preview";

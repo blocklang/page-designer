@@ -141,6 +141,47 @@ export function getParentIndex<T extends { id: string; parentId: string }>(
 }
 
 /**
+ * 当选中的节点被删除后，推断出下一个获取焦点的节点信息
+ *
+ *  删除之后，要重新设置聚焦的部件，按以下顺序设置：
+ *  1. 如果聚焦项有前一个兄弟节点，则让前一个兄弟节点聚焦
+ *  2. 如果聚焦项有后一个兄弟节点，则让后一个兄弟节点聚焦
+ *  3. 让父节点聚焦
+ *
+ * @param treeNodes          节点数组
+ * @param selectedIndex      当前选中的节点索引
+ *
+ * @returns                  新获取焦点的节点索引，索引是基于全节点数组的
+ */
+export function inferNextActiveNodeIndex<T extends { id: string; parentId: string }>(
+	treeNodes: ReadonlyArray<T>,
+	selectedIndex: number
+): number {
+	// 寻找前一个兄弟节点
+	const previousNodeIndex = getPreviousIndex(treeNodes, selectedIndex);
+	if (previousNodeIndex > -1) {
+		return previousNodeIndex;
+	}
+
+	// 寻找后一个兄弟节点
+	const nextNodeIndex = getNextIndex(treeNodes, selectedIndex);
+	if (nextNodeIndex > 0 /* 不需要与 -1 比较，因为前面已有一个兄弟节点 */) {
+		// 要考虑在计算索引时还没有实际删除，所以索引的位置还需要再移动一次的
+		// 因为会删除前一个兄弟节点，所以需要再减去 1，但是获取部件时还不能减 1，因为还没有真正删除。
+		return nextNodeIndex - 1;
+	}
+
+	// 寻找父节点
+	const parentNodeIndex = getParentIndex(treeNodes, selectedIndex);
+	if (parentNodeIndex > -1) {
+		return parentNodeIndex;
+	}
+
+	// 如果依然没有找到，则抛出异常
+	throw "没有找到下一个获取焦点的节点";
+}
+
+/**
  * @function getChildrenIndex
  *
  * 获取 widgetId 对应部件的所有直属子部件的索引集合。

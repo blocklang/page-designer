@@ -19,7 +19,7 @@ export default factory(function App({ middleware: { theme } }) {
 	};
 
 	const project: Project = {
-		id: 1,
+		id: 2, // 1
 		name: "project_1",
 		createUserName: "jack"
 	};
@@ -39,9 +39,9 @@ export default factory(function App({ middleware: { theme } }) {
 	const pathes: Path[] = [{ name: "page1", path: "page1" }];
 
 	const urls: RequestUrl = {
-		fetchApiRepoWidgets: "http://localhost:3000/designer/projects/1/dependences/widgets",
-		fetchPageModel: "http://localhost:3000/designer/pages/1/model",
-		fetchIdeDependenceInfos: "http://localhost:3000/designer/projects/1/dependences?category=dev",
+		fetchApiRepoWidgets: `http://localhost:3000/designer/projects/${project.id}/dependences/widgets`,
+		fetchPageModel: `http://localhost:3000/designer/pages/${page.id}/model`,
+		fetchIdeDependenceInfos: `http://localhost:3000/designer/projects/${project.id}/dependences?category=dev`,
 		externalScriptAndCssWebsite: "http://localhost:3001",
 		savePageModel: ""
 	};

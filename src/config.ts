@@ -16,6 +16,8 @@ export let config = {
 	customFetchHeaders: (): any => {},
 	// 界面中根部件的父 id
 	rootWidgetParentId: "-1",
+	// 页面数据中根节点的父 id
+	rootDataParentId: "-1",
 	// route
 	routeProfile: "",
 	routeParentGroup: ""

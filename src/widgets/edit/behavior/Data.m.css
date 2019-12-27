@@ -1,0 +1,12 @@
+.root {
+}
+
+.variableName {
+	width: 15em;
+	display: inline-block;
+}
+
+.defaultValue {
+	width: 15em;
+	display: inline-block;
+}

@@ -5,7 +5,13 @@ import { config } from "../config";
 import { add, replace, remove } from "@dojo/framework/stores/state/operations";
 import { findIndex } from "@dojo/framework/shim/array";
 import { uuid, deepMixin } from "@dojo/framework/core/util";
-import { getAllChildCount, getPreviousIndex, getNextIndex, getParentIndex } from "../utils/pageTree";
+import {
+	getAllChildCount,
+	getPreviousIndex,
+	getNextIndex,
+	getParentIndex,
+	inferNextActiveNodeIndex
+} from "../utils/pageTree";
 import { DimensionResults } from "@dojo/framework/core/meta/Dimensions";
 import { ChangedPropertyValue } from "designer-core/interfaces";
 
@@ -287,7 +293,7 @@ const removeActiveWidgetCommand = commandFactory<{}>(({ at, get, path }) => {
 	}
 
 	// 重新设置聚焦的部件
-	const newSelectedWidgetIndex = inferNextSelectedWidgetInfo(pageWidgets, selectedWidgetIndex);
+	const newSelectedWidgetIndex = inferNextActiveNodeIndex(pageWidgets, selectedWidgetIndex);
 	if (newSelectedWidgetIndex > -1) {
 		result.push(replace(path("selectedWidgetIndex"), newSelectedWidgetIndex));
 	}
@@ -320,39 +326,6 @@ const removeUndefinedWidgetCommand = commandFactory<{ widgetId: string }>(
 		return [remove(at(path("pageModel", "widgets"), undefinedWidgetIndex))];
 	}
 );
-
-/**
- * 当选中的节点被删除后，推断出下一个获取焦点的部件信息
- *
- * @param pageWidgets          页面所有部件
- * @param selectedWidgetIndex  当前选中的部件索引
- *
- * @returns                     新获取焦点的部件索引，索引是基于全页面的
- */
-function inferNextSelectedWidgetInfo(pageWidgets: AttachedWidget[], selectedWidgetIndex: number): number {
-	// 寻找前一个兄弟节点
-	const previousNodeIndex = getPreviousIndex(pageWidgets, selectedWidgetIndex);
-	if (previousNodeIndex > -1) {
-		return previousNodeIndex;
-	}
-
-	// 寻找后一个兄弟节点
-	const nextNodeIndex = getNextIndex(pageWidgets, selectedWidgetIndex);
-	if (nextNodeIndex > 0 /* 不需要与 -1 比较，因为前面已有一个兄弟节点 */) {
-		// 要考虑在计算索引时还没有实际删除，所以索引的位置还需要再移动一次的
-		// 因为会删除前一个兄弟节点，所以需要再减去 1，但是获取部件时还不能减 1，因为还没有真正删除。
-		return nextNodeIndex - 1;
-	}
-
-	// 寻找父节点
-	const parentNodeIndex = getParentIndex(pageWidgets, selectedWidgetIndex);
-	if (parentNodeIndex > -1) {
-		return parentNodeIndex;
-	}
-
-	// 如果依然没有找到，则抛出异常
-	throw "没有找到下一个获取焦点的节点";
-}
 
 const undoCallback: ProcessCallback = () => ({
 	after(error, result) {

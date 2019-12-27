@@ -296,10 +296,33 @@ export interface ComponentRepo {
  *       Node2
  *    ```
  *
+ * @property data      页面数据
  */
 export interface PageModel {
 	pageId: number;
 	widgets: AttachedWidget[];
+	data: PageData[];
+}
+
+export type PageDataValueType = "String" | "Number" | "Date" | "Boolean" | "Object" | "Array";
+
+/**
+ * 页面数据
+ *
+ * @property id         页面数据标识
+ * @property parentId   数据项的父标识
+ * @property name       变量名
+ * @property value      变量的值
+ * @property type       变量值的类型
+ * @property open       如果包含子数据项，是否展开，默认为不展开
+ */
+export interface PageData {
+	id: string;
+	parentId: string;
+	name: string;
+	value?: string;
+	type: PageDataValueType;
+	open: boolean;
 }
 
 /**
@@ -315,6 +338,7 @@ export interface PageModel {
  * @property activeWidgetDimensions        当前选中部件的位置和大小信息等
  * @property highlightWidgetIndex          高亮显示部件的索引，是相对于全页面的索引
  * @property highlightWidgetDimensions     高亮显示部件的位置和大小信息等
+ * @property selectedBehaviorIndex         当前选中的行为元素（包括 data 和 method）的索引，是相对于全页面的索引
  * @property dirty                         判断是否有未保存的内容，如果有则 dirty 的值为 true，否则 dirty 的值为 false，默认为 false
  */
 export interface State {
@@ -328,6 +352,8 @@ export interface State {
 	// 页面中高亮显示部件的信息
 	highlightWidgetIndex: number;
 	highlightWidgetDimensions: DimensionResults;
+	// behavior 的焦点信息，data 和 method 共享焦点信息
+	selectedBehaviorIndex: number;
 	// 数据操作状态：保存
 	dirty: boolean;
 }
