@@ -391,34 +391,3 @@ describe("dataProcesses", () => {
 		assert.equal(selectedBehaviorIndex, 0);
 	});
 });
-
-// store.apply([
-//     add(store.path("pageModel", "data"), [{
-//         id: "1",
-//         parentId: "-1",
-//         name: "root",
-//         type: "Object",
-//         open: true
-//     },{
-//         id: "2",
-//         parentId: "1",
-//         name: "child",
-//         type: "String",
-//         value: '',
-//         open: false
-//     }]),
-//     add(store.path("selectedBehaviorIndex"), 1)
-// ]);
-
-// removeActiveDataProcess(store)({});
-
-// const data = store.get(store.path("pageModel", "data"));
-// assert.equal(data.length, 1);
-
-// const selectedBehaviorIndex = store.get(store.path("selectedBehaviorIndex"));
-// assert.equal(selectedBehaviorIndex, 0);
-
-// // 不能删除根节点
-// removeActiveDataProcess(store)({});
-// const data1 = store.get(store.path("pageModel", "data"));
-// assert.equal(data1.length, 1);

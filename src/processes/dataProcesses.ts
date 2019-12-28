@@ -83,6 +83,10 @@ const removeActiveDataItemCommand = commandFactory(({ get, path, at }) => {
 	return result;
 });
 
+const moveUpActiveDataItemCommand = commandFactory(({ get, path, at }) => {});
+
+const moveDownActiveDataItemCommand = commandFactory(({ get, path, at }) => {});
+
 export const insertDataProcess = createProcess("insert-data-process", [insertEmptyDataItemCommand]);
 export const activeDataProcess = createProcess("active-data-process", [activeDataItemCommand]);
 export const changeActiveDataPropertyProcess = createProcess("change-active-data-property-process", [
@@ -90,3 +94,5 @@ export const changeActiveDataPropertyProcess = createProcess("change-active-data
 ]);
 export const foldDataProcess = createProcess("fold-data-process", [foldDataCommand]);
 export const removeActiveDataProcess = createProcess("remove-data-process", [removeActiveDataItemCommand]);
+export const moveUpActiveDataProcess = createProcess("move-up-data-process", [moveUpActiveDataItemCommand]);
+export const moveDownActiveDataProcess = createProcess("move-down-data-process", [moveDownActiveDataItemCommand]);
