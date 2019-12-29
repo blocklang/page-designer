@@ -13,28 +13,13 @@ import store from "../../../../../src/store";
 import { replace } from "@dojo/framework/stores/state/operations";
 
 describe("edit/behavior/data", () => {
-	it("loading", () => {
-		const mockStore = createMockStoreMiddleware<State>();
-		const h = harness(() => <Data />, { middleware: [[store, mockStore]] });
-
-		h.expect(() => (
-			<div key="root">
-				<div key="loading" classes={[c.spinner_border, c.text_secondary]} role="status">
-					<span classes={[c.sr_only]}>Loading...</span>
-				</div>
-			</div>
-		));
-	});
-
 	it("load, should has one root data", () => {
 		const mockStore = createMockStoreMiddleware<State>();
-		const h = harness(() => <Data />, { middleware: [[store, mockStore]] });
+		const h = harness(() => <Data data={[]} />, { middleware: [[store, mockStore]] });
 
-		const pageData: PageData[] = [];
-		mockStore((path) => [replace(path("pageModel", "data"), pageData)]);
 		h.expect(() => (
 			<div key="root">
-				<div key="alert-has-no-root" classes={[c.alert, c.alert_danger]} role="alert">
+				<div key="alert-has-no-root" classes={[c.alert, c.alert_danger, c.text_center]} role="alert">
 					共发现 0 个数据节点，至少要存在一个根节点！
 				</div>
 			</div>
@@ -43,8 +28,6 @@ describe("edit/behavior/data", () => {
 
 	it("load, first node must be root data", () => {
 		const mockStore = createMockStoreMiddleware<State>();
-		const h = harness(() => <Data />, { middleware: [[store, mockStore]] });
-
 		const pageData: PageData[] = [
 			{
 				id: "1",
@@ -55,10 +38,12 @@ describe("edit/behavior/data", () => {
 				open: false
 			}
 		];
+		const h = harness(() => <Data data={pageData} />, { middleware: [[store, mockStore]] });
+
 		mockStore((path) => [replace(path("pageModel", "data"), pageData)]);
 		h.expect(() => (
 			<div key="root">
-				<div key="alert-not-a-root" classes={[c.alert, c.alert_danger]} role="alert">
+				<div key="alert-not-a-root" classes={[c.alert, c.alert_danger, c.text_center]} role="alert">
 					第一个节点必须是根节点，但也页面的第一个节点却不是根节点！
 				</div>
 			</div>
@@ -69,8 +54,6 @@ describe("edit/behavior/data", () => {
 
 	it("load complete, only has one node", () => {
 		const mockStore = createMockStoreMiddleware<State>();
-		const h = harness(() => <Data />, { middleware: [[store, mockStore]] });
-
 		const pageData: PageData[] = [
 			{
 				id: "1",
@@ -80,16 +63,18 @@ describe("edit/behavior/data", () => {
 				open: true
 			}
 		];
+		const h = harness(() => <Data data={pageData} />, { middleware: [[store, mockStore]] });
+
 		mockStore((path) => [replace(path("pageModel", "data"), pageData)]);
 
 		h.expect(() => (
-			<div key="root">
-				<div>
-					<span onclick={() => {}}>
+			<div key="root" classes={[c.ml_4]}>
+				<div key="1-0" classes={[c.position_relative, c.border, c.border_primary]} onclick={() => {}}>
+					<span classes={[c.position_absolute, css.icon, c.text_muted]} onclick={() => {}}>
 						<FontAwesomeIcon icon="angle-down" />
 					</span>
 					<span classes={[c.ml_1]}>data（页面数据）</span>
-					<span key="op-add-1" title="加变量" classes={[c.ml_3]} onclick={() => {}}>
+					<span key="op-add-1" title="加变量" classes={[c.ml_3, c.text_muted]} onclick={() => {}}>
 						<FontAwesomeIcon icon="plus" />
 					</span>
 				</div>
@@ -100,8 +85,6 @@ describe("edit/behavior/data", () => {
 	// 默认展开
 	it("load with a string variable", () => {
 		const mockStore = createMockStoreMiddleware<State>();
-		const h = harness(() => <Data />, { middleware: [[store, mockStore]] });
-
 		const pageData: PageData[] = [
 			{
 				id: "1",
@@ -119,55 +102,63 @@ describe("edit/behavior/data", () => {
 				open: false
 			}
 		];
+		const h = harness(() => <Data data={pageData} />, { middleware: [[store, mockStore]] });
 		mockStore((path) => [replace(path("pageModel", "data"), pageData)]);
 
-		h.expect(() => (
-			<div key="root">
-				<div>
-					<span onclick={() => {}}>
-						<FontAwesomeIcon icon="angle-down" />
-					</span>
-					<span classes={[c.ml_1]}>data（页面数据）</span>
-					<span key="op-add-1" title="加变量" classes={[c.ml_3]} onclick={() => {}}>
-						<FontAwesomeIcon icon="plus" />
-					</span>
-				</div>
-				<div classes={[c.ml_4]}>
-					<div>
-						<input value="str" type="text" classes={[css.variableName]} />
-						<span classes={[c.dropdown]}>
-							<button
-								classes={[c.btn, c.btn_secondary, c.dropdown_toggle]}
-								type="button"
-								data-toggle="dropdown"
-								aria-haspopup="true"
-								aria-expanded="false"
-							>
+		h.expectPartial("@1-0-children", () => (
+			<div key="1-0-children" classes={[c.pl_4, c.border_left]}>
+				{
+					// index 不是全页面的，而是当前兄弟节点内排序
+				}
+				<div key="2-0" classes={[c.position_relative, c.border, c.border_white]} onmouseup={() => {}}>
+					<input
+						key="variable"
+						value="str"
+						type="text"
+						classes={[c.form_control, c.form_control_sm, css.variableName]}
+						placeholder="变量名(英文字母、数字、‘_’)"
+						oninput={() => {}}
+					/>
+					<span key="dataType" classes={[c.dropdown, c.ml_1]}>
+						<button
+							classes={[c.btn, c.btn_outline_secondary, c.btn_sm, c.dropdown_toggle]}
+							type="button"
+							key="dataType-button"
+							data-toggle="dropdown"
+							aria-haspopup="true"
+							aria-expanded="false"
+							onclick={() => {}}
+						>
+							String
+						</button>
+						<div classes={[c.dropdown_menu]}>
+							<a classes={[c.dropdown_item, c.active]} href="#" onclick={() => {}}>
 								String
-							</button>
-							<div classes={[c.dropdown_menu]}>
-								<a classes={[c.dropdown_item, c.active]} href="#">
-									String
-								</a>
-								<a classes={[c.dropdown_item, undefined]} href="#">
-									Number
-								</a>
-								<a classes={[c.dropdown_item, undefined]} href="#">
-									Date
-								</a>
-								<a classes={[c.dropdown_item, undefined]} href="#">
-									Boolean
-								</a>
-								<a classes={[c.dropdown_item, undefined]} href="#">
-									Object
-								</a>
-								<a classes={[c.dropdown_item, undefined]} href="#">
-									Array
-								</a>
-							</div>
-						</span>
-						<input value="a string value" type="text" classes={[css.defaultValue]} />
-					</div>
+							</a>
+							<a classes={[c.dropdown_item, undefined]} href="#" onclick={() => {}}>
+								Number
+							</a>
+							<a classes={[c.dropdown_item, undefined]} href="#" onclick={() => {}}>
+								Date
+							</a>
+							<a classes={[c.dropdown_item, undefined]} href="#" onclick={() => {}}>
+								Boolean
+							</a>
+							<a classes={[c.dropdown_item, undefined]} href="#" onclick={() => {}}>
+								Object
+							</a>
+							<a classes={[c.dropdown_item, undefined]} href="#" onclick={() => {}}>
+								Array
+							</a>
+						</div>
+					</span>
+					<input
+						key="defaultValue"
+						value="a string value"
+						type="text"
+						classes={[c.form_control, c.form_control_sm, c.ml_1, css.defaultValue]}
+						oninput={() => {}}
+					/>
 				</div>
 			</div>
 		));
@@ -175,8 +166,6 @@ describe("edit/behavior/data", () => {
 
 	it("load with a number variable", () => {
 		const mockStore = createMockStoreMiddleware<State>();
-		const h = harness(() => <Data />, { middleware: [[store, mockStore]] });
-
 		const pageData: PageData[] = [
 			{
 				id: "1",
@@ -194,64 +183,70 @@ describe("edit/behavior/data", () => {
 				open: false
 			}
 		];
+		const h = harness(() => <Data data={pageData} />, { middleware: [[store, mockStore]] });
 		mockStore((path) => [replace(path("pageModel", "data"), pageData)]);
 
-		h.expect(() => (
-			<div key="root">
-				<div>
-					<span onclick={() => {}}>
-						<FontAwesomeIcon icon="angle-down" />
-					</span>
-					<span classes={[c.ml_1]}>data（页面数据）</span>
-					<span key="op-add-1" title="加变量" classes={[c.ml_3]} onclick={() => {}}>
-						<FontAwesomeIcon icon="plus" />
-					</span>
-				</div>
-				<div classes={[c.ml_4]}>
-					<div>
-						<input value="num" type="text" classes={[css.variableName]} />
-						<span classes={[c.dropdown]}>
-							<button
-								classes={[c.btn, c.btn_secondary, c.dropdown_toggle]}
-								type="button"
-								data-toggle="dropdown"
-								aria-haspopup="true"
-								aria-expanded="false"
-							>
+		h.expectPartial("@1-0-children", () => (
+			<div key="1-0-children" classes={[c.pl_4, c.border_left]}>
+				{
+					// index 不是全页面的，而是当前兄弟节点内排序
+				}
+				<div key="2-0" classes={[c.position_relative, c.border, c.border_white]} onmouseup={() => {}}>
+					<input
+						key="variable"
+						value="num"
+						type="text"
+						classes={[c.form_control, c.form_control_sm, css.variableName]}
+						placeholder="变量名(英文字母、数字、‘_’)"
+						oninput={() => {}}
+					/>
+					<span key="dataType" classes={[c.dropdown, c.ml_1]}>
+						<button
+							classes={[c.btn, c.btn_outline_secondary, c.btn_sm, c.dropdown_toggle]}
+							type="button"
+							key="dataType-button"
+							data-toggle="dropdown"
+							aria-haspopup="true"
+							aria-expanded="false"
+							onclick={() => {}}
+						>
+							Number
+						</button>
+						<div classes={[c.dropdown_menu]}>
+							<a classes={[c.dropdown_item, undefined]} href="#" onclick={() => {}}>
+								String
+							</a>
+							<a classes={[c.dropdown_item, c.active]} href="#" onclick={() => {}}>
 								Number
-							</button>
-							<div classes={[c.dropdown_menu]}>
-								<a classes={[c.dropdown_item, undefined]} href="#">
-									String
-								</a>
-								<a classes={[c.dropdown_item, c.active]} href="#">
-									Number
-								</a>
-								<a classes={[c.dropdown_item, undefined]} href="#">
-									Date
-								</a>
-								<a classes={[c.dropdown_item, undefined]} href="#">
-									Boolean
-								</a>
-								<a classes={[c.dropdown_item, undefined]} href="#">
-									Object
-								</a>
-								<a classes={[c.dropdown_item, undefined]} href="#">
-									Array
-								</a>
-							</div>
-						</span>
-						<input value="1" type="text" classes={[css.defaultValue]} />
-					</div>
+							</a>
+							<a classes={[c.dropdown_item, undefined]} href="#" onclick={() => {}}>
+								Date
+							</a>
+							<a classes={[c.dropdown_item, undefined]} href="#" onclick={() => {}}>
+								Boolean
+							</a>
+							<a classes={[c.dropdown_item, undefined]} href="#" onclick={() => {}}>
+								Object
+							</a>
+							<a classes={[c.dropdown_item, undefined]} href="#" onclick={() => {}}>
+								Array
+							</a>
+						</div>
+					</span>
+					<input
+						key="defaultValue"
+						value="1"
+						type="text"
+						classes={[c.form_control, c.form_control_sm, c.ml_1, css.defaultValue]}
+						oninput={() => {}}
+					/>
 				</div>
 			</div>
 		));
 	});
 
-	it("trigger add event: to add a variable", () => {
+	it("load with a object variable", () => {
 		const mockStore = createMockStoreMiddleware<State>();
-		const h = harness(() => <Data />, { middleware: [[store, mockStore]] });
-
 		const pageData: PageData[] = [
 			{
 				id: "1",
@@ -263,61 +258,64 @@ describe("edit/behavior/data", () => {
 			{
 				id: "2",
 				parentId: "1",
-				name: "",
-				type: "String",
-				open: false,
-				value: ""
+				name: "obj",
+				type: "Object",
+				open: false
 			}
 		];
+		const h = harness(() => <Data data={pageData} />, { middleware: [[store, mockStore]] });
 		mockStore((path) => [replace(path("pageModel", "data"), pageData)]);
 
-		h.expect(() => (
-			<div key="root">
-				<div>
-					<span onclick={() => {}}>
-						<FontAwesomeIcon icon="angle-down" />
+		h.expectPartial("@1-0-children", () => (
+			<div key="1-0-children" classes={[c.pl_4, c.border_left]}>
+				{
+					// index 不是全页面的，而是当前兄弟节点内排序
+				}
+				<div key="2-0" classes={[c.position_relative, c.border, c.border_white]} onmouseup={() => {}}>
+					<span key="icon" classes={[c.position_absolute, css.icon, c.text_muted]} onclick={() => {}}>
+						<FontAwesomeIcon icon="angle-right" />
 					</span>
-					<span classes={[c.ml_1]}>data（页面数据）</span>
-					<span key="op-add-1" title="加变量" classes={[c.ml_3]} onclick={() => {}}>
-						<FontAwesomeIcon icon="plus" />
-					</span>
-				</div>
-				<div classes={[c.ml_4]}>
-					<div>
-						<input value="" type="text" classes={[css.variableName]} />
-						<span classes={[c.dropdown]}>
-							<button
-								classes={[c.btn, c.btn_secondary, c.dropdown_toggle]}
-								type="button"
-								data-toggle="dropdown"
-								aria-haspopup="true"
-								aria-expanded="false"
-							>
+					<input
+						key="variable"
+						value="obj"
+						type="text"
+						classes={[c.form_control, c.form_control_sm, css.variableName]}
+						placeholder="变量名(英文字母、数字、‘_’)"
+						oninput={() => {}}
+					/>
+					<span key="dataType" classes={[c.dropdown, c.ml_1]}>
+						<button
+							classes={[c.btn, c.btn_outline_secondary, c.btn_sm, c.dropdown_toggle]}
+							type="button"
+							key="dataType-button"
+							data-toggle="dropdown"
+							aria-haspopup="true"
+							aria-expanded="false"
+							onclick={() => {}}
+						>
+							Object
+						</button>
+						<div classes={[c.dropdown_menu]}>
+							<a classes={[c.dropdown_item, undefined]} href="#" onclick={() => {}}>
 								String
-							</button>
-							<div classes={[c.dropdown_menu]}>
-								<a classes={[c.dropdown_item, c.active]} href="#">
-									String
-								</a>
-								<a classes={[c.dropdown_item, undefined]} href="#">
-									Number
-								</a>
-								<a classes={[c.dropdown_item, undefined]} href="#">
-									Date
-								</a>
-								<a classes={[c.dropdown_item, undefined]} href="#">
-									Boolean
-								</a>
-								<a classes={[c.dropdown_item, undefined]} href="#">
-									Object
-								</a>
-								<a classes={[c.dropdown_item, undefined]} href="#">
-									Array
-								</a>
-							</div>
-						</span>
-						<input value="" type="text" classes={[css.defaultValue]} />
-					</div>
+							</a>
+							<a classes={[c.dropdown_item, undefined]} href="#" onclick={() => {}}>
+								Number
+							</a>
+							<a classes={[c.dropdown_item, undefined]} href="#" onclick={() => {}}>
+								Date
+							</a>
+							<a classes={[c.dropdown_item, undefined]} href="#" onclick={() => {}}>
+								Boolean
+							</a>
+							<a classes={[c.dropdown_item, c.active]} href="#" onclick={() => {}}>
+								Object
+							</a>
+							<a classes={[c.dropdown_item, undefined]} href="#" onclick={() => {}}>
+								Array
+							</a>
+						</div>
+					</span>
 				</div>
 			</div>
 		));

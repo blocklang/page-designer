@@ -17,7 +17,7 @@ import { PageData } from "../../../interfaces";
 import * as $ from "jquery";
 import "bootstrap";
 import { VNode } from "@dojo/framework/core/interfaces";
-import { getChildrenIndex } from "../../../utils/pageTree";
+import { getChildrenIndex, getPreviousIndex, getNextIndex } from "../../../utils/pageTree";
 
 const dataTypes = ["String", "Number", "Date", "Boolean", "Object", "Array"];
 
@@ -48,7 +48,7 @@ export default factory(function Data({ properties, middleware: { store } }) {
 		]);
 	}
 
-	const pageData = get(path("pageModel", "data")) || [];
+	const pageData = data || [];
 	const selectedBehaviorIndex = get(path("selectedBehaviorIndex")) || 0;
 	const activeDataItemId = pageData[selectedBehaviorIndex].id;
 
@@ -56,12 +56,13 @@ export default factory(function Data({ properties, middleware: { store } }) {
 		v(
 			"div",
 			{
+				key: `${data[0].id}-0`,
 				classes: [
 					c.position_relative,
 					c.border,
 					activeDataItemId === data[0].id ? c.border_primary : c.border_white
 				],
-				onmouseup: (event: MouseEvent) => {
+				onclick: (event: MouseEvent) => {
 					event.stopPropagation();
 					executor(activeDataProcess)({ id: data[0].id });
 				}
@@ -104,8 +105,11 @@ export default factory(function Data({ properties, middleware: { store } }) {
 			data[0].open &&
 			v(
 				"div",
-				{ classes: [c.pl_4, c.border_left] },
-				_renderChildren(data, data[0], 1, activeDataItemId, executor)
+				{
+					key: `${data[0].id}-0-children`,
+					classes: [c.pl_4, c.border_left]
+				},
+				_renderChildren(data, data[0], 1, activeDataItemId, selectedBehaviorIndex, executor)
 			)
 	]);
 });
@@ -115,18 +119,28 @@ function _renderChildren(
 	data: PageData,
 	firstChildIndex: number,
 	activeDataItemId: string,
+	selectedBehaviorIndex: number,
 	executor: any
 ): VNode[] {
 	const children = getChildrenIndex(pageData, data.id, firstChildIndex);
 	let result: VNode[] = [];
 	for (let i = 0; i < children.length; i++) {
 		const eachData = pageData[children[i]];
-		result.push(_renderDataItem(eachData, i, data, activeDataItemId, executor));
+		result.push(_renderDataItem(eachData, i, data, activeDataItemId, pageData, selectedBehaviorIndex, executor));
 
 		if (eachData.open) {
-			const subChildren = _renderChildren(pageData, eachData, children[i] + 1, activeDataItemId, executor);
+			const subChildren = _renderChildren(
+				pageData,
+				eachData,
+				children[i] + 1,
+				activeDataItemId,
+				selectedBehaviorIndex,
+				executor
+			);
 			if (subChildren.length > 0) {
-				result.push(v("div", { classes: [c.pl_4, c.border_left] }, subChildren));
+				result.push(
+					v("div", { key: `${data.id}-${i}-children`, classes: [c.pl_4, c.border_left] }, subChildren)
+				);
 			}
 		}
 	}
@@ -138,6 +152,8 @@ function _renderDataItem(
 	index: number,
 	parentData: PageData,
 	activeDataItemId: string,
+	allData: PageData[],
+	selectedBehaviorIndex: number,
 	executor: any
 ): VNode {
 	return v(
@@ -145,6 +161,7 @@ function _renderDataItem(
 		{
 			key: `${data.id}-${index}`,
 			classes: [c.position_relative, c.border, activeDataItemId === data.id ? c.border_primary : c.border_white],
+			// 注意：如果改为 onclick，则第一次点击数据类型的 dropdown 时没有弹出菜单。
 			onmouseup: (event: MouseEvent) => {
 				event.stopPropagation();
 				executor(activeDataProcess)({ id: data.id });
@@ -155,7 +172,7 @@ function _renderDataItem(
 			_renderVariableName(data, index, parentData, executor),
 			_renderDataType(data, index, executor),
 			_renderDefaultValue(data, executor),
-			_renderOperators(data, activeDataItemId, executor)
+			_renderOperators(data, activeDataItemId, allData, selectedBehaviorIndex, executor)
 		]
 	);
 }
@@ -165,6 +182,7 @@ function _renderIcon(data: PageData, executor: any): VNode | undefined {
 		return v(
 			"span",
 			{
+				key: "icon",
 				classes: [c.position_absolute, css.icon, c.text_muted],
 				onclick: () => {
 					executor(foldDataProcess)({ id: data.id });
@@ -183,10 +201,11 @@ function _renderIcon(data: PageData, executor: any): VNode | undefined {
  */
 function _renderVariableName(data: PageData, index: number, parentData: PageData, executor: any): VNode {
 	if (parentData.type === "Array") {
-		return v("span", { classes: [c.mr_1] }, [`${index}`]);
+		return v("span", { key: "variable", classes: [c.mr_1] }, [`${index}`]);
 	}
 
 	return v("input", {
+		key: "variable",
 		value: data.name,
 		type: "text",
 		classes: [c.form_control, c.form_control_sm, css.variableName],
@@ -210,13 +229,13 @@ function _renderVariableName(data: PageData, index: number, parentData: PageData
  * @param executor   store 执行器
  */
 function _renderDataType(data: PageData, index: number, executor: any): VNode {
-	return v("span", { classes: [c.dropdown, c.ml_1] }, [
+	return v("span", { key: "dataType", classes: [c.dropdown, c.ml_1] }, [
 		v(
 			"button",
 			{
 				classes: [c.btn, c.btn_outline_secondary, c.btn_sm, c.dropdown_toggle],
 				type: "button",
-				key: `dataType-${index}`,
+				key: `dataType-button`,
 				"data-toggle": "dropdown",
 				"aria-haspopup": "true",
 				"aria-expanded": "false",
@@ -228,7 +247,7 @@ function _renderDataType(data: PageData, index: number, executor: any): VNode {
 		),
 		v(
 			"div",
-			{ classes: [c.dropdown_menu], "aria-labelledby": `dataType-${index}` },
+			{ classes: [c.dropdown_menu] },
 			dataTypes.map((dataType) =>
 				v(
 					"a",
@@ -259,6 +278,7 @@ function _renderDataType(data: PageData, index: number, executor: any): VNode {
 function _renderDefaultValue(data: PageData, executor: any): VNode | undefined {
 	if (data.type === "Boolean") {
 		return v("input", {
+			key: "defaultValue",
 			type: "checkbox",
 			checked: data.value === "true",
 			classes: [c.ml_1],
@@ -274,6 +294,7 @@ function _renderDefaultValue(data: PageData, executor: any): VNode | undefined {
 
 	if (data.type === "String" || data.type === "Number" || data.type === "Date") {
 		return v("input", {
+			key: "defaultValue",
 			value: data.value,
 			type: "text",
 			classes: [c.form_control, c.form_control_sm, c.ml_1, css.defaultValue],
@@ -291,13 +312,19 @@ function _renderDefaultValue(data: PageData, executor: any): VNode | undefined {
 	// 如果是 Object 或 Array，则不显示默认值。
 }
 
-function _renderOperators(data: PageData, activeDataItemId: string, executor: any): VNode | undefined {
+function _renderOperators(
+	data: PageData,
+	activeDataItemId: string,
+	allData: PageData[],
+	selectedBehaviorIndex: number,
+	executor: any
+): VNode | undefined {
 	const isActive = activeDataItemId === data.id;
 	if (!isActive) {
 		return;
 	}
 
-	return v("span", { classes: [c.ml_3] }, [
+	const ops = [
 		v(
 			"span",
 			{
@@ -313,38 +340,50 @@ function _renderOperators(data: PageData, activeDataItemId: string, executor: an
 				}
 			},
 			[w(FontAwesomeIcon, { icon: "plus" })]
-		),
+		)
+	];
 
-		v(
-			"span",
-			{
-				key: `op-up-${data.id}`,
-				classes: [c.ml_1, c.text_muted],
-				title: "上移",
-				onclick: (event: MouseEvent) => {
-					event.stopPropagation();
-					// 上移
-					executor(moveUpActiveDataProcess)({});
-				}
-			},
-			[w(FontAwesomeIcon, { icon: "arrow-up" })]
-		),
+	const activeDataIsFirst = getPreviousIndex(allData, selectedBehaviorIndex) === -1;
+	if (!activeDataIsFirst) {
+		ops.push(
+			v(
+				"span",
+				{
+					key: `op-up-${data.id}`,
+					classes: [c.ml_1, c.text_muted],
+					title: "上移",
+					onclick: (event: MouseEvent) => {
+						event.stopPropagation();
+						// 上移
+						executor(moveUpActiveDataProcess)({});
+					}
+				},
+				[w(FontAwesomeIcon, { icon: "arrow-up" })]
+			)
+		);
+	}
 
-		v(
-			"span",
-			{
-				key: `op-down-${data.id}`,
-				classes: [c.ml_1, c.text_muted],
-				title: "下移",
-				onclick: (event: MouseEvent) => {
-					event.stopPropagation();
-					// 下移
-					executor(moveDownActiveDataProcess)({});
-				}
-			},
-			[w(FontAwesomeIcon, { icon: "arrow-down" })]
-		),
+	const activeDataIsLast = getNextIndex(allData, selectedBehaviorIndex) === -1;
+	if (!activeDataIsLast) {
+		ops.push(
+			v(
+				"span",
+				{
+					key: `op-down-${data.id}`,
+					classes: [c.ml_1, c.text_muted],
+					title: "下移",
+					onclick: (event: MouseEvent) => {
+						event.stopPropagation();
+						// 下移
+						executor(moveDownActiveDataProcess)({});
+					}
+				},
+				[w(FontAwesomeIcon, { icon: "arrow-down" })]
+			)
+		);
+	}
 
+	ops.push(
 		v(
 			"span",
 			{
@@ -358,5 +397,7 @@ function _renderOperators(data: PageData, activeDataItemId: string, executor: an
 			},
 			[w(FontAwesomeIcon, { icon: "trash-alt" })]
 		)
-	]);
+	);
+
+	return v("span", { classes: [c.ml_3] }, ops);
 }
