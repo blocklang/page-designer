@@ -1,9 +1,9 @@
 import Page from "std-ide-widget/page";
-import { ComponentRepo, AttachedWidget } from "../../../../interfaces";
+import { ComponentRepo, InstWidgetProperties } from "../../../../interfaces";
 import { find } from "@dojo/framework/shim/array";
 import { w } from "@dojo/framework/core/vdom";
 import { WNode } from "@dojo/framework/core/interfaces";
-import { EditableWidgetProperties, InstWidgetProperties, EditableProperties } from "designer-core/interfaces";
+import { EditableWidgetProperties, AttachedWidget, EditableProperties } from "designer-core/interfaces";
 import { config } from "../../../../config";
 import * as blocklang from "designer-core/blocklang";
 import UndefinedWidget from "../../../UndefinedWidget";
@@ -107,14 +107,7 @@ function renderWidget(widget: AttachedWidget, index: number): WNode {
 
 	const properties: EditableWidgetProperties = {
 		key,
-		widget: {
-			id: widget.id,
-			parentId: widget.parentId,
-			widgetCode: widget.widgetCode,
-			widgetName: widget.widgetName,
-			canHasChildren: widget.canHasChildren
-		},
-		originalProperties,
+		widget,
 		extendProperties: roEditableProperties,
 		...originalProperties
 	};

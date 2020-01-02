@@ -3,20 +3,22 @@ const { assert } = intern.getPlugin("chai");
 
 import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
-import * as c from "bootstrap-classes";
 import PropertiesTab from "../../../../../../../src/widgets/edit/ui/operate-pane/properties-tab";
-import * as css from "../../../../../../../src/widgets/edit/ui/operate-pane/properties-tab/index.m.css";
 import store from "../../../../../../../src/store";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
-import { State, AttachedWidget, ComponentRepo } from "../../../../../../../src/interfaces";
+import { State, ComponentRepo } from "../../../../../../../src/interfaces";
 import { add } from "@dojo/framework/stores/state/operations";
 import WidgetBase from "@dojo/framework/core/WidgetBase";
 import { stub, SinonStub } from "sinon";
 import * as blocklang from "designer-core/blocklang";
+import { AttachedWidget, GitUrlSegment, PropertyLayout } from "designer-core/interfaces";
 import { SingleProperty } from "designer-core/interfaces";
 import { changeActiveWidgetPropertiesProcess } from "../../../../../../../src/processes/uiProcesses";
 
-let findWidgetPropertiesLayoutStub: SinonStub;
+import * as c from "bootstrap-classes";
+import * as css from "../../../../../../../src/widgets/edit/ui/operate-pane/properties-tab/index.m.css";
+
+let findWidgetPropertiesLayoutStub: SinonStub<[GitUrlSegment | string, string], PropertyLayout[]>;
 
 describe("edit/ui/operate-pane/properties-tab", () => {
 	afterEach(() => {

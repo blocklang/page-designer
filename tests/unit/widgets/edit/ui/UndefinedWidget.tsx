@@ -4,7 +4,8 @@ import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 
 import UndefinedWidget from "../../../../../src/widgets/UndefinedWidget";
-import { AttachedWidget, ComponentRepo, State } from "../../../../../src/interfaces";
+import { ComponentRepo, State } from "../../../../../src/interfaces";
+import { AttachedWidget } from "designer-core/interfaces";
 import * as c from "bootstrap-classes";
 import store from "../../../../../src/store";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";

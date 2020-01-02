@@ -4,12 +4,12 @@ import harness from "@dojo/framework/testing/harness";
 import { create, tsx } from "@dojo/framework/core/vdom";
 import Editor from "../../../../../../src/widgets/edit/ui/editor";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
-import { State, ComponentRepo, PageModel, AttachedWidget } from "../../../../../../src/interfaces";
+import { State, ComponentRepo, PageModel } from "../../../../../../src/interfaces";
 import store from "../../../../../../src/store";
 import * as c from "bootstrap-classes";
 import { replace } from "@dojo/framework/stores/state/operations";
 import Page from "std-ide-widget/page";
-import { InstWidget, EditableWidgetProperties } from "designer-core/interfaces";
+import { AttachedWidget, EditableWidgetProperties } from "designer-core/interfaces";
 import FocusBox from "../../../../../../src/widgets/edit/ui/editor/FocusBox";
 import HighlightBox from "../../../../../../src/widgets/edit/ui/editor/HighlightBox";
 import * as blocklang from "designer-core/blocklang";
@@ -74,7 +74,8 @@ describe("edit/ui/editor", () => {
 						}
 					]
 				}
-			]
+			],
+			data: []
 		};
 		// 默认包含标准库
 		const ideRepos: ComponentRepo[] = [
@@ -93,21 +94,13 @@ describe("edit/ui/editor", () => {
 
 		mockStore((path) => [replace(path("pageModel"), pageModel), replace(path("ideRepos"), ideRepos)]);
 
-		const widget: InstWidget = {
-			id: "1",
-			parentId: "-1",
-			widgetCode: "0001",
-			widgetName: "Page",
-			canHasChildren: true
-		};
 		// activeWidgetId 的作用是什么？可否用 focused 属性代替
 		// widget 属性是否可以替换或者精简？
 		h.expect(() => (
 			<div>
 				<Page
 					key="0_1"
-					widget={widget}
-					originalProperties={{ onLoad: () => {} }} // 原始属性值
+					widget={pageModel.widgets[0]}
 					extendProperties={{
 						onFocusing: () => {},
 						onFocused: () => {},
@@ -181,7 +174,8 @@ describe("edit/ui/editor", () => {
 					canHasChildren: true,
 					properties: []
 				}
-			]
+			],
+			data: []
 		};
 
 		// 默认包含标准库
@@ -217,34 +211,10 @@ describe("edit/ui/editor", () => {
 
 		mockStore((path) => [replace(path("pageModel"), pageModel), replace(path("ideRepos"), ideRepos)]);
 
-		const pageWidget: InstWidget = {
-			id: "1",
-			parentId: "-1",
-			widgetCode: "0001",
-			widgetName: "Page",
-			canHasChildren: true
-		};
-		const containerWidget1: InstWidget = {
-			id: "2",
-			parentId: "1",
-			widgetCode: "0002",
-			widgetName: "Container",
-			canHasChildren: true
-		};
-		const containerWidget11: InstWidget = {
-			id: "21",
-			parentId: "2",
-			widgetCode: "0002",
-			widgetName: "Container",
-			canHasChildren: true
-		};
-		const containerWidget2: InstWidget = {
-			id: "3",
-			parentId: "1",
-			widgetCode: "0002",
-			widgetName: "Container",
-			canHasChildren: true
-		};
+		const pageWidget = pageModel.widgets[0];
+		const containerWidget1 = pageModel.widgets[1];
+		const containerWidget11 = pageModel.widgets[2];
+		const containerWidget2 = pageModel.widgets[3];
 
 		// activeWidgetId 的作用是什么？可否用 focused 属性代替
 		// widget 属性是否可以替换或者精简？
@@ -253,7 +223,6 @@ describe("edit/ui/editor", () => {
 				<Page
 					key={`0_${pageWidget.id}`}
 					widget={pageWidget}
-					originalProperties={{ onLoad: () => {} }} // 原始属性值
 					extendProperties={{
 						onFocusing: () => {},
 						onFocused: () => {},
@@ -268,7 +237,6 @@ describe("edit/ui/editor", () => {
 						// 注意，key 是以 0 开头，不是以 1 开头，因为 index 是基于子部件的，不是基于全局列表的
 						key={`0_${containerWidget1.id}`}
 						widget={containerWidget1}
-						originalProperties={{}}
 						extendProperties={{
 							onFocusing: () => {},
 							onFocused: () => {},
@@ -280,7 +248,6 @@ describe("edit/ui/editor", () => {
 						<IdeContainer
 							key={`0_${containerWidget11.id}`}
 							widget={containerWidget11}
-							originalProperties={{}}
 							extendProperties={{
 								onFocusing: () => {},
 								onFocused: () => {},
@@ -294,7 +261,6 @@ describe("edit/ui/editor", () => {
 						// 注意，key 是以 0 开头，不是以 1 开头，因为 index 是基于子部件的，不是基于全局列表的
 						key={`1_${containerWidget2.id}`}
 						widget={containerWidget2}
-						originalProperties={{}}
 						extendProperties={{
 							onFocusing: () => {},
 							onFocused: () => {},
@@ -338,7 +304,8 @@ describe("edit/ui/editor", () => {
 						}
 					]
 				}
-			]
+			],
+			data: []
 		};
 		// 默认包含标准库
 		const ideRepos: ComponentRepo[] = [
@@ -383,21 +350,14 @@ describe("edit/ui/editor", () => {
 			}
 		];
 
-		const widget: InstWidget = {
-			id: "1",
-			parentId: "-1",
-			widgetCode: "0001",
-			widgetName: "Page",
-			canHasChildren: true
-		};
+		const pageWidget = pageModel.widgets[0];
 		// activeWidgetId 的作用是什么？可否用 focused 属性代替
 		// widget 属性是否可以替换或者精简？
 		h.expect(() => (
 			<div>
 				<Page
 					key="0_1"
-					widget={widget}
-					originalProperties={{ onLoad: () => {} }} // 原始属性值
+					widget={pageWidget}
 					extendProperties={{
 						onFocusing: () => {},
 						onFocused: () => {},
@@ -442,7 +402,8 @@ describe("edit/ui/editor", () => {
 						}
 					]
 				}
-			]
+			],
+			data: []
 		};
 		// 默认包含标准库
 		const ideRepos: ComponentRepo[] = [
@@ -488,21 +449,14 @@ describe("edit/ui/editor", () => {
 			}
 		];
 
-		const widget: InstWidget = {
-			id: "1",
-			parentId: "-1",
-			widgetCode: "0001",
-			widgetName: "Page",
-			canHasChildren: true
-		};
+		const pageWidget = pageModel.widgets[0];
 		// activeWidgetId 的作用是什么？可否用 focused 属性代替
 		// widget 属性是否可以替换或者精简？
 		h.expect(() => (
 			<div>
 				<Page
 					key="0_1"
-					widget={widget}
-					originalProperties={{ onLoad: () => {} }} // 原始属性值
+					widget={pageWidget}
 					extendProperties={{
 						onFocusing: () => {},
 						onFocused: () => {},
@@ -547,7 +501,8 @@ describe("edit/ui/editor", () => {
 						}
 					]
 				}
-			]
+			],
+			data: []
 		};
 		// 默认包含标准库
 		const ideRepos: ComponentRepo[] = [
@@ -570,21 +525,14 @@ describe("edit/ui/editor", () => {
 			replace(path("highlightWidgetIndex"), 0)
 		]);
 
-		const widget: InstWidget = {
-			id: "1",
-			parentId: "-1",
-			widgetCode: "0001",
-			widgetName: "Page",
-			canHasChildren: true
-		};
+		const pageWidget = pageModel.widgets[0];
 		// activeWidgetId 的作用是什么？可否用 focused 属性代替
 		// widget 属性是否可以替换或者精简？
 		h.expect(() => (
 			<div>
 				<Page
 					key="0_1"
-					widget={widget}
-					originalProperties={{ onLoad: () => {} }} // 原始属性值
+					widget={pageWidget}
 					extendProperties={{
 						onFocusing: () => {},
 						onFocused: () => {},

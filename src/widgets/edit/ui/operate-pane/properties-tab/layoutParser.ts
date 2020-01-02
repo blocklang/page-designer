@@ -1,6 +1,6 @@
 import { v, w } from "@dojo/framework/core/vdom";
 import { PropertyLayout, ChangedPropertyValue } from "designer-core/interfaces";
-import { AttachedWidgetProperty } from "../../../../../interfaces";
+import { AttachedWidgetProperty } from "designer-core/interfaces";
 import { findIndex } from "@dojo/framework/shim/array";
 import * as css from "./index.m.css";
 

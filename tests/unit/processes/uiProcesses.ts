@@ -1,7 +1,8 @@
 const { describe, it, beforeEach } = intern.getInterface("bdd");
 const { assert } = intern.getPlugin("chai");
 import Store from "@dojo/framework/stores/Store";
-import { State, PageModel, AttachedWidget, Widget } from "../../../src/interfaces";
+import { State, PageModel } from "../../../src/interfaces";
+import { Widget, AttachedWidget } from "designer-core/interfaces";
 import global from "@dojo/framework/shim/global";
 import * as sinon from "sinon";
 

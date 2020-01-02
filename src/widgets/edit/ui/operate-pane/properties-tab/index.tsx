@@ -3,7 +3,7 @@ import * as c from "bootstrap-classes";
 import * as css from "./index.m.css";
 import store from "../../../../../store";
 import * as blocklang from "designer-core/blocklang";
-import { AttachedWidget } from "../../../../../interfaces";
+import { AttachedWidget } from "designer-core/interfaces";
 import { find } from "@dojo/framework/shim/array";
 import * as layoutParser from "./layoutParser";
 import { PropertyLayout, ChangedPropertyValue } from "designer-core/interfaces";

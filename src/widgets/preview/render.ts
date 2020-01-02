@@ -1,9 +1,9 @@
 import Page from "std-widget-web/page";
-import { ComponentRepo, AttachedWidget } from "../../interfaces";
+import { ComponentRepo, InstWidgetProperties } from "../../interfaces";
+import { AttachedWidget } from "designer-core/interfaces";
 import { find } from "@dojo/framework/shim/array";
 import { w } from "@dojo/framework/core/vdom";
 import { WNode } from "@dojo/framework/core/interfaces";
-import { InstWidgetProperties } from "designer-core/interfaces";
 import { config } from "../../config";
 import * as blocklang from "designer-core/blocklang";
 import UndefinedWidget from "../UndefinedWidget";

@@ -90,7 +90,8 @@ describe("preview", () => {
 					canHasChildren: true,
 					properties: []
 				}
-			]
+			],
+			data: []
 		};
 
 		mockStore((path) => [replace(path("pageModel"), pageModel)]);
@@ -133,7 +134,8 @@ describe("preview", () => {
 					canHasChildren: true,
 					properties: []
 				}
-			]
+			],
+			data: []
 		};
 
 		mockStore((path) => [replace(path("pageModel"), pageModel)]);
@@ -223,7 +225,8 @@ describe("preview", () => {
 					canHasChildren: true,
 					properties: []
 				}
-			]
+			],
+			data: []
 		};
 
 		// 默认包含标准库
@@ -332,7 +335,8 @@ describe("preview", () => {
 						}
 					]
 				}
-			]
+			],
+			data: []
 		};
 
 		// 默认包含标准库

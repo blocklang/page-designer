@@ -1,16 +1,17 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import { User, Project, Path, Permission, EditMode, ViewType, State } from "../interfaces";
-import * as c from "bootstrap-classes";
 import { DNode } from "@dojo/framework/core/interfaces";
 import store from "../store";
 import { invalidator } from "@dojo/framework/core/vdom";
 import { savePageModelProcess, undoProcess, redoProcess } from "../processes/uiProcesses";
 import { uiHistoryManager } from "../processes/utils";
 import Store from "@dojo/framework/stores/Store";
-import * as css from "./Header.m.css";
 import Link from "@dojo/framework/routing/Link";
 import { config } from "../config";
+
+import * as css from "./Header.m.css";
+import * as c from "bootstrap-classes";
 
 export interface HeaderProperties {
 	user?: User;

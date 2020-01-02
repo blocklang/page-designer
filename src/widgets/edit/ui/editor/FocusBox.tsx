@@ -13,7 +13,7 @@ import {
 	moveActiveWidgetNextProcess,
 	removeActiveWidgetProcess
 } from "../../../../processes/uiProcesses";
-import { AttachedWidget } from "../../../../interfaces";
+import { AttachedWidget } from "designer-core/interfaces";
 
 export interface FocusBoxProperties extends HighlightBoxProperties {
 	selectedWidgetIndex: number;

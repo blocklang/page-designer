@@ -1,10 +1,11 @@
 import { create, v, w } from "@dojo/framework/core/vdom";
 import store from "../../store";
-import * as c from "bootstrap-classes";
-import * as css from "./index.m.css";
 import { Permission } from "../../interfaces";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import { renderPage } from "./render";
+
+import * as c from "bootstrap-classes";
+import * as css from "./index.m.css";
 
 export interface PreviewProperties {
 	permission: Permission;

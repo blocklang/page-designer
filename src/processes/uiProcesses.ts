@@ -1,6 +1,6 @@
 import { createProcess, ProcessCallback } from "@dojo/framework/stores/process";
 import { commandFactory, uiHistoryManager } from "./utils";
-import { Widget, AttachedWidget } from "../interfaces";
+import { Widget, AttachedWidget } from "designer-core/interfaces";
 import { config } from "../config";
 import { add, replace, remove } from "@dojo/framework/stores/state/operations";
 import { findIndex } from "@dojo/framework/shim/array";

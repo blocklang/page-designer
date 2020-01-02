@@ -1,4 +1,6 @@
 import { DimensionResults } from "@dojo/framework/core/meta/Dimensions";
+import { Widget, AttachedWidget } from "designer-core/interfaces";
+import { WidgetProperties } from "@dojo/framework/core/interfaces";
 
 export interface User {
 	name: string;
@@ -106,72 +108,17 @@ export interface WidgetCategory {
 }
 
 /**
- * @type Widget
+ * @type InstWidgetProperties
  *
- * UI 部件信息
+ * 关于 AttachedWidgetProperty 和 InstWidgetProperties 两个名字的区别：
+ * 1. 两个都表示添加到页面中的部件属性信息；
+ * 2. InstWidgetProperties 是由 AttachedWidgetProperty[] 转换来的，是更贴近于部件实例的数据格式;
+ * 3. InstWidgetProperties 在渲染时候使用，而 AttachedWidgetProperty[] 是在定义关系时使用。
  *
- * @property widgetId           部件标识
- * @property widgetName         部件名称
- * @property widgetCode         部件编码
- * @property canHasChildren     是否可以包含子部件
- * @property apiRepoId          部件所属的 API 库标识
- * @property properties         部件的属性列表，要按顺序加载全部属性
+ * 部件的属性值
  */
-export interface Widget {
-	widgetId: number;
-	widgetName: string;
-	widgetCode: string;
-	canHasChildren: boolean;
-	apiRepoId: number;
-	properties: WidgetProperty[];
-}
-
-export type PropertyValueType = "string" | "int" | "float" | "date" | "boolean" | "function";
-
-/**
- * @interface WidgetProperty
- *
- * @property code           属性编码，是属性的基本信息，此字段要存入到页面模型中
- * @property name           属性名，此字段仅做显示用，如果 label 有值则优先使用 label 的值
- * @property defaultValue   属性的默认值
- * @property valueType      属性值类型,支持 string、int、float、date、boolean 和 function 类型
- */
-export interface WidgetProperty {
-	code: string;
-	name: string;
-	defaultValue?: string;
-	valueType: PropertyValueType;
-}
-
-/**
- * @interface AttachedWidget
- *
- * 添加到页面中的部件信息
- *
- * @property id          部件 id，部件添加到页面中后，新生成的 id
- * @property parentId    部件的父 id，也是添加到页面中后，之前生成的 id
- * @property properties  部件的属性列表，不论是否有值，都要加载全部属性
- */
-export interface AttachedWidget extends Widget {
-	id: string;
-	parentId: string;
-
-	properties: AttachedWidgetProperty[];
-}
-
-/**
- * @interface AttachedWidgetProperty
- *
- * 部件添加到页面后，部件的属性信息
- *
- * @property id         属性标识，是部件添加到页面之后重新生成的 id
- * @property value      属性值
- * @property isExpr     属性值是不是包含表达式，默认为 false
- */
-export interface AttachedWidgetProperty extends WidgetProperty {
-	id: string;
-	value?: string;
-	isExpr: boolean;
+export interface InstWidgetProperties extends WidgetProperties {
+	[propName: string]: any;
 }
 
 // 部件列表中显示的是组件的 API，但是在页面中使用的是 ide 版的组件，两者之间怎么关联？
