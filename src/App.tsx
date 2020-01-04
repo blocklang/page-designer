@@ -1,11 +1,11 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
 import theme from "@dojo/framework/core/middleware/theme";
 import dojo from "@dojo/themes/dojo";
-import PageDesigner from "./PageDesigner";
-import { User, Project, Permission, Page, Path, RequestUrl, RouteName } from "./interfaces";
-
+// 注意： 此样式要放在 import PageDesigner 语句之上，这样 PageDesigner 及其子部件中的样式优先级就会提高
 import "bootstrap/dist/css/bootstrap.min.css";
 import * as css from "./App.m.css";
+import PageDesigner from "./PageDesigner";
+import { User, Project, Permission, Page, Path, RequestUrl, RouteName } from "./interfaces";
 
 const factory = create({ theme });
 

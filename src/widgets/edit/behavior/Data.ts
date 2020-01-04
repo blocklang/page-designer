@@ -1,9 +1,7 @@
 import { create, v, w } from "@dojo/framework/core/vdom";
 import store from "../../../store";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
-import * as c from "bootstrap-classes";
 import { config } from "../../../config";
-import * as css from "./Data.m.css";
 import {
 	insertDataProcess,
 	changeActiveDataPropertyProcess,
@@ -15,9 +13,12 @@ import {
 } from "../../../processes/dataProcesses";
 import { PageData } from "../../../interfaces";
 import * as $ from "jquery";
-import "bootstrap";
 import { VNode } from "@dojo/framework/core/interfaces";
 import { getChildrenIndex, getPreviousIndex, getNextIndex } from "../../../utils/pageTree";
+
+import "bootstrap";
+import * as c from "bootstrap-classes";
+import * as css from "./Data.m.css";
 
 const dataTypes = ["String", "Number", "Date", "Boolean", "Object", "Array"];
 
