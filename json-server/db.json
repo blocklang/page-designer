@@ -33,6 +33,16 @@
               "name": "value"
             }
           ]
+        }, {
+          "widgetId": 2,
+          "widgetCode": "0002",
+          "widgetName": "PlainText",
+          "properties": [
+            {
+              "id": "1",
+              "name": "value"
+            }
+          ]
         }]
       }]
     },

@@ -20,7 +20,7 @@ export default factory(function App({ middleware: { theme } }) {
 	};
 
 	const project: Project = {
-		id: 2, // 1
+		id: 1,
 		name: "project_1",
 		createUserName: "jack"
 	};

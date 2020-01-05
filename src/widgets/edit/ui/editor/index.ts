@@ -8,8 +8,10 @@ import {
 	activeWidgetProcess,
 	highlightWidgetProcess,
 	changeActiveWidgetDimensionsProcess,
-	unhighlightWidgetProcess
+	unhighlightWidgetProcess,
+	changeActiveWidgetPropertiesProcess
 } from "../../../../processes/uiProcesses";
+import { ChangedPropertyValue } from "designer-core/interfaces";
 
 export interface EditorProperties {}
 
@@ -51,7 +53,11 @@ export default factory(function Editor({ properties, middleware: { store } }) {
 			onUnhighlight: () => {
 				executor(unhighlightWidgetProcess)({});
 			},
-			autoFocus: (widgetId) => widgetId === activeWidget.id
+			autoFocus: (widgetId) => widgetId === activeWidget.id,
+			onPropertyChanged: (changedProperty: ChangedPropertyValue) => {
+				const changedProperties: ChangedPropertyValue[] = [changedProperty];
+				executor(changeActiveWidgetPropertiesProcess)({ changedProperties });
+			}
 		}),
 		activeWidget && w(FocusBox, { widgets: pageWidgets, selectedWidgetIndex, widgetName: activeWidget.widgetName }),
 		highlightWidget && !onlyShowFocusBox && w(HighlightBox, { widgetName: highlightWidget.widgetName })
