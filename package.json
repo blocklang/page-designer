@@ -27,12 +27,12 @@
     "serve": "cd serve && serve -l 3001"
   },
   "dependencies": {
-    "@tanem/svg-injector": "^8.0.37",
+    "@tanem/svg-injector": "^8.0.38",
     "@types/diff": "^4.0.2",
     "@types/jquery": "^3.3.31",
     "@types/scriptjs": "^0.0.2",
     "bootstrap-classes": "~0.0.3-alpha.1",
-    "designer-core": "~0.0.1-alpha.23",
+    "designer-core": "~0.0.1-alpha.26",
     "diff": "^4.0.1",
     "dojo-fontawesome": "~0.0.3-alpha.1",
     "jquery": "^3.4.1",
