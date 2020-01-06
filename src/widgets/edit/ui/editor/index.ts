@@ -1,7 +1,7 @@
 import { create, v, w } from "@dojo/framework/core/vdom";
 import { renderPage } from "./render";
 import * as c from "bootstrap-classes";
-import store from "../../../../store";
+import store from "designer-core/store";
 import FocusBox from "./FocusBox";
 import HighlightBox from "./HighlightBox";
 import {
@@ -53,11 +53,11 @@ export default factory(function Editor({ properties, middleware: { store } }) {
 			onUnhighlight: () => {
 				executor(unhighlightWidgetProcess)({});
 			},
-			autoFocus: (widgetId) => widgetId === activeWidget.id,
 			onPropertyChanged: (changedProperty: ChangedPropertyValue) => {
 				const changedProperties: ChangedPropertyValue[] = [changedProperty];
 				executor(changeActiveWidgetPropertiesProcess)({ changedProperties });
-			}
+			},
+			autoFocus: (widgetId) => widgetId === activeWidget.id
 		}),
 		activeWidget && w(FocusBox, { widgets: pageWidgets, selectedWidgetIndex, widgetName: activeWidget.widgetName }),
 		highlightWidget && !onlyShowFocusBox && w(HighlightBox, { widgetName: highlightWidget.widgetName })

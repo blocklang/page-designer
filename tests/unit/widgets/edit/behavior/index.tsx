@@ -6,8 +6,8 @@ import * as c from "bootstrap-classes";
 
 import Behavior from "../../../../../src/widgets/edit/behavior";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
-import { State } from "../../../../../src/interfaces";
-import store from "../../../../../src/store";
+import { State } from "designer-core/interfaces";
+import store from "designer-core/store";
 import { add } from "@dojo/framework/stores/state/operations";
 import Data from "../../../../../src/widgets/edit/behavior/Data";
 

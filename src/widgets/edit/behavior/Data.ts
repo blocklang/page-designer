@@ -1,5 +1,7 @@
 import { create, v, w } from "@dojo/framework/core/vdom";
-import store from "../../../store";
+import { VNode } from "@dojo/framework/core/interfaces";
+import { PageData } from "designer-core/interfaces";
+import store from "designer-core/store";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import { config } from "../../../config";
 import {
@@ -11,9 +13,7 @@ import {
 	moveUpActiveDataProcess,
 	moveDownActiveDataProcess
 } from "../../../processes/dataProcesses";
-import { PageData } from "../../../interfaces";
 import * as $ from "jquery";
-import { VNode } from "@dojo/framework/core/interfaces";
 import { getChildrenIndex, getPreviousIndex, getNextIndex } from "../../../utils/pageTree";
 
 import "bootstrap";

@@ -4,7 +4,6 @@ import Box from "./Box";
 import * as css from "./FocusBox.m.css";
 import * as c from "bootstrap-classes";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
-import store from "../../../../store";
 import { getPreviousIndex, getNextIndex } from "../../../../utils/pageTree";
 import { getWidgetPositionAndSize } from "../../../util";
 import {
@@ -13,6 +12,7 @@ import {
 	moveActiveWidgetNextProcess,
 	removeActiveWidgetProcess
 } from "../../../../processes/uiProcesses";
+import store from "designer-core/store";
 import { AttachedWidget } from "designer-core/interfaces";
 
 export interface FocusBoxProperties extends HighlightBoxProperties {

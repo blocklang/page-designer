@@ -4,12 +4,12 @@ import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import Header from "../../../src/widgets/Header";
-import { Project, Path, Permission, User, EditMode, ViewType, State } from "../../../src/interfaces";
+import { Path, Permission, User, EditMode, ViewType } from "../../../src/interfaces";
 import * as c from "bootstrap-classes";
-
 import { stub } from "sinon";
 import { assert } from "chai";
-import store from "../../../src/store";
+import { Project, State } from "designer-core/interfaces";
+import store from "designer-core/store";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
 import { replace } from "@dojo/framework/stores/state/operations";
 import { savePageModelProcess, undoProcess, redoProcess } from "../../../src/processes/uiProcesses";

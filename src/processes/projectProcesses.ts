@@ -1,6 +1,6 @@
 import { createProcess } from "@dojo/framework/stores/process";
 import { commandFactory } from "./utils";
-import { Project } from "../interfaces";
+import { Project } from "designer-core/interfaces";
 import { add } from "@dojo/framework/stores/state/operations";
 import { config } from "../config";
 import { clearWidgetsCommand } from "./widgetProcesses";

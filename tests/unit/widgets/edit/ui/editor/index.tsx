@@ -4,8 +4,8 @@ import harness from "@dojo/framework/testing/harness";
 import { create, tsx } from "@dojo/framework/core/vdom";
 import Editor from "../../../../../../src/widgets/edit/ui/editor";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
-import { State, ComponentRepo, PageModel } from "../../../../../../src/interfaces";
-import store from "../../../../../../src/store";
+import { State, ComponentRepo, PageModel } from "designer-core/interfaces";
+import store from "designer-core/store";
 import * as c from "bootstrap-classes";
 import { replace } from "@dojo/framework/stores/state/operations";
 import Page from "std-ide-widget/page";
@@ -106,6 +106,7 @@ describe("edit/ui/editor", () => {
 						onFocused: () => {},
 						onHighlight: () => {},
 						onUnhighlight: () => {},
+						onPropertyChanged: () => {},
 						autoFocus: () => true
 					}}
 					// 原始属性的值，是必须要展开的
@@ -228,6 +229,7 @@ describe("edit/ui/editor", () => {
 						onFocused: () => {},
 						onHighlight: () => {},
 						onUnhighlight: () => {},
+						onPropertyChanged: () => {},
 						autoFocus: () => false
 					}}
 					// 原始属性的值，是必须要展开的
@@ -242,6 +244,7 @@ describe("edit/ui/editor", () => {
 							onFocused: () => {},
 							onHighlight: () => {},
 							onUnhighlight: () => {},
+							onPropertyChanged: () => {},
 							autoFocus: () => false
 						}}
 					>
@@ -253,6 +256,7 @@ describe("edit/ui/editor", () => {
 								onFocused: () => {},
 								onHighlight: () => {},
 								onUnhighlight: () => {},
+								onPropertyChanged: () => {},
 								autoFocus: () => false
 							}}
 						></IdeContainer>
@@ -266,6 +270,7 @@ describe("edit/ui/editor", () => {
 							onFocused: () => {},
 							onHighlight: () => {},
 							onUnhighlight: () => {},
+							onPropertyChanged: () => {},
 							autoFocus: () => false
 						}}
 					/>
@@ -363,6 +368,7 @@ describe("edit/ui/editor", () => {
 						onFocused: () => {},
 						onHighlight: () => {},
 						onUnhighlight: () => {},
+						onPropertyChanged: () => {},
 						autoFocus: () => false
 					}}
 					// 原始属性的值，是必须要展开的
@@ -462,6 +468,7 @@ describe("edit/ui/editor", () => {
 						onFocused: () => {},
 						onHighlight: () => {},
 						onUnhighlight: () => {},
+						onPropertyChanged: () => {},
 						autoFocus: () => false
 					}}
 					// 原始属性的值，是必须要展开的
@@ -538,6 +545,7 @@ describe("edit/ui/editor", () => {
 						onFocused: () => {},
 						onHighlight: () => {},
 						onUnhighlight: () => {},
+						onPropertyChanged: () => {},
 						autoFocus: () => false
 					}}
 					// 原始属性的值，是必须要展开的

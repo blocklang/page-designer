@@ -11,7 +11,7 @@ import {
 	moveDownActiveDataProcess
 } from "../../../src/processes/dataProcesses";
 import Store from "@dojo/framework/stores/Store";
-import { State } from "../../../src/interfaces";
+import { State } from "designer-core/interfaces";
 import { add } from "@dojo/framework/stores/state/operations";
 
 describe("dataProcesses", () => {

@@ -4,7 +4,7 @@ const { assert } = intern.getPlugin("chai");
 import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 import Header from "../../../../../../src/widgets/edit/ui/operate-pane/Header";
-import store from "../../../../../../src/store";
+import store from "designer-core/store";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
 import { add } from "@dojo/framework/stores/state/operations";
 import { AttachedWidget } from "designer-core/interfaces";

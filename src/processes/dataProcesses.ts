@@ -1,7 +1,7 @@
 import { createProcess } from "@dojo/framework/stores/process";
 import { commandFactory } from "./utils";
 import { add, replace, remove } from "@dojo/framework/stores/state/operations";
-import { PageData } from "../interfaces";
+import { PageData } from "designer-core/interfaces";
 import { uuid } from "@dojo/framework/core/util";
 import { findIndex } from "@dojo/framework/shim/array";
 import { getAllChildCount, inferNextActiveNodeIndex, getPreviousIndex, getNextIndex } from "../utils/pageTree";

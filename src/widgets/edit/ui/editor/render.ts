@@ -1,11 +1,12 @@
 import Page from "std-ide-widget/page";
-import { ComponentRepo, InstWidgetProperties } from "../../../../interfaces";
+import { InstWidgetProperties } from "../../../../interfaces";
 import { find } from "@dojo/framework/shim/array";
 import { w } from "@dojo/framework/core/vdom";
 import { WNode } from "@dojo/framework/core/interfaces";
 import { EditableWidgetProperties, AttachedWidget, EditableProperties } from "designer-core/interfaces";
 import { config } from "../../../../config";
 import * as blocklang from "designer-core/blocklang";
+import { ComponentRepo } from "designer-core/interfaces";
 import UndefinedWidget from "../../../UndefinedWidget";
 import { getChildrenIndex } from "../../../../utils/pageTree";
 

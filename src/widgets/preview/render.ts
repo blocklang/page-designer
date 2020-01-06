@@ -1,6 +1,6 @@
 import Page from "std-widget-web/page";
-import { ComponentRepo, InstWidgetProperties } from "../../interfaces";
-import { AttachedWidget } from "designer-core/interfaces";
+import { InstWidgetProperties } from "../../interfaces";
+import { ComponentRepo, AttachedWidget } from "designer-core/interfaces";
 import { find } from "@dojo/framework/shim/array";
 import { w } from "@dojo/framework/core/vdom";
 import { WNode } from "@dojo/framework/core/interfaces";

@@ -6,12 +6,13 @@ import * as c from "bootstrap-classes";
 import * as css from "../../src/PageDesigner.m.css";
 import PageDesigner from "../../src/PageDesigner";
 import Header from "../../src/widgets/Header";
-import { User, Project, Path, Page, Permission, RequestUrl, State, RouteName } from "../../src/interfaces";
+import { User, Path, Page, Permission, RequestUrl, RouteName } from "../../src/interfaces";
 import Preview from "../../src/widgets/preview";
 import UIView from "../../src/widgets/edit/ui";
 import BehaviorView from "../../src/widgets/edit/behavior";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
-import store from "../../src/store";
+import store from "designer-core/store";
+import { Project, State } from "designer-core/interfaces";
 import { replace } from "@dojo/framework/stores/state/operations";
 
 // login user

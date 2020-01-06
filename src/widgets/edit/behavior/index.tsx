@@ -1,6 +1,6 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
+import store from "designer-core/store";
 import Data from "./Data";
-import store from "../../../store";
 import * as c from "bootstrap-classes";
 
 export interface BehaviorViewProperties {}

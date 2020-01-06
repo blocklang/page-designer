@@ -1,5 +1,5 @@
 import { create, v, w } from "@dojo/framework/core/vdom";
-import store from "../../store";
+import store from "designer-core/store";
 import { Permission } from "../../interfaces";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import { renderPage } from "./render";

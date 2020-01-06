@@ -7,12 +7,6 @@ export interface User {
 	avatar: string;
 }
 
-export interface Project {
-	id: number;
-	name: string;
-	createUserName: string;
-}
-
 /**
  *
  * 登录用户对项目的操作权限。
@@ -80,32 +74,6 @@ export type EditMode = "Preview" | "Edit";
  * 2. behavior: 行为或交互
  */
 export type ViewType = "ui" | "behavior";
-
-/**
- * @interface WidgetRepo
- *
- * 主要描述 API 部件仓库中的部件信息
- *
- * @property apiRepoId         API 仓库标识
- * @property apiRepoName       API 仓库名称，对应于 api.json 中的 name 属性
- * @property widgetCategories  分组的部件信息
- */
-export interface WidgetRepo {
-	apiRepoId: number;
-	apiRepoName: string;
-	widgetCategories: WidgetCategory[];
-}
-
-/**
- * @interface WidgetCategory
- *
- * @property name      分类名称，如果未分类，则值为 “_”
- * @property widgets   部件列表
- */
-export interface WidgetCategory {
-	name: string;
-	widgets: Widget[];
-}
 
 /**
  * @type InstWidgetProperties
@@ -196,113 +164,6 @@ export interface RouteName {
 	// 因为目前 dojo route 不支持通配符，所以在此处加入自定义逻辑
 	// 当支持时去除该逻辑
 	gotoGroup?: (owner: string, project: string, parentPath: string) => void;
-}
-
-/**
- * @interface ComponentRepo
- *
- * 组件仓库
- *
- * @property id                 组件仓库标识
- * @property apiRepoId          该组件仓库实现的 API 仓库标识
- * @property gitRepoWebsite     托管该组件仓库的域名或者 ip 地址
- * @property gitRepoOwner       组件仓库的拥有者，是在托管网站上注册用户的登录名
- * @property gitRepoName        组件仓库的仓库名
- * @property name               组件仓库的名称，是在 component.json 中配置的名称
- * @property category           组件库分类
- * @property version            组件库的版本号，此版本不是组件库的最新版本，而是项目当前依赖的版本
- * @property std                是否标准库
- */
-export interface ComponentRepo {
-	id: number;
-	apiRepoId: number;
-	gitRepoWebsite: string;
-	gitRepoOwner: string;
-	gitRepoName: string;
-	name: string;
-	category: string;
-	version: string;
-	std: boolean;
-}
-
-/**
- * 页面模型
- *
- * @property pageId      页面标识
- * @property widgets     页面中的部件列表，widgets 的排列结构如下：
- *
- * 1. 一个页面只能有一个根节点；
- * 1. widgets 的第一个节点必须是根节点；
- * 1. 直属子部件紧跟父部件之后，如
- *    ```text
- *    Page
- *       Node1
- *          Node11
- *             Node111
- *          Node12
- *       Node2
- *    ```
- *
- * @property data      页面数据
- */
-export interface PageModel {
-	pageId: number;
-	widgets: AttachedWidget[];
-	data: PageData[];
-}
-
-export type PageDataValueType = "String" | "Number" | "Date" | "Boolean" | "Object" | "Array";
-
-/**
- * 页面数据
- *
- * @property id         页面数据标识
- * @property parentId   数据项的父标识
- * @property name       变量名
- * @property value      变量的值
- * @property type       变量值的类型
- * @property open       如果包含子数据项，是否展开，默认为不展开
- */
-export interface PageData {
-	id: string;
-	parentId: string;
-	name: string;
-	value?: string;
-	type: PageDataValueType;
-	open: boolean;
-}
-
-/**
- * @type State
- *
- * 设计器的共享状态
- *
- * @property project                       项目基本信息
- * @property widgetRepos                   项目依赖的所有 widget，类型为 widget 的 API 库，按 API 库分组。
- * @property ideRepos                      项目依赖的 ide 组件库信息
- * @property pageModel                     页面模型
- * @property selectedWidgetIndex           当前选中的部件索引，是相对于全页面的索引
- * @property activeWidgetDimensions        当前选中部件的位置和大小信息等
- * @property highlightWidgetIndex          高亮显示部件的索引，是相对于全页面的索引
- * @property highlightWidgetDimensions     高亮显示部件的位置和大小信息等
- * @property selectedBehaviorIndex         当前选中的行为元素（包括 data 和 method）的索引，是相对于全页面的索引
- * @property dirty                         判断是否有未保存的内容，如果有则 dirty 的值为 true，否则 dirty 的值为 false，默认为 false
- */
-export interface State {
-	project: Project;
-	widgetRepos: WidgetRepo[];
-	ideRepos: ComponentRepo[];
-	pageModel: PageModel;
-	// ui 的焦点信息
-	selectedWidgetIndex: number;
-	activeWidgetDimensions: DimensionResults;
-	// 页面中高亮显示部件的信息
-	highlightWidgetIndex: number;
-	highlightWidgetDimensions: DimensionResults;
-	// behavior 的焦点信息，data 和 method 共享焦点信息
-	selectedBehaviorIndex: number;
-	// 数据操作状态：保存
-	dirty: boolean;
 }
 
 // 有三类数据

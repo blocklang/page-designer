@@ -1,8 +1,9 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
-import { User, Project, Path, Permission, EditMode, ViewType, State } from "../interfaces";
+import { Project, State } from "designer-core/interfaces";
+import { User, Path, Permission, EditMode, ViewType } from "../interfaces";
 import { DNode } from "@dojo/framework/core/interfaces";
-import store from "../store";
+import store from "designer-core/store";
 import { invalidator } from "@dojo/framework/core/vdom";
 import { savePageModelProcess, undoProcess, redoProcess } from "../processes/uiProcesses";
 import { uiHistoryManager } from "../processes/utils";

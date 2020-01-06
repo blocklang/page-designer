@@ -1,7 +1,7 @@
 import { create, v } from "@dojo/framework/core/vdom";
 import * as c from "bootstrap-classes";
 import * as css from "./index.m.css";
-import store from "../../../../../store";
+import store from "designer-core/store";
 import * as blocklang from "designer-core/blocklang";
 import { AttachedWidget } from "designer-core/interfaces";
 import { find } from "@dojo/framework/shim/array";

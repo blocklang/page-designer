@@ -1,30 +1,21 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
 import icache from "@dojo/framework/core/middleware/icache";
 import cache from "@dojo/framework/core/middleware/cache";
-
+import { widgetInstanceMap } from "@dojo/framework/core/vdom";
 import * as css from "./PageDesigner.m.css";
 import * as c from "bootstrap-classes";
 import Header from "./widgets/Header";
-import {
-	User,
-	Project,
-	Page,
-	Path,
-	Permission,
-	EditMode,
-	ViewType,
-	RequestUrl,
-	ComponentRepo,
-	RouteName
-} from "./interfaces";
+import { User, Page, Path, Permission, EditMode, ViewType, RequestUrl, RouteName } from "./interfaces";
 import Preview from "./widgets/preview";
 import UIView from "./widgets/edit/ui";
 import BehaviorView from "./widgets/edit/behavior";
-import store from "./store";
+
 import { config } from "./config";
 import { initProjectProcess, getProjectIdeDependencesProcess } from "./processes/projectProcesses";
 import * as scriptjs from "scriptjs";
-import { widgetInstanceMap } from "@dojo/framework/core/vdom";
+
+import { Project, ComponentRepo } from "designer-core/interfaces";
+import store from "designer-core/store";
 import * as blocklang from "designer-core/blocklang";
 
 import { getPageModelProcess } from "./processes/uiProcesses";
