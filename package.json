@@ -20,7 +20,6 @@
     "test:all": "dojo build --mode unit && dojo build --mode functional && dojo test --all --config local",
     "test:headless": "dojo test -u -c headless",
     "test:ci": "run-s build:test test:headless",
-    "precommit": "lint-staged",
     "prettier": "prettier --write 'src/**/*.{ts,tsx}' 'src/**/*.css' 'tests/**/*.{ts,tsx}'",
     "uploadCoverage": "codecov --file=coverage/coverage.json",
     "json-server": "json-server --watch json-server/db.json --routes json-server/routes.json",
@@ -31,20 +30,20 @@
     "@types/diff": "^4.0.2",
     "@types/jquery": "^3.3.31",
     "@types/scriptjs": "^0.0.2",
-    "bootstrap-classes": "~0.0.3-alpha.1",
-    "designer-core": "~0.0.1-alpha.26",
+    "bootstrap-classes": "^0.0.3-alpha.1",
+    "designer-core": "^0.0.1-alpha.28",
     "diff": "^4.0.1",
-    "dojo-fontawesome": "~0.0.3-alpha.1",
+    "dojo-fontawesome": "^0.0.3-alpha.1",
     "jquery": "^3.4.1",
     "popper.js": "^1.16.0",
     "scriptjs": "^2.5.9",
-    "std-ide-widget": "~0.0.3-alpha.19",
+    "std-ide-widget": "^0.0.3-alpha.19",
     "tslib": "~1.9.1"
   },
   "peerDependencies": {
     "@dojo/framework": "^6.0.3",
     "bootstrap": "^4.3.1",
-    "std-widget-web": "~0.0.4-alpha.3"
+    "std-widget-web": "^0.0.5"
   },
   "devDependencies": {
     "@dojo/cli": "^6.0.0",
@@ -64,6 +63,11 @@
     "shx": "^0.3.2",
     "sinon": "^7.5.0",
     "typescript": "~3.4.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
     "*.{ts,tsx,css}": [
