@@ -1,6 +1,7 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
 import icache from "@dojo/framework/core/middleware/icache";
 import cache from "@dojo/framework/core/middleware/cache";
+import dimensions from "@dojo/framework/core/middleware/dimensions";
 import { widgetInstanceMap } from "@dojo/framework/core/vdom";
 import * as css from "./PageDesigner.m.css";
 import * as c from "bootstrap-classes";
@@ -22,46 +23,9 @@ import { getPageModelProcess } from "./processes/uiProcesses";
 import { loadCSS } from "./utils/fg-loadcss/loadCSS";
 import onloadCSS from "./utils/fg-loadcss/onloadCSS";
 import { SVGInjector } from "@tanem/svg-injector";
+import * as icon from "./icon";
 
-import { library } from "@fortawesome/fontawesome-svg-core";
-
-import { faArrowAltCircleLeft } from "@fortawesome/free-regular-svg-icons/faArrowAltCircleLeft";
-import { faEdit } from "@fortawesome/free-regular-svg-icons/faEdit";
-import { faCaretSquareRight } from "@fortawesome/free-regular-svg-icons/faCaretSquareRight";
-import { faSave } from "@fortawesome/free-regular-svg-icons/faSave";
-import { faCube } from "@fortawesome/free-solid-svg-icons/faCube";
-import { faUndo } from "@fortawesome/free-solid-svg-icons/faUndo";
-import { faRedo } from "@fortawesome/free-solid-svg-icons/faRedo";
-import { faLevelUpAlt } from "@fortawesome/free-solid-svg-icons/faLevelUpAlt";
-import { faStepForward } from "@fortawesome/free-solid-svg-icons/faStepForward";
-import { faStepBackward } from "@fortawesome/free-solid-svg-icons/faStepBackward";
-import { faTrashAlt } from "@fortawesome/free-solid-svg-icons/faTrashAlt";
-import { faAngleDown } from "@fortawesome/free-solid-svg-icons/faAngleDown";
-import { faAngleRight } from "@fortawesome/free-solid-svg-icons/faAngleRight";
-import { faArrowsAlt } from "@fortawesome/free-solid-svg-icons/faArrowsAlt";
-import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
-import { faArrowUp } from "@fortawesome/free-solid-svg-icons/faArrowUp";
-import { faArrowDown } from "@fortawesome/free-solid-svg-icons/faArrowDown";
-
-library.add(
-	faArrowAltCircleLeft,
-	faEdit,
-	faCaretSquareRight,
-	faSave,
-	faCube,
-	faUndo,
-	faRedo,
-	faLevelUpAlt,
-	faStepForward,
-	faStepBackward,
-	faTrashAlt,
-	faAngleDown,
-	faAngleRight,
-	faArrowsAlt,
-	faPlus,
-	faArrowUp,
-	faArrowDown
-);
+icon.init();
 
 export interface PageDesignerProperties {
 	user?: User; // 如果是匿名用户，则值为 null
@@ -73,6 +37,7 @@ export interface PageDesignerProperties {
 	routes: RouteName;
 }
 
+blocklang.registerDimensionsMiddleware(dimensions);
 const factory = create({ icache, store, cache }).properties<PageDesignerProperties>();
 
 // 注意，根据单一职责原则，以及参数宜集中不宜分散的原则，在调用 PageDesigner 只有一个设置参数入口，
