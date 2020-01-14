@@ -2,7 +2,7 @@ import { create, tsx } from "@dojo/framework/core/vdom";
 import * as css from "./HighlightBox.m.css";
 import Box from "./Box";
 import store from "designer-core/store";
-import { getWidgetPositionAndSize } from "../../../util";
+import { calculateOffset } from "../../../util";
 
 export interface HighlightBoxProperties {
 	widgetName: string;
@@ -15,7 +15,7 @@ export default factory(function HighlightBox({ properties, middleware: { store }
 
 	const { get, path } = store;
 	const highlightWidgetDimensions = get(path("highlightWidgetDimensions"));
-	const { left, top, width, height } = getWidgetPositionAndSize(highlightWidgetDimensions);
+	const { left, top, width, height } = calculateOffset(highlightWidgetDimensions);
 
 	return (
 		<Box left={left} top={top} width={width} height={height}>

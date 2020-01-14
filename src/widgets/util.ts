@@ -1,4 +1,4 @@
-import { DimensionResults } from "@dojo/framework/core/meta/Dimensions";
+import { DimensionResults, Size, TopLeft } from "@dojo/framework/core/meta/Dimensions";
 
 /**
  * 获取部件的位置信息和大小信息，如果传入的 widgetDimensions 的值为 undefined，则返回的值都为 0
@@ -7,9 +7,7 @@ import { DimensionResults } from "@dojo/framework/core/meta/Dimensions";
  *
  * @returns 只返回 left、top、width、height 的值
  */
-export function getWidgetPositionAndSize(
-	widgetDimensions: DimensionResults
-): { left: number; top: number; width: number; height: number } {
+export function calculateOffset(widgetDimensions: DimensionResults): TopLeft & Size {
 	if (!widgetDimensions) {
 		return { left: 0, top: 0, width: 0, height: 0 };
 	}

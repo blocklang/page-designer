@@ -5,7 +5,7 @@ import * as css from "./FocusBox.m.css";
 import * as c from "bootstrap-classes";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import { getPreviousIndex, getNextIndex } from "../../../../utils/pageTree";
-import { getWidgetPositionAndSize } from "../../../util";
+import { calculateOffset } from "../../../util";
 import {
 	activeParentWidgetProcess,
 	moveActiveWidgetPreviousProcess,
@@ -30,7 +30,7 @@ export default factory(function FocusBox({ properties, middleware: { store } }) 
 	// 如果选中的是根节点，则不显示操作栏
 	const showOperateBar = selectedWidgetIndex > 0;
 
-	const { left, top, width, height } = getWidgetPositionAndSize(activeWidgetDimensions);
+	const { left, top, width, height } = calculateOffset(activeWidgetDimensions);
 	let disableMovePreviousButton = true;
 	let disableMoveNextButton = true;
 
