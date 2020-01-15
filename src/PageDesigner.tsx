@@ -38,6 +38,8 @@ export interface PageDesignerProperties {
 }
 
 blocklang.registerDimensionsMiddleware(dimensions);
+blocklang.registerICacheMiddleware(icache);
+
 const factory = create({ icache, store, cache }).properties<PageDesignerProperties>();
 
 // 注意，根据单一职责原则，以及参数宜集中不宜分散的原则，在调用 PageDesigner 只有一个设置参数入口，
