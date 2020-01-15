@@ -21,30 +21,46 @@
       "projectId": 1,
       "apiRepoId": 2,
       "apiRepoName": "ide-widgets-bootstrap",
-      "widgetCategories": [{
-        "name": "category 1",
-        "widgets": [{
-          "widgetId": 1,
-          "widgetCode": "0001",
-          "widgetName": "TextInput",
-          "properties": [
+      "widgetCategories": [
+        {
+          "name": "category 1",
+          "widgets": [
             {
-              "id": "1",
-              "name": "value"
+              "widgetId": 1,
+              "widgetCode": "0001",
+              "widgetName": "TextInput",
+              "properties": [
+                {
+                  "id": "1",
+                  "name": "value"
+                }
+              ]
+            },
+            {
+              "widgetId": 2,
+              "widgetCode": "0002",
+              "widgetName": "PlainText",
+              "properties": [
+                {
+                  "id": "1",
+                  "name": "value"
+                }
+              ]
+            },
+            {
+              "widgetId": 3,
+              "widgetCode": "0003",
+              "widgetName": "PageData",
+              "properties": [
+                {
+                  "id": "1",
+                  "name": "dataId"
+                }
+              ]
             }
           ]
-        }, {
-          "widgetId": 2,
-          "widgetCode": "0002",
-          "widgetName": "PlainText",
-          "properties": [
-            {
-              "id": "1",
-              "name": "value"
-            }
-          ]
-        }]
-      }]
+        }
+      ]
     },
     {
       "projectId": 1,
@@ -57,30 +73,39 @@
     {
       "id": 1,
       "pageId": 1,
-      "widgets": [{
-        "id":"1",
-        "parentId": "-1",
-        "apiRepoId": 1,
-        "widgetCode": "0001",
-        "widgetName": "Page",
-        "canHasChildren": true,
-        "properties": [{}]
-      },{
-        "id":"2",
-        "parentId": "1",
-        "apiRepoId": 2,
-        "widgetCode": "0001",
-        "widgetName": "TextInput",
-        "canHasChildren": false,
-        "properties": [{}]
-      }],
-      "data": [{
-        "id": "1",
-        "parentId": "-1",
-        "type": "Object",
-        "name": "root",
-        "open": true
-      }]
+      "widgets": [
+        {
+          "id": "1",
+          "parentId": "-1",
+          "apiRepoId": 1,
+          "widgetCode": "0001",
+          "widgetName": "Page",
+          "canHasChildren": true,
+          "properties": [
+            {}
+          ]
+        },
+        {
+          "id": "2",
+          "parentId": "1",
+          "apiRepoId": 2,
+          "widgetCode": "0001",
+          "widgetName": "TextInput",
+          "canHasChildren": false,
+          "properties": [
+            {}
+          ]
+        }
+      ],
+      "data": [
+        {
+          "id": "1",
+          "parentId": "-1",
+          "type": "Object",
+          "name": "root",
+          "open": true
+        }
+      ]
     }
   ],
   "ideDependences": [
