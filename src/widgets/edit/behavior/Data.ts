@@ -1,17 +1,17 @@
 import { create, v, w } from "@dojo/framework/core/vdom";
 import { VNode } from "@dojo/framework/core/interfaces";
-import { PageData } from "designer-core/interfaces";
+import { PageDataItem } from "designer-core/interfaces";
 import store from "designer-core/store";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import { config } from "../../../config";
 import {
-	insertDataProcess,
-	changeActiveDataPropertyProcess,
-	activeDataProcess,
-	foldDataProcess,
-	removeActiveDataProcess,
-	moveUpActiveDataProcess,
-	moveDownActiveDataProcess
+	insertDataItemProcess,
+	changeActiveDataItemPropertyProcess,
+	activeDataItemProcess,
+	foldDataGroupProcess,
+	removeActiveDataItemProcess,
+	moveUpActiveDataItemProcess,
+	moveDownActiveDataItemProcess
 } from "../../../processes/dataProcesses";
 import * as $ from "jquery";
 import { getChildrenIndex, getPreviousIndex, getNextIndex } from "../../../utils/pageTree";
@@ -23,7 +23,7 @@ import * as css from "./Data.m.css";
 const dataTypes = ["String", "Number", "Date", "Boolean", "Object", "Array"];
 
 export interface DataProperties {
-	data: PageData[];
+	data: PageDataItem[];
 }
 
 const factory = create({ store }).properties<DataProperties>();
@@ -65,7 +65,7 @@ export default factory(function Data({ properties, middleware: { store } }) {
 				],
 				onclick: (event: MouseEvent) => {
 					event.stopPropagation();
-					executor(activeDataProcess)({ id: data[0].id });
+					executor(activeDataItemProcess)({ id: data[0].id });
 				}
 			},
 			[
@@ -74,7 +74,7 @@ export default factory(function Data({ properties, middleware: { store } }) {
 					{
 						classes: [c.position_absolute, css.icon, c.text_muted],
 						onclick: () => {
-							executor(foldDataProcess)({ id: data[0].id });
+							executor(foldDataGroupProcess)({ id: data[0].id });
 						}
 					},
 					[
@@ -93,9 +93,9 @@ export default factory(function Data({ properties, middleware: { store } }) {
 						onclick: (event: MouseEvent) => {
 							event.stopPropagation();
 							if (!data[0].open) {
-								executor(foldDataProcess)({ id: data[0].id });
+								executor(foldDataGroupProcess)({ id: data[0].id });
 							}
-							executor(insertDataProcess)({});
+							executor(insertDataItemProcess)({});
 						}
 					},
 					[w(FontAwesomeIcon, { icon: "plus" })]
@@ -116,18 +116,20 @@ export default factory(function Data({ properties, middleware: { store } }) {
 });
 
 function _renderChildren(
-	pageData: PageData[],
-	data: PageData,
+	pageData: PageDataItem[],
+	currentData: PageDataItem,
 	firstChildIndex: number,
 	activeDataItemId: string,
 	selectedBehaviorIndex: number,
 	executor: any
 ): VNode[] {
-	const children = getChildrenIndex(pageData, data.id, firstChildIndex);
+	const children = getChildrenIndex(pageData, currentData.id, firstChildIndex);
 	let result: VNode[] = [];
 	for (let i = 0; i < children.length; i++) {
 		const eachData = pageData[children[i]];
-		result.push(_renderDataItem(eachData, i, data, activeDataItemId, pageData, selectedBehaviorIndex, executor));
+		result.push(
+			_renderDataItem(eachData, i, currentData, activeDataItemId, pageData, selectedBehaviorIndex, executor)
+		);
 
 		if (eachData.open) {
 			const subChildren = _renderChildren(
@@ -140,7 +142,7 @@ function _renderChildren(
 			);
 			if (subChildren.length > 0) {
 				result.push(
-					v("div", { key: `${data.id}-${i}-children`, classes: [c.pl_4, c.border_left] }, subChildren)
+					v("div", { key: `${currentData.id}-${i}-children`, classes: [c.pl_4, c.border_left] }, subChildren)
 				);
 			}
 		}
@@ -149,11 +151,11 @@ function _renderChildren(
 }
 
 function _renderDataItem(
-	data: PageData,
+	data: PageDataItem,
 	index: number,
-	parentData: PageData,
+	parentData: PageDataItem,
 	activeDataItemId: string,
-	allData: PageData[],
+	allData: PageDataItem[],
 	selectedBehaviorIndex: number,
 	executor: any
 ): VNode {
@@ -165,7 +167,7 @@ function _renderDataItem(
 			// 注意：如果改为 onclick，则第一次点击数据类型的 dropdown 时没有弹出菜单。
 			onmouseup: (event: MouseEvent) => {
 				event.stopPropagation();
-				executor(activeDataProcess)({ id: data.id });
+				executor(activeDataItemProcess)({ id: data.id });
 			}
 		},
 		[
@@ -178,18 +180,18 @@ function _renderDataItem(
 	);
 }
 
-function _renderIcon(data: PageData, executor: any): VNode | undefined {
-	if (data.type === "Object" || data.type === "Array") {
+function _renderIcon(dataItem: PageDataItem, executor: any): VNode | undefined {
+	if (dataItem.type === "Object" || dataItem.type === "Array") {
 		return v(
 			"span",
 			{
 				key: "icon",
 				classes: [c.position_absolute, css.icon, c.text_muted],
 				onclick: () => {
-					executor(foldDataProcess)({ id: data.id });
+					executor(foldDataGroupProcess)({ id: dataItem.id });
 				}
 			},
-			[data.open ? w(FontAwesomeIcon, { icon: "angle-down" }) : w(FontAwesomeIcon, { icon: "angle-right" })]
+			[dataItem.open ? w(FontAwesomeIcon, { icon: "angle-down" }) : w(FontAwesomeIcon, { icon: "angle-right" })]
 		);
 	}
 }
@@ -200,21 +202,26 @@ function _renderIcon(data: PageData, executor: any): VNode | undefined {
  * @param data       数据项
  * @param executor   store 执行器
  */
-function _renderVariableName(data: PageData, index: number, parentData: PageData, executor: any): VNode {
-	if (parentData.type === "Array") {
+function _renderVariableName(
+	dataItem: PageDataItem,
+	index: number,
+	parentDataItem: PageDataItem,
+	executor: any
+): VNode {
+	if (parentDataItem.type === "Array") {
 		return v("span", { key: "variable", classes: [c.mr_1] }, [`${index}`]);
 	}
 
 	return v("input", {
 		key: "variable",
-		value: data.name,
+		value: dataItem.name,
 		type: "text",
 		classes: [c.form_control, c.form_control_sm, css.variableName],
 		placeholder: "变量名(英文字母、数字、‘_’)",
 		oninput: (event: KeyboardEvent) => {
 			const target = event.target as HTMLInputElement;
 			// TODO: 校验数据的有效性
-			executor(changeActiveDataPropertyProcess)({
+			executor(changeActiveDataItemPropertyProcess)({
 				name: "name",
 				value: target.value
 			});
@@ -229,7 +236,7 @@ function _renderVariableName(data: PageData, index: number, parentData: PageData
  * @param index      数据的索引值
  * @param executor   store 执行器
  */
-function _renderDataType(data: PageData, index: number, executor: any): VNode {
+function _renderDataType(dataItem: PageDataItem, index: number, executor: any): VNode {
 	return v("span", { key: "dataType", classes: [c.dropdown, c.ml_1] }, [
 		v(
 			"button",
@@ -244,7 +251,7 @@ function _renderDataType(data: PageData, index: number, executor: any): VNode {
 					($(event.srcElement!) as any).dropdown();
 				}
 			},
-			[`${data.type}`]
+			[`${dataItem.type}`]
 		),
 		v(
 			"div",
@@ -253,11 +260,11 @@ function _renderDataType(data: PageData, index: number, executor: any): VNode {
 				v(
 					"a",
 					{
-						classes: [c.dropdown_item, dataType === data.type ? c.active : undefined],
+						classes: [c.dropdown_item, dataType === dataItem.type ? c.active : undefined],
 						href: "#",
 						onclick: (event: MouseEvent) => {
 							event.preventDefault();
-							executor(changeActiveDataPropertyProcess)({
+							executor(changeActiveDataItemPropertyProcess)({
 								name: "type",
 								value: dataType
 							});
@@ -276,16 +283,16 @@ function _renderDataType(data: PageData, index: number, executor: any): VNode {
  * @param data       数据项
  * @param executor   store 执行器
  */
-function _renderDefaultValue(data: PageData, executor: any): VNode | undefined {
-	if (data.type === "Boolean") {
+function _renderDefaultValue(dataItem: PageDataItem, executor: any): VNode | undefined {
+	if (dataItem.type === "Boolean") {
 		return v("input", {
 			key: "defaultValue",
 			type: "checkbox",
-			checked: data.value === "true",
+			checked: dataItem.value === "true",
 			classes: [c.ml_1],
 			onchange: (event: MouseEvent) => {
 				const target = event.target as HTMLInputElement;
-				executor(changeActiveDataPropertyProcess)({
+				executor(changeActiveDataItemPropertyProcess)({
 					name: "value",
 					value: String(target.checked)
 				});
@@ -293,16 +300,16 @@ function _renderDefaultValue(data: PageData, executor: any): VNode | undefined {
 		});
 	}
 
-	if (data.type === "String" || data.type === "Number" || data.type === "Date") {
+	if (dataItem.type === "String" || dataItem.type === "Number" || dataItem.type === "Date") {
 		return v("input", {
 			key: "defaultValue",
-			value: data.value,
+			value: dataItem.value,
 			type: "text",
 			classes: [c.form_control, c.form_control_sm, c.ml_1, css.defaultValue],
 			oninput: (event: KeyboardEvent) => {
 				const target = event.target as HTMLInputElement;
 				// TODO: 校验数据的有效性
-				executor(changeActiveDataPropertyProcess)({
+				executor(changeActiveDataItemPropertyProcess)({
 					name: "value",
 					value: target.value
 				});
@@ -314,13 +321,13 @@ function _renderDefaultValue(data: PageData, executor: any): VNode | undefined {
 }
 
 function _renderOperators(
-	data: PageData,
+	dataItem: PageDataItem,
 	activeDataItemId: string,
-	allData: PageData[],
+	allData: PageDataItem[],
 	selectedBehaviorIndex: number,
 	executor: any
 ): VNode | undefined {
-	const isActive = activeDataItemId === data.id;
+	const isActive = activeDataItemId === dataItem.id;
 	if (!isActive) {
 		return;
 	}
@@ -329,15 +336,15 @@ function _renderOperators(
 		v(
 			"span",
 			{
-				key: `op-add-${data.id}`,
+				key: `op-add-${dataItem.id}`,
 				classes: [c.text_muted],
 				title: "加变量",
 				onclick: (event: MouseEvent) => {
 					event.stopPropagation();
-					if (!data.open) {
-						executor(foldDataProcess)({ id: data.id });
+					if (!dataItem.open) {
+						executor(foldDataGroupProcess)({ id: dataItem.id });
 					}
-					executor(insertDataProcess)({});
+					executor(insertDataItemProcess)({});
 				}
 			},
 			[w(FontAwesomeIcon, { icon: "plus" })]
@@ -350,13 +357,13 @@ function _renderOperators(
 			v(
 				"span",
 				{
-					key: `op-up-${data.id}`,
+					key: `op-up-${dataItem.id}`,
 					classes: [c.ml_1, c.text_muted],
 					title: "上移",
 					onclick: (event: MouseEvent) => {
 						event.stopPropagation();
 						// 上移
-						executor(moveUpActiveDataProcess)({});
+						executor(moveUpActiveDataItemProcess)({});
 					}
 				},
 				[w(FontAwesomeIcon, { icon: "arrow-up" })]
@@ -370,13 +377,13 @@ function _renderOperators(
 			v(
 				"span",
 				{
-					key: `op-down-${data.id}`,
+					key: `op-down-${dataItem.id}`,
 					classes: [c.ml_1, c.text_muted],
 					title: "下移",
 					onclick: (event: MouseEvent) => {
 						event.stopPropagation();
 						// 下移
-						executor(moveDownActiveDataProcess)({});
+						executor(moveDownActiveDataItemProcess)({});
 					}
 				},
 				[w(FontAwesomeIcon, { icon: "arrow-down" })]
@@ -388,12 +395,12 @@ function _renderOperators(
 		v(
 			"span",
 			{
-				key: `op-remove-${data.id}`,
+				key: `op-remove-${dataItem.id}`,
 				title: "删除变量",
 				classes: [c.ml_1, c.text_muted],
 				onclick: (event: MouseEvent) => {
 					event.stopPropagation();
-					executor(removeActiveDataProcess)({});
+					executor(removeActiveDataItemProcess)({});
 				}
 			},
 			[w(FontAwesomeIcon, { icon: "trash-alt" })]

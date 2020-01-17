@@ -6,7 +6,7 @@ import { stub } from "sinon";
 
 import { getWidgetsProcess } from "../../../src/processes/widgetProcesses";
 import Store from "@dojo/framework/stores/Store";
-import { State } from "../../../src/interfaces";
+import { State } from "designer-core/interfaces";
 import { initProjectProcess } from "../../../src/processes/projectProcesses";
 import { config } from "../../../src/config";
 

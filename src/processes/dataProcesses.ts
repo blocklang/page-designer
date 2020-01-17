@@ -1,7 +1,7 @@
 import { createProcess } from "@dojo/framework/stores/process";
 import { commandFactory } from "./utils";
 import { add, replace, remove } from "@dojo/framework/stores/state/operations";
-import { PageData } from "designer-core/interfaces";
+import { PageDataItem } from "designer-core/interfaces";
 import { uuid } from "@dojo/framework/core/util";
 import { findIndex } from "@dojo/framework/shim/array";
 import { getAllChildCount, inferNextActiveNodeIndex, getPreviousIndex, getNextIndex } from "../utils/pageTree";
@@ -20,7 +20,7 @@ const insertEmptyDataItemCommand = commandFactory(({ get, path, at }) => {
 
 	// 紧挨着选中的节点
 	const insertedIndex = selectedBehaviorIndex + 1;
-	const dataItem: PageData = {
+	const dataItem: PageDataItem = {
 		id: uuid().replace(/-/g, ""),
 		type: "String",
 		parentId,
@@ -39,14 +39,14 @@ const activeDataItemCommand = commandFactory(({ payload: { id }, get, path, at }
 	return [replace(path("selectedBehaviorIndex"), selectedIndex)];
 });
 
-const changeActiveDataPropertyCommand = commandFactory(({ payload: { name, value }, at, get, path }) => {
+const changeActiveDataItemPropertyCommand = commandFactory(({ payload: { name, value }, at, get, path }) => {
 	const selectedBehaviorIndex = get(path("selectedBehaviorIndex")) || 0;
 	const selectedPageDataPath = at(path("pageModel", "data"), selectedBehaviorIndex);
 
 	return [replace(path(selectedPageDataPath, name), value)];
 });
 
-const foldDataCommand = commandFactory(({ payload: { id }, get, path, at }) => {
+const foldDataGroupCommand = commandFactory(({ payload: { id }, get, path, at }) => {
 	const pageData = get(path("pageModel", "data"));
 	const selectedIndex = findIndex(pageData, (item) => {
 		return item.id === id;
@@ -142,12 +142,14 @@ const moveDownActiveDataItemCommand = commandFactory(({ get, path, at }) => {
 	return result;
 });
 
-export const insertDataProcess = createProcess("insert-data-process", [insertEmptyDataItemCommand]);
-export const activeDataProcess = createProcess("active-data-process", [activeDataItemCommand]);
-export const changeActiveDataPropertyProcess = createProcess("change-active-data-property-process", [
-	changeActiveDataPropertyCommand
+export const insertDataItemProcess = createProcess("insert-data-item-process", [insertEmptyDataItemCommand]);
+export const activeDataItemProcess = createProcess("active-data-item-process", [activeDataItemCommand]);
+export const changeActiveDataItemPropertyProcess = createProcess("change-active-data-item-property-process", [
+	changeActiveDataItemPropertyCommand
 ]);
-export const foldDataProcess = createProcess("fold-data-process", [foldDataCommand]);
-export const removeActiveDataProcess = createProcess("remove-data-process", [removeActiveDataItemCommand]);
-export const moveUpActiveDataProcess = createProcess("move-up-data-process", [moveUpActiveDataItemCommand]);
-export const moveDownActiveDataProcess = createProcess("move-down-data-process", [moveDownActiveDataItemCommand]);
+export const foldDataGroupProcess = createProcess("fold-data-group-process", [foldDataGroupCommand]);
+export const removeActiveDataItemProcess = createProcess("remove-data-item-process", [removeActiveDataItemCommand]);
+export const moveUpActiveDataItemProcess = createProcess("move-up-data-item-process", [moveUpActiveDataItemCommand]);
+export const moveDownActiveDataItemProcess = createProcess("move-down-data-item-process", [
+	moveDownActiveDataItemCommand
+]);

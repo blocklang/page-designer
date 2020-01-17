@@ -2,13 +2,13 @@ const { describe, it, beforeEach } = intern.getInterface("bdd");
 const { assert } = intern.getPlugin("chai");
 
 import {
-	insertDataProcess,
-	activeDataProcess,
-	changeActiveDataPropertyProcess,
-	foldDataProcess,
-	removeActiveDataProcess,
-	moveUpActiveDataProcess,
-	moveDownActiveDataProcess
+	insertDataItemProcess,
+	activeDataItemProcess,
+	changeActiveDataItemPropertyProcess,
+	foldDataGroupProcess,
+	removeActiveDataItemProcess,
+	moveUpActiveDataItemProcess,
+	moveDownActiveDataItemProcess
 } from "../../../src/processes/dataProcesses";
 import Store from "@dojo/framework/stores/Store";
 import { State } from "designer-core/interfaces";
@@ -35,7 +35,7 @@ describe("dataProcesses", () => {
 			add(store.path("selectedBehaviorIndex"), 0)
 		]);
 
-		insertDataProcess(store)({});
+		insertDataItemProcess(store)({});
 
 		const data = store.get(store.path("pageModel", "data"));
 		assert.equal(data.length, 2);
@@ -70,7 +70,7 @@ describe("dataProcesses", () => {
 			add(store.path("selectedBehaviorIndex"), 0)
 		]);
 
-		insertDataProcess(store)({});
+		insertDataItemProcess(store)({});
 
 		const data = store.get(store.path("pageModel", "data"));
 		assert.equal(data.length, 3);
@@ -106,7 +106,7 @@ describe("dataProcesses", () => {
 			add(store.path("selectedBehaviorIndex"), 1)
 		]);
 
-		insertDataProcess(store)({});
+		insertDataItemProcess(store)({});
 
 		const data = store.get(store.path("pageModel", "data"));
 		assert.equal(data.length, 3);
@@ -140,13 +140,13 @@ describe("dataProcesses", () => {
 			])
 		]);
 
-		activeDataProcess(store)({ id: "not exist id" });
+		activeDataItemProcess(store)({ id: "not exist id" });
 		assert.equal(store.get(store.path("selectedBehaviorIndex")), -1);
 
-		activeDataProcess(store)({ id: "1" });
+		activeDataItemProcess(store)({ id: "1" });
 		assert.equal(store.get(store.path("selectedBehaviorIndex")), 0);
 
-		activeDataProcess(store)({ id: "2" });
+		activeDataItemProcess(store)({ id: "2" });
 		assert.equal(store.get(store.path("selectedBehaviorIndex")), 1);
 	});
 
@@ -172,7 +172,7 @@ describe("dataProcesses", () => {
 			add(store.path("selectedBehaviorIndex"), 1)
 		]);
 
-		changeActiveDataPropertyProcess(store)({ name: "name", value: "name1" });
+		changeActiveDataItemPropertyProcess(store)({ name: "name", value: "name1" });
 
 		const data = store.get(store.path("pageModel", "data"));
 
@@ -207,13 +207,13 @@ describe("dataProcesses", () => {
 			add(store.path("selectedBehaviorIndex"), 1)
 		]);
 
-		foldDataProcess(store)({ id: "1" });
+		foldDataGroupProcess(store)({ id: "1" });
 
 		const data1 = store.get(store.path("pageModel", "data"));
 		const updatedData1 = data1[0];
 		assert.isFalse(updatedData1.open);
 
-		foldDataProcess(store)({ id: "1" });
+		foldDataGroupProcess(store)({ id: "1" });
 
 		const data2 = store.get(store.path("pageModel", "data"));
 		const updatedData2 = data2[0];
@@ -234,7 +234,7 @@ describe("dataProcesses", () => {
 			add(store.path("selectedBehaviorIndex"), 0)
 		]);
 		// 不能删除根节点
-		removeActiveDataProcess(store)({});
+		removeActiveDataItemProcess(store)({});
 
 		const data = store.get(store.path("pageModel", "data"));
 		assert.equal(data.length, 1);
@@ -265,7 +265,7 @@ describe("dataProcesses", () => {
 			add(store.path("selectedBehaviorIndex"), 1)
 		]);
 
-		removeActiveDataProcess(store)({});
+		removeActiveDataItemProcess(store)({});
 
 		const data = store.get(store.path("pageModel", "data"));
 		assert.equal(data.length, 1);
@@ -304,7 +304,7 @@ describe("dataProcesses", () => {
 			add(store.path("selectedBehaviorIndex"), 2)
 		]);
 
-		removeActiveDataProcess(store)({});
+		removeActiveDataItemProcess(store)({});
 
 		const data = store.get(store.path("pageModel", "data"));
 		assert.equal(data.length, 2);
@@ -343,7 +343,7 @@ describe("dataProcesses", () => {
 			add(store.path("selectedBehaviorIndex"), 1)
 		]);
 
-		removeActiveDataProcess(store)({});
+		removeActiveDataItemProcess(store)({});
 
 		const data = store.get(store.path("pageModel", "data"));
 		assert.equal(data.length, 2);
@@ -384,7 +384,7 @@ describe("dataProcesses", () => {
 			add(store.path("selectedBehaviorIndex"), 1)
 		]);
 
-		removeActiveDataProcess(store)({});
+		removeActiveDataItemProcess(store)({});
 
 		const data = store.get(store.path("pageModel", "data"));
 		assert.equal(data.length, 1);
@@ -415,7 +415,7 @@ describe("dataProcesses", () => {
 			add(store.path("selectedBehaviorIndex"), 1)
 		]);
 
-		moveUpActiveDataProcess(store)({});
+		moveUpActiveDataItemProcess(store)({});
 		// 没有前一个兄弟节点，所以没有移动
 		assert.equal(store.get(store.path("selectedBehaviorIndex")), 1);
 		assert.isUndefined(store.get(store.path("dirty")));
@@ -451,7 +451,7 @@ describe("dataProcesses", () => {
 			add(store.path("selectedBehaviorIndex"), 2)
 		]);
 
-		moveUpActiveDataProcess(store)({});
+		moveUpActiveDataItemProcess(store)({});
 
 		assert.equal(store.get(store.path("selectedBehaviorIndex")), 1);
 		// 判断位置已互换
@@ -509,7 +509,7 @@ describe("dataProcesses", () => {
 			add(store.path("selectedBehaviorIndex"), 3)
 		]);
 
-		moveUpActiveDataProcess(store)({});
+		moveUpActiveDataItemProcess(store)({});
 
 		assert.equal(store.get(store.path("selectedBehaviorIndex")), 1);
 		// 判断位置已互换
@@ -553,7 +553,7 @@ describe("dataProcesses", () => {
 			add(store.path("selectedBehaviorIndex"), 1)
 		]);
 
-		moveDownActiveDataProcess(store)({});
+		moveDownActiveDataItemProcess(store)({});
 		// 没有后一个兄弟节点，所以没有移动
 		assert.equal(store.get(store.path("selectedBehaviorIndex")), 1);
 		assert.isUndefined(store.get(store.path("dirty")));
@@ -589,7 +589,7 @@ describe("dataProcesses", () => {
 			add(store.path("selectedBehaviorIndex"), 1)
 		]);
 
-		moveDownActiveDataProcess(store)({});
+		moveDownActiveDataItemProcess(store)({});
 
 		assert.equal(store.get(store.path("selectedBehaviorIndex")), 2);
 		// 判断位置已互换
@@ -647,7 +647,7 @@ describe("dataProcesses", () => {
 			add(store.path("selectedBehaviorIndex"), 1)
 		]);
 
-		moveDownActiveDataProcess(store)({});
+		moveDownActiveDataItemProcess(store)({});
 
 		assert.equal(store.get(store.path("selectedBehaviorIndex")), 3);
 		// 判断位置已互换

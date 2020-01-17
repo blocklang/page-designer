@@ -8,7 +8,7 @@ import * as c from "bootstrap-classes";
 import Data from "../../../../../src/widgets/edit/behavior/Data";
 import * as css from "../../../../../src/widgets/edit/behavior/Data.m.css";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
-import { State, PageData } from "designer-core/interfaces";
+import { State, PageDataItem } from "designer-core/interfaces";
 import store from "designer-core/store";
 import { replace } from "@dojo/framework/stores/state/operations";
 
@@ -28,7 +28,7 @@ describe("edit/behavior/data", () => {
 
 	it("load, first node must be root data", () => {
 		const mockStore = createMockStoreMiddleware<State>();
-		const pageData: PageData[] = [
+		const pageData: PageDataItem[] = [
 			{
 				id: "1",
 				parentId: "invalid parent id",
@@ -54,7 +54,7 @@ describe("edit/behavior/data", () => {
 
 	it("load complete, only has one node", () => {
 		const mockStore = createMockStoreMiddleware<State>();
-		const pageData: PageData[] = [
+		const pageData: PageDataItem[] = [
 			{
 				id: "1",
 				parentId: "-1",
@@ -85,7 +85,7 @@ describe("edit/behavior/data", () => {
 	// 默认展开
 	it("load with a string variable", () => {
 		const mockStore = createMockStoreMiddleware<State>();
-		const pageData: PageData[] = [
+		const pageData: PageDataItem[] = [
 			{
 				id: "1",
 				parentId: "-1",
@@ -166,7 +166,7 @@ describe("edit/behavior/data", () => {
 
 	it("load with a number variable", () => {
 		const mockStore = createMockStoreMiddleware<State>();
-		const pageData: PageData[] = [
+		const pageData: PageDataItem[] = [
 			{
 				id: "1",
 				parentId: "-1",
@@ -247,7 +247,7 @@ describe("edit/behavior/data", () => {
 
 	it("load with a object variable", () => {
 		const mockStore = createMockStoreMiddleware<State>();
-		const pageData: PageData[] = [
+		const pageData: PageDataItem[] = [
 			{
 				id: "1",
 				parentId: "-1",
