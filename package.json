@@ -26,12 +26,12 @@
     "serve": "cd serve && serve -l 3001"
   },
   "dependencies": {
-    "@tanem/svg-injector": "^8.0.38",
+    "@tanem/svg-injector": "^8.0.39",
     "@types/diff": "^4.0.2",
     "@types/jquery": "^3.3.31",
     "@types/scriptjs": "^0.0.2",
     "bootstrap-classes": "^0.0.3-alpha.1",
-    "designer-core": "~0.0.1-alpha.42",
+    "designer-core": "~0.0.1-alpha.46",
     "diff": "^4.0.2",
     "dojo-fontawesome": "^0.0.3-alpha.1",
     "jquery": "^3.4.1",
@@ -41,16 +41,16 @@
     "tslib": "~1.9.1"
   },
   "peerDependencies": {
-    "@dojo/framework": "^6.0.3",
-    "bootstrap": "^4.3.1",
-    "std-widget-web": "^0.0.5"
+    "@dojo/framework": "^6.0.4",
+    "bootstrap": "^4.4.1",
+    "std-widget-web": "^0.0.6-alpha.1"
   },
   "devDependencies": {
     "@dojo/cli": "^6.0.0",
     "@dojo/cli-build-app": "^6.0.9",
     "@dojo/cli-build-widget": "^6.0.2",
     "@dojo/cli-test-intern": "^6.0.1",
-    "@dojo/framework": "^6.0.3",
+    "@dojo/framework": "^6.0.4",
     "@dojo/themes": "^6.0.0",
     "@types/node": "^9.6.55",
     "@types/sinon": "^7.5.1",
