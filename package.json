@@ -31,7 +31,7 @@
     "@types/jquery": "^3.3.31",
     "@types/scriptjs": "^0.0.2",
     "bootstrap-classes": "^0.0.3-alpha.1",
-    "designer-core": "~0.0.1-alpha.46",
+    "designer-core": "~0.0.1-alpha.47",
     "diff": "^4.0.2",
     "dojo-fontawesome": "^0.0.3-alpha.1",
     "jquery": "^3.4.1",

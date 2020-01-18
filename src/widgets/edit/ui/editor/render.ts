@@ -8,7 +8,7 @@ import { config } from "../../../../config";
 import * as blocklang from "designer-core/blocklang";
 import { ComponentRepo } from "designer-core/interfaces";
 import UndefinedWidget from "../../../UndefinedWidget";
-import { getChildrenIndex } from "../../../../utils/pageTree";
+import { getChildrenIndex } from "designer-core/utils/treeUtil";
 
 // 有两种方式共享 widgets 和 ideRepos 的值，以避免在每个函数中多次传递
 // 1. 在此处缓存 widgets 和 ideRepos 的值

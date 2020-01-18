@@ -14,7 +14,7 @@ import {
 	moveDownActiveDataItemProcess
 } from "../../../processes/dataProcesses";
 import * as $ from "jquery";
-import { getChildrenIndex, getPreviousIndex, getNextIndex } from "../../../utils/pageTree";
+import { getChildrenIndex, getPreviousIndex, getNextIndex } from "designer-core/utils/treeUtil";
 
 import "bootstrap";
 import * as c from "bootstrap-classes";
@@ -44,14 +44,13 @@ export default factory(function Data({ properties, middleware: { store } }) {
 	if (data[0].parentId !== config.rootDataParentId) {
 		return v("div", { key: "root" }, [
 			v("div", { key: "alert-not-a-root", classes: [c.alert, c.alert_danger, c.text_center], role: "alert" }, [
-				"第一个节点必须是根节点，但也页面的第一个节点却不是根节点！"
+				"第一个节点必须是根节点！"
 			])
 		]);
 	}
 
-	const pageData = data || [];
 	const selectedBehaviorIndex = get(path("selectedBehaviorIndex")) || 0;
-	const activeDataItemId = pageData[selectedBehaviorIndex].id;
+	const activeDataItemId = data[selectedBehaviorIndex].id;
 
 	return v("div", { key: "root", classes: [c.ml_4] }, [
 		v(

@@ -4,7 +4,12 @@ import { add, replace, remove } from "@dojo/framework/stores/state/operations";
 import { PageDataItem } from "designer-core/interfaces";
 import { uuid } from "@dojo/framework/core/util";
 import { findIndex } from "@dojo/framework/shim/array";
-import { getAllChildCount, inferNextActiveNodeIndex, getPreviousIndex, getNextIndex } from "../utils/pageTree";
+import {
+	getAllChildCount,
+	inferNextActiveNodeIndex,
+	getPreviousIndex,
+	getNextIndex
+} from "designer-core/utils/treeUtil";
 
 const insertEmptyDataItemCommand = commandFactory(({ get, path, at }) => {
 	// 默认添加在距离父节点最近的位置，参考自 vscode 中的在文件夹下新建文件的逻辑

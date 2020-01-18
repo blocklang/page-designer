@@ -4,7 +4,7 @@ import Box from "./Box";
 import * as css from "./FocusBox.m.css";
 import * as c from "bootstrap-classes";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
-import { getPreviousIndex, getNextIndex } from "../../../../utils/pageTree";
+import { getPreviousIndex, getNextIndex } from "designer-core/utils/treeUtil";
 import { calculateOffset } from "../../../util";
 import {
 	activeParentWidgetProcess,

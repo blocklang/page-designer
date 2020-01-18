@@ -44,7 +44,7 @@ describe("edit/behavior/data", () => {
 		h.expect(() => (
 			<div key="root">
 				<div key="alert-not-a-root" classes={[c.alert, c.alert_danger, c.text_center]} role="alert">
-					第一个节点必须是根节点，但也页面的第一个节点却不是根节点！
+					第一个节点必须是根节点！
 				</div>
 			</div>
 		));

@@ -11,7 +11,7 @@ import {
 	getNextIndex,
 	getParentIndex,
 	inferNextActiveNodeIndex
-} from "../utils/pageTree";
+} from "designer-core/utils/treeUtil";
 import { DimensionResults } from "@dojo/framework/core/meta/Dimensions";
 import { ChangedPropertyValue } from "designer-core/interfaces";
 
