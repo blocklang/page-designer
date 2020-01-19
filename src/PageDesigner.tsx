@@ -39,6 +39,7 @@ export interface PageDesignerProperties {
 
 blocklang.registerDimensionsMiddleware(dimensions);
 blocklang.registerICacheMiddleware(icache);
+blocklang.registerStoreMiddleware(store);
 
 const factory = create({ icache, store, cache }).properties<PageDesignerProperties>();
 

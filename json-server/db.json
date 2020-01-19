@@ -102,7 +102,7 @@
           "id": "1",
           "parentId": "-1",
           "type": "Object",
-          "name": "root",
+          "name": "$",
           "open": true
         }
       ]
