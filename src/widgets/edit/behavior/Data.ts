@@ -83,22 +83,23 @@ export default factory(function Data({ properties, middleware: { store } }) {
 					]
 				),
 				v("span", { classes: [c.ml_1] }, ["data（页面数据）"]),
-				v(
-					"span",
-					{
-						key: `op-add-${data[0].id}`,
-						title: "加变量",
-						classes: [c.ml_3, c.text_muted],
-						onclick: (event: MouseEvent) => {
-							event.stopPropagation();
-							if (!data[0].open) {
-								executor(foldDataGroupProcess)({ id: data[0].id });
+				activeDataItemId === data[0].id &&
+					v(
+						"span",
+						{
+							key: `op-add-${data[0].id}`,
+							title: "加变量",
+							classes: [c.ml_3, c.text_muted],
+							onclick: (event: MouseEvent) => {
+								event.stopPropagation();
+								if (!data[0].open) {
+									executor(foldDataGroupProcess)({ id: data[0].id });
+								}
+								executor(insertDataItemProcess)({});
 							}
-							executor(insertDataItemProcess)({});
-						}
-					},
-					[w(FontAwesomeIcon, { icon: "plus" })]
-				)
+						},
+						[w(FontAwesomeIcon, { icon: "plus" })]
+					)
 			]
 		),
 		data.length > 1 &&
