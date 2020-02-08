@@ -4,11 +4,11 @@ import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import Header from "../../../src/widgets/Header";
-import { Path, Permission, User, EditMode, ViewType } from "../../../src/interfaces";
+import { Path, Permission, User } from "../../../src/interfaces";
 import * as c from "bootstrap-classes";
 import { stub } from "sinon";
 import { assert } from "chai";
-import { Project, State } from "designer-core/interfaces";
+import { Project, State, EditMode, PageViewType } from "designer-core/interfaces";
 import store from "designer-core/store";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
 import { replace } from "@dojo/framework/stores/state/operations";
@@ -46,8 +46,8 @@ describe("Header", () => {
 				project={project}
 				permission={permission}
 				pathes={pathes}
-				onChangeEditMode={() => {}}
-				onChangeView={() => {}}
+				onSwitchEditMode={() => {}}
+				onSwitchPageView={() => {}}
 			/>
 		));
 
@@ -98,8 +98,8 @@ describe("Header", () => {
 				project={project}
 				permission={permission}
 				pathes={pathes}
-				onChangeEditMode={() => {}}
-				onChangeView={() => {}}
+				onSwitchEditMode={() => {}}
+				onSwitchPageView={() => {}}
 			/>
 		));
 
@@ -151,15 +151,15 @@ describe("Header", () => {
 		};
 
 		const pathes: Path[] = [{ name: "page1", path: "page1" }];
-		const changeEditMode = stub();
+		const switchEditModeStub = stub();
 		const h = harness(() => (
 			<Header
 				user={user}
 				project={project}
 				permission={permission}
 				pathes={pathes}
-				onChangeEditMode={changeEditMode}
-				onChangeView={() => {}}
+				onSwitchEditMode={switchEditModeStub}
+				onSwitchPageView={() => {}}
 			/>
 		));
 
@@ -197,7 +197,7 @@ describe("Header", () => {
 		));
 
 		h.trigger("@toEditButton", "onclick");
-		assert.isTrue(changeEditMode.calledOnce);
+		assert.isTrue(switchEditModeStub.calledOnce);
 	});
 
 	it("header when login user access, has write permission, in edit mode and show ui view", () => {
@@ -220,8 +220,8 @@ describe("Header", () => {
 		const editMode: EditMode = "Edit";
 
 		const pathes: Path[] = [{ name: "page1", path: "page1" }];
-		const changeEditMode = stub();
-		const changeView = stub();
+		const switchEditModeStub = stub();
+		const switchPageViewStub = stub();
 		const h = harness(() => (
 			<Header
 				user={user}
@@ -229,8 +229,8 @@ describe("Header", () => {
 				permission={permission}
 				pathes={pathes}
 				editMode={editMode}
-				onChangeEditMode={changeEditMode}
-				onChangeView={changeView}
+				onSwitchEditMode={switchEditModeStub}
+				onSwitchPageView={switchPageViewStub}
 			/>
 		));
 
@@ -315,10 +315,10 @@ describe("Header", () => {
 		));
 
 		h.trigger("@toPreviewButton", "onclick");
-		assert.isTrue(changeEditMode.calledOnce);
+		assert.isTrue(switchEditModeStub.calledOnce);
 
 		h.trigger("@toBehaviorViewButton", "onclick");
-		assert.isTrue(changeView.calledOnce);
+		assert.isTrue(switchPageViewStub.calledOnce);
 	});
 
 	it("header when login user access, has write permission, in edit mode and show behavior view", () => {
@@ -339,11 +339,11 @@ describe("Header", () => {
 		};
 
 		const editMode: EditMode = "Edit";
-		const viewType: ViewType = "behavior";
+		const viewType: PageViewType = "behavior";
 
 		const pathes: Path[] = [{ name: "page1", path: "page1" }];
-		const changeEditMode = stub();
-		const changeView = stub();
+		const switchEditModeStub = stub();
+		const switchPageViewStub = stub();
 
 		const h = harness(() => (
 			<Header
@@ -352,9 +352,9 @@ describe("Header", () => {
 				permission={permission}
 				pathes={pathes}
 				editMode={editMode}
-				activeView={viewType}
-				onChangeEditMode={changeEditMode}
-				onChangeView={changeView}
+				activePageView={viewType}
+				onSwitchEditMode={switchEditModeStub}
+				onSwitchPageView={switchPageViewStub}
 			/>
 		));
 
@@ -443,10 +443,10 @@ describe("Header", () => {
 		));
 
 		h.trigger("@toPreviewButton", "onclick");
-		assert.isTrue(changeEditMode.calledOnce);
+		assert.isTrue(switchEditModeStub.calledOnce);
 
 		h.trigger("@toUIViewButton", "onclick");
-		assert.isTrue(changeView.calledOnce);
+		assert.isTrue(switchPageViewStub.calledOnce);
 	});
 
 	// 1. 根据 dirty 状态修改按钮的状态
@@ -480,8 +480,8 @@ describe("Header", () => {
 					permission={permission}
 					pathes={pathes}
 					editMode={editMode}
-					onChangeEditMode={() => {}}
-					onChangeView={() => {}}
+					onSwitchEditMode={() => {}}
+					onSwitchPageView={() => {}}
 				/>
 			),
 			{ middleware: [[store, mockStore]] }
@@ -527,8 +527,8 @@ describe("Header", () => {
 					permission={permission}
 					pathes={pathes}
 					editMode={editMode}
-					onChangeEditMode={() => {}}
-					onChangeView={() => {}}
+					onSwitchEditMode={() => {}}
+					onSwitchPageView={() => {}}
 				/>
 			),
 			{ middleware: [[store, mockStore]] }
@@ -582,8 +582,8 @@ describe("Header", () => {
 					permission={permission}
 					pathes={pathes}
 					editMode={editMode}
-					onChangeEditMode={() => {}}
-					onChangeView={() => {}}
+					onSwitchEditMode={() => {}}
+					onSwitchPageView={() => {}}
 				/>
 			),
 			{ middleware: [[store, mockStore]] }
@@ -623,8 +623,8 @@ describe("Header", () => {
 				permission={permission}
 				pathes={pathes}
 				editMode={editMode}
-				onChangeEditMode={() => {}}
-				onChangeView={() => {}}
+				onSwitchEditMode={() => {}}
+				onSwitchPageView={() => {}}
 			/>
 		));
 
@@ -673,8 +673,8 @@ describe("Header", () => {
 				permission={permission}
 				pathes={pathes}
 				editMode={editMode}
-				onChangeEditMode={() => {}}
-				onChangeView={() => {}}
+				onSwitchEditMode={() => {}}
+				onSwitchPageView={() => {}}
 			/>
 		));
 
@@ -720,8 +720,8 @@ describe("Header", () => {
 					permission={permission}
 					pathes={pathes}
 					editMode={editMode}
-					onChangeEditMode={() => {}}
-					onChangeView={() => {}}
+					onSwitchEditMode={() => {}}
+					onSwitchPageView={() => {}}
 				/>
 			),
 			{ middleware: [[store, mockStore]] }
@@ -759,8 +759,8 @@ describe("Header", () => {
 				permission={permission}
 				pathes={pathes}
 				editMode={editMode}
-				onChangeEditMode={() => {}}
-				onChangeView={() => {}}
+				onSwitchEditMode={() => {}}
+				onSwitchPageView={() => {}}
 			/>
 		));
 
@@ -809,8 +809,8 @@ describe("Header", () => {
 				permission={permission}
 				pathes={pathes}
 				editMode={editMode}
-				onChangeEditMode={() => {}}
-				onChangeView={() => {}}
+				onSwitchEditMode={() => {}}
+				onSwitchPageView={() => {}}
 			/>
 		));
 
@@ -856,8 +856,8 @@ describe("Header", () => {
 					permission={permission}
 					pathes={pathes}
 					editMode={editMode}
-					onChangeEditMode={() => {}}
-					onChangeView={() => {}}
+					onSwitchEditMode={() => {}}
+					onSwitchPageView={() => {}}
 				/>
 			),
 			{ middleware: [[store, mockStore]] }

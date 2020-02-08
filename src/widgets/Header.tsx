@@ -20,9 +20,9 @@ export interface HeaderProperties {
 	project: Project;
 	pathes: Path[];
 	editMode?: EditMode;
-	activeView?: PageViewType;
-	onChangeEditMode: () => void;
-	onChangeView: () => void;
+	activePageView?: PageViewType;
+	onSwitchEditMode: () => void;
+	onSwitchPageView: () => void;
 	// FIXME: 当 dojo route 支持通配符后，去除此函数
 	onGotoGroup?: (owner: string, project: string, parentPath: string) => void;
 }
@@ -36,9 +36,9 @@ export default factory(function Header({ properties, middleware: { store, invali
 		pathes,
 		permission,
 		editMode = "Preview",
-		activeView = "ui",
-		onChangeEditMode,
-		onChangeView,
+		activePageView = "ui",
+		onSwitchEditMode,
+		onSwitchPageView,
 		onGotoGroup
 	} = properties();
 
@@ -90,7 +90,7 @@ export default factory(function Header({ properties, middleware: { store, invali
 	let centerBlock = undefined;
 
 	let switchViewActionButtons: DNode[] = [];
-	if (activeView === "ui") {
+	if (activePageView === "ui") {
 		switchViewActionButtons = [
 			<button key="toUIViewButton" type="button" classes={[c.btn, c.btn_outline_secondary, c.active]}>
 				界面
@@ -99,7 +99,7 @@ export default factory(function Header({ properties, middleware: { store, invali
 				key="toBehaviorViewButton"
 				type="button"
 				classes={[c.btn, c.btn_outline_secondary]}
-				onclick={() => onChangeView()}
+				onclick={() => onSwitchPageView()}
 			>
 				交互
 			</button>
@@ -110,7 +110,7 @@ export default factory(function Header({ properties, middleware: { store, invali
 				key="toUIViewButton"
 				type="button"
 				classes={[c.btn, c.btn_outline_secondary]}
-				onclick={() => onChangeView()}
+				onclick={() => onSwitchPageView()}
 			>
 				界面
 			</button>,
@@ -204,14 +204,14 @@ export default factory(function Header({ properties, middleware: { store, invali
 	if (permission.canWrite) {
 		if (editMode === "Preview") {
 			switchEditModeBlock = (
-				<button type="button" classes={[css.btn]} key="toEditButton" onclick={() => onChangeEditMode()}>
+				<button type="button" classes={[css.btn]} key="toEditButton" onclick={() => onSwitchEditMode()}>
 					<FontAwesomeIcon icon={["far", "edit"]} />
 					<span classes={[c.ml_1]}>编辑</span>
 				</button>
 			);
 		} else {
 			switchEditModeBlock = (
-				<button type="button" classes={[css.btn]} key="toPreviewButton" onclick={() => onChangeEditMode()}>
+				<button type="button" classes={[css.btn]} key="toPreviewButton" onclick={() => onSwitchEditMode()}>
 					<FontAwesomeIcon icon={["far", "caret-square-right"]} />
 					<span classes={[c.ml_1]}>浏览</span>
 				</button>

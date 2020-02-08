@@ -9,13 +9,13 @@ import * as css from "./index.m.css";
 
 export interface PreviewProperties {
 	permission: Permission;
-	onChangeEditMode: () => void;
+	onSwitchEditMode: () => void;
 }
 
 const factory = create({ store }).properties<PreviewProperties>();
 
 export default factory(function Preview({ properties, middleware: { store } }) {
-	const { permission, onChangeEditMode } = properties();
+	const { permission, onSwitchEditMode } = properties();
 	const { get, path } = store;
 	const pageWidgets = get(path("pageModel", "widgets"));
 	if (!pageWidgets) {
@@ -52,7 +52,7 @@ export default factory(function Preview({ properties, middleware: { store } }) {
 					permission.canWrite &&
 						v(
 							"button",
-							{ classes: [c.btn, c.btn_outline_primary, c.mt_3], onclick: () => onChangeEditMode() },
+							{ classes: [c.btn, c.btn_outline_primary, c.mt_3], onclick: () => onSwitchEditMode() },
 							[w(FontAwesomeIcon, { icon: ["far", "edit"], classes: [c.mr_1] }), "开始编辑"]
 						)
 				]

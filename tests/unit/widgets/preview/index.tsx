@@ -28,7 +28,7 @@ describe("preview", () => {
 			canWrite: false
 		};
 
-		const h = harness(() => <Preview permission={permission} onChangeEditMode={() => {}} />);
+		const h = harness(() => <Preview permission={permission} onSwitchEditMode={() => {}} />);
 
 		h.expect(() => (
 			<div>
@@ -49,7 +49,7 @@ describe("preview", () => {
 			canWrite: false
 		};
 
-		const h = harness(() => <Preview permission={permission} onChangeEditMode={() => {}} />, {
+		const h = harness(() => <Preview permission={permission} onSwitchEditMode={() => {}} />, {
 			middleware: [[store, mockStore]]
 		});
 		mockStore((path) => [replace(path("pageModel", "widgets"), [])]);
@@ -70,7 +70,7 @@ describe("preview", () => {
 			canWrite: false
 		};
 
-		const h = harness(() => <Preview permission={permission} onChangeEditMode={() => {}} />, {
+		const h = harness(() => <Preview permission={permission} onSwitchEditMode={() => {}} />, {
 			middleware: [[store, mockStore]]
 		});
 
@@ -113,8 +113,8 @@ describe("preview", () => {
 			canWrite: true
 		};
 
-		const onChangeEditModeStub = stub();
-		const h = harness(() => <Preview permission={permission} onChangeEditMode={onChangeEditModeStub} />, {
+		const onSwitchEditModeStub = stub();
+		const h = harness(() => <Preview permission={permission} onSwitchEditMode={onSwitchEditModeStub} />, {
 			middleware: [[store, mockStore]]
 		});
 
@@ -153,7 +153,7 @@ describe("preview", () => {
 		));
 
 		h.trigger("button", "onclick");
-		assert.isTrue(onChangeEditModeStub.calledOnce);
+		assert.isTrue(onSwitchEditModeStub.calledOnce);
 	});
 
 	it("show a page, root->node1->node11 root->node2", () => {
@@ -166,7 +166,7 @@ describe("preview", () => {
 			canRead: true,
 			canWrite: false
 		};
-		const h = harness(() => <Preview permission={permission} onChangeEditMode={() => {}} />, {
+		const h = harness(() => <Preview permission={permission} onSwitchEditMode={() => {}} />, {
 			middleware: [[store, mockStore]]
 		});
 
@@ -287,7 +287,7 @@ describe("preview", () => {
 			canRead: true,
 			canWrite: false
 		};
-		const h = harness(() => <Preview permission={permission} onChangeEditMode={() => {}} />, {
+		const h = harness(() => <Preview permission={permission} onSwitchEditMode={() => {}} />, {
 			middleware: [[store, mockStore]]
 		});
 

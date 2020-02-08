@@ -32,7 +32,12 @@
               "properties": [
                 {
                   "id": "1",
-                  "name": "value"
+                  "name": "value",
+                  "valueType": "string"
+                }, {
+                  "id": "2",
+                  "name": "onValue",
+                  "valueType": "function"
                 }
               ]
             },

@@ -12,7 +12,7 @@ import {
 	removeActiveDataItemProcess,
 	moveUpActiveDataItemProcess,
 	moveDownActiveDataItemProcess
-} from "../../../processes/dataProcesses";
+} from "../../../processes/pageDataProcesses";
 import * as $ from "jquery";
 import { getChildrenIndex, getPreviousIndex, getNextIndex } from "designer-core/utils/treeUtil";
 

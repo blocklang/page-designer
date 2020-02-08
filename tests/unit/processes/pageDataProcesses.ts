@@ -9,7 +9,7 @@ import {
 	removeActiveDataItemProcess,
 	moveUpActiveDataItemProcess,
 	moveDownActiveDataItemProcess
-} from "../../../src/processes/dataProcesses";
+} from "../../../src/processes/pageDataProcesses";
 import Store from "@dojo/framework/stores/Store";
 import { State } from "designer-core/interfaces";
 import { add } from "@dojo/framework/stores/state/operations";

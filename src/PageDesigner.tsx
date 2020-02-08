@@ -7,7 +7,6 @@ import * as css from "./PageDesigner.m.css";
 import * as c from "bootstrap-classes";
 import Header from "./widgets/Header";
 import { User, Page, Path, Permission, RequestUrl, RouteName } from "./interfaces";
-import { EditMode, PageViewType } from "designer-core/interfaces";
 import Preview from "./widgets/preview";
 import UIView from "./widgets/edit/ui";
 import BehaviorView from "./widgets/edit/behavior";
@@ -25,6 +24,7 @@ import { loadCSS } from "./utils/fg-loadcss/loadCSS";
 import onloadCSS from "./utils/fg-loadcss/onloadCSS";
 import { SVGInjector } from "@tanem/svg-injector";
 import * as icon from "./icon";
+import { switchEditModeProcess, switchPageViewTypeProcess } from "./processes/designerProcesses";
 
 icon.init();
 
@@ -131,16 +131,11 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 	}
 
 	// 只有当加载完外部资源之后才渲染
-	let editMode = icache.getOrSet<EditMode>("editMode", "Preview");
-	let activeView = icache.getOrSet<PageViewType>("activeView", "ui");
+	const editMode = get(path("paneLayout", "editMode")) || "Preview";
+	const activePageView = get(path("paneLayout", "pageViewType")) || "ui";
 
-	const onChangeEditMode = () => {
-		if (editMode === "Preview") {
-			editMode = "Edit";
-		} else {
-			editMode = "Preview";
-		}
-		icache.set("editMode", editMode);
+	const onSwitchEditMode = () => {
+		executor(switchEditModeProcess)({});
 	};
 
 	return (
@@ -152,15 +147,10 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 				project={project}
 				pathes={pathes}
 				editMode={editMode}
-				activeView={activeView}
-				onChangeEditMode={onChangeEditMode}
-				onChangeView={() => {
-					if (activeView === "ui") {
-						activeView = "behavior";
-					} else {
-						activeView = "ui";
-					}
-					icache.set("activeView", activeView);
+				activePageView={activePageView}
+				onSwitchEditMode={onSwitchEditMode}
+				onSwitchPageView={() => {
+					executor(switchPageViewTypeProcess)({});
 				}}
 				// 当路由支持通配符后删除此段代码
 				onGotoGroup={(owner: string, project: string, parentPath: string) => {
@@ -169,8 +159,8 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 			/>
 			<div classes={[css.container]}>
 				{editMode === "Preview" ? (
-					<Preview permission={permission} onChangeEditMode={onChangeEditMode} />
-				) : activeView === "ui" ? (
+					<Preview permission={permission} onSwitchEditMode={onSwitchEditMode} />
+				) : activePageView === "ui" ? (
 					<UIView />
 				) : (
 					<BehaviorView />

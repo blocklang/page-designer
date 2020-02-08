@@ -1,4 +1,5 @@
 const { describe, it } = intern.getInterface("bdd");
+const { assert } = intern.getPlugin("chai");
 
 import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
@@ -14,6 +15,8 @@ import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/
 import store from "designer-core/store";
 import { Project, State } from "designer-core/interfaces";
 import { replace } from "@dojo/framework/stores/state/operations";
+import { switchEditModeProcess, switchPageViewTypeProcess } from "../../src/processes/designerProcesses";
+import { stub } from "sinon";
 
 // login user
 const user: User = {
@@ -102,24 +105,25 @@ describe("PageDesigner", () => {
 				<Header
 					key="header"
 					editMode="Preview"
-					activeView="ui"
+					activePageView="ui"
 					user={user}
 					project={project}
 					permission={permission}
 					pathes={pathes}
-					onChangeEditMode={() => {}}
-					onChangeView={() => {}}
+					onSwitchEditMode={() => {}}
+					onSwitchPageView={() => {}}
 					onGotoGroup={() => {}}
 				/>
 				<div classes={[css.container]}>
-					<Preview permission={permission} onChangeEditMode={() => {}} />
+					<Preview permission={permission} onSwitchEditMode={() => {}} />
 				</div>
 			</div>
 		));
 	});
 
-	it("onChangeEditMode should be switch between edit and preview", () => {
-		const mockStore = createMockStoreMiddleware<State>();
+	it("onSwitchEditMode should be switch between edit and preview", () => {
+		const switchEditModeProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[switchEditModeProcess, switchEditModeProcessStub]]);
 
 		const h = harness(
 			() => (
@@ -143,35 +147,39 @@ describe("PageDesigner", () => {
 				<Header
 					key="header"
 					editMode="Preview"
-					activeView="ui"
+					activePageView="ui"
 					user={user}
 					project={project}
 					permission={permission}
 					pathes={pathes}
-					onChangeEditMode={() => {}}
-					onChangeView={() => {}}
+					onSwitchEditMode={() => {}}
+					onSwitchPageView={() => {}}
 					onGotoGroup={() => {}}
 				/>
 				<div classes={[css.container]}>
-					<Preview permission={permission} onChangeEditMode={() => {}} />
+					<Preview permission={permission} onSwitchEditMode={() => {}} />
 				</div>
 			</div>
 		));
 
 		// 切换到编辑模式
-		h.trigger("@header", "onChangeEditMode");
+		h.trigger("@header", "onSwitchEditMode");
+		assert.isTrue(switchEditModeProcessStub.calledOnce);
+
+		// 实际修改 store 中的数据
+		mockStore((path) => [replace(path("paneLayout", "editMode"), "Edit")]);
 		h.expect(() => (
 			<div classes={[c.container_fluid, css.root]}>
 				<Header
 					key="header"
 					editMode="Edit"
-					activeView="ui"
+					activePageView="ui"
 					user={user}
 					project={project}
 					permission={permission}
 					pathes={pathes}
-					onChangeEditMode={() => {}}
-					onChangeView={() => {}}
+					onSwitchEditMode={() => {}}
+					onSwitchPageView={() => {}}
 					onGotoGroup={() => {}}
 				/>
 				<div classes={[css.container]}>
@@ -181,30 +189,37 @@ describe("PageDesigner", () => {
 		));
 
 		// 切换回浏览模式
-		h.trigger("@header", "onChangeEditMode");
+		h.trigger("@header", "onSwitchEditMode");
+		assert.isTrue(switchEditModeProcessStub.calledTwice);
+
+		// 实际修改 store 中的数据
+		mockStore((path) => [replace(path("paneLayout", "editMode"), "Preview")]);
 		h.expect(() => (
 			<div classes={[c.container_fluid, css.root]}>
 				<Header
 					key="header"
 					editMode="Preview"
-					activeView="ui"
+					activePageView="ui"
 					user={user}
 					project={project}
 					permission={permission}
 					pathes={pathes}
-					onChangeEditMode={() => {}}
-					onChangeView={() => {}}
+					onSwitchEditMode={() => {}}
+					onSwitchPageView={() => {}}
 					onGotoGroup={() => {}}
 				/>
 				<div classes={[css.container]}>
-					<Preview permission={permission} onChangeEditMode={() => {}} />
+					<Preview permission={permission} onSwitchEditMode={() => {}} />
 				</div>
 			</div>
 		));
 	});
 
-	it("onChangeViewMode should be switch between ui and behavior", () => {
-		const mockStore = createMockStoreMiddleware<State>();
+	it("onSwitchPageViewType should be switch between ui and behavior", () => {
+		const switchPageViewTypeProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[switchPageViewTypeProcess, switchPageViewTypeProcessStub]
+		]);
 
 		const h = harness(
 			() => (
@@ -228,37 +243,46 @@ describe("PageDesigner", () => {
 				<Header
 					key="header"
 					editMode="Preview"
-					activeView="ui"
+					activePageView="ui"
 					user={user}
 					project={project}
 					permission={permission}
 					pathes={pathes}
-					onChangeEditMode={() => {}}
-					onChangeView={() => {}}
+					onSwitchEditMode={() => {}}
+					onSwitchPageView={() => {}}
 					onGotoGroup={() => {}}
 				/>
 				<div classes={[css.container]}>
-					<Preview permission={permission} onChangeEditMode={() => {}} />
+					<Preview permission={permission} onSwitchEditMode={() => {}} />
 				</div>
 			</div>
 		));
 
 		// 切换到编辑模式
-		h.trigger("@header", "onChangeEditMode");
+		h.trigger("@header", "onSwitchEditMode");
 		// 切换到交互视图
-		h.trigger("@header", "onChangeView");
+		h.trigger("@header", "onSwitchPageView");
+
+		assert.isTrue(switchPageViewTypeProcessStub.calledOnce);
+
+		// 实际修改 store 中的数据
+		mockStore((path) => [
+			replace(path("paneLayout", "editMode"), "Edit"),
+			replace(path("paneLayout", "pageViewType"), "behavior")
+		]);
+
 		h.expect(() => (
 			<div classes={[c.container_fluid, css.root]}>
 				<Header
 					key="header"
 					editMode="Edit"
-					activeView="behavior"
+					activePageView="behavior"
 					user={user}
 					project={project}
 					permission={permission}
 					pathes={pathes}
-					onChangeEditMode={() => {}}
-					onChangeView={() => {}}
+					onSwitchEditMode={() => {}}
+					onSwitchPageView={() => {}}
 					onGotoGroup={() => {}}
 				/>
 				<div classes={[css.container]}>
@@ -268,19 +292,24 @@ describe("PageDesigner", () => {
 		));
 
 		// 切换回 UI 视图
-		h.trigger("@header", "onChangeView");
+		h.trigger("@header", "onSwitchPageView");
+		assert.isTrue(switchPageViewTypeProcessStub.calledTwice);
+
+		// 实际修改 store 中的数据
+		mockStore((path) => [replace(path("paneLayout", "pageViewType"), "ui")]);
+
 		h.expect(() => (
 			<div classes={[c.container_fluid, css.root]}>
 				<Header
 					key="header"
 					editMode="Edit"
-					activeView="ui"
+					activePageView="ui"
 					user={user}
 					project={project}
 					permission={permission}
 					pathes={pathes}
-					onChangeEditMode={() => {}}
-					onChangeView={() => {}}
+					onSwitchEditMode={() => {}}
+					onSwitchPageView={() => {}}
 					onGotoGroup={() => {}}
 				/>
 				<div classes={[css.container]}>
