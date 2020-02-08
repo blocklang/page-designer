@@ -1,6 +1,5 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
-import { EditMode } from "../interfaces";
-import { AttachedWidget, ComponentRepo } from "designer-core/interfaces";
+import { AttachedWidget, ComponentRepo, EditMode } from "designer-core/interfaces";
 import store from "designer-core/store";
 import { removeUndefinedWidgetProcess } from "../processes/uiProcesses";
 

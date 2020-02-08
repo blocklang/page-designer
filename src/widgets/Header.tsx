@@ -1,7 +1,7 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
-import { Project, State } from "designer-core/interfaces";
-import { User, Path, Permission, EditMode, ViewType } from "../interfaces";
+import { Project, State, EditMode, PageViewType } from "designer-core/interfaces";
+import { User, Path, Permission } from "../interfaces";
 import { DNode } from "@dojo/framework/core/interfaces";
 import store from "designer-core/store";
 import { invalidator } from "@dojo/framework/core/vdom";
@@ -20,7 +20,7 @@ export interface HeaderProperties {
 	project: Project;
 	pathes: Path[];
 	editMode?: EditMode;
-	activeView?: ViewType;
+	activeView?: PageViewType;
 	onChangeEditMode: () => void;
 	onChangeView: () => void;
 	// FIXME: 当 dojo route 支持通配符后，去除此函数

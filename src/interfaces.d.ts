@@ -56,26 +56,6 @@ export interface Path {
 }
 
 /**
- * @type EditMode
- *
- * 编辑模式:
- *
- * 1. Preview: 预览
- * 2. Edit: 编辑
- */
-export type EditMode = "Preview" | "Edit";
-
-/**
- * @type ViewType
- *
- * 视图类型
- *
- * 1. ui: 界面
- * 2. behavior: 行为或交互
- */
-export type ViewType = "ui" | "behavior";
-
-/**
  * @type InstWidgetProperties
  *
  * 关于 AttachedWidgetProperty 和 InstWidgetProperties 两个名字的区别：

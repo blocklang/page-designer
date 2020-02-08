@@ -6,7 +6,8 @@ import { widgetInstanceMap } from "@dojo/framework/core/vdom";
 import * as css from "./PageDesigner.m.css";
 import * as c from "bootstrap-classes";
 import Header from "./widgets/Header";
-import { User, Page, Path, Permission, EditMode, ViewType, RequestUrl, RouteName } from "./interfaces";
+import { User, Page, Path, Permission, RequestUrl, RouteName } from "./interfaces";
+import { EditMode, PageViewType } from "designer-core/interfaces";
 import Preview from "./widgets/preview";
 import UIView from "./widgets/edit/ui";
 import BehaviorView from "./widgets/edit/behavior";
@@ -131,7 +132,7 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 
 	// 只有当加载完外部资源之后才渲染
 	let editMode = icache.getOrSet<EditMode>("editMode", "Preview");
-	let activeView = icache.getOrSet<ViewType>("activeView", "ui");
+	let activeView = icache.getOrSet<PageViewType>("activeView", "ui");
 
 	const onChangeEditMode = () => {
 		if (editMode === "Preview") {
