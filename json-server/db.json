@@ -98,7 +98,19 @@
           "widgetName": "TextInput",
           "canHasChildren": false,
           "properties": [
-            {}
+            {
+              "id": "1",
+              "code": "0001",
+              "name": "value",
+              "valueType": "string",
+              "isExpr": false
+            },{
+              "id": "2",
+              "code": "0002",
+              "name": "onValue",
+              "valueType": "function",
+              "isExpr": false
+            }
           ]
         }
       ],

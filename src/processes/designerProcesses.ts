@@ -30,5 +30,26 @@ const switchPageViewTypeCommand = commandFactory(({ get, path }) => {
 	return result;
 });
 
-export const switchEditModeProcess = createProcess("switch-edit-mode-process", [switchEditModeCommand]);
-export const switchPageViewTypeProcess = createProcess("switch-page-view-type-process", [switchPageViewTypeCommand]);
+const switchToFuncEditViewCommand = commandFactory(({ get, path }) => {
+	const result = [];
+	const editMode = get(path("paneLayout", "editMode")) || "Preview";
+	if (editMode === "Preview") {
+		result.push(replace(path("paneLayout", "editMode"), "Edit"));
+	}
+
+	const activePageView = get(path("paneLayout", "pageViewType")) || "ui";
+	if (activePageView === "ui") {
+		result.push(replace(path("paneLayout", "pageViewType"), "behavior"));
+	}
+
+	const activeFuncView = get(path("paneLayout", "funcViewType")) || "funcList";
+	if (activeFuncView === "funcList") {
+		result.push(replace(path("paneLayout", "funcViewType"), "funcItem"));
+	}
+
+	return result;
+});
+
+export const switchEditModeProcess = createProcess("switch-edit-mode", [switchEditModeCommand]);
+export const switchPageViewTypeProcess = createProcess("switch-page-view-type", [switchPageViewTypeCommand]);
+export const switchToFuncEditViewProcess = createProcess("switch-to-func-edit-view", [switchToFuncEditViewCommand]);

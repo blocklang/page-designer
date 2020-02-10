@@ -30,6 +30,17 @@ const activeRootWidgetCommand = commandFactory(({ path }) => {
 	return [replace(path("selectedWidgetIndex"), 0)];
 });
 
+const activeWidgetPropertyCommand = commandFactory<{ propertyIndex: number }>(
+	({ path, payload: { propertyIndex } }) => {
+		if (propertyIndex === -1) {
+			// 删除
+			return [remove(path("selectedWidgetPropertyIndex"))];
+		}
+
+		return [replace(path("selectedWidgetPropertyIndex"), propertyIndex)];
+	}
+);
+
 const changeActiveWidgetDimensionsCommand = commandFactory<{ activeWidgetDimensions: DimensionResults }>(
 	({ path, payload: { activeWidgetDimensions } }) => {
 		return [replace(path("activeWidgetDimensions"), activeWidgetDimensions)];
@@ -344,6 +355,7 @@ const redoCallback: ProcessCallback = () => ({
 export const getPageModelProcess = createProcess("get-page-model", [getPageModelCommand]);
 export const savePageModelProcess = createProcess("save-page-model", [savePageModelCommand]);
 export const activeWidgetProcess = createProcess("active-widget", [activeWidgetCommand]);
+export const activeWidgetPropertyProcess = createProcess("active-widget-property", [activeWidgetPropertyCommand]);
 export const changeActiveWidgetDimensionsProcess = createProcess("change-active-widget-dimensions", [
 	changeActiveWidgetDimensionsCommand
 ]);

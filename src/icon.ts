@@ -17,6 +17,7 @@ import { faArrowsAlt } from "@fortawesome/free-solid-svg-icons/faArrowsAlt";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons/faArrowUp";
 import { faArrowDown } from "@fortawesome/free-solid-svg-icons/faArrowDown";
+import { faEdit as faSolidEdit } from "@fortawesome/free-solid-svg-icons/faEdit";
 
 export function init() {
 	library.add(
@@ -36,6 +37,7 @@ export function init() {
 		faArrowsAlt,
 		faPlus,
 		faArrowUp,
-		faArrowDown
+		faArrowDown,
+		faSolidEdit
 	);
 }

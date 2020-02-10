@@ -3,11 +3,12 @@ import * as c from "bootstrap-classes";
 import * as css from "./index.m.css";
 import store from "designer-core/store";
 import * as blocklang from "designer-core/blocklang";
-import { AttachedWidget } from "designer-core/interfaces";
+import { AttachedWidget, PaneLayout } from "designer-core/interfaces";
 import { find } from "@dojo/framework/shim/array";
 import * as layoutParser from "./layoutParser";
 import { PropertyLayout, ChangedPropertyValue } from "designer-core/interfaces";
-import { changeActiveWidgetPropertiesProcess } from "../../../../../processes/uiProcesses";
+import { changeActiveWidgetPropertiesProcess, activeWidgetPropertyProcess } from "../../../../../processes/uiProcesses";
+import { switchToFuncEditViewProcess } from "../../../../../processes/designerProcesses";
 
 export interface PropertiesTabProperties {}
 
@@ -79,6 +80,16 @@ export default factory(function PropertiesTab({ properties, middleware: { store 
 		(changedProperty: ChangedPropertyValue) => {
 			const changedProperties: ChangedPropertyValue[] = [changedProperty];
 			executor(changeActiveWidgetPropertiesProcess)({ changedProperties });
+		},
+		(paneLayout: Partial<PaneLayout>, data: { propertyIndex: number; propertyValue: string }) => {
+			// 1. 记录下选中的属性
+			// 暂时考虑不缓存当前的属性值，而是在目标面板中根据属性索引来获取属性值
+			const { propertyIndex } = data;
+			executor(activeWidgetPropertyProcess)({ propertyIndex });
+			// 2. 根据传入的参数切换到不同的面板，如切换到“交互/函数编辑器”面板
+			if (paneLayout.funcViewType === "funcItem") {
+				executor(switchToFuncEditViewProcess)(paneLayout);
+			}
 		}
 	);
 	return v("div", { classes: [css.root, c.py_1, c.px_2] }, propertyWidgets);
