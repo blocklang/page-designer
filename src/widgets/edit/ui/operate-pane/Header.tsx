@@ -1,11 +1,10 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
-import { find } from "@dojo/framework/shim/array";
 import store from "designer-core/store";
-import { config } from "../../../../config";
 import { activeWidgetProcess } from "../../../../processes/uiProcesses";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import * as c from "bootstrap-classes";
 import * as css from "./Header.m.css";
+import { getParents } from "designer-core/utils/treeUtil";
 
 export interface HeaderProperties {}
 
@@ -22,19 +21,9 @@ export default factory(function Header({ properties, middleware: { store } }) {
 	const selectedWidgetIndex = get(path("selectedWidgetIndex"));
 	const activeWidget = pageWidgets[selectedWidgetIndex];
 
-	const focusWidgetPath = [];
-
-	let currentWidget = activeWidget;
-	let parentId = currentWidget.parentId;
-	do {
-		focusWidgetPath.unshift(currentWidget);
-
-		parentId = currentWidget.parentId;
-
-		currentWidget = find(pageWidgets, (widget) => {
-			return widget.id === parentId;
-		})!;
-	} while (parentId !== config.rootWidgetParentId);
+	// FIXME: 使用 treeUtils.getParents() 替代
+	const focusWidgetPath = getParents(pageWidgets, activeWidget.id);
+	focusWidgetPath.push(activeWidget);
 	const length = focusWidgetPath.length;
 
 	return (
