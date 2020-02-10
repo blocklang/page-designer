@@ -192,11 +192,23 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 			<div classes={[css.root, c.py_1, c.px_2]}>
 				<div classes={[css.propertyItem]}>
 					<div>属性1</div>
-					<Prop1 key="Prop1" index={0} value={undefined} onPropertyChanged={() => {}} />
+					<Prop1
+						key="Prop1"
+						index={0}
+						value={undefined}
+						onPropertyChanged={() => {}}
+						onChangePaneLayout={() => {}}
+					/>
 				</div>
 				<div classes={[css.propertyItem]}>
 					<div>属性2</div>
-					<Prop2 key="Prop2" index={1} value={undefined} onPropertyChanged={() => {}} />
+					<Prop2
+						key="Prop2"
+						index={1}
+						value={undefined}
+						onPropertyChanged={() => {}}
+						onChangePaneLayout={() => {}}
+					/>
 				</div>
 			</div>
 		));
