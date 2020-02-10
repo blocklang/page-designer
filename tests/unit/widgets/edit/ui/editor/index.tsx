@@ -110,7 +110,7 @@ describe("edit/ui/editor", () => {
 						autoFocus: () => true
 					}}
 					// 原始属性的值，是必须要展开的
-					onLoad={() => {}}
+					onLoad={undefined}
 				/>
 			</div>
 		));
@@ -233,7 +233,7 @@ describe("edit/ui/editor", () => {
 						autoFocus: () => false
 					}}
 					// 原始属性的值，是必须要展开的
-					onLoad={() => {}}
+					onLoad={undefined}
 				>
 					<IdeContainer
 						// 注意，key 是以 0 开头，不是以 1 开头，因为 index 是基于子部件的，不是基于全局列表的
@@ -372,7 +372,7 @@ describe("edit/ui/editor", () => {
 						autoFocus: () => false
 					}}
 					// 原始属性的值，是必须要展开的
-					onLoad={() => {}}
+					onLoad={undefined}
 				/>
 				<FocusBox widgetName="Page" selectedWidgetIndex={0} widgets={pageWidgets} />
 			</div>
@@ -472,7 +472,7 @@ describe("edit/ui/editor", () => {
 						autoFocus: () => false
 					}}
 					// 原始属性的值，是必须要展开的
-					onLoad={() => {}}
+					onLoad={undefined}
 				/>
 				<FocusBox widgetName="Page" selectedWidgetIndex={0} widgets={pageWidgets} />
 			</div>
@@ -549,7 +549,7 @@ describe("edit/ui/editor", () => {
 						autoFocus: () => false
 					}}
 					// 原始属性的值，是必须要展开的
-					onLoad={() => {}}
+					onLoad={undefined}
 				/>
 				<HighlightBox widgetName="Page" />
 			</div>

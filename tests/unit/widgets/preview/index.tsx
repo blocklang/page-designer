@@ -264,7 +264,7 @@ describe("preview", () => {
 
 		h.expect(() => (
 			<div>
-				<Page key="0_1" onLoad={() => {}}>
+				<Page key="0_1" onLoad={undefined}>
 					<Container
 						// 注意，key 是以 0 开头，不是以 1 开头，因为 index 是基于子部件的，不是基于全局列表的
 						key="0_2"
@@ -374,7 +374,7 @@ describe("preview", () => {
 
 		h.expect(() => (
 			<div>
-				<Page key="0_1" onLoad={() => {}}>
+				<Page key="0_1" onLoad={undefined}>
 					<TextInput key="0_2" prop1=""></TextInput>
 				</Page>
 			</div>

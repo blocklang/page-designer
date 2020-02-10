@@ -94,11 +94,9 @@ function renderWidget(widget: AttachedWidget, index: number): WNode {
 			// 注意，从服务器端返回的是字符串类型，这里需要转换。
 			let value;
 			if (item.valueType === "function") {
-				if (!item.value) {
-					value = () => {};
-				} else {
-					throw "未实现";
-				}
+				// 如果 value 存在值，则说明该事件已绑定函数
+				// 如果 value 的值为 undefined，则说明该事件未绑定函数
+				value = item.value;
 			} else {
 				value = item.value || "";
 			}
