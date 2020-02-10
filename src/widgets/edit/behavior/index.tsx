@@ -2,6 +2,7 @@ import { create, tsx } from "@dojo/framework/core/vdom";
 import store from "designer-core/store";
 import Data from "./Data";
 import * as c from "bootstrap-classes";
+import Func from "./func";
 
 export interface BehaviorViewProperties {}
 
@@ -23,10 +24,13 @@ export default factory(function BehaviorView({ properties, middleware: { store }
 	}
 
 	const pageData = pageModel.data || [];
+	const widgets = pageModel.widgets || [];
+	const functions = pageModel.functions || [];
 
 	return (
 		<div classes={[c.mx_2]}>
 			<Data data={pageData} />
+			<Func widgets={widgets} functions={functions} />
 		</div>
 	);
 });

@@ -10,6 +10,7 @@ import { State } from "designer-core/interfaces";
 import store from "designer-core/store";
 import { add } from "@dojo/framework/stores/state/operations";
 import Data from "../../../../../src/widgets/edit/behavior/Data";
+import Func from "../../../../../src/widgets/edit/behavior/func";
 
 describe("edit/behavior", () => {
 	it("loading", () => {
@@ -29,11 +30,12 @@ describe("edit/behavior", () => {
 		const mockStore = createMockStoreMiddleware<State>();
 		const h = harness(() => <Behavior />, { middleware: [[store, mockStore]] });
 
-		mockStore((path) => [add(path("pageModel"), { pageId: 1, widgets: [], data: [] })]);
+		mockStore((path) => [add(path("pageModel"), { pageId: 1, widgets: [], data: [], functions: [] })]);
 
 		h.expect(() => (
 			<div classes={[c.mx_2]}>
 				<Data data={[]} />
+				<Func widgets={[]} functions={[]} />
 			</div>
 		));
 	});

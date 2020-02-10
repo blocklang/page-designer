@@ -1,6 +1,9 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
+import { AttachedWidget } from "designer-core/interfaces";
 
-export interface ListProperties {}
+export interface ListProperties {
+	widgets: AttachedWidget[];
+}
 
 const factory = create().properties<ListProperties>();
 
@@ -8,5 +11,5 @@ const factory = create().properties<ListProperties>();
 
 export default factory(function List({ properties }) {
 	const {} = properties();
-	return <div></div>;
+	return <div>列表</div>;
 });
