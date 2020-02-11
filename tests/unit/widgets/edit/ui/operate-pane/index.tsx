@@ -1,7 +1,9 @@
 const { describe, it } = intern.getInterface("bdd");
+const { assert } = intern.getPlugin("chai");
 
 import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
+import { stub } from "sinon";
 
 import * as c from "bootstrap-classes";
 import * as css from "../../../../../../src/widgets/edit/ui/operate-pane/index.m.css";
@@ -10,6 +12,11 @@ import UIOperatePane from "../../../../../../src/widgets/edit/ui/operate-pane";
 import Header from "../../../../../../src/widgets/edit/ui/operate-pane/Header";
 import WidgetsTab from "../../../../../../src/widgets/edit/ui/operate-pane/widgets-tab";
 import PropertiesTab from "../../../../../../src/widgets/edit/ui/operate-pane/properties-tab";
+import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
+import { State } from "designer-core/interfaces";
+import store from "designer-core/store";
+import { switchUIOperateTabProcess } from "../../../../../../src/processes/designerProcesses";
+import { add } from "@dojo/framework/stores/state/operations";
 
 describe("edit/ui/operate-pane", () => {
 	it("default properties", () => {
@@ -48,7 +55,11 @@ describe("edit/ui/operate-pane", () => {
 	});
 
 	it("active property tab", () => {
-		const h = harness(() => <UIOperatePane />);
+		const switchUIOperateTabProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[switchUIOperateTabProcess, switchUIOperateTabProcessStub]
+		]);
+		const h = harness(() => <UIOperatePane />, { middleware: [[store, mockStore]] });
 
 		h.expect(() => (
 			<div key="root" classes={[css.root]} styles={{ right: "0px", top: "0px" }}>
@@ -82,6 +93,9 @@ describe("edit/ui/operate-pane", () => {
 		));
 
 		h.trigger("@nav-properties", "onclick", { preventDefault: () => {} });
+		assert.isTrue(switchUIOperateTabProcessStub.calledOnce);
+
+		mockStore((path) => [add(path("paneLayout", "uiOperateTab"), "properties")]);
 
 		h.expect(() => (
 			<div key="root" classes={[css.root]} styles={{ right: "0px", top: "0px" }}>
@@ -116,7 +130,11 @@ describe("edit/ui/operate-pane", () => {
 	});
 
 	it("back to widgets tab", () => {
-		const h = harness(() => <UIOperatePane />);
+		const switchUIOperateTabProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[switchUIOperateTabProcess, switchUIOperateTabProcessStub]
+		]);
+		const h = harness(() => <UIOperatePane />, { middleware: [[store, mockStore]] });
 
 		h.expect(() => (
 			<div key="root" classes={[css.root]} styles={{ right: "0px", top: "0px" }}>
@@ -150,7 +168,12 @@ describe("edit/ui/operate-pane", () => {
 		));
 
 		h.trigger("@nav-properties", "onclick", { preventDefault: () => {} });
+		assert.isTrue(switchUIOperateTabProcessStub.calledOnce);
+		mockStore((path) => [add(path("paneLayout", "uiOperateTab"), "properties")]);
+
 		h.trigger("@nav-widgets", "onclick", { preventDefault: () => {} });
+		assert.isTrue(switchUIOperateTabProcessStub.calledTwice);
+		mockStore((path) => [add(path("paneLayout", "uiOperateTab"), "widgets")]);
 
 		h.expect(() => (
 			<div key="root" classes={[css.root]} styles={{ right: "0px", top: "0px" }}>
