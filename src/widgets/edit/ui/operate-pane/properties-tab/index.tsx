@@ -8,7 +8,7 @@ import { find } from "@dojo/framework/shim/array";
 import * as layoutParser from "./layoutParser";
 import { PropertyLayout, ChangedPropertyValue } from "designer-core/interfaces";
 import { changeActiveWidgetPropertiesProcess, activeWidgetPropertyProcess } from "../../../../../processes/uiProcesses";
-import { switchToFuncEditViewProcess } from "../../../../../processes/designerProcesses";
+import { switchPageViewTypeProcess } from "../../../../../processes/designerProcesses";
 
 export interface PropertiesTabProperties {}
 
@@ -58,6 +58,8 @@ export default factory(function PropertiesTab({ properties, middleware: { store 
 		console.error("部件的属性列表必须是数组类型，但现在的值是 undefined");
 	}
 
+	const activeWidgetPropertyIndex = get(path("selectedWidgetPropertyIndex"));
+
 	// 关于部件实例中属性值的格式要求
 	//
 	// 必须按顺序加载属性，确保每次加载，同一个部件属性顺序都是一致的（如果不遵循此约定，不会影响程序逻辑）
@@ -77,6 +79,7 @@ export default factory(function PropertiesTab({ properties, middleware: { store 
 	const propertyWidgets = layoutParser.parse(
 		layoutMeta,
 		activeWidget.properties,
+		activeWidgetPropertyIndex,
 		(changedProperty: ChangedPropertyValue) => {
 			const changedProperties: ChangedPropertyValue[] = [changedProperty];
 			executor(changeActiveWidgetPropertiesProcess)({ changedProperties });
@@ -86,11 +89,14 @@ export default factory(function PropertiesTab({ properties, middleware: { store 
 			// 暂时考虑不缓存当前的属性值，而是在目标面板中根据属性索引来获取属性值
 			const { propertyIndex } = data;
 			executor(activeWidgetPropertyProcess)({ propertyIndex });
+			// TODO: 创建一个空函数？
 			// 2. 根据传入的参数切换到不同的面板，如切换到“交互/函数编辑器”面板
-			if (paneLayout.funcViewType === "funcItem") {
-				executor(switchToFuncEditViewProcess)(paneLayout);
-			}
+			executor(switchPageViewTypeProcess)({});
+		},
+		(index: number) => {
+			console.log("index", index);
+			executor(activeWidgetPropertyProcess)({ propertyIndex: index });
 		}
 	);
-	return v("div", { classes: [css.root, c.py_1, c.px_2] }, propertyWidgets);
+	return v("div", { classes: [css.root, c.py_1, c.px_1] }, propertyWidgets);
 });

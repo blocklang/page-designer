@@ -35,6 +35,7 @@ describe("edit/behavior", () => {
 		h.expect(() => (
 			<div classes={[c.mx_2]}>
 				<Data data={[]} />
+				<hr />
 				<Func widgets={[]} functions={[]} />
 			</div>
 		));

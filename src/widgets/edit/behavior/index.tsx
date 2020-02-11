@@ -30,6 +30,7 @@ export default factory(function BehaviorView({ properties, middleware: { store }
 	return (
 		<div classes={[c.mx_2]}>
 			<Data data={pageData} />
+			<hr />
 			<Func widgets={widgets} functions={functions} />
 		</div>
 	);

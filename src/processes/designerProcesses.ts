@@ -30,26 +30,29 @@ const switchPageViewTypeCommand = commandFactory(({ get, path }) => {
 	return result;
 });
 
-const switchToFuncEditViewCommand = commandFactory(({ get, path }) => {
+const switchUIOperateTabCommand = commandFactory(({ get, path }) => {
 	const result = [];
 	const editMode = get(path("paneLayout", "editMode")) || "Preview";
 	if (editMode === "Preview") {
 		result.push(replace(path("paneLayout", "editMode"), "Edit"));
 	}
 
-	const activePageView = get(path("paneLayout", "pageViewType")) || "ui";
-	if (activePageView === "ui") {
-		result.push(replace(path("paneLayout", "pageViewType"), "behavior"));
+	let activePageView = get(path("paneLayout", "pageViewType")) || "ui";
+	if (activePageView === "behavior") {
+		result.push(replace(path("paneLayout", "pageViewType"), "ui"));
 	}
 
-	const activeFuncView = get(path("paneLayout", "funcViewType")) || "funcList";
-	if (activeFuncView === "funcList") {
-		result.push(replace(path("paneLayout", "funcViewType"), "funcItem"));
+	let uiOperateTab = get(path("paneLayout", "uiOperateTab")) || "widgets";
+	if (uiOperateTab === "widgets") {
+		uiOperateTab = "properties";
+	} else {
+		uiOperateTab = "widgets";
 	}
 
+	result.push(replace(path("paneLayout", "uiOperateTab"), uiOperateTab));
 	return result;
 });
 
 export const switchEditModeProcess = createProcess("switch-edit-mode", [switchEditModeCommand]);
 export const switchPageViewTypeProcess = createProcess("switch-page-view-type", [switchPageViewTypeCommand]);
-export const switchToFuncEditViewProcess = createProcess("switch-to-func-edit-view", [switchToFuncEditViewCommand]);
+export const switchUIOperateTabProcess = createProcess("switch-ui-operate-tab", [switchUIOperateTabCommand]);

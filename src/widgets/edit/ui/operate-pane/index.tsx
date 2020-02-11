@@ -3,18 +3,17 @@ import { create, tsx } from "@dojo/framework/core/vdom";
 import * as c from "bootstrap-classes";
 import * as css from "./index.m.css";
 import Header from "./Header";
-import icache from "@dojo/framework/core/middleware/icache";
+import store from "designer-core/store";
 import WidgetsTab from "./widgets-tab";
 import PropertiesTab from "./properties-tab";
 import { drag } from "../../../../middleware/drag";
+import { switchUIOperateTabProcess } from "../../../../processes/designerProcesses";
 
 export interface UIOperatePaneProperties {
 	top?: number; // 设置初始化位置
 }
 
-type NavKey = "widgets" | "properties";
-
-const factory = create({ icache, drag }).properties<UIOperatePaneProperties>();
+const factory = create({ store, drag }).properties<UIOperatePaneProperties>();
 
 const OPERATE_PANE_WIDTH = 370; // 操作面板的宽度
 const DRAG_BOTTOM_LIMIT = 100; // 低端拖拽的保留高度（这里包括了去除设计器上面的工具栏的高度）
@@ -23,7 +22,7 @@ const DRAG_RIGHT_LIMIT = 40; // 右侧拖拽的保留宽度
 let dragRight = 0;
 let dragTop = 0;
 
-export default factory(function UIOperatePane({ properties, middleware: { icache, drag } }) {
+export default factory(function UIOperatePane({ properties, middleware: { store, drag } }) {
 	const { top = 0 } = properties();
 
 	const dragResults = drag.get("header");
@@ -56,7 +55,9 @@ export default factory(function UIOperatePane({ properties, middleware: { icache
 		top: `${top + dragTop}px`
 	};
 
-	const activeNav = icache.getOrSet<NavKey>("activeNav", "widgets");
+	const { get, path, executor } = store;
+
+	const activeNav = get(path("paneLayout", "uiOperateTab")) || "widgets";
 
 	return (
 		<div key="root" classes={[css.root]} styles={styles}>
@@ -75,9 +76,7 @@ export default factory(function UIOperatePane({ properties, middleware: { icache
 						href="#"
 						onclick={(event: MouseEvent) => {
 							event.preventDefault();
-							if (activeNav === "properties") {
-								icache.set("activeNav", "widgets");
-							}
+							executor(switchUIOperateTabProcess)({});
 						}}
 					>
 						部件
@@ -94,9 +93,7 @@ export default factory(function UIOperatePane({ properties, middleware: { icache
 						href="#"
 						onclick={(event: MouseEvent) => {
 							event.preventDefault();
-							if (activeNav === "widgets") {
-								icache.set("activeNav", "properties");
-							}
+							executor(switchUIOperateTabProcess)({});
 						}}
 					>
 						属性

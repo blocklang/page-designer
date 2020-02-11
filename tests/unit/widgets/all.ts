@@ -11,4 +11,5 @@ import "./edit/ui/operate-pane/properties-tab";
 import "./edit/behavior";
 import "./edit/behavior/Data";
 import "./edit/behavior/func";
+import "./edit/behavior/func/Editor";
 import "./preview";
