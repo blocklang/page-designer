@@ -23,7 +23,7 @@ const activeWidgetCommand = commandFactory<{ activeWidgetId: string }>(({ get, p
 		console.error("设置获取焦点的部件时，在页面的部件列表中没有找到该部件");
 		selectedWidgetIndex = 0;
 	}
-	return [replace(path("selectedWidgetIndex"), selectedWidgetIndex)];
+	return [replace(path("selectedWidgetIndex"), selectedWidgetIndex), remove(path("selectedWidgetPropertyIndex"))];
 });
 
 const activeRootWidgetCommand = commandFactory(({ path }) => {

@@ -20,7 +20,8 @@ import {
 	undoProcess,
 	redoProcess,
 	changeActiveWidgetPropertiesProcess,
-	unhighlightWidgetProcess
+	unhighlightWidgetProcess,
+	activeWidgetPropertyProcess
 } from "../../../src/processes/uiProcesses";
 import { add } from "@dojo/framework/stores/state/operations";
 import { afterEach } from "intern/lib/interfaces/tdd";
@@ -53,7 +54,8 @@ describe("processes/uiProcesses", () => {
 					properties: []
 				}
 			],
-			data: []
+			data: [],
+			functions: []
 		};
 		global.fetch = sinon.stub().returns(
 			Promise.resolve({
@@ -111,10 +113,16 @@ describe("processes/uiProcesses", () => {
 		activeWidgetProcess(store)({ activeWidgetId: "1" });
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 0);
 		assert.isNotNull(store.get(store.path("activeWidgetDimensions")));
+		assert.isUndefined(store.get(store.path("selectedWidgetPropertyIndex")));
+
+		// 选中一个属性，切换部件后自动将选中的属性设置为 undefined
+		activeWidgetPropertyProcess(store)({ propertyIndex: 1 });
+		assert.equal(store.get(store.path("selectedWidgetPropertyIndex")), 1);
 
 		activeWidgetProcess(store)({ activeWidgetId: "2" });
 		assert.equal(store.get(store.path("selectedWidgetIndex")), 1);
 		assert.isNotNull(store.get(store.path("activeWidgetDimensions")));
+		assert.isUndefined(store.get(store.path("selectedWidgetPropertyIndex")));
 	});
 
 	it("highlightWidgetProcess - add highlight", () => {
