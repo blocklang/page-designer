@@ -1,0 +1,11 @@
+.root {
+}
+
+.canvas {
+	min-height: 800px;
+	position: relative;
+	background-image: linear-gradient(rgba(200, 200, 200, 0.2) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(200, 200, 200, 0.2) 1px, transparent 1px);
+	background-size: 20px 20px, 20px 20px, 10px 10px, 10px 10px;
+	background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+}
