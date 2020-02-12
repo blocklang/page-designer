@@ -1,8 +1,8 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
-import { Func as PageFunction, AttachedWidget, AttachedWidgetProperty } from "designer-core/interfaces";
+import { PageFunction, AttachedWidget, AttachedWidgetProperty } from "designer-core/interfaces";
 import store from "designer-core/store";
 import * as c from "bootstrap-classes";
-import { getParents } from "designer-core/utils/treeUtil";
+import { getNodePath } from "designer-core/utils/treeUtil";
 import * as css from "./index.m.css";
 
 export interface EditorProperties {
@@ -17,7 +17,7 @@ export default factory(function Editor({ properties, middleware: { store } }) {
 
 	const { get, path } = store;
 
-	function getActiveWidget(): AttachedWidget | undefined {
+	function getActiveWidget(): { node: AttachedWidget; index: number } | undefined {
 		if (widgets.length === 0) {
 			console.warn("页面中未添加部件。");
 			return;
@@ -35,7 +35,7 @@ export default factory(function Editor({ properties, middleware: { store } }) {
 			return;
 		}
 
-		return activeWidget;
+		return { node: activeWidget, index: selectedWidgetIndex };
 	}
 
 	function getActiveProperty(activeWidget: AttachedWidget): AttachedWidgetProperty | undefined {
@@ -62,9 +62,7 @@ export default factory(function Editor({ properties, middleware: { store } }) {
 	}
 
 	const activeWidget = getActiveWidget();
-	const activeWidgetProperty = activeWidget && getActiveProperty(activeWidget);
-
-	console.log(activeWidget, activeWidgetProperty);
+	const activeWidgetProperty = activeWidget && getActiveProperty(activeWidget.node);
 
 	if (!activeWidget || !activeWidgetProperty) {
 		return (
@@ -83,16 +81,22 @@ export default factory(function Editor({ properties, middleware: { store } }) {
 	}
 
 	// 获取所有父部件
-	const parentWidgets = getParents(widgets, activeWidget.id);
-	parentWidgets.push(activeWidget);
-	const widgetPathes = parentWidgets.map((item) => item.widgetName).join(" / ");
+	const nodePath = getNodePath(widgets, activeWidget.index);
+	const parentWidgetPathes = nodePath
+		.map(({ node, index }) => {
+			if (index === -1) {
+				return node.widgetName;
+			}
+			return `[${index}]${node.widgetName}`;
+		})
+		.join(" / ");
 
 	return (
 		<div key="root">
 			<div key="title-bar">
 				<span key="title">页面行为</span>
 				<small classes={[c.ml_2, c.text_muted]}>
-					{`${widgetPathes} / `}
+					{`${parentWidgetPathes} / `}
 					<strong>{`${activeWidgetProperty.name}`}</strong>
 				</small>
 			</div>
