@@ -18,6 +18,8 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons/faArrowUp";
 import { faArrowDown } from "@fortawesome/free-solid-svg-icons/faArrowDown";
 import { faEdit as faSolidEdit } from "@fortawesome/free-solid-svg-icons/faEdit";
+import { faCaretRight } from "@fortawesome/free-solid-svg-icons/faCaretRight";
+import { faCircle } from "@fortawesome/free-solid-svg-icons/faCircle";
 
 export function init() {
 	library.add(
@@ -38,6 +40,8 @@ export function init() {
 		faPlus,
 		faArrowUp,
 		faArrowDown,
-		faSolidEdit
+		faSolidEdit,
+		faCaretRight,
+		faCircle
 	);
 }
