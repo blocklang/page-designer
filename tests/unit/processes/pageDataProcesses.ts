@@ -32,7 +32,7 @@ describe("dataProcesses", () => {
 					open: false
 				}
 			]),
-			add(store.path("selectedBehaviorIndex"), 0)
+			add(store.path("selectedDataItemIndex"), 0)
 		]);
 
 		insertDataItemProcess(store)({});
@@ -67,7 +67,7 @@ describe("dataProcesses", () => {
 					open: false
 				}
 			]),
-			add(store.path("selectedBehaviorIndex"), 0)
+			add(store.path("selectedDataItemIndex"), 0)
 		]);
 
 		insertDataItemProcess(store)({});
@@ -103,7 +103,7 @@ describe("dataProcesses", () => {
 					open: false
 				}
 			]),
-			add(store.path("selectedBehaviorIndex"), 1)
+			add(store.path("selectedDataItemIndex"), 1)
 		]);
 
 		insertDataItemProcess(store)({});
@@ -141,13 +141,13 @@ describe("dataProcesses", () => {
 		]);
 
 		activeDataItemProcess(store)({ id: "not exist id" });
-		assert.equal(store.get(store.path("selectedBehaviorIndex")), -1);
+		assert.equal(store.get(store.path("selectedDataItemIndex")), -1);
 
 		activeDataItemProcess(store)({ id: "1" });
-		assert.equal(store.get(store.path("selectedBehaviorIndex")), 0);
+		assert.equal(store.get(store.path("selectedDataItemIndex")), 0);
 
 		activeDataItemProcess(store)({ id: "2" });
-		assert.equal(store.get(store.path("selectedBehaviorIndex")), 1);
+		assert.equal(store.get(store.path("selectedDataItemIndex")), 1);
 	});
 
 	it("changeActiveDataPropertyProcess", () => {
@@ -169,7 +169,7 @@ describe("dataProcesses", () => {
 					open: false
 				}
 			]),
-			add(store.path("selectedBehaviorIndex"), 1)
+			add(store.path("selectedDataItemIndex"), 1)
 		]);
 
 		changeActiveDataItemPropertyProcess(store)({ name: "name", value: "name1" });
@@ -204,7 +204,7 @@ describe("dataProcesses", () => {
 					open: false
 				}
 			]),
-			add(store.path("selectedBehaviorIndex"), 1)
+			add(store.path("selectedDataItemIndex"), 1)
 		]);
 
 		foldDataGroupProcess(store)({ id: "1" });
@@ -231,7 +231,7 @@ describe("dataProcesses", () => {
 					open: true
 				}
 			]),
-			add(store.path("selectedBehaviorIndex"), 0)
+			add(store.path("selectedDataItemIndex"), 0)
 		]);
 		// 不能删除根节点
 		removeActiveDataItemProcess(store)({});
@@ -239,8 +239,8 @@ describe("dataProcesses", () => {
 		const data = store.get(store.path("pageModel", "data"));
 		assert.equal(data.length, 1);
 
-		const selectedBehaviorIndex = store.get(store.path("selectedBehaviorIndex"));
-		assert.equal(selectedBehaviorIndex, 0);
+		const selectedDataItemIndex = store.get(store.path("selectedDataItemIndex"));
+		assert.equal(selectedDataItemIndex, 0);
 	});
 
 	it("removeActiveDataProcess：remove single node then active parent node", () => {
@@ -262,7 +262,7 @@ describe("dataProcesses", () => {
 					open: false
 				}
 			]),
-			add(store.path("selectedBehaviorIndex"), 1)
+			add(store.path("selectedDataItemIndex"), 1)
 		]);
 
 		removeActiveDataItemProcess(store)({});
@@ -270,8 +270,8 @@ describe("dataProcesses", () => {
 		const data = store.get(store.path("pageModel", "data"));
 		assert.equal(data.length, 1);
 
-		const selectedBehaviorIndex = store.get(store.path("selectedBehaviorIndex"));
-		assert.equal(selectedBehaviorIndex, 0);
+		const selectedDataItemIndex = store.get(store.path("selectedDataItemIndex"));
+		assert.equal(selectedDataItemIndex, 0);
 	});
 
 	it("removeActiveDataProcess：remove single node then active previous sibling node", () => {
@@ -301,7 +301,7 @@ describe("dataProcesses", () => {
 					open: false
 				}
 			]),
-			add(store.path("selectedBehaviorIndex"), 2)
+			add(store.path("selectedDataItemIndex"), 2)
 		]);
 
 		removeActiveDataItemProcess(store)({});
@@ -309,8 +309,8 @@ describe("dataProcesses", () => {
 		const data = store.get(store.path("pageModel", "data"));
 		assert.equal(data.length, 2);
 
-		const selectedBehaviorIndex = store.get(store.path("selectedBehaviorIndex"));
-		assert.equal(selectedBehaviorIndex, 1);
+		const selectedDataItemIndex = store.get(store.path("selectedDataItemIndex"));
+		assert.equal(selectedDataItemIndex, 1);
 	});
 
 	it("removeActiveDataProcess：remove single node then active next sibling node", () => {
@@ -340,7 +340,7 @@ describe("dataProcesses", () => {
 					open: false
 				}
 			]),
-			add(store.path("selectedBehaviorIndex"), 1)
+			add(store.path("selectedDataItemIndex"), 1)
 		]);
 
 		removeActiveDataItemProcess(store)({});
@@ -348,8 +348,8 @@ describe("dataProcesses", () => {
 		const data = store.get(store.path("pageModel", "data"));
 		assert.equal(data.length, 2);
 
-		const selectedBehaviorIndex = store.get(store.path("selectedBehaviorIndex"));
-		assert.equal(selectedBehaviorIndex, 1);
+		const selectedDataItemIndex = store.get(store.path("selectedDataItemIndex"));
+		assert.equal(selectedDataItemIndex, 1);
 
 		assert.equal(data[1].id, "3");
 	});
@@ -381,7 +381,7 @@ describe("dataProcesses", () => {
 					open: false
 				}
 			]),
-			add(store.path("selectedBehaviorIndex"), 1)
+			add(store.path("selectedDataItemIndex"), 1)
 		]);
 
 		removeActiveDataItemProcess(store)({});
@@ -389,8 +389,8 @@ describe("dataProcesses", () => {
 		const data = store.get(store.path("pageModel", "data"));
 		assert.equal(data.length, 1);
 
-		const selectedBehaviorIndex = store.get(store.path("selectedBehaviorIndex"));
-		assert.equal(selectedBehaviorIndex, 0);
+		const selectedDataItemIndex = store.get(store.path("selectedDataItemIndex"));
+		assert.equal(selectedDataItemIndex, 0);
 	});
 
 	it("moveUpActiveDataProcess: has no previous data", () => {
@@ -412,12 +412,12 @@ describe("dataProcesses", () => {
 					open: false
 				}
 			]),
-			add(store.path("selectedBehaviorIndex"), 1)
+			add(store.path("selectedDataItemIndex"), 1)
 		]);
 
 		moveUpActiveDataItemProcess(store)({});
 		// 没有前一个兄弟节点，所以没有移动
-		assert.equal(store.get(store.path("selectedBehaviorIndex")), 1);
+		assert.equal(store.get(store.path("selectedDataItemIndex")), 1);
 		assert.isUndefined(store.get(store.path("dirty")));
 	});
 
@@ -448,12 +448,12 @@ describe("dataProcesses", () => {
 					open: false
 				}
 			]),
-			add(store.path("selectedBehaviorIndex"), 2)
+			add(store.path("selectedDataItemIndex"), 2)
 		]);
 
 		moveUpActiveDataItemProcess(store)({});
 
-		assert.equal(store.get(store.path("selectedBehaviorIndex")), 1);
+		assert.equal(store.get(store.path("selectedDataItemIndex")), 1);
 		// 判断位置已互换
 		const pageData = store.get(store.path("pageModel", "data"));
 
@@ -506,12 +506,12 @@ describe("dataProcesses", () => {
 					open: false
 				}
 			]),
-			add(store.path("selectedBehaviorIndex"), 3)
+			add(store.path("selectedDataItemIndex"), 3)
 		]);
 
 		moveUpActiveDataItemProcess(store)({});
 
-		assert.equal(store.get(store.path("selectedBehaviorIndex")), 1);
+		assert.equal(store.get(store.path("selectedDataItemIndex")), 1);
 		// 判断位置已互换
 		const pageData = store.get(store.path("pageModel", "data"));
 
@@ -550,12 +550,12 @@ describe("dataProcesses", () => {
 					open: false
 				}
 			]),
-			add(store.path("selectedBehaviorIndex"), 1)
+			add(store.path("selectedDataItemIndex"), 1)
 		]);
 
 		moveDownActiveDataItemProcess(store)({});
 		// 没有后一个兄弟节点，所以没有移动
-		assert.equal(store.get(store.path("selectedBehaviorIndex")), 1);
+		assert.equal(store.get(store.path("selectedDataItemIndex")), 1);
 		assert.isUndefined(store.get(store.path("dirty")));
 	});
 
@@ -586,12 +586,12 @@ describe("dataProcesses", () => {
 					open: false
 				}
 			]),
-			add(store.path("selectedBehaviorIndex"), 1)
+			add(store.path("selectedDataItemIndex"), 1)
 		]);
 
 		moveDownActiveDataItemProcess(store)({});
 
-		assert.equal(store.get(store.path("selectedBehaviorIndex")), 2);
+		assert.equal(store.get(store.path("selectedDataItemIndex")), 2);
 		// 判断位置已互换
 		const pageData = store.get(store.path("pageModel", "data"));
 
@@ -644,12 +644,12 @@ describe("dataProcesses", () => {
 					open: false
 				}
 			]),
-			add(store.path("selectedBehaviorIndex"), 1)
+			add(store.path("selectedDataItemIndex"), 1)
 		]);
 
 		moveDownActiveDataItemProcess(store)({});
 
-		assert.equal(store.get(store.path("selectedBehaviorIndex")), 3);
+		assert.equal(store.get(store.path("selectedDataItemIndex")), 3);
 		// 判断位置已互换
 		const pageData = store.get(store.path("pageModel", "data"));
 

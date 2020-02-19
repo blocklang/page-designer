@@ -14,17 +14,17 @@ import {
 const insertEmptyDataItemCommand = commandFactory(({ get, path, at }) => {
 	// 默认添加在距离父节点最近的位置，参考自 vscode 中的在文件夹下新建文件的逻辑
 	const pageData = get(path("pageModel", "data"));
-	const selectedBehaviorIndex = get(path("selectedBehaviorIndex")) || 0;
-	const selectedBehaviorData = pageData[selectedBehaviorIndex];
+	const selectedDataItemIndex = get(path("selectedDataItemIndex")) || 0;
+	const selectedDataItem = pageData[selectedDataItemIndex];
 	let parentId = "";
-	if (selectedBehaviorData.type === "Array" || selectedBehaviorData.type === "Object") {
-		parentId = selectedBehaviorData.id;
+	if (selectedDataItem.type === "Array" || selectedDataItem.type === "Object") {
+		parentId = selectedDataItem.id;
 	} else {
-		parentId = selectedBehaviorData.parentId;
+		parentId = selectedDataItem.parentId;
 	}
 
 	// 紧挨着选中的节点
-	const insertedIndex = selectedBehaviorIndex + 1;
+	const insertedIndex = selectedDataItemIndex + 1;
 	const dataItem: PageDataItem = {
 		id: uuid().replace(/-/g, ""),
 		type: "String",
@@ -41,12 +41,12 @@ const activeDataItemCommand = commandFactory(({ payload: { id }, get, path, at }
 	const selectedIndex = findIndex(pageData, (item) => {
 		return item.id === id;
 	});
-	return [replace(path("selectedBehaviorIndex"), selectedIndex)];
+	return [replace(path("selectedDataItemIndex"), selectedIndex)];
 });
 
 const changeActiveDataItemPropertyCommand = commandFactory(({ payload: { name, value }, at, get, path }) => {
-	const selectedBehaviorIndex = get(path("selectedBehaviorIndex")) || 0;
-	const selectedPageDataPath = at(path("pageModel", "data"), selectedBehaviorIndex);
+	const selectedDataItemIndex = get(path("selectedDataItemIndex")) || 0;
+	const selectedPageDataPath = at(path("pageModel", "data"), selectedDataItemIndex);
 
 	return [replace(path(selectedPageDataPath, name), value)];
 });
@@ -67,22 +67,22 @@ const foldDataGroupCommand = commandFactory(({ payload: { id }, get, path, at })
 });
 
 const removeActiveDataItemCommand = commandFactory(({ get, path, at }) => {
-	const selectedBehaviorIndex = get(path("selectedBehaviorIndex")) || 0;
-	if (selectedBehaviorIndex === 0) {
+	const selectedDataItemIndex = get(path("selectedDataItemIndex")) || 0;
+	if (selectedDataItemIndex === 0) {
 		console.warn("不能删除根节点！");
 		return;
 	}
 	const result = [];
 
 	const pageData = get(path("pageModel", "data"));
-	const allChildCount = getAllChildCount(pageData, selectedBehaviorIndex);
+	const allChildCount = getAllChildCount(pageData, selectedDataItemIndex);
 	for (let i = 0; i <= allChildCount; i++) {
-		result.push(remove(at(path("pageModel", "data"), selectedBehaviorIndex)));
+		result.push(remove(at(path("pageModel", "data"), selectedDataItemIndex)));
 	}
 	// 重新聚焦
-	const newSelectedBehaviorIndex = inferNextActiveNodeIndex(pageData, selectedBehaviorIndex);
-	if (newSelectedBehaviorIndex > -1) {
-		result.push(replace(path("selectedBehaviorIndex"), newSelectedBehaviorIndex));
+	const newSelectedDataItemIndex = inferNextActiveNodeIndex(pageData, selectedDataItemIndex);
+	if (newSelectedDataItemIndex > -1) {
+		result.push(replace(path("selectedDataItemIndex"), newSelectedDataItemIndex));
 	}
 
 	return result;
@@ -90,26 +90,26 @@ const removeActiveDataItemCommand = commandFactory(({ get, path, at }) => {
 
 const moveUpActiveDataItemCommand = commandFactory(({ get, path, at }) => {
 	const pageData = get(path("pageModel", "data"));
-	const selectedBehaviorIndex = get(path("selectedBehaviorIndex"));
+	const selectedDataItemIndex = get(path("selectedDataItemIndex"));
 
-	const previousNodeIndex = getPreviousIndex(pageData, selectedBehaviorIndex);
+	const previousNodeIndex = getPreviousIndex(pageData, selectedDataItemIndex);
 	if (previousNodeIndex === -1) {
 		return [];
 	}
 
 	// 将选中的数据节点及其所有子节点移到前一个兄弟节点之前
 	// 获取当前选中节点的所有子节点个数
-	const allChildCount = getAllChildCount(pageData, selectedBehaviorIndex);
+	const allChildCount = getAllChildCount(pageData, selectedDataItemIndex);
 	// 因为目前 dojo store 不支持 move operation，所以先 remove 再 add
 	const result = [];
-	for (let i = selectedBehaviorIndex; i <= selectedBehaviorIndex + allChildCount; i++) {
+	for (let i = selectedDataItemIndex; i <= selectedDataItemIndex + allChildCount; i++) {
 		result.push(remove(at(path("pageModel", "data"), i)));
 	}
-	for (let i = selectedBehaviorIndex, j = previousNodeIndex; i <= selectedBehaviorIndex + allChildCount; i++, j++) {
+	for (let i = selectedDataItemIndex, j = previousNodeIndex; i <= selectedDataItemIndex + allChildCount; i++, j++) {
 		result.push(add(at(path("pageModel", "data"), j), pageData[i]));
 	}
-	// selectedBehaviorIndex 的值没有改变
-	result.push(replace(path("selectedBehaviorIndex"), previousNodeIndex));
+	// selectedDataItemIndex 的值没有改变
+	result.push(replace(path("selectedDataItemIndex"), previousNodeIndex));
 
 	result.push(replace(path("dirty"), true));
 	return result;
@@ -117,9 +117,9 @@ const moveUpActiveDataItemCommand = commandFactory(({ get, path, at }) => {
 
 const moveDownActiveDataItemCommand = commandFactory(({ get, path, at }) => {
 	const pageData = get(path("pageModel", "data"));
-	const selectedBehaviorIndex = get(path("selectedBehaviorIndex"));
+	const selectedDataItemIndex = get(path("selectedDataItemIndex"));
 
-	const nextNodeIndex = getNextIndex(pageData, selectedBehaviorIndex);
+	const nextNodeIndex = getNextIndex(pageData, selectedDataItemIndex);
 	if (nextNodeIndex === -1) {
 		return [];
 	}
@@ -135,12 +135,12 @@ const moveDownActiveDataItemCommand = commandFactory(({ get, path, at }) => {
 	for (let i = nextNodeIndex; i <= nextNodeIndex + allNextNodeChildCount; i++) {
 		result.push(remove(at(path("pageModel", "data"), i)));
 	}
-	for (let i = nextNodeIndex, j = selectedBehaviorIndex; i <= nextNodeIndex + allNextNodeChildCount; i++, j++) {
+	for (let i = nextNodeIndex, j = selectedDataItemIndex; i <= nextNodeIndex + allNextNodeChildCount; i++, j++) {
 		result.push(add(at(path("pageModel", "data"), j), pageData[i]));
 	}
 	// activeWidgetId 的值没有改变
 	result.push(
-		replace(path("selectedBehaviorIndex"), selectedBehaviorIndex + 1 /*表示 next node*/ + allNextNodeChildCount)
+		replace(path("selectedDataItemIndex"), selectedDataItemIndex + 1 /*表示 next node*/ + allNextNodeChildCount)
 	);
 
 	result.push(replace(path("dirty"), true));

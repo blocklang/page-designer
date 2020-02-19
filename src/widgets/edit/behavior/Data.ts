@@ -49,8 +49,8 @@ export default factory(function Data({ properties, middleware: { store } }) {
 		]);
 	}
 
-	const selectedBehaviorIndex = get(path("selectedBehaviorIndex")) || 0;
-	const activeDataItemId = data[selectedBehaviorIndex].id;
+	const selectedDataItemIndex = get(path("selectedDataItemIndex")) || 0;
+	const activeDataItemId = data[selectedDataItemIndex].id;
 
 	return v("div", { key: "root", classes: [c.ml_4] }, [
 		v(
@@ -110,7 +110,7 @@ export default factory(function Data({ properties, middleware: { store } }) {
 					key: `${data[0].id}-0-children`,
 					classes: [c.pl_4, c.border_left]
 				},
-				_renderChildren(data, data[0], 1, activeDataItemId, selectedBehaviorIndex, executor)
+				_renderChildren(data, data[0], 1, activeDataItemId, selectedDataItemIndex, executor)
 			)
 	]);
 });
@@ -120,7 +120,7 @@ function _renderChildren(
 	currentData: PageDataItem,
 	firstChildIndex: number,
 	activeDataItemId: string,
-	selectedBehaviorIndex: number,
+	selectedDataItemIndex: number,
 	executor: any
 ): VNode[] {
 	const children = getChildrenIndex(pageData, currentData.id, firstChildIndex);
@@ -128,7 +128,7 @@ function _renderChildren(
 	for (let i = 0; i < children.length; i++) {
 		const eachData = pageData[children[i]];
 		result.push(
-			_renderDataItem(eachData, i, currentData, activeDataItemId, pageData, selectedBehaviorIndex, executor)
+			_renderDataItem(eachData, i, currentData, activeDataItemId, pageData, selectedDataItemIndex, executor)
 		);
 
 		if (eachData.open) {
@@ -137,7 +137,7 @@ function _renderChildren(
 				eachData,
 				children[i] + 1,
 				activeDataItemId,
-				selectedBehaviorIndex,
+				selectedDataItemIndex,
 				executor
 			);
 			if (subChildren.length > 0) {
@@ -156,7 +156,7 @@ function _renderDataItem(
 	parentData: PageDataItem,
 	activeDataItemId: string,
 	allData: PageDataItem[],
-	selectedBehaviorIndex: number,
+	selectedDataItemIndex: number,
 	executor: any
 ): VNode {
 	return v(
@@ -175,7 +175,7 @@ function _renderDataItem(
 			_renderVariableName(data, index, parentData, executor),
 			_renderDataType(data, index, executor),
 			_renderDefaultValue(data, executor),
-			_renderOperators(data, activeDataItemId, allData, selectedBehaviorIndex, executor)
+			_renderOperators(data, activeDataItemId, allData, selectedDataItemIndex, executor)
 		]
 	);
 }
@@ -324,7 +324,7 @@ function _renderOperators(
 	dataItem: PageDataItem,
 	activeDataItemId: string,
 	allData: PageDataItem[],
-	selectedBehaviorIndex: number,
+	selectedDataItemIndex: number,
 	executor: any
 ): VNode | undefined {
 	const isActive = activeDataItemId === dataItem.id;
@@ -351,7 +351,7 @@ function _renderOperators(
 		)
 	];
 
-	const activeDataIsFirst = getPreviousIndex(allData, selectedBehaviorIndex) === -1;
+	const activeDataIsFirst = getPreviousIndex(allData, selectedDataItemIndex) === -1;
 	if (!activeDataIsFirst) {
 		ops.push(
 			v(
@@ -371,7 +371,7 @@ function _renderOperators(
 		);
 	}
 
-	const activeDataIsLast = getNextIndex(allData, selectedBehaviorIndex) === -1;
+	const activeDataIsLast = getNextIndex(allData, selectedDataItemIndex) === -1;
 	if (!activeDataIsLast) {
 		ops.push(
 			v(
