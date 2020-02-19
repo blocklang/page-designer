@@ -92,7 +92,7 @@ describe("edit/ui/operate-pane/Header", () => {
 							</a>
 						</li>
 						<li key="fwp-2" classes={[c.breadcrumb_item, css.breadcrumbItem, c.active]}>
-							Widget1
+							[0]Widget1
 						</li>
 					</ol>
 				</nav>

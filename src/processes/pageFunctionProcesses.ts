@@ -3,6 +3,7 @@ import { commandFactory } from "./utils";
 import { FunctionDeclaration, PageFunction } from "designer-core/interfaces";
 import { add, replace } from "@dojo/framework/stores/state/operations";
 import { findIndex } from "@dojo/framework/shim/array";
+import { ConnectorPayload } from "./interfaces";
 
 const newFunctionCommand = commandFactory<{ functionDeclaration: FunctionDeclaration }>(
 	({ get, path, at, payload: { functionDeclaration } }) => {
@@ -11,18 +12,18 @@ const newFunctionCommand = commandFactory<{ functionDeclaration: FunctionDeclara
 
 		const func: PageFunction = {
 			id: functionDeclaration.id,
-			name: functionDeclaration.name,
 			nodes: [
 				{
 					id: functionDeclaration.id,
-					name: "a",
 					top: 20, // 默认位置
 					left: 20,
-					dataInputPorts: [],
-					dataOutputPorts: [],
-					sequenceInputPorts: [],
-					sequenceOutputPorts: [],
-					functionDeclaration
+					caption: "函数",
+					text: "",
+					category: "flowControl",
+					inputSequencePort: undefined,
+					outputSequencePorts: [],
+					inputDataPorts: [],
+					outputDataPorts: []
 				}
 			],
 			sequenceConnections: [],
@@ -67,6 +68,9 @@ const moveFunctionNodeCommand = commandFactory<{ functionId: string; left: numbe
 	}
 );
 
+const addConnectorCommand = commandFactory<ConnectorPayload>(({ get, path, payload: { startPort, endPort } }) => {});
+
 export const newFunctionProcess = createProcess("new-function", [newFunctionCommand]);
 export const activeFunctionNodeProcess = createProcess("active-function-node", [activeFunctionNodeCommand]);
 export const moveFunctionNodeProcess = createProcess("move-function-node", [moveFunctionNodeCommand]);
+export const addConnectorProcess = createProcess("add-connector", [addConnectorCommand]);

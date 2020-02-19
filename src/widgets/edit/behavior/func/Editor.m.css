@@ -1,0 +1,31 @@
+.root {
+	min-height: 800px;
+	position: relative;
+	background-image: linear-gradient(rgba(200, 200, 200, 0.2) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(200, 200, 200, 0.2) 1px, transparent 1px);
+	background-size: 20px 20px, 20px 20px, 10px 10px, 10px 10px;
+	background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+}
+
+.node {
+	position: absolute;
+	display: inline-block;
+	min-width: 100px;
+}
+
+.port {
+	width: "10px";
+}
+
+.dataPointIcon {
+	font-size: 0.5rem;
+}
+
+.inputValue {
+	border: 1px solid #ced4da;
+	width: 10em;
+}
+
+.svg {
+	position: absolute;
+}

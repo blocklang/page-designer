@@ -23,6 +23,8 @@ export default factory(function Header({ properties, middleware: { store } }) {
 	const nodePath = getNodePath(pageWidgets, selectedWidgetIndex);
 	const length = nodePath.length;
 
+	console.log("nodePath", nodePath);
+
 	return (
 		<div classes={[css.root]}>
 			<FontAwesomeIcon icon="arrows-alt" classes={[c.text_muted, c.ml_1]} />

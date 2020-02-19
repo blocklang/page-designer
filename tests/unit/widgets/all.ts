@@ -12,4 +12,6 @@ import "./edit/behavior";
 import "./edit/behavior/Data";
 import "./edit/behavior/func";
 import "./edit/behavior/func/util";
+import "./edit/behavior/func/TitleBar";
+import "./edit/behavior/func/Editor";
 import "./preview";
