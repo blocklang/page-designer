@@ -4,22 +4,24 @@ import * as c from "bootstrap-classes";
 import * as css from "./Editor.m.css";
 import { DNode } from "@dojo/framework/core/interfaces";
 import store from "designer-core/store";
-import { activeFunctionNodeProcess } from "../../../../processes/pageFunctionProcesses";
+import { activeFunctionNodeProcess, moveActiveFunctionNodeProcess } from "../../../../processes/pageFunctionProcesses";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import { find } from "@dojo/framework/shim/array";
 import { getConnectorOffset, getConnectorPath } from "./util";
+import { drag, DragResults } from "../../../../middleware/drag";
+import dimensions from "@dojo/framework/core/middleware/dimensions";
 
 export interface EditorProperties {
 	pageFunction?: PageFunction;
 }
 
-const factory = create({ store }).properties<EditorProperties>();
+const factory = create({ store, drag, dimensions }).properties<EditorProperties>();
 
 let isConnecting = false;
 // let drawingConnectorStartPoint: { x: number; y: number };
 // let drawingConnectorEndPoint: { x: number; y: number };
 
-export default factory(function Editor({ properties, middleware: { store } }) {
+export default factory(function Editor({ properties, middleware: { store, drag, dimensions } }) {
 	const { pageFunction } = properties();
 
 	if (!pageFunction) {
@@ -33,6 +35,30 @@ export default factory(function Editor({ properties, middleware: { store } }) {
 	const { get, path, executor } = store;
 	const selectedFunctionNodeId = get(path("selectedFunctionNodeId"));
 	const { nodes, sequenceConnections, dataConnections } = pageFunction;
+
+	// 让所有函数节点可以移动
+	const dragNodesMap = new Map<string, DragResults>();
+	nodes.forEach((node) => dragNodesMap.set(node.id, drag.get(node.id)));
+
+	const rootDimensions = dimensions.get("root");
+
+	// 然后只移动选中的节点
+	const selectedFunctionNode = find(nodes, (node) => node.id === selectedFunctionNodeId);
+	if (selectedFunctionNode) {
+		const dragResults = dragNodesMap.get(selectedFunctionNodeId);
+		if (dragResults && dragResults.isDragging) {
+			let dragLeft = selectedFunctionNode.left + dragResults.delta.x;
+			let dragTop = selectedFunctionNode.top + dragResults.delta.y;
+
+			dragLeft = Math.max(dragLeft, 0);
+			dragTop = Math.max(dragTop, 0);
+
+			dragLeft = Math.min(dragLeft, rootDimensions.position.right);
+			dragTop = Math.min(dragTop, rootDimensions.position.bottom);
+
+			executor(moveActiveFunctionNodeProcess)({ top: dragTop, left: dragLeft });
+		}
+	}
 
 	return v(
 		"div",

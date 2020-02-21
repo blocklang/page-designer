@@ -10,8 +10,11 @@ const newFunctionCommand = commandFactory<{ functionDeclaration: FunctionDeclara
 		const functions = get(path("pageModel", "functions")) || [];
 		const length = functions.length;
 
+		// functionId 是否应设置为 uuid？
+		const functionId = functionDeclaration.id;
+
 		const func: PageFunction = {
-			id: functionDeclaration.id,
+			id: functionId,
 			nodes: [
 				{
 					id: functionDeclaration.id,
@@ -30,9 +33,13 @@ const newFunctionCommand = commandFactory<{ functionDeclaration: FunctionDeclara
 			dataConnections: []
 		};
 
-		return [add(at(path("pageModel", "functions"), length), func)];
+		return [add(at(path("pageModel", "functions"), length), func), replace(path("selectedFunctionId"), functionId)];
 	}
 );
+
+const activeFunctionCommand = commandFactory<{ functionId: string }>(({ path, payload: { functionId } }) => {
+	return [replace(path("selectedFunctionId"), functionId)];
+});
 
 const activeFunctionNodeCommand = commandFactory<{ functionNodeId: string }>(
 	({ path, payload: { functionNodeId } }) => {
@@ -40,11 +47,12 @@ const activeFunctionNodeCommand = commandFactory<{ functionNodeId: string }>(
 	}
 );
 
-const moveFunctionNodeCommand = commandFactory<{ functionId: string; left: number; top: number }>(
-	({ get, path, at, payload: { functionId, left, top } }) => {
+const moveActiveFunctionNodeCommand = commandFactory<{ left: number; top: number }>(
+	({ get, path, at, payload: { left, top } }) => {
 		// 1. 找到当前编辑的函数
 		const functions = get(path("pageModel", "functions"));
-		const currentFunctionIndex = findIndex(functions, (func) => func.id === functionId);
+		const currentFunctionId = get(path("selectedFunctionId"));
+		const currentFunctionIndex = findIndex(functions, (func) => func.id === currentFunctionId);
 		if (currentFunctionIndex === -1) {
 			return;
 		}
@@ -71,6 +79,9 @@ const moveFunctionNodeCommand = commandFactory<{ functionId: string; left: numbe
 const addConnectorCommand = commandFactory<ConnectorPayload>(({ get, path, payload: { startPort, endPort } }) => {});
 
 export const newFunctionProcess = createProcess("new-function", [newFunctionCommand]);
+export const activeFunctionProcess = createProcess("active-function", [activeFunctionCommand]);
 export const activeFunctionNodeProcess = createProcess("active-function-node", [activeFunctionNodeCommand]);
-export const moveFunctionNodeProcess = createProcess("move-function-node", [moveFunctionNodeCommand]);
+export const moveActiveFunctionNodeProcess = createProcess("move-active-function-node", [
+	moveActiveFunctionNodeCommand
+]);
 export const addConnectorProcess = createProcess("add-connector", [addConnectorCommand]);

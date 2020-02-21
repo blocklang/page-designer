@@ -3,7 +3,7 @@ import { PageFunction, AttachedWidget, AttachedWidgetProperty, FunctionDeclarati
 import store from "designer-core/store";
 import { drag } from "../../../../middleware/drag";
 import { find } from "@dojo/framework/shim/array";
-import { newFunctionProcess } from "../../../../processes/pageFunctionProcesses";
+import { newFunctionProcess, activeFunctionProcess } from "../../../../processes/pageFunctionProcesses";
 import dimensions from "@dojo/framework/core/middleware/dimensions";
 import TitleBar from "./TitleBar";
 import Editor from "./Editor";
@@ -82,6 +82,8 @@ export default factory(function Func({ properties, middleware: { store, drag, in
 				arguments: activeWidgetProperty.arguments || []
 			};
 			executor(newFunctionProcess)({ functionDeclaration });
+		} else {
+			executor(activeFunctionProcess)({ functionId: currentFunction.id });
 		}
 	}
 

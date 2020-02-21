@@ -242,71 +242,6 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		h.expect(nodeAssertion);
 	});
 
-	it("select node", () => {
-		const nodeAssertion = baseAssertion
-			// 以下两个事件专用于在节点间连线。
-			.setProperty("@root", "onpointermove", () => {})
-			.setProperty("@root", "onpointerup", () => {})
-			.replaceChildren("@root", () => [
-				<div
-					key="11"
-					classes={[c.border, c.border_primary, css.node]}
-					styles={{ top: "2px", left: "1px" }}
-					onpointerdown={() => {}}
-				>
-					<div key="caption" classes={[c.bg_secondary, c.px_1]}>
-						函数
-					</div>
-					<div classes={[c.d_flex, c.justify_content_between]}>
-						<div classes={[css.port]}></div>
-						<div>onValue</div>
-						<div classes={[css.port]} onpointerdown={() => {}} onpointerup={() => {}}>
-							<FontAwesomeIcon icon="caret-right" />
-						</div>
-					</div>
-				</div>
-			]);
-
-		const pageFunction: PageFunction = {
-			id: "1",
-			nodes: [
-				{
-					id: "11",
-					left: 1,
-					top: 2,
-					caption: "函数",
-					text: "onValue",
-					category: "flowControl",
-					outputSequencePorts: [
-						{
-							id: "osp1",
-							text: ""
-						}
-					],
-					inputDataPorts: [],
-					outputDataPorts: []
-				}
-			],
-			sequenceConnections: [],
-			dataConnections: []
-		};
-
-		const activeFunctionNodeProcessStub = stub();
-		const mockStore = createMockStoreMiddleware([[activeFunctionNodeProcess, activeFunctionNodeProcessStub]]);
-		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
-
-		h.trigger("@11", "onpointerdown", { preventDefault: () => {} });
-		assert.isTrue(activeFunctionNodeProcessStub.calledOnce);
-
-		mockStore((path) => [add(path("selectedFunctionNodeId"), "11")]);
-
-		// 如果已经选中，则就不再设置选中数据
-		h.trigger("@11", "onpointerdown", { preventDefault: () => {} });
-		assert.isTrue(activeFunctionNodeProcessStub.calledOnce);
-
-		h.expect(nodeAssertion);
-	});
-
 	it("a set data node", () => {
 		const nodeAssertion = baseAssertion
 			// 以下两个事件专用于在节点间连线。
@@ -702,6 +637,71 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		};
 
 		const h = harness(() => <Editor pageFunction={pageFunction} />);
+		h.expect(nodeAssertion);
+	});
+
+	it("select node", () => {
+		const nodeAssertion = baseAssertion
+			// 以下两个事件专用于在节点间连线。
+			.setProperty("@root", "onpointermove", () => {})
+			.setProperty("@root", "onpointerup", () => {})
+			.replaceChildren("@root", () => [
+				<div
+					key="11"
+					classes={[c.border, c.border_primary, css.node]}
+					styles={{ top: "2px", left: "1px" }}
+					onpointerdown={() => {}}
+				>
+					<div key="caption" classes={[c.bg_secondary, c.px_1]}>
+						函数
+					</div>
+					<div classes={[c.d_flex, c.justify_content_between]}>
+						<div classes={[css.port]}></div>
+						<div>onValue</div>
+						<div classes={[css.port]} onpointerdown={() => {}} onpointerup={() => {}}>
+							<FontAwesomeIcon icon="caret-right" />
+						</div>
+					</div>
+				</div>
+			]);
+
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "函数",
+					text: "onValue",
+					category: "flowControl",
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const activeFunctionNodeProcessStub = stub();
+		const mockStore = createMockStoreMiddleware([[activeFunctionNodeProcess, activeFunctionNodeProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@11", "onpointerdown", { preventDefault: () => {} });
+		assert.isTrue(activeFunctionNodeProcessStub.calledOnce);
+
+		mockStore((path) => [add(path("selectedFunctionNodeId"), "11")]);
+
+		// 如果已经选中，则就不再设置选中数据
+		h.trigger("@11", "onpointerdown", { preventDefault: () => {} });
+		assert.isTrue(activeFunctionNodeProcessStub.calledOnce);
+
 		h.expect(nodeAssertion);
 	});
 });
