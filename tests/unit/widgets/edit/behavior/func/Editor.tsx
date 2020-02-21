@@ -41,13 +41,15 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					styles={{ top: "2px", left: "1px" }}
 					onpointerdown={() => {}}
 				>
-					<div key="caption" classes={[c.bg_secondary, c.px_1]}>
+					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						函数
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
-						<div classes={[css.port]}></div>
+						<div classes={[c.px_1]}>
+							<span classes={[css.blankPort]}></span>
+						</div>
 						<div>onValue</div>
-						<div classes={[css.port]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
@@ -95,24 +97,26 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					styles={{ top: "2px", left: "1px" }}
 					onpointerdown={() => {}}
 				>
-					<div key="caption" classes={[c.bg_secondary, c.px_1]}>
+					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						函数
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
-						<div classes={[css.port]}></div>
+						<div classes={[c.px_1]}>
+							<span classes={[css.blankPort]}></span>
+						</div>
 						<div>onValue</div>
-						<div classes={[css.port]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
-						<div>
-							<span classes={[css.port]}></span>
+						<div classes={[c.px_1]}>
+							<span classes={[css.blankPort]}></span>
 						</div>
-						<div onpointerdown={() => {}} onpointerup={() => {}}>
+						<div classes={[c.px_1]}>
 							<span>value</span>
 							<small classes={[c.ml_1, c.font_italic]}>string</small>
-							<span classes={[css.port, c.ml_1]}>
+							<span classes={[c.ml_1, css.dataPointIcon]} onpointerdown={() => {}} onpointerup={() => {}}>
 								<FontAwesomeIcon icon="circle" size="xs" />
 							</span>
 						</div>
@@ -166,36 +170,38 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					styles={{ top: "2px", left: "1px" }}
 					onpointerdown={() => {}}
 				>
-					<div key="caption" classes={[c.bg_secondary, c.px_1]}>
+					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						函数
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
-						<div classes={[css.port]}></div>
+						<div classes={[c.px_1]}>
+							<span classes={[css.blankPort]}></span>
+						</div>
 						<div>onValue</div>
-						<div classes={[css.port]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
-						<div>
-							<span classes={[css.port]}></span>
+						<div classes={[c.px_1]}>
+							<span classes={[css.blankPort]}></span>
 						</div>
-						<div onpointerdown={() => {}} onpointerup={() => {}}>
+						<div classes={[c.px_1]}>
 							<span>value</span>
 							<small classes={[c.ml_1, c.font_italic]}>string</small>
-							<span classes={[css.port, c.ml_1]}>
+							<span classes={[c.ml_1, css.dataPointIcon]} onpointerdown={() => {}} onpointerup={() => {}}>
 								<FontAwesomeIcon icon="circle" size="xs" />
 							</span>
 						</div>
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
-						<div>
-							<span classes={[css.port]}></span>
+						<div classes={[c.px_1]}>
+							<span classes={[css.blankPort]}></span>
 						</div>
-						<div onpointerdown={() => {}} onpointerup={() => {}}>
+						<div classes={[c.px_1]}>
 							<span>value2</span>
 							<small classes={[c.ml_1, c.font_italic]}>string</small>
-							<span classes={[css.port, c.ml_1]}>
+							<span classes={[c.ml_1, css.dataPointIcon]} onpointerdown={() => {}} onpointerup={() => {}}>
 								<FontAwesomeIcon icon="circle" size="xs" />
 							</span>
 						</div>
@@ -254,40 +260,42 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					styles={{ top: "2px", left: "1px" }}
 					onpointerdown={() => {}}
 				>
-					<div key="caption" classes={[c.bg_secondary, c.px_1]}>
+					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Set a
-						<span classes={[c.float_right, c.text_white]} onclick={() => {}}>
+						<span classes={[c.float_right, c.text_white, css.close]} onclick={() => {}}>
 							<FontAwesomeIcon icon="times" />
 						</span>
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
-						<div classes={[css.port]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 						<div></div>
-						<div classes={[css.port]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
 						<div classes={[c.d_flex, c.justify_content_start]}>
-							<div onpointerdown={() => {}} onpointerup={() => {}}>
-								<span classes={[css.port, c.ml_1]}>
-									<FontAwesomeIcon icon="circle" size="xs" />
-								</span>
+							<div
+								classes={[c.px_1, css.dataPointIcon, c.d_flex, c.align_items_center]}
+								onpointerdown={() => {}}
+								onpointerup={() => {}}
+							>
+								<FontAwesomeIcon icon="circle" size="xs" />
 							</div>
 							<div>
 								<div>
-									<small classes={[c.ml_1, c.font_italic]}>string</small>
-									<span>set</span>
+									<small classes={[c.font_italic]}>string</small>
+									<span classes={[c.ml_1]}>set</span>
 								</div>
 								<div>
-									<input />
+									<input classes={[css.inputValue]} />
 								</div>
 							</div>
 						</div>
-						<div>
-							<span classes={[css.port]}></span>
+						<div classes={[c.px_1]}>
+							<span classes={[css.blankPort]}></span>
 						</div>
 					</div>
 				</div>
@@ -341,20 +349,20 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					styles={{ top: "2px", left: "1px" }}
 					onpointerdown={() => {}}
 				>
-					<div key="caption" classes={[c.bg_secondary, c.px_1]}>
+					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Get a
-						<span classes={[c.float_right, c.text_white]} onclick={() => {}}>
+						<span classes={[c.float_right, c.text_white, css.close]} onclick={() => {}}>
 							<FontAwesomeIcon icon="times" />
 						</span>
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
-						<div>
-							<span classes={[css.port]}></span>
+						<div classes={[c.px_1]}>
+							<span classes={[css.blankPort]}></span>
 						</div>
 						<div>
 							<span>value</span>
 							<small classes={[c.ml_1, c.font_italic]}>string</small>
-							<span classes={[css.port, c.ml_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+							<span classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
 								<FontAwesomeIcon icon="circle" size="xs" />
 							</span>
 						</div>
@@ -403,13 +411,15 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					styles={{ top: "2px", left: "1px" }}
 					onpointerdown={() => {}}
 				>
-					<div key="caption" classes={[c.bg_secondary, c.px_1]}>
+					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						函数
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
-						<div classes={[css.port]}></div>
+						<div classes={[c.px_1]}>
+							<span classes={[css.blankPort]}></span>
+						</div>
 						<div>onValue</div>
-						<div classes={[css.port]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
@@ -420,18 +430,18 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					styles={{ top: "20px", left: "10px" }}
 					onpointerdown={() => {}}
 				>
-					<div key="caption" classes={[c.bg_secondary, c.px_1]}>
+					<div key="12-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Set a
-						<span classes={[c.float_right, c.text_white]} onclick={() => {}}>
+						<span classes={[c.float_right, c.text_white, css.close]} onclick={() => {}}>
 							<FontAwesomeIcon icon="times" />
 						</span>
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
-						<div classes={[css.port]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 						<div></div>
-						<div classes={[css.port]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
@@ -519,17 +529,17 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					styles={{ top: "2px", left: "1px" }}
 					onpointerdown={() => {}}
 				>
-					<div key="caption" classes={[c.bg_secondary, c.px_1]}>
+					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						函数
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
-						<div>
-							<span classes={[css.port]}></span>
+						<div classes={[c.px_1]}>
+							<span classes={[css.blankPort]}></span>
 						</div>
-						<div onpointerdown={() => {}} onpointerup={() => {}}>
+						<div classes={[c.px_1]}>
 							<span>value</span>
 							<small classes={[c.ml_1, c.font_italic]}>string</small>
-							<span classes={[css.port, c.ml_1]}>
+							<span classes={[c.ml_1, css.dataPointIcon]} onpointerdown={() => {}} onpointerup={() => {}}>
 								<FontAwesomeIcon icon="circle" size="xs" />
 							</span>
 						</div>
@@ -541,31 +551,33 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					styles={{ top: "20px", left: "10px" }}
 					onpointerdown={() => {}}
 				>
-					<div key="caption" classes={[c.bg_secondary, c.px_1]}>
+					<div key="12-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Set a
-						<span classes={[c.float_right, c.text_white]} onclick={() => {}}>
+						<span classes={[c.float_right, c.text_white, css.close]} onclick={() => {}}>
 							<FontAwesomeIcon icon="times" />
 						</span>
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
 						<div classes={[c.d_flex, c.justify_content_start]}>
-							<div onpointerdown={() => {}} onpointerup={() => {}}>
-								<span classes={[css.port, c.ml_1]}>
-									<FontAwesomeIcon icon="circle" size="xs" />
-								</span>
+							<div
+								classes={[c.px_1, css.dataPointIcon, c.d_flex, c.align_items_center]}
+								onpointerdown={() => {}}
+								onpointerup={() => {}}
+							>
+								<FontAwesomeIcon icon="circle" size="xs" />
 							</div>
 							<div>
 								<div>
-									<small classes={[c.ml_1, c.font_italic]}>string</small>
-									<span>set</span>
+									<small classes={[c.font_italic]}>string</small>
+									<span classes={[c.ml_1]}>set</span>
 								</div>
 								<div>
-									<input />
+									<input classes={[css.inputValue]} />
 								</div>
 							</div>
 						</div>
-						<div>
-							<span classes={[css.port]}></span>
+						<div classes={[c.px_1]}>
+							<span classes={[css.blankPort]}></span>
 						</div>
 					</div>
 				</div>,
@@ -652,13 +664,15 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					styles={{ top: "2px", left: "1px" }}
 					onpointerdown={() => {}}
 				>
-					<div key="caption" classes={[c.bg_secondary, c.px_1]}>
+					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						函数
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
-						<div classes={[css.port]}></div>
+						<div classes={[c.px_1]}>
+							<span classes={[css.blankPort]}></span>
+						</div>
 						<div>onValue</div>
-						<div classes={[css.port]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>

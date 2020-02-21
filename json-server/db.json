@@ -139,60 +139,45 @@
           "nodes": [
             {
               "id": "1",
-              "name": "onValue",
               "top": 20,
               "left": 20,
-              "sequenceInputPorts": [],
-              "sequenceOutputPorts": [],
-              "dataInputPorts": [],
-              "dataOutputPorts": ["1"],
-              "functionDeclaration": {
-                "id": "1",
-                "name": "onValue",
-                "arguments": [
-                  {
-                    "id": "1",
-                    "name": "value",
-                    "valueType": "string"
-                  }
-                ]
-              }
+              "caption": "函数",
+              "text": "onValue",
+              "category": "flowControl",
+              "outputSequencePorts": [{
+                "id": "otp1",
+                "text": ""
+              }],
+              "inputDataPorts": [],
+              "outputDataPorts": [{
+                "id": "odp1",
+                "name": "value",
+                "type": "string"
+              }]
             },
             {
               "id": "2",
-              "name": "setData",
-              "label": "set",
               "top": 200,
               "left": 200,
-              "sequenceInputPorts": [],
-              "sequenceOutputPorts": [
-                {}
-              ],
-              "dataInputPorts": ["11", "22"],
-              "dataOutputPorts": [],
-              "functionDeclaration": {
-                "id": "2",
-                "name": "setData",
-                "arguments": [
-                  {
-                    "id": "11",
-                    "name": "key",
-                    "valueType": "string"
-                  },
-                  {
-                    "id": "21",
-                    "name": "value",
-                    "valueType": "any"
-                  }
-                ]
-              }
+              "caption": "setData a",
+              "text": "",
+              "category": "data",
+              "inputSequencePort": {
+                "id": "isp2"
+              },
+              "outputSequencePorts": [{
+                "id": "osp2",
+                "text": ""
+              }],
+              "inputDataPorts": [{
+                "id": "idp2",
+                "name": "set",
+                "type": "string"
+              }],
+              "outputDataPorts": []
             }
           ],
-          "sequenceConnections": [{
-            "id":"1",
-            "fromSequencePort": "1",
-            "toSequencePort": "2"
-          }],
+          "sequenceConnections": [],
           "dataConnections": []
         }
       ]

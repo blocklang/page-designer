@@ -38,7 +38,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 
 	// 让所有函数节点可以移动
 	const dragNodesMap = new Map<string, DragResults>();
-	nodes.forEach((node) => dragNodesMap.set(node.id, drag.get(node.id)));
+	nodes.forEach((node) => dragNodesMap.set(node.id, drag.get(`${node.id}-caption`)));
 
 	const rootDimensions = dimensions.get("root");
 
@@ -101,19 +101,18 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 					if (selectedFunctionNodeId !== node.id) {
 						executor(activeFunctionNodeProcess)({ functionNodeId: node.id });
 					}
-					event.preventDefault();
 				}
 			},
 			[
-				v("div", { key: "caption", classes: [c.bg_secondary, c.px_1] }, [node.caption]),
+				v("div", { key: `${node.id}-caption`, classes: [c.bg_secondary, c.px_1, css.caption] }, [node.caption]),
 				node.outputSequencePorts.length === 1 &&
 					v("div", { classes: [c.d_flex, c.justify_content_between] }, [
-						v("div", { classes: [css.port] }),
+						v("div", { classes: [c.px_1] }, [v("span", { classes: [css.blankPort] })]),
 						v("div", {}, [node.text]),
 						v(
 							"div",
 							{
-								classes: [css.port],
+								classes: [c.px_1],
 								onpointerdown: (event: PointerEvent) => {},
 								onpointerup: (event: PointerEvent) => {}
 							},
@@ -122,21 +121,20 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 					]),
 				...node.outputDataPorts.map((item) =>
 					v("div", { classes: [c.d_flex, c.justify_content_between] }, [
-						v("div", {}, [v("span", { classes: [css.port] })]),
-						v(
-							"div",
-							{
-								onpointerdown: (event: PointerEvent) => {},
-								onpointerup: (event: PointerEvent) => {}
-							},
-							[
-								v("span", {}, [item.name]),
-								v("small", { classes: [c.ml_1, c.font_italic] }, [item.type]),
-								v("span", { classes: [css.port, c.ml_1] }, [
-									w(FontAwesomeIcon, { icon: "circle", size: "xs" })
-								])
-							]
-						)
+						v("div", { classes: [c.px_1] }, [v("span", { classes: [css.blankPort] })]),
+						v("div", { classes: [c.px_1] }, [
+							v("span", {}, [item.name]),
+							v("small", { classes: [c.ml_1, c.font_italic] }, [item.type]),
+							v(
+								"span",
+								{
+									classes: [c.ml_1, css.dataPointIcon],
+									onpointerdown: (event: PointerEvent) => {},
+									onpointerup: (event: PointerEvent) => {}
+								},
+								[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
+							)
+						])
 					])
 				)
 			]
@@ -195,15 +193,21 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 					if (selectedFunctionNodeId !== node.id) {
 						executor(activeFunctionNodeProcess)({ functionNodeId: node.id });
 					}
-					event.preventDefault();
 				}
 			},
 			[
-				v("div", { key: "caption", classes: [c.bg_secondary, c.px_1] }, [
+				v("div", { key: `${node.id}-caption`, classes: [c.bg_secondary, c.px_1, css.caption] }, [
 					node.caption,
-					v("span", { classes: [c.float_right, c.text_white], onclick: () => {} }, [
-						w(FontAwesomeIcon, { icon: "times" })
-					])
+					v(
+						"span",
+						{
+							classes: [c.float_right, c.text_white, css.close],
+							onclick: () => {
+								console.log("delete");
+							}
+						},
+						[w(FontAwesomeIcon, { icon: "times" })]
+					)
 				]),
 				// sequence port
 				singleSequenceInputAndOutput &&
@@ -211,7 +215,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 						v(
 							"div",
 							{
-								classes: [css.port],
+								classes: [c.px_1],
 								onpointerdown: (event: PointerEvent) => {},
 								onpointerup: (event: PointerEvent) => {}
 							},
@@ -221,7 +225,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 						v(
 							"div",
 							{
-								classes: [css.port],
+								classes: [c.px_1],
 								onpointerdown: (event: PointerEvent) => {},
 								onpointerup: (event: PointerEvent) => {}
 							},
@@ -235,36 +239,33 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 							v(
 								"div",
 								{
+									classes: [c.px_1, css.dataPointIcon, c.d_flex, c.align_items_center],
 									onpointerdown: (event: PointerEvent) => {},
 									onpointerup: (event: PointerEvent) => {}
 								},
-								[
-									v("span", { classes: [css.port, c.ml_1] }, [
-										w(FontAwesomeIcon, { icon: "circle", size: "xs" })
-									])
-								]
+								[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
 							),
 							v("div", {}, [
 								v("div", {}, [
-									v("small", { classes: [c.ml_1, c.font_italic] }, [item.type]),
-									v("span", {}, [item.name])
+									v("small", { classes: [c.font_italic] }, [item.type]),
+									v("span", { classes: [c.ml_1] }, [item.name])
 								]),
-								v("div", {}, [v("input", {})])
+								v("div", {}, [v("input", { classes: [css.inputValue] })])
 							])
 						]),
-						v("div", {}, [v("span", { classes: [css.port] })])
+						v("div", { classes: [c.px_1] }, [v("span", { classes: [css.blankPort] })])
 					])
 				),
 				...node.outputDataPorts.map((item) =>
 					v("div", { classes: [c.d_flex, c.justify_content_between] }, [
-						v("div", {}, [v("span", { classes: [css.port] })]),
+						v("div", { classes: [c.px_1] }, [v("span", { classes: [css.blankPort] })]),
 						v("div", {}, [
 							v("span", {}, [item.name]),
 							v("small", { classes: [c.ml_1, c.font_italic] }, [item.type]),
 							v(
 								"span",
 								{
-									classes: [css.port, c.ml_1],
+									classes: [c.px_1],
 									onpointerdown: (event: PointerEvent) => {},
 									onpointerup: (event: PointerEvent) => {}
 								},
