@@ -1,4 +1,4 @@
-import { create, v, w } from "@dojo/framework/core/vdom";
+import { create, v, w, invalidator } from "@dojo/framework/core/vdom";
 import { PageFunction, VisualNode, NodeConnection } from "designer-core/interfaces";
 import * as c from "bootstrap-classes";
 import * as css from "./Editor.m.css";
@@ -15,13 +15,13 @@ export interface EditorProperties {
 	pageFunction?: PageFunction;
 }
 
-const factory = create({ store, drag, dimensions }).properties<EditorProperties>();
+const factory = create({ store, drag, dimensions, invalidator }).properties<EditorProperties>();
 
 let isConnecting = false;
-// let drawingConnectorStartPoint: { x: number; y: number };
-// let drawingConnectorEndPoint: { x: number; y: number };
+let drawingConnectorStartPort: { x: number; y: number };
+let drawingConnectorEndPort: { x: number; y: number };
 
-export default factory(function Editor({ properties, middleware: { store, drag, dimensions } }) {
+export default factory(function Editor({ properties, middleware: { store, drag, dimensions, invalidator } }) {
 	const { pageFunction } = properties();
 
 	if (!pageFunction) {
@@ -65,8 +65,25 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 		{
 			key: "root",
 			classes: [c.border, css.root],
-			onpointermove: (event: PointerEvent) => {},
-			onpointerup: (event: PointerEvent) => {}
+			onpointermove: (event: PointerEvent) => {
+				if (!isConnecting) {
+					return;
+				}
+
+				drawingConnectorEndPort = {
+					x: event.clientX - rootDimensions.position.left,
+					y: event.clientY - rootDimensions.position.top
+				};
+				invalidator();
+			},
+			onpointerup: (event: PointerEvent) => {
+				if (!isConnecting) {
+					return;
+				}
+				isConnecting = false;
+
+				invalidator();
+			}
 		},
 		[
 			...renderNodes(),
@@ -112,8 +129,11 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 						v(
 							"div",
 							{
+								key: "osp",
 								classes: [c.px_1],
-								onpointerdown: (event: PointerEvent) => {},
+								onpointerdown: (event: PointerEvent) => {
+									startConnect(event);
+								},
 								onpointerup: (event: PointerEvent) => {}
 							},
 							[w(FontAwesomeIcon, { icon: "caret-right" })]
@@ -122,14 +142,17 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 				...node.outputDataPorts.map((item) =>
 					v("div", { classes: [c.d_flex, c.justify_content_between] }, [
 						v("div", { classes: [c.px_1] }, [v("span", { classes: [css.blankPort] })]),
-						v("div", { classes: [c.px_1] }, [
+						v("div", { classes: [c.pl_1] }, [
 							v("span", {}, [item.name]),
 							v("small", { classes: [c.ml_1, c.font_italic] }, [item.type]),
 							v(
 								"span",
 								{
-									classes: [c.ml_1, css.dataPointIcon],
-									onpointerdown: (event: PointerEvent) => {},
+									key: "odp",
+									classes: [c.px_1, css.dataPointIcon],
+									onpointerdown: (event: PointerEvent) => {
+										startConnect(event);
+									},
 									onpointerup: (event: PointerEvent) => {}
 								},
 								[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
@@ -139,41 +162,6 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 				)
 			]
 		);
-
-		// return (<div
-		//     key={node.id}
-		//     classes={[c.border, node.id === selectedFunctionNodeId && c.border_primary, css.node]}
-		//     styles={{ top: `${node.top}px`, left: `${node.left}px` }}
-		//     onpointerdown={(event: PointerEvent) => {
-		//         // 用于选中节点
-		//         // 如果已经选中了，则不再重复选中
-		//         if (selectedFunctionNodeId !== node.id) {
-		//             executor(activeFunctionNodeProcess)({ functionNodeId: node.id });
-		//         }
-		//         event.preventDefault();
-		//     }}>
-		//     <div key="caption" classes={[c.bg_secondary, c.px_1]}>{node.caption}</div>
-		//     {
-		//         singleSequenceOutput && (<div classes={[c.d_flex, c.justify_content_between]}>
-		//             <div classes={[css.port]}>
-		//                 {
-		//                     node.inputSequencePort && <FontAwesomeIcon icon="caret-right" />
-		//                 }
-		//             </div>
-		//             <div>{node.text}</div>
-		//             <div classes={[css.port]}>
-		//                 <FontAwesomeIcon icon="caret-right" />
-		//             </div>
-		//         </div>)
-		//     }
-		//     {
-		//         !singleSequenceOutput && (<virtual>
-		//             {
-		//                 node.
-		//             }
-		//         </virtual>)
-		//     }
-		// </div>);
 	}
 
 	function renderDataNode(node: VisualNode): DNode {
@@ -215,8 +203,11 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 						v(
 							"div",
 							{
+								key: "isp",
 								classes: [c.px_1],
-								onpointerdown: (event: PointerEvent) => {},
+								onpointerdown: (event: PointerEvent) => {
+									startConnect(event);
+								},
 								onpointerup: (event: PointerEvent) => {}
 							},
 							[w(FontAwesomeIcon, { icon: "caret-right" })]
@@ -225,8 +216,11 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 						v(
 							"div",
 							{
+								key: "osp",
 								classes: [c.px_1],
-								onpointerdown: (event: PointerEvent) => {},
+								onpointerdown: (event: PointerEvent) => {
+									startConnect(event);
+								},
 								onpointerup: (event: PointerEvent) => {}
 							},
 							[w(FontAwesomeIcon, { icon: "caret-right" })]
@@ -236,15 +230,20 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 				...node.inputDataPorts.map((item) =>
 					v("div", { classes: [c.d_flex, c.justify_content_between] }, [
 						v("div", { classes: [c.d_flex, c.justify_content_start] }, [
-							v(
-								"div",
-								{
-									classes: [c.px_1, css.dataPointIcon, c.d_flex, c.align_items_center],
-									onpointerdown: (event: PointerEvent) => {},
-									onpointerup: (event: PointerEvent) => {}
-								},
-								[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
-							),
+							v("div", { classes: [c.d_flex, c.align_items_center] }, [
+								v(
+									"span",
+									{
+										key: "idp",
+										classes: [c.px_1, css.dataPointIcon],
+										onpointerdown: (event: PointerEvent) => {
+											startConnect(event);
+										},
+										onpointerup: (event: PointerEvent) => {}
+									},
+									[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
+								)
+							]),
 							v("div", {}, [
 								v("div", {}, [
 									v("small", { classes: [c.font_italic] }, [item.type]),
@@ -259,14 +258,17 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 				...node.outputDataPorts.map((item) =>
 					v("div", { classes: [c.d_flex, c.justify_content_between] }, [
 						v("div", { classes: [c.px_1] }, [v("span", { classes: [css.blankPort] })]),
-						v("div", {}, [
+						v("div", { classes: [c.pl_1] }, [
 							v("span", {}, [item.name]),
 							v("small", { classes: [c.ml_1, c.font_italic] }, [item.type]),
 							v(
 								"span",
 								{
-									classes: [c.px_1],
-									onpointerdown: (event: PointerEvent) => {},
+									key: "odp",
+									classes: [c.px_1, css.dataPointIcon],
+									onpointerdown: (event: PointerEvent) => {
+										startConnect(event);
+									},
 									onpointerup: (event: PointerEvent) => {}
 								},
 								[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
@@ -276,6 +278,17 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 				)
 			]
 		);
+	}
+
+	function startConnect(event: PointerEvent<EventTarget>) {
+		drawingConnectorStartPort = drawingConnectorEndPort = {
+			x: event.clientX - rootDimensions.position.left,
+			y: event.clientY - rootDimensions.position.top
+		};
+
+		console.log("starting", drawingConnectorStartPort);
+
+		isConnecting = true;
 	}
 
 	function renderSequenceConnections(): DNode[] {
@@ -316,7 +329,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 		const startPoint = { x: startPort.left || 0, y: startPort.top || 0 };
 		const endPoint = { x: endPort.left || 0, y: endPort.top || 0 };
 
-		return renderConnection(startPoint, endPoint, connection);
+		return renderConnection(startPoint, endPoint, connection.id);
 	}
 
 	function renderDataConnection(connection: NodeConnection): DNode {
@@ -349,20 +362,20 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 		const startPoint = { x: startPort.left || 0, y: startPort.top || 0 };
 		const endPoint = { x: endPort.left || 0, y: endPort.top || 0 };
 
-		return renderConnection(startPoint, endPoint, connection);
+		return renderConnection(startPoint, endPoint, connection.id);
 	}
 
 	function renderConnection(
 		startPoint: { x: number; y: number } = { x: 0, y: 0 },
 		endPoint: { x: number; y: number } = { x: 0, y: 0 },
-		connection: NodeConnection
+		svgKey: string
 	) {
 		const svgOffset = getConnectorOffset(startPoint, endPoint);
 		const connectorPath = getConnectorPath(startPoint, endPoint);
 		return v(
 			"svg",
 			{
-				key: connection.id,
+				key: svgKey,
 				classes: [css.svg],
 				styles: { left: `${svgOffset.left}px`, top: `${svgOffset.top}px` },
 				width: `${Math.max(svgOffset.width, 2)}`,
@@ -382,6 +395,6 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 	}
 
 	function renderDrawingConnection(): DNode {
-		return v("svg");
+		return renderConnection(drawingConnectorStartPort, drawingConnectorEndPort, "drawingConnector");
 	}
 });

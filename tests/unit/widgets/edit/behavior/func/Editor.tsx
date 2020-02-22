@@ -49,7 +49,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							<span classes={[css.blankPort]}></span>
 						</div>
 						<div>onValue</div>
-						<div classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div key="osp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
@@ -105,7 +105,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							<span classes={[css.blankPort]}></span>
 						</div>
 						<div>onValue</div>
-						<div classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div key="osp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
@@ -113,10 +113,15 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						<div classes={[c.px_1]}>
 							<span classes={[css.blankPort]}></span>
 						</div>
-						<div classes={[c.px_1]}>
+						<div classes={[c.pl_1]}>
 							<span>value</span>
 							<small classes={[c.ml_1, c.font_italic]}>string</small>
-							<span classes={[c.ml_1, css.dataPointIcon]} onpointerdown={() => {}} onpointerup={() => {}}>
+							<span
+								key="odp"
+								classes={[c.px_1, css.dataPointIcon]}
+								onpointerdown={() => {}}
+								onpointerup={() => {}}
+							>
 								<FontAwesomeIcon icon="circle" size="xs" />
 							</span>
 						</div>
@@ -178,7 +183,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							<span classes={[css.blankPort]}></span>
 						</div>
 						<div>onValue</div>
-						<div classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div key="osp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
@@ -186,10 +191,15 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						<div classes={[c.px_1]}>
 							<span classes={[css.blankPort]}></span>
 						</div>
-						<div classes={[c.px_1]}>
+						<div classes={[c.pl_1]}>
 							<span>value</span>
 							<small classes={[c.ml_1, c.font_italic]}>string</small>
-							<span classes={[c.ml_1, css.dataPointIcon]} onpointerdown={() => {}} onpointerup={() => {}}>
+							<span
+								key="odp"
+								classes={[c.px_1, css.dataPointIcon]}
+								onpointerdown={() => {}}
+								onpointerup={() => {}}
+							>
 								<FontAwesomeIcon icon="circle" size="xs" />
 							</span>
 						</div>
@@ -198,10 +208,15 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						<div classes={[c.px_1]}>
 							<span classes={[css.blankPort]}></span>
 						</div>
-						<div classes={[c.px_1]}>
+						<div classes={[c.pl_1]}>
 							<span>value2</span>
 							<small classes={[c.ml_1, c.font_italic]}>string</small>
-							<span classes={[c.ml_1, css.dataPointIcon]} onpointerdown={() => {}} onpointerup={() => {}}>
+							<span
+								key="odp"
+								classes={[c.px_1, css.dataPointIcon]}
+								onpointerdown={() => {}}
+								onpointerup={() => {}}
+							>
 								<FontAwesomeIcon icon="circle" size="xs" />
 							</span>
 						</div>
@@ -267,22 +282,25 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						</span>
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
-						<div classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div key="isp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 						<div></div>
-						<div classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div key="osp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
 						<div classes={[c.d_flex, c.justify_content_start]}>
-							<div
-								classes={[c.px_1, css.dataPointIcon, c.d_flex, c.align_items_center]}
-								onpointerdown={() => {}}
-								onpointerup={() => {}}
-							>
-								<FontAwesomeIcon icon="circle" size="xs" />
+							<div classes={[c.d_flex, c.align_items_center]}>
+								<span
+									key="idp"
+									classes={[c.px_1, css.dataPointIcon]}
+									onpointerdown={() => {}}
+									onpointerup={() => {}}
+								>
+									<FontAwesomeIcon icon="circle" size="xs" />
+								</span>
 							</div>
 							<div>
 								<div>
@@ -359,10 +377,15 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						<div classes={[c.px_1]}>
 							<span classes={[css.blankPort]}></span>
 						</div>
-						<div>
+						<div classes={[c.pl_1]}>
 							<span>value</span>
 							<small classes={[c.ml_1, c.font_italic]}>string</small>
-							<span classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+							<span
+								key="odp"
+								classes={[c.px_1, css.dataPointIcon]}
+								onpointerdown={() => {}}
+								onpointerup={() => {}}
+							>
 								<FontAwesomeIcon icon="circle" size="xs" />
 							</span>
 						</div>
@@ -419,7 +442,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							<span classes={[css.blankPort]}></span>
 						</div>
 						<div>onValue</div>
-						<div classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div key="osp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
@@ -437,11 +460,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						</span>
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
-						<div classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div key="isp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 						<div></div>
-						<div classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div key="osp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
@@ -536,10 +559,15 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						<div classes={[c.px_1]}>
 							<span classes={[css.blankPort]}></span>
 						</div>
-						<div classes={[c.px_1]}>
+						<div classes={[c.pl_1]}>
 							<span>value</span>
 							<small classes={[c.ml_1, c.font_italic]}>string</small>
-							<span classes={[c.ml_1, css.dataPointIcon]} onpointerdown={() => {}} onpointerup={() => {}}>
+							<span
+								key="odp"
+								classes={[c.px_1, css.dataPointIcon]}
+								onpointerdown={() => {}}
+								onpointerup={() => {}}
+							>
 								<FontAwesomeIcon icon="circle" size="xs" />
 							</span>
 						</div>
@@ -559,12 +587,15 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
 						<div classes={[c.d_flex, c.justify_content_start]}>
-							<div
-								classes={[c.px_1, css.dataPointIcon, c.d_flex, c.align_items_center]}
-								onpointerdown={() => {}}
-								onpointerup={() => {}}
-							>
-								<FontAwesomeIcon icon="circle" size="xs" />
+							<div classes={[c.d_flex, c.align_items_center]}>
+								<span
+									key="idp"
+									classes={[c.px_1, css.dataPointIcon]}
+									onpointerdown={() => {}}
+									onpointerup={() => {}}
+								>
+									<FontAwesomeIcon icon="circle" size="xs" />
+								</span>
 							</div>
 							<div>
 								<div>
@@ -672,7 +703,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							<span classes={[css.blankPort]}></span>
 						</div>
 						<div>onValue</div>
-						<div classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div key="osp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
@@ -717,5 +748,561 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		assert.isTrue(activeFunctionNodeProcessStub.calledOnce);
 
 		h.expect(nodeAssertion);
+	});
+
+	/**
+	 * 注意，写连线相关的测试用例时，必须在每个测试用例后面调用 root 节点的 onpointerup 事件，以重置 isConnecting 等值
+	 */
+
+	it("start drag from FlowControl node's output sequence port", () => {
+		const nodeAssertion = baseAssertion
+			// 以下两个事件专用于在节点间连线。
+			.setProperty("@root", "onpointermove", () => {})
+			.setProperty("@root", "onpointerup", () => {})
+			.replaceChildren("@root", () => [
+				<div
+					key="11"
+					classes={[c.border, undefined, css.node]}
+					styles={{ top: "2px", left: "1px" }}
+					onpointerdown={() => {}}
+				>
+					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
+						函数
+					</div>
+					<div classes={[c.d_flex, c.justify_content_between]}>
+						<div classes={[c.px_1]}>
+							<span classes={[css.blankPort]}></span>
+						</div>
+						<div>onValue</div>
+						<div key="osp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+							<FontAwesomeIcon icon="caret-right" />
+						</div>
+					</div>
+				</div>,
+				<svg
+					key="drawingConnector"
+					classes={[css.svg]}
+					styles={{ left: "0px", top: "0px" }}
+					width="10"
+					height="20"
+					pointer-events="none"
+				>
+					<path
+						d="M0 0 L10 20"
+						fill="none"
+						stroke="#6c757d"
+						stroke-width="2"
+						pointer-events="visibleStroke"
+					/>
+				</svg>
+			]);
+
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "函数",
+					text: "onValue",
+					category: "flowControl",
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const h = harness(() => <Editor pageFunction={pageFunction} />);
+
+		// 先点击节点上的序列输出端口
+		h.trigger("@osp", "onpointerdown", { clientX: 0, clientY: 0 });
+		// 然后触发 canvas 节点上的移动事件
+		h.trigger("@root", "onpointermove", { clientX: 10, clientY: 20 });
+
+		h.expect(nodeAssertion);
+
+		const noSvgAssertion = nodeAssertion.remove("@drawingConnector");
+		h.trigger("@root", "onpointerup");
+		h.expect(noSvgAssertion);
+	});
+
+	it("start drag from Data node's output sequence port", () => {
+		const nodeAssertion = baseAssertion
+			// 以下两个事件专用于在节点间连线。
+			.setProperty("@root", "onpointermove", () => {})
+			.setProperty("@root", "onpointerup", () => {})
+			.replaceChildren("@root", () => [
+				<div
+					key="11"
+					classes={[c.border, undefined, css.node]}
+					styles={{ top: "2px", left: "1px" }}
+					onpointerdown={() => {}}
+				>
+					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
+						Set a
+						<span classes={[c.float_right, c.text_white, css.close]} onclick={() => {}}>
+							<FontAwesomeIcon icon="times" />
+						</span>
+					</div>
+					<div classes={[c.d_flex, c.justify_content_between]}>
+						<div key="isp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+							<FontAwesomeIcon icon="caret-right" />
+						</div>
+						<div></div>
+						<div key="osp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+							<FontAwesomeIcon icon="caret-right" />
+						</div>
+					</div>
+				</div>,
+				<svg
+					key="drawingConnector"
+					classes={[css.svg]}
+					styles={{ left: "0px", top: "0px" }}
+					width="10"
+					height="20"
+					pointer-events="none"
+				>
+					<path
+						d="M0 0 L10 20"
+						fill="none"
+						stroke="#6c757d"
+						stroke-width="2"
+						pointer-events="visibleStroke"
+					/>
+				</svg>
+			]);
+
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp1" },
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const h = harness(() => <Editor pageFunction={pageFunction} />);
+
+		// 先点击节点上的序列输出端口
+		h.trigger("@osp", "onpointerdown", { clientX: 0, clientY: 0 });
+		// 然后触发 canvas 节点上的移动事件
+		h.trigger("@root", "onpointermove", { clientX: 10, clientY: 20 });
+
+		h.expect(nodeAssertion);
+
+		const noSvgAssertion = nodeAssertion.remove("@drawingConnector");
+		h.trigger("@root", "onpointerup");
+		h.expect(noSvgAssertion);
+	});
+
+	it("start drag from Data node's input sequence port", () => {
+		const nodeAssertion = baseAssertion
+			// 以下两个事件专用于在节点间连线。
+			.setProperty("@root", "onpointermove", () => {})
+			.setProperty("@root", "onpointerup", () => {})
+			.replaceChildren("@root", () => [
+				<div
+					key="11"
+					classes={[c.border, undefined, css.node]}
+					styles={{ top: "2px", left: "1px" }}
+					onpointerdown={() => {}}
+				>
+					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
+						Set a
+						<span classes={[c.float_right, c.text_white, css.close]} onclick={() => {}}>
+							<FontAwesomeIcon icon="times" />
+						</span>
+					</div>
+					<div classes={[c.d_flex, c.justify_content_between]}>
+						<div key="isp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+							<FontAwesomeIcon icon="caret-right" />
+						</div>
+						<div></div>
+						<div key="osp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+							<FontAwesomeIcon icon="caret-right" />
+						</div>
+					</div>
+				</div>,
+				<svg
+					key="drawingConnector"
+					classes={[css.svg]}
+					styles={{ left: "0px", top: "0px" }}
+					width="10"
+					height="20"
+					pointer-events="none"
+				>
+					<path
+						d="M10 20 L0 0"
+						fill="none"
+						stroke="#6c757d"
+						stroke-width="2"
+						pointer-events="visibleStroke"
+					/>
+				</svg>
+			]);
+
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp1" },
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const h = harness(() => <Editor pageFunction={pageFunction} />);
+
+		// 先点击节点上的序列输出端口
+		h.trigger("@isp", "onpointerdown", { clientX: 10, clientY: 20 });
+		// 然后触发 canvas 节点上的移动事件
+		h.trigger("@root", "onpointermove", { clientX: 0, clientY: 0 });
+
+		h.expect(nodeAssertion);
+
+		const noSvgAssertion = nodeAssertion.remove("@drawingConnector");
+		h.trigger("@root", "onpointerup");
+		h.expect(noSvgAssertion);
+	});
+
+	it("start drag from FlowControl node's output data port", () => {
+		const nodeAssertion = baseAssertion
+			// 以下两个事件专用于在节点间连线。
+			.setProperty("@root", "onpointermove", () => {})
+			.setProperty("@root", "onpointerup", () => {})
+			.replaceChildren("@root", () => [
+				<div
+					key="11"
+					classes={[c.border, undefined, css.node]}
+					styles={{ top: "2px", left: "1px" }}
+					onpointerdown={() => {}}
+				>
+					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
+						函数
+					</div>
+					<div classes={[c.d_flex, c.justify_content_between]}>
+						<div classes={[c.px_1]}>
+							<span classes={[css.blankPort]}></span>
+						</div>
+						<div classes={[c.pl_1]}>
+							<span>value</span>
+							<small classes={[c.ml_1, c.font_italic]}>string</small>
+							<span
+								key="odp"
+								classes={[c.px_1, css.dataPointIcon]}
+								onpointerdown={() => {}}
+								onpointerup={() => {}}
+							>
+								<FontAwesomeIcon icon="circle" size="xs" />
+							</span>
+						</div>
+					</div>
+				</div>,
+				<svg
+					key="drawingConnector"
+					classes={[css.svg]}
+					styles={{ left: "0px", top: "0px" }}
+					width="10"
+					height="20"
+					pointer-events="none"
+				>
+					<path
+						d="M0 0 L10 20"
+						fill="none"
+						stroke="#6c757d"
+						stroke-width="2"
+						pointer-events="visibleStroke"
+					/>
+				</svg>
+			]);
+
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "函数",
+					text: "onValue",
+					category: "flowControl",
+					outputSequencePorts: [],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp1",
+							name: "value",
+							type: "string"
+						}
+					]
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const h = harness(() => <Editor pageFunction={pageFunction} />);
+
+		// 先点击节点上的序列输出端口
+		h.trigger("@odp", "onpointerdown", { clientX: 0, clientY: 0 });
+		// 然后触发 canvas 节点上的移动事件
+		h.trigger("@root", "onpointermove", { clientX: 10, clientY: 20 });
+
+		h.expect(nodeAssertion);
+
+		const noSvgAssertion = nodeAssertion.remove("@drawingConnector");
+		h.trigger("@root", "onpointerup");
+		h.expect(noSvgAssertion);
+	});
+
+	it("start drag from Data node's output data port", () => {
+		const nodeAssertion = baseAssertion
+			// 以下两个事件专用于在节点间连线。
+			.setProperty("@root", "onpointermove", () => {})
+			.setProperty("@root", "onpointerup", () => {})
+			.replaceChildren("@root", () => [
+				<div
+					key="11"
+					classes={[c.border, undefined, css.node]}
+					styles={{ top: "2px", left: "1px" }}
+					onpointerdown={() => {}}
+				>
+					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
+						Get a
+						<span classes={[c.float_right, c.text_white, css.close]} onclick={() => {}}>
+							<FontAwesomeIcon icon="times" />
+						</span>
+					</div>
+					<div classes={[c.d_flex, c.justify_content_between]}>
+						<div classes={[c.px_1]}>
+							<span classes={[css.blankPort]}></span>
+						</div>
+						<div classes={[c.pl_1]}>
+							<span>value</span>
+							<small classes={[c.ml_1, c.font_italic]}>string</small>
+							<span
+								key="odp"
+								classes={[c.px_1, css.dataPointIcon]}
+								onpointerdown={() => {}}
+								onpointerup={() => {}}
+							>
+								<FontAwesomeIcon icon="circle" size="xs" />
+							</span>
+						</div>
+					</div>
+				</div>,
+				<svg
+					key="drawingConnector"
+					classes={[css.svg]}
+					styles={{ left: "0px", top: "0px" }}
+					width="10"
+					height="20"
+					pointer-events="none"
+				>
+					<path
+						d="M0 0 L10 20"
+						fill="none"
+						stroke="#6c757d"
+						stroke-width="2"
+						pointer-events="visibleStroke"
+					/>
+				</svg>
+			]);
+
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Get a",
+					text: "",
+					category: "data",
+					outputSequencePorts: [],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp1",
+							name: "value",
+							type: "string"
+						}
+					]
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const h = harness(() => <Editor pageFunction={pageFunction} />);
+
+		// 先点击节点上的序列输出端口
+		h.trigger("@odp", "onpointerdown", { clientX: 0, clientY: 0 });
+		// 然后触发 canvas 节点上的移动事件
+		h.trigger("@root", "onpointermove", { clientX: 10, clientY: 20 });
+
+		h.expect(nodeAssertion);
+
+		const noSvgAssertion = nodeAssertion.remove("@drawingConnector");
+		h.trigger("@root", "onpointerup");
+		h.expect(noSvgAssertion);
+	});
+
+	it("start drag from Data node's input data port", () => {
+		const nodeAssertion = baseAssertion
+			// 以下两个事件专用于在节点间连线。
+			.setProperty("@root", "onpointermove", () => {})
+			.setProperty("@root", "onpointerup", () => {})
+			.replaceChildren("@root", () => [
+				<div
+					key="11"
+					classes={[c.border, undefined, css.node]}
+					styles={{ top: "2px", left: "1px" }}
+					onpointerdown={() => {}}
+				>
+					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
+						Set a
+						<span classes={[c.float_right, c.text_white, css.close]} onclick={() => {}}>
+							<FontAwesomeIcon icon="times" />
+						</span>
+					</div>
+					<div classes={[c.d_flex, c.justify_content_between]}>
+						<div key="isp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+							<FontAwesomeIcon icon="caret-right" />
+						</div>
+						<div></div>
+						<div key="osp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+							<FontAwesomeIcon icon="caret-right" />
+						</div>
+					</div>
+					<div classes={[c.d_flex, c.justify_content_between]}>
+						<div classes={[c.d_flex, c.justify_content_start]}>
+							<div classes={[c.d_flex, c.align_items_center]}>
+								<span
+									key="idp"
+									classes={[c.px_1, css.dataPointIcon]}
+									onpointerdown={() => {}}
+									onpointerup={() => {}}
+								>
+									<FontAwesomeIcon icon="circle" size="xs" />
+								</span>
+							</div>
+							<div>
+								<div>
+									<small classes={[c.font_italic]}>string</small>
+									<span classes={[c.ml_1]}>set</span>
+								</div>
+								<div>
+									<input classes={[css.inputValue]} />
+								</div>
+							</div>
+						</div>
+						<div classes={[c.px_1]}>
+							<span classes={[css.blankPort]}></span>
+						</div>
+					</div>
+				</div>,
+				<svg
+					key="drawingConnector"
+					classes={[css.svg]}
+					styles={{ left: "0px", top: "0px" }}
+					width="10"
+					height="20"
+					pointer-events="none"
+				>
+					<path
+						d="M0 0 L10 20"
+						fill="none"
+						stroke="#6c757d"
+						stroke-width="2"
+						pointer-events="visibleStroke"
+					/>
+				</svg>
+			]);
+
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp1" },
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [
+						{
+							id: "idp1",
+							name: "set",
+							type: "string",
+							connected: false
+						}
+					],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const h = harness(() => <Editor pageFunction={pageFunction} />);
+
+		// 先点击节点上的序列输出端口
+		h.trigger("@idp", "onpointerdown", { clientX: 0, clientY: 0 });
+		// 然后触发 canvas 节点上的移动事件
+		h.trigger("@root", "onpointermove", { clientX: 10, clientY: 20 });
+
+		h.expect(nodeAssertion);
+
+		const noSvgAssertion = nodeAssertion.remove("@drawingConnector");
+		h.trigger("@root", "onpointerup");
+		h.expect(noSvgAssertion);
 	});
 });

@@ -175,6 +175,21 @@
                 "type": "string"
               }],
               "outputDataPorts": []
+            },
+            {
+              "id": "3",
+              "top": 100,
+              "left": 500,
+              "caption": "getData a",
+              "text": "",
+              "category": "data",
+              "outputSequencePorts": [],
+              "inputDataPorts": [],
+              "outputDataPorts": [{
+                "id": "odp3",
+                "name": "value",
+                "type": "string"
+              }]
             }
           ],
           "sequenceConnections": [],
