@@ -281,14 +281,17 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 	}
 
 	function startConnect(event: PointerEvent<EventTarget>) {
+		// 为了避免有垂直滚动条，向下滚动后
+		// 或者增加数据项后，root 的位置发生了变化
+		// 所以在此处重新计算 root 的位置。
+		const newRootDimensions = dimensions.get("root");
 		drawingConnectorStartPort = drawingConnectorEndPort = {
-			x: event.clientX - rootDimensions.position.left,
-			y: event.clientY - rootDimensions.position.top
+			x: event.clientX - newRootDimensions.position.left,
+			y: event.clientY - newRootDimensions.position.top
 		};
 
-		console.log("starting", drawingConnectorStartPort);
-
 		isConnecting = true;
+		invalidator();
 	}
 
 	function renderSequenceConnections(): DNode[] {
