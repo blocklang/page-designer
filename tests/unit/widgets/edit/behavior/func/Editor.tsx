@@ -7,11 +7,11 @@ import { tsx } from "@dojo/framework/core/vdom";
 import Editor from "../../../../../../src/widgets/edit/behavior/func/Editor";
 import * as css from "../../../../../../src/widgets/edit/behavior/func/Editor.m.css";
 import * as c from "bootstrap-classes";
-import { PageFunction } from "designer-core/interfaces";
+import { PageFunction, State } from "designer-core/interfaces";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import store from "designer-core/store";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
-import { activeFunctionNodeProcess } from "../../../../../../src/processes/pageFunctionProcesses";
+import { activeFunctionNodeProcess, addConnectorProcess } from "../../../../../../src/processes/pageFunctionProcesses";
 import { stub } from "sinon";
 import { add } from "@dojo/framework/stores/state/operations";
 
@@ -754,7 +754,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 	 * 注意，写连线相关的测试用例时，必须在每个测试用例后面调用 root 节点的 onpointerup 事件，以重置 isConnecting 等值
 	 */
 
-	it("start drag from FlowControl node's output sequence port", () => {
+	it("start connect from FlowControl node's output sequence port", () => {
 		const nodeAssertion = baseAssertion
 			// 以下两个事件专用于在节点间连线。
 			.setProperty("@root", "onpointermove", () => {})
@@ -835,7 +835,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		h.expect(noSvgAssertion);
 	});
 
-	it("start drag from Data node's output sequence port", () => {
+	it("start connect from Data node's output sequence port", () => {
 		const nodeAssertion = baseAssertion
 			// 以下两个事件专用于在节点间连线。
 			.setProperty("@root", "onpointermove", () => {})
@@ -920,7 +920,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		h.expect(noSvgAssertion);
 	});
 
-	it("start drag from Data node's input sequence port", () => {
+	it("start connect from Data node's input sequence port", () => {
 		const nodeAssertion = baseAssertion
 			// 以下两个事件专用于在节点间连线。
 			.setProperty("@root", "onpointermove", () => {})
@@ -1005,7 +1005,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		h.expect(noSvgAssertion);
 	});
 
-	it("start drag from FlowControl node's output data port", () => {
+	it("start connect from FlowControl node's output data port", () => {
 		const nodeAssertion = baseAssertion
 			// 以下两个事件专用于在节点间连线。
 			.setProperty("@root", "onpointermove", () => {})
@@ -1095,7 +1095,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		h.expect(noSvgAssertion);
 	});
 
-	it("start drag from Data node's output data port", () => {
+	it("start connect from Data node's output data port", () => {
 		const nodeAssertion = baseAssertion
 			// 以下两个事件专用于在节点间连线。
 			.setProperty("@root", "onpointermove", () => {})
@@ -1188,7 +1188,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		h.expect(noSvgAssertion);
 	});
 
-	it("start drag from Data node's input data port", () => {
+	it("start connect from Data node's input data port", () => {
 		const nodeAssertion = baseAssertion
 			// 以下两个事件专用于在节点间连线。
 			.setProperty("@root", "onpointermove", () => {})
@@ -1305,4 +1305,674 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		h.trigger("@root", "onpointerup");
 		h.expect(noSvgAssertion);
 	});
+
+	it("can connect - Function node's output sequence port to SetData node's input sequence port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "函数",
+					text: "onValue",
+					category: "flowControl",
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp1",
+							name: "value",
+							type: "string"
+						}
+					]
+				},
+				{
+					id: "12",
+					left: 10,
+					top: 20,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: {
+						id: "isp2"
+					},
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [
+						{
+							id: "idp2",
+							name: "set",
+							type: "string",
+							connected: false
+						}
+					],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		// 先点击节点上的序列输出端口
+		h.trigger("@11 @osp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@12 @isp", "onpointerup", { clientX: 10, clientY: 20 });
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addConnectorProcessStub.calledOnce);
+	});
+
+	it("can connect - SetData node's input sequence port to Function node's output sequence port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "函数",
+					text: "onValue",
+					category: "flowControl",
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp1",
+							name: "value",
+							type: "string"
+						}
+					]
+				},
+				{
+					id: "12",
+					left: 10,
+					top: 20,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: {
+						id: "isp2"
+					},
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [
+						{
+							id: "idp2",
+							name: "set",
+							type: "string",
+							connected: false
+						}
+					],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@12 @isp", "onpointerdown", { clientX: 10, clientY: 20 });
+		h.trigger("@11 @osp", "onpointerup", { clientX: 0, clientY: 0 });
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addConnectorProcessStub.calledOnce);
+	});
+
+	it("can connect - SetData node's input sequence port to SetData node's output sequence port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: {
+						id: "isp1"
+					},
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [
+						{
+							id: "idp1",
+							name: "set",
+							type: "string",
+							connected: false
+						}
+					],
+					outputDataPorts: []
+				},
+				{
+					id: "12",
+					left: 10,
+					top: 20,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: {
+						id: "isp2"
+					},
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [
+						{
+							id: "idp2",
+							name: "set",
+							type: "string",
+							connected: false
+						}
+					],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@12 @isp", "onpointerdown", { clientX: 10, clientY: 20 });
+		h.trigger("@11 @osp", "onpointerup", { clientX: 0, clientY: 0 });
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addConnectorProcessStub.calledOnce);
+	});
+
+	it("can connect - Function node's output data port to SetData node's input data port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "函数",
+					text: "onValue",
+					category: "flowControl",
+					outputSequencePorts: [],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp1",
+							name: "value",
+							type: "string"
+						}
+					]
+				},
+				{
+					id: "21",
+					left: 10,
+					top: 20,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp2" },
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [
+						{
+							id: "idp2",
+							name: "value",
+							type: "string",
+							connected: false
+						}
+					],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@11 @odp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@21 @idp", "onpointerup", { clientX: 10, clientY: 20 });
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addConnectorProcessStub.calledOnce);
+	});
+
+	it("can connect - SetData node's input data port to Function node's output data port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "函数",
+					text: "onValue",
+					category: "flowControl",
+					outputSequencePorts: [],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp1",
+							name: "value",
+							type: "string"
+						}
+					]
+				},
+				{
+					id: "21",
+					left: 10,
+					top: 20,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp2" },
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [
+						{
+							id: "idp2",
+							name: "value",
+							type: "string",
+							connected: false
+						}
+					],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@21 @idp", "onpointerdown", { clientX: 10, clientY: 20 });
+		h.trigger("@11 @odp", "onpointerup", { clientX: 0, clientY: 0 });
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addConnectorProcessStub.calledOnce);
+	});
+
+	it("can connect - SetData node's input data port to GetData node's output data port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Get a",
+					text: "",
+					category: "data",
+					outputSequencePorts: [],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp1",
+							name: "value",
+							type: "string"
+						}
+					]
+				},
+				{
+					id: "21",
+					left: 10,
+					top: 20,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp2" },
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [
+						{
+							id: "idp2",
+							name: "value",
+							type: "string",
+							connected: false
+						}
+					],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@21 @idp", "onpointerdown", { clientX: 10, clientY: 20 });
+		h.trigger("@11 @odp", "onpointerup", { clientX: 0, clientY: 0 });
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addConnectorProcessStub.calledOnce);
+	});
+
+	// 1. sequence port 与 data port 不能互连
+	// 2. output 不能连 output，input 不能连 input
+	// 3. 不能连节点自身的其余 port 上
+	// 4. port 不能自己连自己
+	it("can not connect self - FlowControl node's output sequence port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "函数",
+					text: "onValue",
+					category: "flowControl",
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp1",
+							name: "value",
+							type: "string"
+						}
+					]
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		// 先点击节点上的序列输出端口
+		h.trigger("@osp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@osp", "onpointerup", { clientX: 10, clientY: 20 });
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addConnectorProcessStub.notCalled);
+	});
+
+	it("can not connect self - FlowControl node's output data port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "函数",
+					text: "onValue",
+					category: "flowControl",
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp1",
+							name: "value",
+							type: "string"
+						}
+					]
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		// 先点击节点上的序列输出端口
+		h.trigger("@odp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@odp", "onpointerup", { clientX: 10, clientY: 20 });
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addConnectorProcessStub.notCalled);
+	});
+
+	it("can not connect self - Data node's output sequence port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp1" },
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@osp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@osp", "onpointerup", { clientX: 0, clientY: 0 });
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addConnectorProcessStub.notCalled);
+	});
+
+	it("can not connect self - Data node's input sequence port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp1" },
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@isp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@isp", "onpointerup", { clientX: 0, clientY: 0 });
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addConnectorProcessStub.notCalled);
+	});
+
+	it("can not connect self - Data node's output data port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					outputSequencePorts: [],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp1",
+							name: "value",
+							type: "string"
+						}
+					]
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@odp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@odp", "onpointerup", { clientX: 0, clientY: 0 });
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addConnectorProcessStub.notCalled);
+	});
+
+	it("can not connect self - Data node's input data port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					outputSequencePorts: [],
+					inputDataPorts: [
+						{
+							id: "idp1",
+							name: "value",
+							type: "string",
+							connected: false
+						}
+					],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@idp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@idp", "onpointerup", { clientX: 0, clientY: 0 });
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addConnectorProcessStub.notCalled);
+	});
+
+	it("can not connect two Function nodes - Function node's output sequence port to Function node's output sequence port", () => {});
+
+	it("can not connect two Function nodes - Function node's output sequence port to Function node's output data port", () => {});
+
+	it("can not connect two Function nodes - Function node's output data port to Function node's output sequence port", () => {});
+
+	it("can not connect two Data nodes - Data node's output sequence port to Data node's output sequence port", () => {});
+
+	it("can not connect two Data nodes - Data node's input sequence port to Data node's input sequence port", () => {});
+
+	it("can not connect two Data nodes - Data node's input sequence port to Data node's input data port", () => {});
+
+	it("can not connect two Data nodes - Data node's input sequence port to Data node's output data port", () => {});
+
+	it("can not connect two Data nodes - Data node's output sequence port to Data node's input data port", () => {});
+
+	it("can not connect two Data nodes - Data node's output sequence port to Data node's output data port", () => {});
+
+	it("can not connect two Data nodes - Data node's output data port to Data node's output sequence port", () => {});
+
+	it("can not connect two Data nodes - Data node's output data port to Data node's input sequence port", () => {});
+
+	it("can not connect two Data nodes - Data node's output data port to Data node's output data port", () => {});
+
+	it("can not connect two Data nodes - Data node's input data port to Data node's output sequence port", () => {});
+
+	it("can not connect two Data nodes - Data node's input data port to Data node's input sequence port", () => {});
+
+	it("can not connect two Data nodes - Data node's input data port to Data node's input data port", () => {});
 });

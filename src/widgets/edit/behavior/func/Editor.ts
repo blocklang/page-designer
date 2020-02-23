@@ -4,12 +4,17 @@ import * as c from "bootstrap-classes";
 import * as css from "./Editor.m.css";
 import { DNode } from "@dojo/framework/core/interfaces";
 import store from "designer-core/store";
-import { activeFunctionNodeProcess, moveActiveFunctionNodeProcess } from "../../../../processes/pageFunctionProcesses";
+import {
+	activeFunctionNodeProcess,
+	moveActiveFunctionNodeProcess,
+	addConnectorProcess
+} from "../../../../processes/pageFunctionProcesses";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import { find } from "@dojo/framework/shim/array";
 import { getConnectorOffset, getConnectorPath } from "./util";
 import { drag, DragResults } from "../../../../middleware/drag";
 import dimensions from "@dojo/framework/core/middleware/dimensions";
+import { PortPosition } from "../../../../processes/interfaces";
 
 export interface EditorProperties {
 	pageFunction?: PageFunction;
@@ -17,7 +22,11 @@ export interface EditorProperties {
 
 const factory = create({ store, drag, dimensions, invalidator }).properties<EditorProperties>();
 
+type PortType = "sequence" | "data";
+type FlowType = "output" | "input";
+
 let isConnecting = false;
+let connectingStartPort: { nodeId: string; portId: string; portType: PortType; flowType: FlowType };
 let drawingConnectorStartPort: { x: number; y: number };
 let drawingConnectorEndPort: { x: number; y: number };
 
@@ -132,9 +141,39 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 								key: "osp",
 								classes: [c.px_1],
 								onpointerdown: (event: PointerEvent) => {
+									connectingStartPort = {
+										nodeId: node.id,
+										portId: node.outputSequencePorts[0].id,
+										portType: "sequence",
+										flowType: "output"
+									};
 									startConnect(event);
 								},
-								onpointerup: (event: PointerEvent) => {}
+								onpointerup: (event: PointerEvent) => {
+									if (!isConnecting) {
+										return;
+									}
+
+									// 连接线有效校验：
+									// 1. 端口不能自己连接自己
+									if (
+										node.id === connectingStartPort.nodeId &&
+										node.outputSequencePorts[0].id === connectingStartPort.portId
+									) {
+										return;
+									}
+
+									// startPort 对应起始节点的 output, endPort 对应终止节点的 input
+									const startPort: PortPosition = {
+										nodeId: node.id,
+										portId: node.outputSequencePorts[0].id
+									};
+									const endPort: PortPosition = {
+										nodeId: connectingStartPort.nodeId,
+										portId: connectingStartPort.portId
+									};
+									executor(addConnectorProcess)({ startPort, endPort });
+								}
 							},
 							[w(FontAwesomeIcon, { icon: "caret-right" })]
 						)
@@ -151,9 +190,36 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 									key: "odp",
 									classes: [c.px_1, css.dataPointIcon],
 									onpointerdown: (event: PointerEvent) => {
+										connectingStartPort = {
+											nodeId: node.id,
+											portId: item.id,
+											portType: "data",
+											flowType: "output"
+										};
 										startConnect(event);
 									},
-									onpointerup: (event: PointerEvent) => {}
+									onpointerup: (event: PointerEvent) => {
+										if (!isConnecting) {
+											return;
+										}
+
+										// 连接线有效校验：
+										// 1. 端口不能自己连接自己
+										if (
+											node.id === connectingStartPort.nodeId &&
+											item.id === connectingStartPort.portId
+										) {
+											return;
+										}
+
+										// startPort 对应起始节点的 output, endPort 对应终止节点的 input
+										const startPort: PortPosition = { nodeId: node.id, portId: item.id };
+										const endPort: PortPosition = {
+											nodeId: connectingStartPort.nodeId,
+											portId: connectingStartPort.portId
+										};
+										executor(addConnectorProcess)({ startPort, endPort });
+									}
 								},
 								[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
 							)
@@ -206,9 +272,39 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 								key: "isp",
 								classes: [c.px_1],
 								onpointerdown: (event: PointerEvent) => {
+									connectingStartPort = {
+										nodeId: node.id,
+										portId: node.inputSequencePort!.id,
+										portType: "sequence",
+										flowType: "input"
+									};
 									startConnect(event);
 								},
-								onpointerup: (event: PointerEvent) => {}
+								onpointerup: (event: PointerEvent) => {
+									if (!isConnecting) {
+										return;
+									}
+
+									// 连接线有效校验：
+									// 1. 端口不能自己连接自己
+									if (
+										node.id === connectingStartPort.nodeId &&
+										node.inputSequencePort!.id === connectingStartPort.portId
+									) {
+										return;
+									}
+
+									// startPort 对应起始节点的 output, endPort 对应终止节点的 input
+									const startPort: PortPosition = {
+										nodeId: connectingStartPort.nodeId,
+										portId: connectingStartPort.portId
+									};
+									const endPort: PortPosition = {
+										nodeId: node.id,
+										portId: node.inputSequencePort!.id
+									};
+									executor(addConnectorProcess)({ startPort, endPort });
+								}
 							},
 							[w(FontAwesomeIcon, { icon: "caret-right" })]
 						),
@@ -219,9 +315,39 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 								key: "osp",
 								classes: [c.px_1],
 								onpointerdown: (event: PointerEvent) => {
+									connectingStartPort = {
+										nodeId: node.id,
+										portId: node.outputSequencePorts[0].id,
+										portType: "sequence",
+										flowType: "output"
+									};
 									startConnect(event);
 								},
-								onpointerup: (event: PointerEvent) => {}
+								onpointerup: (event: PointerEvent) => {
+									if (!isConnecting) {
+										return;
+									}
+
+									// 连接线有效校验：
+									// 1. 端口不能自己连接自己
+									if (
+										node.id === connectingStartPort.nodeId &&
+										node.outputSequencePorts[0].id === connectingStartPort.portId
+									) {
+										return;
+									}
+
+									// startPort 对应起始节点的 output, endPort 对应终止节点的 input
+									const startPort: PortPosition = {
+										nodeId: connectingStartPort.nodeId,
+										portId: connectingStartPort.portId
+									};
+									const endPort: PortPosition = {
+										nodeId: node.id,
+										portId: node.outputSequencePorts[0].id
+									};
+									executor(addConnectorProcess)({ startPort, endPort });
+								}
 							},
 							[w(FontAwesomeIcon, { icon: "caret-right" })]
 						)
@@ -237,9 +363,36 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 										key: "idp",
 										classes: [c.px_1, css.dataPointIcon],
 										onpointerdown: (event: PointerEvent) => {
+											connectingStartPort = {
+												nodeId: node.id,
+												portId: item.id,
+												portType: "data",
+												flowType: "input"
+											};
 											startConnect(event);
 										},
-										onpointerup: (event: PointerEvent) => {}
+										onpointerup: (event: PointerEvent) => {
+											if (!isConnecting) {
+												return;
+											}
+
+											// 连接线有效校验：
+											// 1. 端口不能自己连接自己
+											if (
+												node.id === connectingStartPort.nodeId &&
+												item.id === connectingStartPort.portId
+											) {
+												return;
+											}
+
+											// startPort 对应起始节点的 output, endPort 对应终止节点的 input
+											const startPort: PortPosition = {
+												nodeId: connectingStartPort.nodeId,
+												portId: connectingStartPort.portId
+											};
+											const endPort: PortPosition = { nodeId: node.id, portId: item.id };
+											executor(addConnectorProcess)({ startPort, endPort });
+										}
 									},
 									[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
 								)
@@ -267,9 +420,36 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 									key: "odp",
 									classes: [c.px_1, css.dataPointIcon],
 									onpointerdown: (event: PointerEvent) => {
+										connectingStartPort = {
+											nodeId: node.id,
+											portId: item.id,
+											portType: "data",
+											flowType: "output"
+										};
 										startConnect(event);
 									},
-									onpointerup: (event: PointerEvent) => {}
+									onpointerup: (event: PointerEvent) => {
+										if (!isConnecting) {
+											return;
+										}
+
+										// 连接线有效校验：
+										// 1. 端口不能自己连接自己
+										if (
+											node.id === connectingStartPort.nodeId &&
+											item.id === connectingStartPort.portId
+										) {
+											return;
+										}
+
+										// startPort 对应起始节点的 output, endPort 对应终止节点的 input
+										const startPort: PortPosition = { nodeId: node.id, portId: item.id };
+										const endPort: PortPosition = {
+											nodeId: connectingStartPort.nodeId,
+											portId: connectingStartPort.portId
+										};
+										executor(addConnectorProcess)({ startPort, endPort });
+									}
 								},
 								[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
 							)
