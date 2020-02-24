@@ -11,7 +11,11 @@ import { PageFunction, State } from "designer-core/interfaces";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import store from "designer-core/store";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
-import { activeFunctionNodeProcess, addConnectorProcess } from "../../../../../../src/processes/pageFunctionProcesses";
+import {
+	activeFunctionNodeProcess,
+	addSequenceConnectorProcess,
+	addDataConnectorProcess
+} from "../../../../../../src/processes/pageFunctionProcesses";
 import { stub } from "sinon";
 import { add } from "@dojo/framework/stores/state/operations";
 
@@ -1363,8 +1367,10 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addSequenceConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub]
+		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		// 先点击节点上的序列输出端口
@@ -1372,7 +1378,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		h.trigger("@12 @isp", "onpointerup", { clientX: 10, clientY: 20 });
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.calledOnce);
+		assert.isTrue(addSequenceConnectorProcessStub.calledOnce);
 	});
 
 	it("can connect - SetData node's input sequence port to Function node's output sequence port", () => {
@@ -1432,8 +1438,10 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addSequenceConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub]
+		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@12 @isp", "onpointerdown", { clientX: 10, clientY: 20 });
@@ -1441,7 +1449,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.calledOnce);
+		assert.isTrue(addSequenceConnectorProcessStub.calledOnce);
 	});
 
 	it("can connect - SetData node's input sequence port to SetData node's output sequence port", () => {
@@ -1505,8 +1513,10 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addSequenceConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub]
+		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@12 @isp", "onpointerdown", { clientX: 10, clientY: 20 });
@@ -1514,7 +1524,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.calledOnce);
+		assert.isTrue(addSequenceConnectorProcessStub.calledOnce);
 	});
 
 	it("can connect - Function node's output data port to SetData node's input data port", () => {
@@ -1567,8 +1577,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addDataConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addDataConnectorProcess, addDataConnectorProcessStub]]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@11 @odp", "onpointerdown", { clientX: 0, clientY: 0 });
@@ -1576,7 +1586,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.calledOnce);
+		assert.isTrue(addDataConnectorProcessStub.calledOnce);
 	});
 
 	it("can connect - SetData node's input data port to Function node's output data port", () => {
@@ -1629,8 +1639,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addDataConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addDataConnectorProcess, addDataConnectorProcessStub]]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@21 @idp", "onpointerdown", { clientX: 10, clientY: 20 });
@@ -1638,7 +1648,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.calledOnce);
+		assert.isTrue(addDataConnectorProcessStub.calledOnce);
 	});
 
 	it("can connect - SetData node's input data port to GetData node's output data port", () => {
@@ -1691,8 +1701,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addDataConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addDataConnectorProcess, addDataConnectorProcessStub]]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@21 @idp", "onpointerdown", { clientX: 10, clientY: 20 });
@@ -1700,7 +1710,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.calledOnce);
+		assert.isTrue(addDataConnectorProcessStub.calledOnce);
 	});
 
 	// 1. sequence port 与 data port 不能互连
@@ -1738,8 +1748,10 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addSequenceConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub]
+		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		// 先点击节点上的序列输出端口
@@ -1747,7 +1759,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		h.trigger("@osp", "onpointerup", { clientX: 10, clientY: 20 });
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.notCalled);
+		assert.isTrue(addSequenceConnectorProcessStub.notCalled);
 	});
 
 	it("can not connect self - FlowControl node's output data port", () => {
@@ -1781,8 +1793,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addDataConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addDataConnectorProcess, addDataConnectorProcessStub]]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		// 先点击节点上的序列输出端口
@@ -1790,7 +1802,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		h.trigger("@odp", "onpointerup", { clientX: 10, clientY: 20 });
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.notCalled);
+		assert.isTrue(addDataConnectorProcessStub.notCalled);
 	});
 
 	it("can not connect self - Data node's output sequence port", () => {
@@ -1819,8 +1831,10 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addSequenceConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub]
+		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@osp", "onpointerdown", { clientX: 0, clientY: 0 });
@@ -1828,7 +1842,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.notCalled);
+		assert.isTrue(addSequenceConnectorProcessStub.notCalled);
 	});
 
 	it("can not connect self - Data node's input sequence port", () => {
@@ -1857,8 +1871,10 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addSequenceConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub]
+		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@isp", "onpointerdown", { clientX: 0, clientY: 0 });
@@ -1866,7 +1882,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.notCalled);
+		assert.isTrue(addSequenceConnectorProcessStub.notCalled);
 	});
 
 	it("can not connect self - Data node's output data port", () => {
@@ -1895,8 +1911,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addDataConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addDataConnectorProcess, addDataConnectorProcessStub]]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@odp", "onpointerdown", { clientX: 0, clientY: 0 });
@@ -1904,7 +1920,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.notCalled);
+		assert.isTrue(addDataConnectorProcessStub.notCalled);
 	});
 
 	it("can not connect self - Data node's input data port", () => {
@@ -1934,8 +1950,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addDataConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addDataConnectorProcess, addDataConnectorProcessStub]]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@idp", "onpointerdown", { clientX: 0, clientY: 0 });
@@ -1943,7 +1959,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.notCalled);
+		assert.isTrue(addDataConnectorProcessStub.notCalled);
 	});
 
 	it("can not connect two Function nodes - Function node's output sequence port to Function node's output sequence port", () => {
@@ -1987,8 +2003,12 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addSequenceConnectorProcessStub = stub();
+		const addDataConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
+			[addDataConnectorProcess, addDataConnectorProcessStub]
+		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@11 @osp", "onpointerdown", { clientX: 0, clientY: 0 });
@@ -1996,7 +2016,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.notCalled);
+		assert.isTrue(addSequenceConnectorProcessStub.notCalled);
+		assert.isTrue(addDataConnectorProcessStub.notCalled);
 	});
 
 	it("can not connect two Function nodes - Function node's output sequence port to Function node's output data port", () => {
@@ -2046,8 +2067,12 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addSequenceConnectorProcessStub = stub();
+		const addDataConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
+			[addDataConnectorProcess, addDataConnectorProcessStub]
+		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@11 @osp", "onpointerdown", { clientX: 0, clientY: 0 });
@@ -2055,7 +2080,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.notCalled);
+		assert.isTrue(addSequenceConnectorProcessStub.notCalled);
+		assert.isTrue(addDataConnectorProcessStub.notCalled);
 	});
 
 	it("can not connect two Function nodes - Function node's output data port to Function node's output sequence port", () => {
@@ -2105,8 +2131,12 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addSequenceConnectorProcessStub = stub();
+		const addDataConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
+			[addDataConnectorProcess, addDataConnectorProcessStub]
+		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@21 @odp", "onpointerdown", { clientX: 0, clientY: 0 });
@@ -2114,7 +2144,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.notCalled);
+		assert.isTrue(addSequenceConnectorProcessStub.notCalled);
+		assert.isTrue(addDataConnectorProcessStub.notCalled);
 	});
 
 	it("can not connect two Data nodes - Data node's output sequence port to Data node's output sequence port", () => {
@@ -2160,8 +2191,12 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addSequenceConnectorProcessStub = stub();
+		const addDataConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
+			[addDataConnectorProcess, addDataConnectorProcessStub]
+		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@11 @osp", "onpointerdown", { clientX: 0, clientY: 0 });
@@ -2169,7 +2204,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.notCalled);
+		assert.isTrue(addSequenceConnectorProcessStub.notCalled);
+		assert.isTrue(addDataConnectorProcessStub.notCalled);
 	});
 
 	it("can not connect two Data nodes - Data node's input sequence port to Data node's input sequence port", () => {
@@ -2215,8 +2251,12 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addSequenceConnectorProcessStub = stub();
+		const addDataConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
+			[addDataConnectorProcess, addDataConnectorProcessStub]
+		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@11 @isp", "onpointerdown", { clientX: 0, clientY: 0 });
@@ -2224,7 +2264,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.notCalled);
+		assert.isTrue(addSequenceConnectorProcessStub.notCalled);
+		assert.isTrue(addDataConnectorProcessStub.notCalled);
 	});
 
 	it("can not connect two Data nodes - Data node's input sequence port to Data node's input data port", () => {
@@ -2277,8 +2318,12 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addSequenceConnectorProcessStub = stub();
+		const addDataConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
+			[addDataConnectorProcess, addDataConnectorProcessStub]
+		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@11 @isp", "onpointerdown", { clientX: 0, clientY: 0 });
@@ -2286,7 +2331,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.notCalled);
+		assert.isTrue(addSequenceConnectorProcessStub.notCalled);
+		assert.isTrue(addDataConnectorProcessStub.notCalled);
 	});
 
 	it("can not connect two Data nodes - Data node's input sequence port to Data node's output data port", () => {
@@ -2338,8 +2384,12 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addSequenceConnectorProcessStub = stub();
+		const addDataConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
+			[addDataConnectorProcess, addDataConnectorProcessStub]
+		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@11 @isp", "onpointerdown", { clientX: 0, clientY: 0 });
@@ -2347,7 +2397,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.notCalled);
+		assert.isTrue(addSequenceConnectorProcessStub.notCalled);
+		assert.isTrue(addDataConnectorProcessStub.notCalled);
 	});
 
 	it("can not connect two Data nodes - Data node's output sequence port to Data node's input data port", () => {
@@ -2400,8 +2451,12 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addSequenceConnectorProcessStub = stub();
+		const addDataConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
+			[addDataConnectorProcess, addDataConnectorProcessStub]
+		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@11 @osp", "onpointerdown", { clientX: 0, clientY: 0 });
@@ -2409,7 +2464,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.notCalled);
+		assert.isTrue(addSequenceConnectorProcessStub.notCalled);
+		assert.isTrue(addDataConnectorProcessStub.notCalled);
 	});
 
 	it("can not connect two Data nodes - Data node's output sequence port to Data node's output data port", () => {
@@ -2461,8 +2517,12 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addSequenceConnectorProcessStub = stub();
+		const addDataConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
+			[addDataConnectorProcess, addDataConnectorProcessStub]
+		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@11 @osp", "onpointerdown", { clientX: 0, clientY: 0 });
@@ -2470,7 +2530,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.notCalled);
+		assert.isTrue(addSequenceConnectorProcessStub.notCalled);
+		assert.isTrue(addDataConnectorProcessStub.notCalled);
 	});
 
 	it("can not connect two Data nodes - Data node's output data port to Data node's output sequence port", () => {
@@ -2528,8 +2589,12 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addSequenceConnectorProcessStub = stub();
+		const addDataConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
+			[addDataConnectorProcess, addDataConnectorProcessStub]
+		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@11 @odp", "onpointerdown", { clientX: 0, clientY: 0 });
@@ -2537,7 +2602,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.notCalled);
+		assert.isTrue(addSequenceConnectorProcessStub.notCalled);
+		assert.isTrue(addDataConnectorProcessStub.notCalled);
 	});
 
 	it("can not connect two Data nodes - Data node's output data port to Data node's input sequence port", () => {
@@ -2595,8 +2661,12 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addSequenceConnectorProcessStub = stub();
+		const addDataConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
+			[addDataConnectorProcess, addDataConnectorProcessStub]
+		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@11 @odp", "onpointerdown", { clientX: 0, clientY: 0 });
@@ -2604,7 +2674,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.notCalled);
+		assert.isTrue(addSequenceConnectorProcessStub.notCalled);
+		assert.isTrue(addDataConnectorProcessStub.notCalled);
 	});
 
 	it("can not connect two Data nodes - Data node's output data port to Data node's output data port", () => {
@@ -2662,8 +2733,12 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addSequenceConnectorProcessStub = stub();
+		const addDataConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
+			[addDataConnectorProcess, addDataConnectorProcessStub]
+		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@11 @odp", "onpointerdown", { clientX: 0, clientY: 0 });
@@ -2671,7 +2746,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.notCalled);
+		assert.isTrue(addSequenceConnectorProcessStub.notCalled);
+		assert.isTrue(addDataConnectorProcessStub.notCalled);
 	});
 
 	it("can not connect two Data nodes - Data node's input data port to Data node's output sequence port", () => {
@@ -2730,8 +2806,12 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addSequenceConnectorProcessStub = stub();
+		const addDataConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
+			[addDataConnectorProcess, addDataConnectorProcessStub]
+		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@11 @idp", "onpointerdown", { clientX: 0, clientY: 0 });
@@ -2739,7 +2819,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.notCalled);
+		assert.isTrue(addSequenceConnectorProcessStub.notCalled);
+		assert.isTrue(addDataConnectorProcessStub.notCalled);
 	});
 
 	it("can not connect two Data nodes - Data node's input data port to Data node's input sequence port", () => {
@@ -2798,8 +2879,12 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addSequenceConnectorProcessStub = stub();
+		const addDataConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
+			[addDataConnectorProcess, addDataConnectorProcessStub]
+		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@11 @idp", "onpointerdown", { clientX: 0, clientY: 0 });
@@ -2807,7 +2892,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.notCalled);
+		assert.isTrue(addSequenceConnectorProcessStub.notCalled);
+		assert.isTrue(addDataConnectorProcessStub.notCalled);
 	});
 
 	it("can not connect two Data nodes - Data node's input data port to Data node's input data port", () => {
@@ -2867,8 +2953,12 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			dataConnections: []
 		};
 
-		const addConnectorProcessStub = stub();
-		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const addSequenceConnectorProcessStub = stub();
+		const addDataConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
+			[addDataConnectorProcess, addDataConnectorProcessStub]
+		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@11 @idp", "onpointerdown", { clientX: 0, clientY: 0 });
@@ -2876,6 +2966,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		h.trigger("@root", "onpointerup");
 
-		assert.isTrue(addConnectorProcessStub.notCalled);
+		assert.isTrue(addSequenceConnectorProcessStub.notCalled);
+		assert.isTrue(addDataConnectorProcessStub.notCalled);
 	});
 });

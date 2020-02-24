@@ -7,7 +7,8 @@ import store from "designer-core/store";
 import {
 	activeFunctionNodeProcess,
 	moveActiveFunctionNodeProcess,
-	addConnectorProcess
+	addSequenceConnectorProcess,
+	addDataConnectorProcess
 } from "../../../../processes/pageFunctionProcesses";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import { find } from "@dojo/framework/shim/array";
@@ -179,7 +180,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 										nodeId: connectingStartPort.nodeId,
 										portId: connectingStartPort.portId
 									};
-									executor(addConnectorProcess)({ startPort, endPort });
+									executor(addSequenceConnectorProcess)({ startPort, endPort });
 								}
 							},
 							[w(FontAwesomeIcon, { icon: "caret-right" })]
@@ -232,7 +233,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 											nodeId: connectingStartPort.nodeId,
 											portId: connectingStartPort.portId
 										};
-										executor(addConnectorProcess)({ startPort, endPort });
+										executor(addDataConnectorProcess)({ startPort, endPort });
 									}
 								},
 								[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
@@ -324,7 +325,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 										nodeId: node.id,
 										portId: node.inputSequencePort!.id
 									};
-									executor(addConnectorProcess)({ startPort, endPort });
+									executor(addSequenceConnectorProcess)({ startPort, endPort });
 								}
 							},
 							[w(FontAwesomeIcon, { icon: "caret-right" })]
@@ -374,7 +375,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 										nodeId: node.id,
 										portId: node.outputSequencePorts[0].id
 									};
-									executor(addConnectorProcess)({ startPort, endPort });
+									executor(addSequenceConnectorProcess)({ startPort, endPort });
 								}
 							},
 							[w(FontAwesomeIcon, { icon: "caret-right" })]
@@ -426,7 +427,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 												portId: connectingStartPort.portId
 											};
 											const endPort: PortPosition = { nodeId: node.id, portId: item.id };
-											executor(addConnectorProcess)({ startPort, endPort });
+											executor(addDataConnectorProcess)({ startPort, endPort });
 										}
 									},
 									[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
@@ -490,7 +491,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 											nodeId: connectingStartPort.nodeId,
 											portId: connectingStartPort.portId
 										};
-										executor(addConnectorProcess)({ startPort, endPort });
+										executor(addDataConnectorProcess)({ startPort, endPort });
 									}
 								},
 								[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]

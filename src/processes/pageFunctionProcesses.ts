@@ -76,7 +76,13 @@ const moveActiveFunctionNodeCommand = commandFactory<{ left: number; top: number
 	}
 );
 
-const addConnectorCommand = commandFactory<ConnectorPayload>(({ get, path, payload: { startPort, endPort } }) => {});
+const addSequenceConnectorCommand = commandFactory<ConnectorPayload>(
+	({ get, path, payload: { startPort, endPort } }) => {}
+);
+
+const addDataConnectorCommand = commandFactory<ConnectorPayload>(
+	({ get, path, payload: { startPort, endPort } }) => {}
+);
 
 export const newFunctionProcess = createProcess("new-function", [newFunctionCommand]);
 export const activeFunctionProcess = createProcess("active-function", [activeFunctionCommand]);
@@ -84,4 +90,5 @@ export const activeFunctionNodeProcess = createProcess("active-function-node", [
 export const moveActiveFunctionNodeProcess = createProcess("move-active-function-node", [
 	moveActiveFunctionNodeCommand
 ]);
-export const addConnectorProcess = createProcess("add-connector", [addConnectorCommand]);
+export const addSequenceConnectorProcess = createProcess("add-sequence-connector", [addSequenceConnectorCommand]);
+export const addDataConnectorProcess = createProcess("add-data-connector", [addDataConnectorCommand]);
