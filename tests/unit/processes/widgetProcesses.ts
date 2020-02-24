@@ -13,7 +13,7 @@ import { config } from "../../../src/config";
 const fetchStub = stub();
 global.fetch = fetchStub;
 
-describe("widgetProcesses", () => {
+describe("processes/widgetProcesses", () => {
 	beforeEach(() => {
 		fetchStub.reset();
 	});

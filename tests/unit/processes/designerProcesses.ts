@@ -6,7 +6,7 @@ import { add } from "@dojo/framework/stores/state/operations";
 const { describe, it, beforeEach } = intern.getInterface("bdd");
 const { assert } = intern.getPlugin("chai");
 
-describe("designerProcesses", () => {
+describe("processes/designerProcesses", () => {
 	let store: Store<State>;
 
 	beforeEach(() => {

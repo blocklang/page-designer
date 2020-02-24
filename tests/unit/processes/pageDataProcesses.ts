@@ -14,7 +14,7 @@ import Store from "@dojo/framework/stores/Store";
 import { State } from "designer-core/interfaces";
 import { add } from "@dojo/framework/stores/state/operations";
 
-describe("dataProcesses", () => {
+describe("processes/pageDataProcesses", () => {
 	let store: Store<State>;
 
 	beforeEach(() => {
