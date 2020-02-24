@@ -162,6 +162,13 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 									) {
 										return;
 									}
+									// 2. 本端口只能与 sequence 型的 input 端口连接
+									if (
+										connectingStartPort.portType !== "sequence" ||
+										connectingStartPort.flowType !== "input"
+									) {
+										return;
+									}
 
 									// startPort 对应起始节点的 output, endPort 对应终止节点的 input
 									const startPort: PortPosition = {
@@ -208,6 +215,13 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 										if (
 											node.id === connectingStartPort.nodeId &&
 											item.id === connectingStartPort.portId
+										) {
+											return;
+										}
+										// 2. 本端口只能与 data 型的 input 端口连接
+										if (
+											connectingStartPort.portType !== "data" ||
+											connectingStartPort.flowType !== "input"
 										) {
 											return;
 										}
@@ -293,6 +307,13 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 									) {
 										return;
 									}
+									// 2. 本端口只能与 sequence 类型的 output 端口连接
+									if (
+										connectingStartPort.portType !== "sequence" ||
+										connectingStartPort.flowType !== "output"
+									) {
+										return;
+									}
 
 									// startPort 对应起始节点的 output, endPort 对应终止节点的 input
 									const startPort: PortPosition = {
@@ -333,6 +354,13 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 									if (
 										node.id === connectingStartPort.nodeId &&
 										node.outputSequencePorts[0].id === connectingStartPort.portId
+									) {
+										return;
+									}
+									// 2. 本端口只能与 sequence 型的 input 端口连接
+									if (
+										connectingStartPort.portType !== "sequence" ||
+										connectingStartPort.flowType !== "input"
 									) {
 										return;
 									}
@@ -381,6 +409,13 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 											if (
 												node.id === connectingStartPort.nodeId &&
 												item.id === connectingStartPort.portId
+											) {
+												return;
+											}
+											// 2. 本端口只能与 data 型的 output 端口连接
+											if (
+												connectingStartPort.portType !== "data" ||
+												connectingStartPort.flowType !== "output"
 											) {
 												return;
 											}
@@ -438,6 +473,13 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 										if (
 											node.id === connectingStartPort.nodeId &&
 											item.id === connectingStartPort.portId
+										) {
+											return;
+										}
+										// 2. 本端口只能与 data 型的 input 连接
+										if (
+											connectingStartPort.portType !== "data" ||
+											connectingStartPort.flowType !== "input"
 										) {
 											return;
 										}

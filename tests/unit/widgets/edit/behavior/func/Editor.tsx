@@ -1946,33 +1946,936 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		assert.isTrue(addConnectorProcessStub.notCalled);
 	});
 
-	it("can not connect two Function nodes - Function node's output sequence port to Function node's output sequence port", () => {});
+	it("can not connect two Function nodes - Function node's output sequence port to Function node's output sequence port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "函数",
+					text: "onValue",
+					category: "flowControl",
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: []
+				},
+				{
+					id: "21",
+					left: 10,
+					top: 20,
+					caption: "函数",
+					text: "onValue",
+					category: "flowControl",
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
 
-	it("can not connect two Function nodes - Function node's output sequence port to Function node's output data port", () => {});
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-	it("can not connect two Function nodes - Function node's output data port to Function node's output sequence port", () => {});
+		h.trigger("@11 @osp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@21 @osp", "onpointerup", { clientX: 0, clientY: 0 });
 
-	it("can not connect two Data nodes - Data node's output sequence port to Data node's output sequence port", () => {});
+		h.trigger("@root", "onpointerup");
 
-	it("can not connect two Data nodes - Data node's input sequence port to Data node's input sequence port", () => {});
+		assert.isTrue(addConnectorProcessStub.notCalled);
+	});
 
-	it("can not connect two Data nodes - Data node's input sequence port to Data node's input data port", () => {});
+	it("can not connect two Function nodes - Function node's output sequence port to Function node's output data port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "函数",
+					text: "onValue",
+					category: "flowControl",
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: []
+				},
+				{
+					id: "21",
+					left: 10,
+					top: 20,
+					caption: "函数",
+					text: "onValue",
+					category: "flowControl",
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp2",
+							name: "value",
+							type: "string"
+						}
+					]
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
 
-	it("can not connect two Data nodes - Data node's input sequence port to Data node's output data port", () => {});
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-	it("can not connect two Data nodes - Data node's output sequence port to Data node's input data port", () => {});
+		h.trigger("@11 @osp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@21 @odp", "onpointerup", { clientX: 0, clientY: 0 });
 
-	it("can not connect two Data nodes - Data node's output sequence port to Data node's output data port", () => {});
+		h.trigger("@root", "onpointerup");
 
-	it("can not connect two Data nodes - Data node's output data port to Data node's output sequence port", () => {});
+		assert.isTrue(addConnectorProcessStub.notCalled);
+	});
 
-	it("can not connect two Data nodes - Data node's output data port to Data node's input sequence port", () => {});
+	it("can not connect two Function nodes - Function node's output data port to Function node's output sequence port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "函数",
+					text: "onValue",
+					category: "flowControl",
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: []
+				},
+				{
+					id: "21",
+					left: 10,
+					top: 20,
+					caption: "函数",
+					text: "onValue",
+					category: "flowControl",
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp2",
+							name: "value",
+							type: "string"
+						}
+					]
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
 
-	it("can not connect two Data nodes - Data node's output data port to Data node's output data port", () => {});
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-	it("can not connect two Data nodes - Data node's input data port to Data node's output sequence port", () => {});
+		h.trigger("@21 @odp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@11 @osp", "onpointerup", { clientX: 0, clientY: 0 });
 
-	it("can not connect two Data nodes - Data node's input data port to Data node's input sequence port", () => {});
+		h.trigger("@root", "onpointerup");
 
-	it("can not connect two Data nodes - Data node's input data port to Data node's input data port", () => {});
+		assert.isTrue(addConnectorProcessStub.notCalled);
+	});
+
+	it("can not connect two Data nodes - Data node's output sequence port to Data node's output sequence port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp1" },
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: []
+				},
+				{
+					id: "21",
+					left: 10,
+					top: 20,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp2" },
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@11 @osp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@21 @osp", "onpointerup", { clientX: 0, clientY: 0 });
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addConnectorProcessStub.notCalled);
+	});
+
+	it("can not connect two Data nodes - Data node's input sequence port to Data node's input sequence port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp1" },
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: []
+				},
+				{
+					id: "21",
+					left: 10,
+					top: 20,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp2" },
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@11 @isp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@21 @isp", "onpointerup", { clientX: 0, clientY: 0 });
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addConnectorProcessStub.notCalled);
+	});
+
+	it("can not connect two Data nodes - Data node's input sequence port to Data node's input data port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp1" },
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: []
+				},
+				{
+					id: "21",
+					left: 10,
+					top: 20,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp2" },
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [
+						{
+							id: "idp1",
+							name: "value",
+							type: "string",
+							connected: false
+						}
+					],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@11 @isp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@21 @idp", "onpointerup", { clientX: 0, clientY: 0 });
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addConnectorProcessStub.notCalled);
+	});
+
+	it("can not connect two Data nodes - Data node's input sequence port to Data node's output data port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp1" },
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: []
+				},
+				{
+					id: "21",
+					left: 10,
+					top: 20,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp2" },
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp2",
+							name: "value",
+							type: "string"
+						}
+					]
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@11 @isp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@21 @odp", "onpointerup", { clientX: 0, clientY: 0 });
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addConnectorProcessStub.notCalled);
+	});
+
+	it("can not connect two Data nodes - Data node's output sequence port to Data node's input data port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp1" },
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: []
+				},
+				{
+					id: "21",
+					left: 10,
+					top: 20,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp2" },
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [
+						{
+							id: "idp2",
+							name: "value",
+							type: "string",
+							connected: false
+						}
+					],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@11 @osp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@21 @idp", "onpointerup", { clientX: 0, clientY: 0 });
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addConnectorProcessStub.notCalled);
+	});
+
+	it("can not connect two Data nodes - Data node's output sequence port to Data node's output data port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp1" },
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: []
+				},
+				{
+					id: "21",
+					left: 10,
+					top: 20,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp2" },
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp2",
+							name: "value",
+							type: "string"
+						}
+					]
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@11 @osp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@21 @odp", "onpointerup", { clientX: 0, clientY: 0 });
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addConnectorProcessStub.notCalled);
+	});
+
+	it("can not connect two Data nodes - Data node's output data port to Data node's output sequence port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp1" },
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp1",
+							name: "value",
+							type: "string"
+						}
+					]
+				},
+				{
+					id: "21",
+					left: 10,
+					top: 20,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp2" },
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp2",
+							name: "value",
+							type: "string"
+						}
+					]
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@11 @odp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@21 @odp", "onpointerup", { clientX: 0, clientY: 0 });
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addConnectorProcessStub.notCalled);
+	});
+
+	it("can not connect two Data nodes - Data node's output data port to Data node's input sequence port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp1" },
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp1",
+							name: "value",
+							type: "string"
+						}
+					]
+				},
+				{
+					id: "21",
+					left: 10,
+					top: 20,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp2" },
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp2",
+							name: "value",
+							type: "string"
+						}
+					]
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@11 @odp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@21 @isp", "onpointerup", { clientX: 0, clientY: 0 });
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addConnectorProcessStub.notCalled);
+	});
+
+	it("can not connect two Data nodes - Data node's output data port to Data node's output data port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp1" },
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp1",
+							name: "value",
+							type: "string"
+						}
+					]
+				},
+				{
+					id: "21",
+					left: 10,
+					top: 20,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp2" },
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp2",
+							name: "value",
+							type: "string"
+						}
+					]
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@11 @odp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@21 @odp", "onpointerup", { clientX: 0, clientY: 0 });
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addConnectorProcessStub.notCalled);
+	});
+
+	it("can not connect two Data nodes - Data node's input data port to Data node's output sequence port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp1" },
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [
+						{
+							id: "idp1",
+							name: "value",
+							type: "string",
+							connected: false
+						}
+					],
+					outputDataPorts: []
+				},
+				{
+					id: "21",
+					left: 10,
+					top: 20,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp2" },
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp2",
+							name: "value",
+							type: "string"
+						}
+					]
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@11 @idp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@21 @osp", "onpointerup", { clientX: 0, clientY: 0 });
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addConnectorProcessStub.notCalled);
+	});
+
+	it("can not connect two Data nodes - Data node's input data port to Data node's input sequence port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp1" },
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [
+						{
+							id: "idp1",
+							name: "value",
+							type: "string",
+							connected: false
+						}
+					],
+					outputDataPorts: []
+				},
+				{
+					id: "21",
+					left: 10,
+					top: 20,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp2" },
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp2",
+							name: "value",
+							type: "string"
+						}
+					]
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@11 @idp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@21 @isp", "onpointerup", { clientX: 0, clientY: 0 });
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addConnectorProcessStub.notCalled);
+	});
+
+	it("can not connect two Data nodes - Data node's input data port to Data node's input data port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp1" },
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [
+						{
+							id: "idp1",
+							name: "value",
+							type: "string",
+							connected: false
+						}
+					],
+					outputDataPorts: []
+				},
+				{
+					id: "21",
+					left: 10,
+					top: 20,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp2" },
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [
+						{
+							id: "idp2",
+							name: "value",
+							type: "string",
+							connected: false
+						}
+					],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addConnectorProcess, addConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@11 @idp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@21 @idp", "onpointerup", { clientX: 0, clientY: 0 });
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addConnectorProcessStub.notCalled);
+	});
 });
