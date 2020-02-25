@@ -163,7 +163,12 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 			"div",
 			{
 				key: node.id,
-				classes: [c.border, node.id === selectedFunctionNodeId ? c.border_primary : undefined, css.node],
+				classes: [
+					c.border,
+					node.id === selectedFunctionNodeId ? c.border_primary : undefined,
+					c.bg_light,
+					css.node
+				],
 				styles: { top: `${node.top}px`, left: `${node.left}px` },
 				onpointerdown: (event: PointerEvent) => {
 					// 用于选中节点
@@ -269,7 +274,12 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 			"div",
 			{
 				key: node.id,
-				classes: [c.border, node.id === selectedFunctionNodeId ? c.border_primary : undefined, css.node],
+				classes: [
+					c.border,
+					node.id === selectedFunctionNodeId ? c.border_primary : undefined,
+					c.bg_light,
+					css.node
+				],
 				styles: { top: `${node.top}px`, left: `${node.left}px` },
 				// FIXME: 抽取出一个事件 onSelectNode?
 				onpointerdown: (event: PointerEvent) => {
