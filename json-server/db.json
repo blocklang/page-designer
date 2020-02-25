@@ -145,7 +145,7 @@
               "text": "onValue",
               "category": "flowControl",
               "outputSequencePorts": [{
-                "id": "otp1",
+                "id": "osp1",
                 "text": ""
               }],
               "inputDataPorts": [],
@@ -192,7 +192,12 @@
               }]
             }
           ],
-          "sequenceConnections": [],
+          "sequenceConnections": [{
+            "fromNode": "1",
+            "fromOutput": "osp1",
+            "toNode": "2",
+            "toInput": "isp2"
+          }],
           "dataConnections": []
         }
       ]

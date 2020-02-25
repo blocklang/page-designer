@@ -4,6 +4,7 @@ import { FunctionDeclaration, PageFunction } from "designer-core/interfaces";
 import { add, replace } from "@dojo/framework/stores/state/operations";
 import { findIndex } from "@dojo/framework/shim/array";
 import { ConnectorPayload } from "./interfaces";
+import { uuid } from "@dojo/framework/core/util";
 
 const newFunctionCommand = commandFactory<{ functionDeclaration: FunctionDeclaration }>(
 	({ get, path, at, payload: { functionDeclaration } }) => {
@@ -77,11 +78,65 @@ const moveActiveFunctionNodeCommand = commandFactory<{ left: number; top: number
 );
 
 const addSequenceConnectorCommand = commandFactory<ConnectorPayload>(
-	({ get, path, payload: { startPort, endPort } }) => {}
+	({ get, path, at, payload: { startPort, endPort } }) => {
+		const selectedFunctionId = get(path("selectedFunctionId"));
+		const functions = get(path("pageModel", "functions"));
+		const activeFunctionIndex = findIndex(functions, (func) => func.id === selectedFunctionId);
+		if (activeFunctionIndex === -1) {
+			return;
+		}
+
+		const sequenceConnectionLength = functions[activeFunctionIndex].sequenceConnections
+			? functions[activeFunctionIndex].sequenceConnections.length
+			: 0;
+
+		return [
+			add(
+				at(
+					path(at(path("pageModel", "functions"), activeFunctionIndex), "sequenceConnections"),
+					sequenceConnectionLength
+				),
+				{
+					id: uuid().replace("-", ""),
+					fromNode: startPort.nodeId,
+					fromOutput: startPort.portId,
+					toNode: endPort.nodeId,
+					toInput: endPort.portId
+				}
+			)
+		];
+	}
 );
 
 const addDataConnectorCommand = commandFactory<ConnectorPayload>(
-	({ get, path, payload: { startPort, endPort } }) => {}
+	({ get, path, at, payload: { startPort, endPort } }) => {
+		const selectedFunctionId = get(path("selectedFunctionId"));
+		const functions = get(path("pageModel", "functions"));
+		const activeFunctionIndex = findIndex(functions, (func) => func.id === selectedFunctionId);
+		if (activeFunctionIndex === -1) {
+			return;
+		}
+
+		const dataConnectionLength = functions[activeFunctionIndex].dataConnections
+			? functions[activeFunctionIndex].sequenceConnections.length
+			: 0;
+
+		return [
+			add(
+				at(
+					path(at(path("pageModel", "functions"), activeFunctionIndex), "dataConnections"),
+					dataConnectionLength
+				),
+				{
+					id: uuid().replace("-", ""),
+					fromNode: startPort.nodeId,
+					fromOutput: startPort.portId,
+					toNode: endPort.nodeId,
+					toInput: endPort.portId
+				}
+			)
+		];
+	}
 );
 
 export const newFunctionProcess = createProcess("new-function", [newFunctionCommand]);

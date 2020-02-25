@@ -53,7 +53,13 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							<span classes={[css.blankPort]}></span>
 						</div>
 						<div>onValue</div>
-						<div key="osp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div
+							key="osp1"
+							classes={[c.px_1]}
+							onpointerdown={() => {}}
+							onpointerenter={() => {}}
+							onpointerleave={() => {}}
+						>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
@@ -109,7 +115,13 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							<span classes={[css.blankPort]}></span>
 						</div>
 						<div>onValue</div>
-						<div key="osp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div
+							key="osp1"
+							classes={[c.px_1]}
+							onpointerdown={() => {}}
+							onpointerenter={() => {}}
+							onpointerleave={() => {}}
+						>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
@@ -121,10 +133,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							<span>value</span>
 							<small classes={[c.ml_1, c.font_italic]}>string</small>
 							<span
-								key="odp"
+								key="odp1"
 								classes={[c.px_1, css.dataPointIcon]}
 								onpointerdown={() => {}}
-								onpointerup={() => {}}
+								onpointerenter={() => {}}
+								onpointerleave={() => {}}
 							>
 								<FontAwesomeIcon icon="circle" size="xs" />
 							</span>
@@ -187,7 +200,13 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							<span classes={[css.blankPort]}></span>
 						</div>
 						<div>onValue</div>
-						<div key="osp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div
+							key="osp1"
+							classes={[c.px_1]}
+							onpointerdown={() => {}}
+							onpointerenter={() => {}}
+							onpointerleave={() => {}}
+						>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
@@ -199,10 +218,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							<span>value</span>
 							<small classes={[c.ml_1, c.font_italic]}>string</small>
 							<span
-								key="odp"
+								key="odp1"
 								classes={[c.px_1, css.dataPointIcon]}
 								onpointerdown={() => {}}
-								onpointerup={() => {}}
+								onpointerenter={() => {}}
+								onpointerleave={() => {}}
 							>
 								<FontAwesomeIcon icon="circle" size="xs" />
 							</span>
@@ -216,10 +236,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							<span>value2</span>
 							<small classes={[c.ml_1, c.font_italic]}>string</small>
 							<span
-								key="odp"
+								key="odp2"
 								classes={[c.px_1, css.dataPointIcon]}
 								onpointerdown={() => {}}
-								onpointerup={() => {}}
+								onpointerenter={() => {}}
+								onpointerleave={() => {}}
 							>
 								<FontAwesomeIcon icon="circle" size="xs" />
 							</span>
@@ -286,11 +307,23 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						</span>
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
-						<div key="isp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div
+							key="isp1"
+							classes={[c.px_1]}
+							onpointerdown={() => {}}
+							onpointerenter={() => {}}
+							onpointerleave={() => {}}
+						>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 						<div></div>
-						<div key="osp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div
+							key="osp1"
+							classes={[c.px_1]}
+							onpointerdown={() => {}}
+							onpointerenter={() => {}}
+							onpointerleave={() => {}}
+						>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
@@ -298,10 +331,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						<div classes={[c.d_flex, c.justify_content_start]}>
 							<div classes={[c.d_flex, c.align_items_center]}>
 								<span
-									key="idp"
+									key="idp1"
 									classes={[c.px_1, css.dataPointIcon]}
 									onpointerdown={() => {}}
-									onpointerup={() => {}}
+									onpointerenter={() => {}}
+									onpointerleave={() => {}}
 								>
 									<FontAwesomeIcon icon="circle" size="xs" />
 								</span>
@@ -385,10 +419,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							<span>value</span>
 							<small classes={[c.ml_1, c.font_italic]}>string</small>
 							<span
-								key="odp"
+								key="odp1"
 								classes={[c.px_1, css.dataPointIcon]}
 								onpointerdown={() => {}}
-								onpointerup={() => {}}
+								onpointerenter={() => {}}
+								onpointerleave={() => {}}
 							>
 								<FontAwesomeIcon icon="circle" size="xs" />
 							</span>
@@ -426,6 +461,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		h.expect(nodeAssertion);
 	});
 
+	// 注意 dimension.get(node) 返回的位置都为 0
 	it("show sequence connection", () => {
 		const nodeAssertion = baseAssertion
 			// 以下两个事件专用于在节点间连线。
@@ -446,7 +482,13 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							<span classes={[css.blankPort]}></span>
 						</div>
 						<div>onValue</div>
-						<div key="osp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div
+							key="osp1"
+							classes={[c.px_1]}
+							onpointerdown={() => {}}
+							onpointerenter={() => {}}
+							onpointerleave={() => {}}
+						>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
@@ -464,11 +506,23 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						</span>
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
-						<div key="isp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div
+							key="isp2"
+							classes={[c.px_1]}
+							onpointerdown={() => {}}
+							onpointerenter={() => {}}
+							onpointerleave={() => {}}
+						>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 						<div></div>
-						<div key="osp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div
+							key="osp2"
+							classes={[c.px_1]}
+							onpointerdown={() => {}}
+							onpointerenter={() => {}}
+							onpointerleave={() => {}}
+						>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
@@ -476,12 +530,12 @@ describe("widgets/edit/behavior/func/Editor", () => {
 				<svg
 					key="sc1"
 					classes={[css.svg]}
-					styles={{ left: "2px", top: "3px" }}
-					width="9"
-					height="18"
+					styles={{ left: "0px", top: "0px" }}
+					width="2"
+					height="2"
 					pointer-events="none"
 				>
-					<path d="M0 0 L9 18" fill="none" stroke="#6c757d" stroke-width="2" pointer-events="visibleStroke" />
+					<path d="M0 0 L0 0" fill="none" stroke="#6c757d" stroke-width="2" pointer-events="none" />
 				</svg>
 			]);
 
@@ -498,9 +552,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: "",
-							left: 2,
-							top: 3
+							text: ""
 						}
 					],
 					inputDataPorts: [],
@@ -514,9 +566,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					text: "",
 					category: "data",
 					inputSequencePort: {
-						id: "isp2",
-						left: 11,
-						top: 21
+						id: "isp2"
 					},
 					outputSequencePorts: [
 						{
@@ -567,10 +617,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							<span>value</span>
 							<small classes={[c.ml_1, c.font_italic]}>string</small>
 							<span
-								key="odp"
+								key="odp1"
 								classes={[c.px_1, css.dataPointIcon]}
 								onpointerdown={() => {}}
-								onpointerup={() => {}}
+								onpointerenter={() => {}}
+								onpointerleave={() => {}}
 							>
 								<FontAwesomeIcon icon="circle" size="xs" />
 							</span>
@@ -593,10 +644,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						<div classes={[c.d_flex, c.justify_content_start]}>
 							<div classes={[c.d_flex, c.align_items_center]}>
 								<span
-									key="idp"
+									key="idp2"
 									classes={[c.px_1, css.dataPointIcon]}
 									onpointerdown={() => {}}
-									onpointerup={() => {}}
+									onpointerenter={() => {}}
+									onpointerleave={() => {}}
 								>
 									<FontAwesomeIcon icon="circle" size="xs" />
 								</span>
@@ -619,12 +671,12 @@ describe("widgets/edit/behavior/func/Editor", () => {
 				<svg
 					key="dc1"
 					classes={[css.svg]}
-					styles={{ left: "2px", top: "3px" }}
-					width="9"
-					height="18"
+					styles={{ left: "0px", top: "0px" }}
+					width="2"
+					height="2"
 					pointer-events="none"
 				>
-					<path d="M0 0 L9 18" fill="none" stroke="#6c757d" stroke-width="2" pointer-events="visibleStroke" />
+					<path d="M0 0 L0 0" fill="none" stroke="#6c757d" stroke-width="2" pointer-events="none" />
 				</svg>
 			]);
 
@@ -660,7 +712,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [],
 					inputDataPorts: [
 						{
-							id: "idp1",
+							id: "idp2",
 							name: "set",
 							type: "string",
 							left: 11,
@@ -678,7 +730,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					fromNode: "11",
 					fromOutput: "odp1",
 					toNode: "12",
-					toInput: "idp1"
+					toInput: "idp2"
 				}
 			]
 		};
@@ -707,7 +759,13 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							<span classes={[css.blankPort]}></span>
 						</div>
 						<div>onValue</div>
-						<div key="osp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div
+							key="osp1"
+							classes={[c.px_1]}
+							onpointerdown={() => {}}
+							onpointerenter={() => {}}
+							onpointerleave={() => {}}
+						>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
@@ -778,7 +836,13 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							<span classes={[css.blankPort]}></span>
 						</div>
 						<div>onValue</div>
-						<div key="osp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div
+							key="osp1"
+							classes={[c.px_1]}
+							onpointerdown={() => {}}
+							onpointerenter={() => {}}
+							onpointerleave={() => {}}
+						>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
@@ -791,13 +855,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					height="20"
 					pointer-events="none"
 				>
-					<path
-						d="M0 0 L10 20"
-						fill="none"
-						stroke="#6c757d"
-						stroke-width="2"
-						pointer-events="visibleStroke"
-					/>
+					<path d="M0 0 L10 20" fill="none" stroke="#6c757d" stroke-width="2" pointer-events="none" />
 				</svg>
 			]);
 
@@ -828,7 +886,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		const h = harness(() => <Editor pageFunction={pageFunction} />);
 
 		// 先点击节点上的序列输出端口
-		h.trigger("@osp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@osp1", "onpointerdown", { clientX: 0, clientY: 0 });
 		// 然后触发 canvas 节点上的移动事件
 		h.trigger("@root", "onpointermove", { clientX: 10, clientY: 20 });
 
@@ -858,11 +916,23 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						</span>
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
-						<div key="isp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div
+							key="isp1"
+							classes={[c.px_1]}
+							onpointerdown={() => {}}
+							onpointerenter={() => {}}
+							onpointerleave={() => {}}
+						>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 						<div></div>
-						<div key="osp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div
+							key="osp1"
+							classes={[c.px_1]}
+							onpointerdown={() => {}}
+							onpointerenter={() => {}}
+							onpointerleave={() => {}}
+						>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
@@ -875,13 +945,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					height="20"
 					pointer-events="none"
 				>
-					<path
-						d="M0 0 L10 20"
-						fill="none"
-						stroke="#6c757d"
-						stroke-width="2"
-						pointer-events="visibleStroke"
-					/>
+					<path d="M0 0 L10 20" fill="none" stroke="#6c757d" stroke-width="2" pointer-events="none" />
 				</svg>
 			]);
 
@@ -913,7 +977,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		const h = harness(() => <Editor pageFunction={pageFunction} />);
 
 		// 先点击节点上的序列输出端口
-		h.trigger("@osp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@osp1", "onpointerdown", { clientX: 0, clientY: 0 });
 		// 然后触发 canvas 节点上的移动事件
 		h.trigger("@root", "onpointermove", { clientX: 10, clientY: 20 });
 
@@ -943,11 +1007,23 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						</span>
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
-						<div key="isp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div
+							key="isp1"
+							classes={[c.px_1]}
+							onpointerdown={() => {}}
+							onpointerenter={() => {}}
+							onpointerleave={() => {}}
+						>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 						<div></div>
-						<div key="osp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div
+							key="osp1"
+							classes={[c.px_1]}
+							onpointerdown={() => {}}
+							onpointerenter={() => {}}
+							onpointerleave={() => {}}
+						>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
@@ -960,13 +1036,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					height="20"
 					pointer-events="none"
 				>
-					<path
-						d="M10 20 L0 0"
-						fill="none"
-						stroke="#6c757d"
-						stroke-width="2"
-						pointer-events="visibleStroke"
-					/>
+					<path d="M10 20 L0 0" fill="none" stroke="#6c757d" stroke-width="2" pointer-events="none" />
 				</svg>
 			]);
 
@@ -998,7 +1068,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		const h = harness(() => <Editor pageFunction={pageFunction} />);
 
 		// 先点击节点上的序列输出端口
-		h.trigger("@isp", "onpointerdown", { clientX: 10, clientY: 20 });
+		h.trigger("@isp1", "onpointerdown", { clientX: 10, clientY: 20 });
 		// 然后触发 canvas 节点上的移动事件
 		h.trigger("@root", "onpointermove", { clientX: 0, clientY: 0 });
 
@@ -1032,10 +1102,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							<span>value</span>
 							<small classes={[c.ml_1, c.font_italic]}>string</small>
 							<span
-								key="odp"
+								key="odp1"
 								classes={[c.px_1, css.dataPointIcon]}
 								onpointerdown={() => {}}
-								onpointerup={() => {}}
+								onpointerenter={() => {}}
+								onpointerleave={() => {}}
 							>
 								<FontAwesomeIcon icon="circle" size="xs" />
 							</span>
@@ -1050,13 +1121,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					height="20"
 					pointer-events="none"
 				>
-					<path
-						d="M0 0 L10 20"
-						fill="none"
-						stroke="#6c757d"
-						stroke-width="2"
-						pointer-events="visibleStroke"
-					/>
+					<path d="M0 0 L10 20" fill="none" stroke="#6c757d" stroke-width="2" pointer-events="none" />
 				</svg>
 			]);
 
@@ -1088,7 +1153,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		const h = harness(() => <Editor pageFunction={pageFunction} />);
 
 		// 先点击节点上的序列输出端口
-		h.trigger("@odp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@odp1", "onpointerdown", { clientX: 0, clientY: 0 });
 		// 然后触发 canvas 节点上的移动事件
 		h.trigger("@root", "onpointermove", { clientX: 10, clientY: 20 });
 
@@ -1125,10 +1190,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							<span>value</span>
 							<small classes={[c.ml_1, c.font_italic]}>string</small>
 							<span
-								key="odp"
+								key="odp1"
 								classes={[c.px_1, css.dataPointIcon]}
 								onpointerdown={() => {}}
-								onpointerup={() => {}}
+								onpointerenter={() => {}}
+								onpointerleave={() => {}}
 							>
 								<FontAwesomeIcon icon="circle" size="xs" />
 							</span>
@@ -1143,13 +1209,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					height="20"
 					pointer-events="none"
 				>
-					<path
-						d="M0 0 L10 20"
-						fill="none"
-						stroke="#6c757d"
-						stroke-width="2"
-						pointer-events="visibleStroke"
-					/>
+					<path d="M0 0 L10 20" fill="none" stroke="#6c757d" stroke-width="2" pointer-events="none" />
 				</svg>
 			]);
 
@@ -1181,7 +1241,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		const h = harness(() => <Editor pageFunction={pageFunction} />);
 
 		// 先点击节点上的序列输出端口
-		h.trigger("@odp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@odp1", "onpointerdown", { clientX: 0, clientY: 0 });
 		// 然后触发 canvas 节点上的移动事件
 		h.trigger("@root", "onpointermove", { clientX: 10, clientY: 20 });
 
@@ -1211,11 +1271,23 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						</span>
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
-						<div key="isp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div
+							key="isp1"
+							classes={[c.px_1]}
+							onpointerdown={() => {}}
+							onpointerenter={() => {}}
+							onpointerleave={() => {}}
+						>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 						<div></div>
-						<div key="osp" classes={[c.px_1]} onpointerdown={() => {}} onpointerup={() => {}}>
+						<div
+							key="osp1"
+							classes={[c.px_1]}
+							onpointerdown={() => {}}
+							onpointerenter={() => {}}
+							onpointerleave={() => {}}
+						>
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
@@ -1223,10 +1295,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						<div classes={[c.d_flex, c.justify_content_start]}>
 							<div classes={[c.d_flex, c.align_items_center]}>
 								<span
-									key="idp"
+									key="idp1"
 									classes={[c.px_1, css.dataPointIcon]}
 									onpointerdown={() => {}}
-									onpointerup={() => {}}
+									onpointerenter={() => {}}
+									onpointerleave={() => {}}
 								>
 									<FontAwesomeIcon icon="circle" size="xs" />
 								</span>
@@ -1254,13 +1327,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					height="20"
 					pointer-events="none"
 				>
-					<path
-						d="M0 0 L10 20"
-						fill="none"
-						stroke="#6c757d"
-						stroke-width="2"
-						pointer-events="visibleStroke"
-					/>
+					<path d="M0 0 L10 20" fill="none" stroke="#6c757d" stroke-width="2" pointer-events="none" />
 				</svg>
 			]);
 
@@ -1299,7 +1366,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		const h = harness(() => <Editor pageFunction={pageFunction} />);
 
 		// 先点击节点上的序列输出端口
-		h.trigger("@idp", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@idp1", "onpointerdown", { clientX: 0, clientY: 0 });
 		// 然后触发 canvas 节点上的移动事件
 		h.trigger("@root", "onpointermove", { clientX: 10, clientY: 20 });
 
@@ -1374,8 +1441,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		// 先点击节点上的序列输出端口
-		h.trigger("@11 @osp", "onpointerdown", { clientX: 0, clientY: 0 });
-		h.trigger("@12 @isp", "onpointerup", { clientX: 10, clientY: 20 });
+		h.trigger("@osp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@isp2", "onpointerenter", { clientX: 10, clientY: 20 });
 		h.trigger("@root", "onpointerup");
 
 		assert.isTrue(addSequenceConnectorProcessStub.calledOnce);
@@ -1444,8 +1511,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@12 @isp", "onpointerdown", { clientX: 10, clientY: 20 });
-		h.trigger("@11 @osp", "onpointerup", { clientX: 0, clientY: 0 });
+		h.trigger("@isp2", "onpointerdown", { clientX: 10, clientY: 20 });
+		h.trigger("@osp1", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
@@ -1519,8 +1586,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@12 @isp", "onpointerdown", { clientX: 10, clientY: 20 });
-		h.trigger("@11 @osp", "onpointerup", { clientX: 0, clientY: 0 });
+		h.trigger("@isp2", "onpointerdown", { clientX: 10, clientY: 20 });
+		h.trigger("@osp1", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
@@ -1581,8 +1648,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		const mockStore = createMockStoreMiddleware<State>([[addDataConnectorProcess, addDataConnectorProcessStub]]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@11 @odp", "onpointerdown", { clientX: 0, clientY: 0 });
-		h.trigger("@21 @idp", "onpointerup", { clientX: 10, clientY: 20 });
+		h.trigger("@odp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@idp2", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
@@ -1643,8 +1710,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		const mockStore = createMockStoreMiddleware<State>([[addDataConnectorProcess, addDataConnectorProcessStub]]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@21 @idp", "onpointerdown", { clientX: 10, clientY: 20 });
-		h.trigger("@11 @odp", "onpointerup", { clientX: 0, clientY: 0 });
+		h.trigger("@idp2", "onpointerdown", { clientX: 10, clientY: 20 });
+		h.trigger("@odp1", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
@@ -1705,8 +1772,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		const mockStore = createMockStoreMiddleware<State>([[addDataConnectorProcess, addDataConnectorProcessStub]]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@21 @idp", "onpointerdown", { clientX: 10, clientY: 20 });
-		h.trigger("@11 @odp", "onpointerup", { clientX: 0, clientY: 0 });
+		h.trigger("@idp2", "onpointerdown", { clientX: 10, clientY: 20 });
+		h.trigger("@odp1", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
@@ -1755,8 +1822,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		// 先点击节点上的序列输出端口
-		h.trigger("@osp", "onpointerdown", { clientX: 0, clientY: 0 });
-		h.trigger("@osp", "onpointerup", { clientX: 10, clientY: 20 });
+		h.trigger("@osp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@osp1", "onpointerenter");
 		h.trigger("@root", "onpointerup");
 
 		assert.isTrue(addSequenceConnectorProcessStub.notCalled);
@@ -1798,8 +1865,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		// 先点击节点上的序列输出端口
-		h.trigger("@odp", "onpointerdown", { clientX: 0, clientY: 0 });
-		h.trigger("@odp", "onpointerup", { clientX: 10, clientY: 20 });
+		h.trigger("@odp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@odp1", "onpointerenter");
 		h.trigger("@root", "onpointerup");
 
 		assert.isTrue(addDataConnectorProcessStub.notCalled);
@@ -1837,8 +1904,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@osp", "onpointerdown", { clientX: 0, clientY: 0 });
-		h.trigger("@osp", "onpointerup", { clientX: 0, clientY: 0 });
+		h.trigger("@osp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@osp1", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
@@ -1877,8 +1944,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@isp", "onpointerdown", { clientX: 0, clientY: 0 });
-		h.trigger("@isp", "onpointerup", { clientX: 0, clientY: 0 });
+		h.trigger("@isp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@isp1", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
@@ -1915,8 +1982,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		const mockStore = createMockStoreMiddleware<State>([[addDataConnectorProcess, addDataConnectorProcessStub]]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@odp", "onpointerdown", { clientX: 0, clientY: 0 });
-		h.trigger("@odp", "onpointerup", { clientX: 0, clientY: 0 });
+		h.trigger("@odp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@odp1", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
@@ -1954,8 +2021,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		const mockStore = createMockStoreMiddleware<State>([[addDataConnectorProcess, addDataConnectorProcessStub]]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@idp", "onpointerdown", { clientX: 0, clientY: 0 });
-		h.trigger("@idp", "onpointerup", { clientX: 0, clientY: 0 });
+		h.trigger("@idp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@idp1", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
@@ -2011,8 +2078,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@11 @osp", "onpointerdown", { clientX: 0, clientY: 0 });
-		h.trigger("@21 @osp", "onpointerup", { clientX: 0, clientY: 0 });
+		h.trigger("@osp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@osp2", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
@@ -2075,8 +2142,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@11 @osp", "onpointerdown", { clientX: 0, clientY: 0 });
-		h.trigger("@21 @odp", "onpointerup", { clientX: 0, clientY: 0 });
+		h.trigger("@osp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@odp2", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
@@ -2139,8 +2206,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@21 @odp", "onpointerdown", { clientX: 0, clientY: 0 });
-		h.trigger("@11 @osp", "onpointerup", { clientX: 0, clientY: 0 });
+		h.trigger("@odp2", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@osp1", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
@@ -2199,8 +2266,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@11 @osp", "onpointerdown", { clientX: 0, clientY: 0 });
-		h.trigger("@21 @osp", "onpointerup", { clientX: 0, clientY: 0 });
+		h.trigger("@osp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@osp2", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
@@ -2259,8 +2326,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@11 @isp", "onpointerdown", { clientX: 0, clientY: 0 });
-		h.trigger("@21 @isp", "onpointerup", { clientX: 0, clientY: 0 });
+		h.trigger("@isp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@isp2", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
@@ -2305,7 +2372,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					],
 					inputDataPorts: [
 						{
-							id: "idp1",
+							id: "idp2",
 							name: "value",
 							type: "string",
 							connected: false
@@ -2326,8 +2393,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@11 @isp", "onpointerdown", { clientX: 0, clientY: 0 });
-		h.trigger("@21 @idp", "onpointerup", { clientX: 0, clientY: 0 });
+		h.trigger("@isp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@idp2", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
@@ -2392,8 +2459,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@11 @isp", "onpointerdown", { clientX: 0, clientY: 0 });
-		h.trigger("@21 @odp", "onpointerup", { clientX: 0, clientY: 0 });
+		h.trigger("@isp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@odp2", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
@@ -2459,8 +2526,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@11 @osp", "onpointerdown", { clientX: 0, clientY: 0 });
-		h.trigger("@21 @idp", "onpointerup", { clientX: 0, clientY: 0 });
+		h.trigger("@osp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@idp2", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
@@ -2525,8 +2592,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@11 @osp", "onpointerdown", { clientX: 0, clientY: 0 });
-		h.trigger("@21 @odp", "onpointerup", { clientX: 0, clientY: 0 });
+		h.trigger("@osp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@odp2", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
@@ -2597,8 +2664,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@11 @odp", "onpointerdown", { clientX: 0, clientY: 0 });
-		h.trigger("@21 @odp", "onpointerup", { clientX: 0, clientY: 0 });
+		h.trigger("@odp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@odp2", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
@@ -2669,8 +2736,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@11 @odp", "onpointerdown", { clientX: 0, clientY: 0 });
-		h.trigger("@21 @isp", "onpointerup", { clientX: 0, clientY: 0 });
+		h.trigger("@odp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@isp2", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
@@ -2741,8 +2808,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@11 @odp", "onpointerdown", { clientX: 0, clientY: 0 });
-		h.trigger("@21 @odp", "onpointerup", { clientX: 0, clientY: 0 });
+		h.trigger("@odp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@odp2", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
@@ -2814,8 +2881,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@11 @idp", "onpointerdown", { clientX: 0, clientY: 0 });
-		h.trigger("@21 @osp", "onpointerup", { clientX: 0, clientY: 0 });
+		h.trigger("@idp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@osp2", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
@@ -2887,8 +2954,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@11 @idp", "onpointerdown", { clientX: 0, clientY: 0 });
-		h.trigger("@21 @isp", "onpointerup", { clientX: 0, clientY: 0 });
+		h.trigger("@idp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@isp2", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
@@ -2961,8 +3028,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@11 @idp", "onpointerdown", { clientX: 0, clientY: 0 });
-		h.trigger("@21 @idp", "onpointerup", { clientX: 0, clientY: 0 });
+		h.trigger("@idp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@idp2", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
