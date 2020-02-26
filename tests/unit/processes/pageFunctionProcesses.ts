@@ -13,7 +13,7 @@ describe("processes/pageFunctionProcesses", () => {
 		store = new Store<State>();
 	});
 
-	it("addSequenceConnectorProcess", () => {
+	it("addSequenceConnectorProcess: new connector", () => {
 		const functions: PageFunction[] = [
 			{
 				id: "1",
@@ -32,7 +32,7 @@ describe("processes/pageFunctionProcesses", () => {
 		assert.equal(actualFunctions[0].dataConnections.length, 0);
 	});
 
-	it("addDataConnectorProcess", () => {
+	it("addDataConnectorProcess: new connector", () => {
 		const functions: PageFunction[] = [
 			{
 				id: "1",

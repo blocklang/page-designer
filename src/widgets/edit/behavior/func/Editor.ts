@@ -11,7 +11,7 @@ import {
 	addDataConnectorProcess
 } from "../../../../processes/pageFunctionProcesses";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
-import { find } from "@dojo/framework/shim/array";
+import { find, findIndex } from "@dojo/framework/shim/array";
 import { getConnectorOffset, getConnectorPath } from "./util";
 import { drag, DragResults } from "../../../../middleware/drag";
 import dimensions from "@dojo/framework/core/middleware/dimensions";
@@ -127,8 +127,41 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 					}
 
 					if (connectingStartPort.portType === "sequence") {
+						const sequenceConnections = pageFunction.sequenceConnections || [];
+						// 节点-输出型序列端口 -> 节点-输入型序列端口之间的连线已存在
+						// 则从节点-输入型序列端口 往 节点-输出型序列端口之间连线时，不能重复添加
+						if (
+							findIndex(
+								sequenceConnections,
+								(connection) =>
+									connection.fromNode === startPort.nodeId &&
+									connection.fromOutput === startPort.portId &&
+									connection.toNode === endPort.nodeId &&
+									connection.toInput === endPort.portId
+							) > -1
+						) {
+							invalidator();
+							return;
+						}
 						executor(addSequenceConnectorProcess)({ startPort, endPort });
 					} else if (connectingStartPort.portType === "data") {
+						const dataConnections = pageFunction.dataConnections || [];
+						// 节点-输出型数据端口 -> 节点-输入型数据端口之间的连线已存在
+						// 则从节点-输出型数据端口 往 节点-输入型数据端口之间连线时，不能重复添加
+						if (
+							findIndex(
+								dataConnections,
+								(connection) =>
+									connection.fromNode === startPort.nodeId &&
+									connection.fromOutput === startPort.portId &&
+									connection.toNode === endPort.nodeId &&
+									connection.toInput === endPort.portId
+							) > -1
+						) {
+							invalidator();
+							return;
+						}
+
 						executor(addDataConnectorProcess)({ startPort, endPort });
 					}
 

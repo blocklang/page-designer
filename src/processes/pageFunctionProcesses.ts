@@ -86,9 +86,8 @@ const addSequenceConnectorCommand = commandFactory<ConnectorPayload>(
 			return;
 		}
 
-		const sequenceConnectionLength = functions[activeFunctionIndex].sequenceConnections
-			? functions[activeFunctionIndex].sequenceConnections.length
-			: 0;
+		const sequenceConnections = functions[activeFunctionIndex].sequenceConnections || [];
+		const sequenceConnectionLength = sequenceConnections.length;
 
 		return [
 			add(
@@ -117,10 +116,8 @@ const addDataConnectorCommand = commandFactory<ConnectorPayload>(
 			return;
 		}
 
-		const dataConnectionLength = functions[activeFunctionIndex].dataConnections
-			? functions[activeFunctionIndex].sequenceConnections.length
-			: 0;
-
+		const dataConnections = functions[activeFunctionIndex].dataConnections || [];
+		const dataConnectionLength = dataConnections.length;
 		return [
 			add(
 				at(
