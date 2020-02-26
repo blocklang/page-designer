@@ -41,7 +41,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			.replaceChildren("@root", () => [
 				<div
 					key="11"
-					classes={[c.border, undefined, css.node]}
+					classes={[c.border, undefined, c.bg_light, css.node]}
 					styles={{ top: "2px", left: "1px" }}
 					onpointerdown={() => {}}
 				>
@@ -103,7 +103,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			.replaceChildren("@root", () => [
 				<div
 					key="11"
-					classes={[c.border, undefined, css.node]}
+					classes={[c.border, undefined, c.bg_light, css.node]}
 					styles={{ top: "2px", left: "1px" }}
 					onpointerdown={() => {}}
 				>
@@ -188,7 +188,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			.replaceChildren("@root", () => [
 				<div
 					key="11"
-					classes={[c.border, undefined, css.node]}
+					classes={[c.border, undefined, c.bg_light, css.node]}
 					styles={{ top: "2px", left: "1px" }}
 					onpointerdown={() => {}}
 				>
@@ -296,7 +296,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			.replaceChildren("@root", () => [
 				<div
 					key="11"
-					classes={[c.border, undefined, css.node]}
+					classes={[c.border, undefined, c.bg_light, css.node]}
 					styles={{ top: "2px", left: "1px" }}
 					onpointerdown={() => {}}
 				>
@@ -401,7 +401,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			.replaceChildren("@root", () => [
 				<div
 					key="11"
-					classes={[c.border, undefined, css.node]}
+					classes={[c.border, undefined, c.bg_light, css.node]}
 					styles={{ top: "2px", left: "1px" }}
 					onpointerdown={() => {}}
 				>
@@ -470,7 +470,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			.replaceChildren("@root", () => [
 				<div
 					key="11"
-					classes={[c.border, undefined, css.node]}
+					classes={[c.border, undefined, c.bg_light, css.node]}
 					styles={{ top: "2px", left: "1px" }}
 					onpointerdown={() => {}}
 				>
@@ -495,7 +495,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 				</div>,
 				<div
 					key="12"
-					classes={[c.border, undefined, css.node]}
+					classes={[c.border, undefined, c.bg_light, css.node]}
 					styles={{ top: "20px", left: "10px" }}
 					onpointerdown={() => {}}
 				>
@@ -602,7 +602,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			.replaceChildren("@root", () => [
 				<div
 					key="11"
-					classes={[c.border, undefined, css.node]}
+					classes={[c.border, undefined, c.bg_light, css.node]}
 					styles={{ top: "2px", left: "1px" }}
 					onpointerdown={() => {}}
 				>
@@ -630,7 +630,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 				</div>,
 				<div
 					key="12"
-					classes={[c.border, undefined, css.node]}
+					classes={[c.border, undefined, c.bg_light, css.node]}
 					styles={{ top: "20px", left: "10px" }}
 					onpointerdown={() => {}}
 				>
@@ -747,7 +747,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			.replaceChildren("@root", () => [
 				<div
 					key="11"
-					classes={[c.border, c.border_primary, css.node]}
+					classes={[c.border, c.border_primary, c.bg_light, css.node]}
 					styles={{ top: "2px", left: "1px" }}
 					onpointerdown={() => {}}
 				>
@@ -824,7 +824,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			.replaceChildren("@root", () => [
 				<div
 					key="11"
-					classes={[c.border, undefined, css.node]}
+					classes={[c.border, undefined, c.bg_light, css.node]}
 					styles={{ top: "2px", left: "1px" }}
 					onpointerdown={() => {}}
 				>
@@ -905,7 +905,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			.replaceChildren("@root", () => [
 				<div
 					key="11"
-					classes={[c.border, undefined, css.node]}
+					classes={[c.border, undefined, c.bg_light, css.node]}
 					styles={{ top: "2px", left: "1px" }}
 					onpointerdown={() => {}}
 				>
@@ -996,7 +996,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			.replaceChildren("@root", () => [
 				<div
 					key="11"
-					classes={[c.border, undefined, css.node]}
+					classes={[c.border, undefined, c.bg_light, css.node]}
 					styles={{ top: "2px", left: "1px" }}
 					onpointerdown={() => {}}
 				>
@@ -1087,7 +1087,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			.replaceChildren("@root", () => [
 				<div
 					key="11"
-					classes={[c.border, undefined, css.node]}
+					classes={[c.border, undefined, c.bg_light, css.node]}
 					styles={{ top: "2px", left: "1px" }}
 					onpointerdown={() => {}}
 				>
@@ -1172,7 +1172,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			.replaceChildren("@root", () => [
 				<div
 					key="11"
-					classes={[c.border, undefined, css.node]}
+					classes={[c.border, undefined, c.bg_light, css.node]}
 					styles={{ top: "2px", left: "1px" }}
 					onpointerdown={() => {}}
 				>
@@ -1260,7 +1260,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 			.replaceChildren("@root", () => [
 				<div
 					key="11"
-					classes={[c.border, undefined, css.node]}
+					classes={[c.border, undefined, c.bg_light, css.node]}
 					styles={{ top: "2px", left: "1px" }}
 					onpointerdown={() => {}}
 				>
@@ -3036,4 +3036,16 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		assert.isTrue(addSequenceConnectorProcessStub.notCalled);
 		assert.isTrue(addDataConnectorProcessStub.notCalled);
 	});
+
+	it("duplicate connector - input sequence port to output sequence port", () => {});
+
+	it("duplicate connector - output data port to input data port", () => {});
+
+	it("remove connector - output sequence port to input sequence port", () => {});
+
+	it("remove connector - input data port to output data port", () => {});
+
+	it("update connector - output sequence port to another output sequence port", () => {});
+
+	it("update connector - input data port to another input data port", () => {});
 });
