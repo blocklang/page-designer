@@ -99,76 +99,77 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 				}
 				isConnecting = false;
 
-				if (connectingHoverPort) {
-					// 连接线有效校验：
-					// 1. 端口不能自己连接自己
-					if (
-						connectingStartPort.nodeId === connectingHoverPort.nodeId &&
-						connectingStartPort.portId === connectingHoverPort.portId
-					) {
-						return;
-					}
-					// 2. 不同节点之间有效的端口连接
-					if (
-						connectingStartPort.portType !== connectingHoverPort.portType ||
-						connectingStartPort.flowType === connectingHoverPort.flowType
-					) {
-						return;
-					}
-
-					// startPort 对应起始节点的 output, endPort 对应终止节点的 input
-					let startPort: PortPosition, endPort: PortPosition;
-					if (connectingStartPort.flowType === "output") {
-						startPort = connectingStartPort;
-						endPort = connectingHoverPort;
-					} else {
-						startPort = connectingHoverPort;
-						endPort = connectingStartPort;
-					}
-
-					if (connectingStartPort.portType === "sequence") {
-						const sequenceConnections = pageFunction.sequenceConnections || [];
-						// 节点-输出型序列端口 -> 节点-输入型序列端口之间的连线已存在
-						// 则从节点-输入型序列端口 往 节点-输出型序列端口之间连线时，不能重复添加
-						if (
-							findIndex(
-								sequenceConnections,
-								(connection) =>
-									connection.fromNode === startPort.nodeId &&
-									connection.fromOutput === startPort.portId &&
-									connection.toNode === endPort.nodeId &&
-									connection.toInput === endPort.portId
-							) > -1
-						) {
-							invalidator();
-							return;
-						}
-						executor(addSequenceConnectorProcess)({ startPort, endPort });
-					} else if (connectingStartPort.portType === "data") {
-						const dataConnections = pageFunction.dataConnections || [];
-						// 节点-输出型数据端口 -> 节点-输入型数据端口之间的连线已存在
-						// 则从节点-输出型数据端口 往 节点-输入型数据端口之间连线时，不能重复添加
-						if (
-							findIndex(
-								dataConnections,
-								(connection) =>
-									connection.fromNode === startPort.nodeId &&
-									connection.fromOutput === startPort.portId &&
-									connection.toNode === endPort.nodeId &&
-									connection.toInput === endPort.portId
-							) > -1
-						) {
-							invalidator();
-							return;
-						}
-
-						executor(addDataConnectorProcess)({ startPort, endPort });
-					}
-
+				if (!connectingHoverPort) {
+					invalidator();
 					return;
 				}
 
-				invalidator();
+				// 连接线有效校验：
+				// 1. 端口不能自己连接自己
+				if (
+					connectingStartPort.nodeId === connectingHoverPort.nodeId &&
+					connectingStartPort.portId === connectingHoverPort.portId
+				) {
+					invalidator();
+					return;
+				}
+				// 2. 不同节点之间有效的端口连接
+				if (
+					connectingStartPort.portType !== connectingHoverPort.portType ||
+					connectingStartPort.flowType === connectingHoverPort.flowType
+				) {
+					invalidator();
+					return;
+				}
+
+				// startPort 对应起始节点的 output, endPort 对应终止节点的 input
+				let startPort: PortPosition, endPort: PortPosition;
+				if (connectingStartPort.flowType === "output") {
+					startPort = connectingStartPort;
+					endPort = connectingHoverPort;
+				} else {
+					startPort = connectingHoverPort;
+					endPort = connectingStartPort;
+				}
+
+				if (connectingStartPort.portType === "sequence") {
+					const sequenceConnections = pageFunction.sequenceConnections || [];
+					// 节点-输出型序列端口 -> 节点-输入型序列端口之间的连线已存在
+					// 则从节点-输入型序列端口 往 节点-输出型序列端口之间连线时，不能重复添加
+					if (
+						findIndex(
+							sequenceConnections,
+							(connection) =>
+								connection.fromNode === startPort.nodeId &&
+								connection.fromOutput === startPort.portId &&
+								connection.toNode === endPort.nodeId &&
+								connection.toInput === endPort.portId
+						) > -1
+					) {
+						invalidator();
+						return;
+					}
+					executor(addSequenceConnectorProcess)({ startPort, endPort });
+				} else if (connectingStartPort.portType === "data") {
+					const dataConnections = pageFunction.dataConnections || [];
+					// 节点-输出型数据端口 -> 节点-输入型数据端口之间的连线已存在
+					// 则从节点-输出型数据端口 往 节点-输入型数据端口之间连线时，不能重复添加
+					if (
+						findIndex(
+							dataConnections,
+							(connection) =>
+								connection.fromNode === startPort.nodeId &&
+								connection.fromOutput === startPort.portId &&
+								connection.toNode === endPort.nodeId &&
+								connection.toInput === endPort.portId
+						) > -1
+					) {
+						invalidator();
+						return;
+					}
+
+					executor(addDataConnectorProcess)({ startPort, endPort });
+				}
 			}
 		},
 		[

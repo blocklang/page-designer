@@ -87,13 +87,12 @@ const addSequenceConnectorCommand = commandFactory<ConnectorPayload>(
 		}
 
 		const sequenceConnections = functions[activeFunctionIndex].sequenceConnections || [];
-		const sequenceConnectionLength = sequenceConnections.length;
 
 		return [
 			add(
 				at(
 					path(at(path("pageModel", "functions"), activeFunctionIndex), "sequenceConnections"),
-					sequenceConnectionLength
+					sequenceConnections.length
 				),
 				{
 					id: uuid().replace("-", ""),
@@ -117,12 +116,11 @@ const addDataConnectorCommand = commandFactory<ConnectorPayload>(
 		}
 
 		const dataConnections = functions[activeFunctionIndex].dataConnections || [];
-		const dataConnectionLength = dataConnections.length;
 		return [
 			add(
 				at(
 					path(at(path("pageModel", "functions"), activeFunctionIndex), "dataConnections"),
-					dataConnectionLength
+					dataConnections.length
 				),
 				{
 					id: uuid().replace("-", ""),

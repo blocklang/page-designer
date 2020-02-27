@@ -1785,6 +1785,38 @@ describe("widgets/edit/behavior/func/Editor", () => {
 	// 3. 不能连节点自身的其余 port 上
 	// 4. port 不能自己连自己
 	it("can not connect self - FlowControl node's output sequence port", () => {
+		const nodeAssertion = baseAssertion
+			// 以下两个事件专用于在节点间连线。
+			.setProperty("@root", "onpointermove", () => {})
+			.setProperty("@root", "onpointerup", () => {})
+			.replaceChildren("@root", () => [
+				<div
+					key="11"
+					classes={[c.border, undefined, c.bg_light, css.node]}
+					styles={{ top: "2px", left: "1px" }}
+					onpointerdown={() => {}}
+				>
+					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
+						函数
+					</div>
+					<div classes={[c.d_flex, c.justify_content_between]}>
+						<div classes={[c.px_1]}>
+							<span classes={[css.blankPort]}></span>
+						</div>
+						<div>onValue</div>
+						<div
+							key="osp1"
+							classes={[c.px_1]}
+							onpointerdown={() => {}}
+							onpointerenter={() => {}}
+							onpointerleave={() => {}}
+						>
+							<FontAwesomeIcon icon="caret-right" />
+						</div>
+					</div>
+				</div>
+			]);
+
 		const pageFunction: PageFunction = {
 			id: "1",
 			nodes: [
@@ -1802,13 +1834,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						}
 					],
 					inputDataPorts: [],
-					outputDataPorts: [
-						{
-							id: "odp1",
-							name: "value",
-							type: "string"
-						}
-					]
+					outputDataPorts: []
 				}
 			],
 			sequenceConnections: [],
@@ -1827,6 +1853,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		h.trigger("@root", "onpointerup");
 
 		assert.isTrue(addSequenceConnectorProcessStub.notCalled);
+		h.expect(nodeAssertion);
 	});
 
 	it("can not connect self - FlowControl node's output data port", () => {
@@ -2030,6 +2057,63 @@ describe("widgets/edit/behavior/func/Editor", () => {
 	});
 
 	it("can not connect two Function nodes - Function node's output sequence port to Function node's output sequence port", () => {
+		const nodeAssertion = baseAssertion
+			// 以下两个事件专用于在节点间连线。
+			.setProperty("@root", "onpointermove", () => {})
+			.setProperty("@root", "onpointerup", () => {})
+			.replaceChildren("@root", () => [
+				<div
+					key="11"
+					classes={[c.border, undefined, c.bg_light, css.node]}
+					styles={{ top: "2px", left: "1px" }}
+					onpointerdown={() => {}}
+				>
+					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
+						函数
+					</div>
+					<div classes={[c.d_flex, c.justify_content_between]}>
+						<div classes={[c.px_1]}>
+							<span classes={[css.blankPort]}></span>
+						</div>
+						<div>onValue</div>
+						<div
+							key="osp1"
+							classes={[c.px_1]}
+							onpointerdown={() => {}}
+							onpointerenter={() => {}}
+							onpointerleave={() => {}}
+						>
+							<FontAwesomeIcon icon="caret-right" />
+						</div>
+					</div>
+				</div>,
+				<div
+					key="21"
+					classes={[c.border, undefined, c.bg_light, css.node]}
+					styles={{ top: "20px", left: "10px" }}
+					onpointerdown={() => {}}
+				>
+					<div key="21-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
+						函数
+					</div>
+					<div classes={[c.d_flex, c.justify_content_between]}>
+						<div classes={[c.px_1]}>
+							<span classes={[css.blankPort]}></span>
+						</div>
+						<div>onValue</div>
+						<div
+							key="osp2"
+							classes={[c.px_1]}
+							onpointerdown={() => {}}
+							onpointerenter={() => {}}
+							onpointerleave={() => {}}
+						>
+							<FontAwesomeIcon icon="caret-right" />
+						</div>
+					</div>
+				</div>
+			]);
+
 		const pageFunction: PageFunction = {
 			id: "1",
 			nodes: [
@@ -2085,6 +2169,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 
 		assert.isTrue(addSequenceConnectorProcessStub.notCalled);
 		assert.isTrue(addDataConnectorProcessStub.notCalled);
+		h.expect(nodeAssertion);
 	});
 
 	it("can not connect two Function nodes - Function node's output sequence port to Function node's output data port", () => {
