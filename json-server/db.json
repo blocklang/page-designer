@@ -193,6 +193,7 @@
             }
           ],
           "sequenceConnections": [{
+            "id": "sc1",
             "fromNode": "1",
             "fromOutput": "osp1",
             "toNode": "2",

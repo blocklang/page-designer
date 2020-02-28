@@ -14,7 +14,9 @@ import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/
 import {
 	activeFunctionNodeProcess,
 	addSequenceConnectorProcess,
-	addDataConnectorProcess
+	addDataConnectorProcess,
+	removeSequenceConnectorProcess,
+	removeDataConnectorProcess
 } from "../../../../../../src/processes/pageFunctionProcesses";
 import { stub } from "sinon";
 import { add } from "@dojo/framework/stores/state/operations";
@@ -3270,9 +3272,203 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		assert.isTrue(addDataConnectorProcessStub.notCalled);
 	});
 
-	it("remove connector - output sequence port to input sequence port", () => {});
+	it("remove connector - flowControl's output sequence port to input sequence port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "函数",
+					text: "onValue",
+					category: "flowControl",
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: []
+				},
+				{
+					id: "21",
+					left: 10,
+					top: 20,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: {
+						id: "isp2"
+					},
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [
+				{
+					id: "sc1",
+					fromNode: "11",
+					fromOutput: "osp1",
+					toNode: "21",
+					toInput: "isp2"
+				}
+			],
+			dataConnections: []
+		};
 
-	it("remove connector - input data port to output data port", () => {});
+		const removeSequenceConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[removeSequenceConnectorProcess, removeSequenceConnectorProcessStub]
+		]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		// 先点击节点上的序列输出端口
+		h.trigger("@osp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(removeSequenceConnectorProcessStub.calledOnce);
+	});
+
+	it("remove connector - input data port to output data port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Get a",
+					text: "",
+					category: "data",
+					outputSequencePorts: [],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp1",
+							name: "value",
+							type: "string"
+						}
+					]
+				},
+				{
+					id: "21",
+					left: 10,
+					top: 20,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp2" },
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [
+						{
+							id: "idp2",
+							name: "value",
+							type: "string",
+							connected: false
+						}
+					],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: [
+				{
+					id: "dc1",
+					fromNode: "11",
+					fromOutput: "odp1",
+					toNode: "21",
+					toInput: "idp2"
+				}
+			]
+		};
+
+		const removeDataConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[removeDataConnectorProcess, removeDataConnectorProcessStub]
+		]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@idp2", "onpointerdown", { clientX: 10, clientY: 20 });
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(removeDataConnectorProcessStub.calledOnce);
+	});
+
+	it("remove connector - setData's output sequence port to setData's input sequence", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp1" },
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: []
+				},
+				{
+					id: "21",
+					left: 10,
+					top: 20,
+					caption: "Set b",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp2" },
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [
+				{
+					id: "sc1",
+					fromNode: "11",
+					fromOutput: "osp1",
+					toNode: "21",
+					toInput: "isp2"
+				}
+			],
+			dataConnections: []
+		};
+		const removeSequenceConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[removeSequenceConnectorProcess, removeSequenceConnectorProcessStub]
+		]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@osp1", "onpointerdown", { clientX: 10, clientY: 20 });
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(removeSequenceConnectorProcessStub.calledOnce);
+	});
 
 	it("update connector - output sequence port to another output sequence port", () => {});
 

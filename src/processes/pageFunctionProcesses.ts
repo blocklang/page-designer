@@ -1,11 +1,12 @@
 import { createProcess } from "@dojo/framework/stores/process";
 import { commandFactory } from "./utils";
 import { FunctionDeclaration, PageFunction } from "designer-core/interfaces";
-import { add, replace } from "@dojo/framework/stores/state/operations";
+import { add, replace, remove } from "@dojo/framework/stores/state/operations";
 import { findIndex } from "@dojo/framework/shim/array";
 import { ConnectorPayload } from "./interfaces";
 import { uuid } from "@dojo/framework/core/util";
 
+// FIXME: 待确认如何实现
 const newFunctionCommand = commandFactory<{ functionDeclaration: FunctionDeclaration }>(
 	({ get, path, at, payload: { functionDeclaration } }) => {
 		const functions = get(path("pageModel", "functions")) || [];
@@ -106,6 +107,35 @@ const addSequenceConnectorCommand = commandFactory<ConnectorPayload>(
 	}
 );
 
+const removeSequenceConnectorCommand = commandFactory<{ sequenceConnectorId: string }>(
+	({ get, path, at, payload: { sequenceConnectorId } }) => {
+		const functions = get(path("pageModel", "functions"));
+		const currentFunctionId = get(path("selectedFunctionId"));
+		const currentFunctionIndex = findIndex(functions, (func) => func.id === currentFunctionId);
+		if (currentFunctionIndex === -1) {
+			return;
+		}
+
+		const sequenceConnections = functions[currentFunctionIndex].sequenceConnections || [];
+		const removedSequenceConnectorIndex = findIndex(
+			sequenceConnections,
+			(connection) => connection.id === sequenceConnectorId
+		);
+		if (removedSequenceConnectorIndex === -1) {
+			return;
+		}
+
+		return [
+			remove(
+				at(
+					path(at(path("pageModel", "functions"), currentFunctionIndex), "sequenceConnections"),
+					removedSequenceConnectorIndex
+				)
+			)
+		];
+	}
+);
+
 const addDataConnectorCommand = commandFactory<ConnectorPayload>(
 	({ get, path, at, payload: { startPort, endPort } }) => {
 		const selectedFunctionId = get(path("selectedFunctionId"));
@@ -134,6 +164,32 @@ const addDataConnectorCommand = commandFactory<ConnectorPayload>(
 	}
 );
 
+const removeDataConnectorCommand = commandFactory<{ dataConnectorId: string }>(
+	({ get, path, at, payload: { dataConnectorId } }) => {
+		const functions = get(path("pageModel", "functions"));
+		const currentFunctionId = get(path("selectedFunctionId"));
+		const currentFunctionIndex = findIndex(functions, (func) => func.id === currentFunctionId);
+		if (currentFunctionIndex === -1) {
+			return;
+		}
+
+		const dataConnections = functions[currentFunctionIndex].dataConnections || [];
+		const removedDataConnectorIndex = findIndex(dataConnections, (connection) => connection.id === dataConnectorId);
+		if (removedDataConnectorIndex === -1) {
+			return;
+		}
+
+		return [
+			remove(
+				at(
+					path(at(path("pageModel", "functions"), currentFunctionIndex), "dataConnections"),
+					removedDataConnectorIndex
+				)
+			)
+		];
+	}
+);
+
 export const newFunctionProcess = createProcess("new-function", [newFunctionCommand]);
 export const activeFunctionProcess = createProcess("active-function", [activeFunctionCommand]);
 export const activeFunctionNodeProcess = createProcess("active-function-node", [activeFunctionNodeCommand]);
@@ -142,3 +198,7 @@ export const moveActiveFunctionNodeProcess = createProcess("move-active-function
 ]);
 export const addSequenceConnectorProcess = createProcess("add-sequence-connector", [addSequenceConnectorCommand]);
 export const addDataConnectorProcess = createProcess("add-data-connector", [addDataConnectorCommand]);
+export const removeSequenceConnectorProcess = createProcess("remove-sequence-connector", [
+	removeSequenceConnectorCommand
+]);
+export const removeDataConnectorProcess = createProcess("remove-data-connector", [removeDataConnectorCommand]);
