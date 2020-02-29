@@ -1,6 +1,6 @@
 import { createProcess } from "@dojo/framework/stores/process";
 import { commandFactory } from "./utils";
-import { FunctionDeclaration, PageFunction } from "designer-core/interfaces";
+import { FunctionDeclaration, PageFunction, NodeConnection } from "designer-core/interfaces";
 import { add, replace, remove } from "@dojo/framework/stores/state/operations";
 import { findIndex } from "@dojo/framework/shim/array";
 import { ConnectorPayload, PortPosition } from "./interfaces";
@@ -77,6 +77,62 @@ const moveActiveFunctionNodeCommand = commandFactory<{ left: number; top: number
 		];
 	}
 );
+
+const removeFunctionNodeCommand = commandFactory<{ functionNodeId: string }>(
+	({ get, path, at, payload: { functionNodeId } }) => {
+		// 1. 如果当前节点是选中的节点，则重置 selectedFunctionNodeId
+		// 2. 如果节点上有连线，则删除所有连线
+		const functions = get(path("pageModel", "functions"));
+		const currentFunctionId = get(path("selectedFunctionId"));
+		const currentFunctionIndex = findIndex(functions, (func) => func.id === currentFunctionId);
+		if (currentFunctionIndex === -1) {
+			return;
+		}
+		const currentFunction = functions[currentFunctionIndex];
+
+		const functionNodeIndex = findIndex(currentFunction.nodes, (item) => item.id === functionNodeId);
+		if (functionNodeIndex === -1) {
+			return;
+		}
+
+		const result = [];
+		result.push(
+			remove(at(path(at(path("pageModel", "functions"), currentFunctionIndex), "nodes"), functionNodeIndex))
+		);
+
+		// 如果当前节点已选中，则删除选中信息
+		if (get(path("selectedFunctionNodeId")) === functionNodeId) {
+			result.push(remove(path("selectedFunctionNodeId")));
+		}
+
+		// 如果当前节点上有连线，则删除所有连线
+		const sequenceConnections = currentFunction.sequenceConnections || [];
+		if (findIndex(sequenceConnections, (connection) => isConnected(functionNodeId, connection)) > -1) {
+			result.push(
+				replace(
+					path(at(path("pageModel", "functions"), currentFunctionIndex), "sequenceConnections"),
+					sequenceConnections.filter((connection) => !isConnected(functionNodeId, connection))
+				)
+			);
+		}
+
+		const dataConnections = currentFunction.dataConnections || [];
+		if (findIndex(dataConnections, (connection) => isConnected(functionNodeId, connection)) > -1) {
+			result.push(
+				replace(
+					path(at(path("pageModel", "functions"), currentFunctionIndex), "dataConnections"),
+					dataConnections.filter((connection) => !isConnected(functionNodeId, connection))
+				)
+			);
+		}
+
+		return result;
+	}
+);
+
+function isConnected(nodeId: string, connection: NodeConnection) {
+	return connection.fromNode === nodeId || connection.toNode === nodeId;
+}
 
 const addSequenceConnectorCommand = commandFactory<ConnectorPayload>(
 	({ get, path, at, payload: { startPort, endPort } }) => {
@@ -266,6 +322,7 @@ const updateDataConnectorCommand = commandFactory<{
 export const newFunctionProcess = createProcess("new-function", [newFunctionCommand]);
 export const activeFunctionProcess = createProcess("active-function", [activeFunctionCommand]);
 export const activeFunctionNodeProcess = createProcess("active-function-node", [activeFunctionNodeCommand]);
+export const removeFunctionNodeProcess = createProcess("remove-function-node", [removeFunctionNodeCommand]);
 export const moveActiveFunctionNodeProcess = createProcess("move-active-function-node", [
 	moveActiveFunctionNodeCommand
 ]);

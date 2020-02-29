@@ -18,7 +18,8 @@ import {
 	removeSequenceConnectorProcess,
 	removeDataConnectorProcess,
 	updateSequenceConnectorProcess,
-	updateDataConnectorProcess
+	updateDataConnectorProcess,
+	removeFunctionNodeProcess
 } from "../../../../../../src/processes/pageFunctionProcesses";
 import { stub } from "sinon";
 import { add } from "@dojo/framework/stores/state/operations";
@@ -306,7 +307,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 				>
 					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Set a
-						<span classes={[c.float_right, c.text_white, css.close]} onclick={() => {}}>
+						<span
+							classes={[c.float_right, c.text_white, css.close]}
+							onclick={() => {}}
+							onpointerdown={() => {}}
+						>
 							<FontAwesomeIcon icon="times" />
 						</span>
 					</div>
@@ -411,7 +416,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 				>
 					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Get a
-						<span classes={[c.float_right, c.text_white, css.close]} onclick={() => {}}>
+						<span
+							classes={[c.float_right, c.text_white, css.close]}
+							onclick={() => {}}
+							onpointerdown={() => {}}
+						>
 							<FontAwesomeIcon icon="times" />
 						</span>
 					</div>
@@ -505,7 +514,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 				>
 					<div key="12-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Set a
-						<span classes={[c.float_right, c.text_white, css.close]} onclick={() => {}}>
+						<span
+							classes={[c.float_right, c.text_white, css.close]}
+							onclick={() => {}}
+							onpointerdown={() => {}}
+						>
 							<FontAwesomeIcon icon="times" />
 						</span>
 					</div>
@@ -640,7 +653,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 				>
 					<div key="12-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Set a
-						<span classes={[c.float_right, c.text_white, css.close]} onclick={() => {}}>
+						<span
+							classes={[c.float_right, c.text_white, css.close]}
+							onclick={() => {}}
+							onpointerdown={() => {}}
+						>
 							<FontAwesomeIcon icon="times" />
 						</span>
 					</div>
@@ -816,6 +833,43 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		h.expect(nodeAssertion);
 	});
 
+	it("delete node - a Data node", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Get a",
+					text: "",
+					category: "data",
+					outputSequencePorts: [],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp1",
+							name: "value",
+							type: "string"
+						}
+					]
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const removeFunctionNodeProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[removeFunctionNodeProcess, removeFunctionNodeProcessStub]
+		]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@11-caption span", "onclick");
+
+		assert.isTrue(removeFunctionNodeProcessStub.calledOnce);
+	});
+
 	/**
 	 * 注意，写连线相关的测试用例时，必须在每个测试用例后面调用 root 节点的 onpointerup 事件，以重置 isConnecting 等值
 	 */
@@ -915,7 +969,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 				>
 					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Set a
-						<span classes={[c.float_right, c.text_white, css.close]} onclick={() => {}}>
+						<span
+							classes={[c.float_right, c.text_white, css.close]}
+							onclick={() => {}}
+							onpointerdown={() => {}}
+						>
 							<FontAwesomeIcon icon="times" />
 						</span>
 					</div>
@@ -1006,7 +1064,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 				>
 					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Set a
-						<span classes={[c.float_right, c.text_white, css.close]} onclick={() => {}}>
+						<span
+							classes={[c.float_right, c.text_white, css.close]}
+							onclick={() => {}}
+							onpointerdown={() => {}}
+						>
 							<FontAwesomeIcon icon="times" />
 						</span>
 					</div>
@@ -1182,7 +1244,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 				>
 					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Get a
-						<span classes={[c.float_right, c.text_white, css.close]} onclick={() => {}}>
+						<span
+							classes={[c.float_right, c.text_white, css.close]}
+							onclick={() => {}}
+							onpointerdown={() => {}}
+						>
 							<FontAwesomeIcon icon="times" />
 						</span>
 					</div>
@@ -1270,7 +1336,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 				>
 					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Set a
-						<span classes={[c.float_right, c.text_white, css.close]} onclick={() => {}}>
+						<span
+							classes={[c.float_right, c.text_white, css.close]}
+							onclick={() => {}}
+							onpointerdown={() => {}}
+						>
 							<FontAwesomeIcon icon="times" />
 						</span>
 					</div>

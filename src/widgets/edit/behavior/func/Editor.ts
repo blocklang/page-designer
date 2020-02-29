@@ -12,7 +12,8 @@ import {
 	removeSequenceConnectorProcess,
 	removeDataConnectorProcess,
 	updateSequenceConnectorProcess,
-	updateDataConnectorProcess
+	updateDataConnectorProcess,
+	removeFunctionNodeProcess
 } from "../../../../processes/pageFunctionProcesses";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import { find, findIndex } from "@dojo/framework/shim/array";
@@ -111,7 +112,6 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 				}
 				isConnecting = false;
 
-				console.log("connectingHoverPort", connectingHoverPort);
 				// 如果松开鼠标前没有停留在端口上，则视为删除连接线的操作。
 				if (!connectingHoverPort) {
 					removeConnector();
@@ -463,8 +463,13 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 						"span",
 						{
 							classes: [c.float_right, c.text_white, css.close],
-							onclick: () => {
-								console.log("delete");
+							onclick: (event: MouseEvent) => {
+								executor(removeFunctionNodeProcess)({ functionNodeId: node.id });
+							},
+							onpointerdown: (event: PointerEvent) => {
+								// 点击删除按钮时，不能选中节点和移动节点
+								event.preventDefault();
+								event.stopPropagation();
 							}
 						},
 						[w(FontAwesomeIcon, { icon: "times" })]

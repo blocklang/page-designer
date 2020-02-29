@@ -7,7 +7,8 @@ import {
 	removeSequenceConnectorProcess,
 	removeDataConnectorProcess,
 	updateSequenceConnectorProcess,
-	updateDataConnectorProcess
+	updateDataConnectorProcess,
+	removeFunctionNodeProcess
 } from "../../../src/processes/pageFunctionProcesses";
 
 const { describe, it, beforeEach } = intern.getInterface("bdd");
@@ -18,6 +19,155 @@ describe("processes/pageFunctionProcesses", () => {
 
 	beforeEach(() => {
 		store = new Store<State>();
+	});
+
+	it("removeFunctionNodeProcess - remove node", () => {
+		const functions: PageFunction[] = [
+			{
+				id: "1",
+				nodes: [
+					{
+						id: "11",
+						left: 1,
+						top: 2,
+						caption: "Get a",
+						text: "",
+						category: "data",
+						outputSequencePorts: [],
+						inputDataPorts: [],
+						outputDataPorts: []
+					}
+				],
+				sequenceConnections: [],
+				dataConnections: []
+			}
+		];
+		store.apply([add(store.path("pageModel", "functions"), functions), add(store.path("selectedFunctionId"), "1")]);
+
+		removeFunctionNodeProcess(store)({ functionNodeId: "not exist id" });
+		let actualFunctions = store.get(store.path("pageModel", "functions"));
+		assert.equal(actualFunctions[0].nodes.length, 1);
+
+		removeFunctionNodeProcess(store)({ functionNodeId: "11" });
+
+		actualFunctions = store.get(store.path("pageModel", "functions"));
+		assert.equal(actualFunctions[0].nodes.length, 0);
+	});
+
+	it("removeFunctionNodeProcess - remove node which is active", () => {
+		const functions: PageFunction[] = [
+			{
+				id: "1",
+				nodes: [
+					{
+						id: "11",
+						left: 1,
+						top: 2,
+						caption: "Get a",
+						text: "",
+						category: "data",
+						outputSequencePorts: [],
+						inputDataPorts: [],
+						outputDataPorts: []
+					}
+				],
+				sequenceConnections: [],
+				dataConnections: []
+			}
+		];
+		store.apply([
+			add(store.path("pageModel", "functions"), functions),
+			add(store.path("selectedFunctionId"), "1"),
+			add(store.path("selectedFunctionNodeId"), "11")
+		]);
+
+		removeFunctionNodeProcess(store)({ functionNodeId: "not exist id" });
+		let actualFunctions = store.get(store.path("pageModel", "functions"));
+		assert.equal(actualFunctions[0].nodes.length, 1);
+		assert.equal(store.get(store.path("selectedFunctionNodeId")), "11");
+
+		removeFunctionNodeProcess(store)({ functionNodeId: "11" });
+
+		actualFunctions = store.get(store.path("pageModel", "functions"));
+		assert.equal(actualFunctions[0].nodes.length, 0);
+		assert.isUndefined(store.get(store.path("selectedFunctionNodeId")));
+	});
+
+	it("removeFunctionNodeProcess - remove node with connection", () => {
+		const functions: PageFunction[] = [
+			{
+				id: "1",
+				nodes: [
+					{
+						id: "11",
+						left: 1,
+						top: 2,
+						caption: "Set a",
+						text: "",
+						category: "data",
+						outputSequencePorts: [
+							{
+								id: "osp1",
+								text: ""
+							}
+						],
+						inputDataPorts: [],
+						outputDataPorts: [
+							{
+								id: "odp1",
+								name: "value",
+								type: "string"
+							}
+						]
+					},
+					{
+						id: "21",
+						left: 1,
+						top: 2,
+						caption: "Set b",
+						text: "",
+						category: "data",
+						inputSequencePort: { id: "isp2" },
+						outputSequencePorts: [],
+						inputDataPorts: [
+							{
+								id: "idp2",
+								name: "value",
+								type: "string",
+								connected: false
+							}
+						],
+						outputDataPorts: []
+					}
+				],
+				sequenceConnections: [
+					{
+						id: "sc1",
+						fromNode: "11",
+						fromOutput: "osp1",
+						toNode: "21",
+						toInput: "isp2"
+					}
+				],
+				dataConnections: [
+					{
+						id: "dc1",
+						fromNode: "11",
+						fromOutput: "odp1",
+						toNode: "21",
+						toInput: "idp2"
+					}
+				]
+			}
+		];
+		store.apply([add(store.path("pageModel", "functions"), functions), add(store.path("selectedFunctionId"), "1")]);
+
+		removeFunctionNodeProcess(store)({ functionNodeId: "11" });
+
+		const actualFunctions = store.get(store.path("pageModel", "functions"));
+		assert.equal(actualFunctions[0].nodes.length, 1);
+		assert.equal(actualFunctions[0].sequenceConnections.length, 0);
+		assert.equal(actualFunctions[0].dataConnections.length, 0);
 	});
 
 	it("addSequenceConnectorProcess: new connector", () => {
