@@ -5,7 +5,9 @@ import {
 	addSequenceConnectorProcess,
 	addDataConnectorProcess,
 	removeSequenceConnectorProcess,
-	removeDataConnectorProcess
+	removeDataConnectorProcess,
+	updateSequenceConnectorProcess,
+	updateDataConnectorProcess
 } from "../../../src/processes/pageFunctionProcesses";
 
 const { describe, it, beforeEach } = intern.getInterface("bdd");
@@ -104,5 +106,73 @@ describe("processes/pageFunctionProcesses", () => {
 		const actualFunctions = store.get(store.path("pageModel", "functions"));
 		assert.equal(actualFunctions[0].sequenceConnections.length, 0);
 		assert.equal(actualFunctions[0].dataConnections.length, 0);
+	});
+
+	it("updateSequenceConnectorProcess", () => {
+		const functions: PageFunction[] = [
+			{
+				id: "1",
+				nodes: [],
+				sequenceConnections: [
+					{
+						id: "sc1",
+						fromNode: "1",
+						fromOutput: "2",
+						toNode: "3",
+						toInput: "4"
+					}
+				],
+				dataConnections: []
+			}
+		];
+		store.apply([add(store.path("pageModel", "functions"), functions), add(store.path("selectedFunctionId"), "1")]);
+		updateSequenceConnectorProcess(store)({
+			sequenceConnectorId: "sc1",
+			startPort: { nodeId: "11", portId: "22" },
+			endPort: { nodeId: "33", portId: "44" }
+		});
+
+		const actualFunctions = store.get(store.path("pageModel", "functions"));
+		assert.equal(actualFunctions[0].sequenceConnections.length, 1);
+		assert.equal(actualFunctions[0].dataConnections.length, 0);
+		assert.equal(actualFunctions[0].sequenceConnections[0].id, "sc1");
+		assert.equal(actualFunctions[0].sequenceConnections[0].fromNode, "11");
+		assert.equal(actualFunctions[0].sequenceConnections[0].fromOutput, "22");
+		assert.equal(actualFunctions[0].sequenceConnections[0].toNode, "33");
+		assert.equal(actualFunctions[0].sequenceConnections[0].toInput, "44");
+	});
+
+	it("updateDataConnectorProcess", () => {
+		const functions: PageFunction[] = [
+			{
+				id: "1",
+				nodes: [],
+				sequenceConnections: [],
+				dataConnections: [
+					{
+						id: "dc1",
+						fromNode: "1",
+						fromOutput: "2",
+						toNode: "3",
+						toInput: "4"
+					}
+				]
+			}
+		];
+		store.apply([add(store.path("pageModel", "functions"), functions), add(store.path("selectedFunctionId"), "1")]);
+		updateDataConnectorProcess(store)({
+			dataConnectorId: "dc1",
+			startPort: { nodeId: "11", portId: "22" },
+			endPort: { nodeId: "33", portId: "44" }
+		});
+
+		const actualFunctions = store.get(store.path("pageModel", "functions"));
+		assert.equal(actualFunctions[0].dataConnections.length, 1);
+		assert.equal(actualFunctions[0].sequenceConnections.length, 0);
+		assert.equal(actualFunctions[0].dataConnections[0].id, "dc1");
+		assert.equal(actualFunctions[0].dataConnections[0].fromNode, "11");
+		assert.equal(actualFunctions[0].dataConnections[0].fromOutput, "22");
+		assert.equal(actualFunctions[0].dataConnections[0].toNode, "33");
+		assert.equal(actualFunctions[0].dataConnections[0].toInput, "44");
 	});
 });

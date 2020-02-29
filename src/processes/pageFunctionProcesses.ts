@@ -3,7 +3,7 @@ import { commandFactory } from "./utils";
 import { FunctionDeclaration, PageFunction } from "designer-core/interfaces";
 import { add, replace, remove } from "@dojo/framework/stores/state/operations";
 import { findIndex } from "@dojo/framework/shim/array";
-import { ConnectorPayload } from "./interfaces";
+import { ConnectorPayload, PortPosition } from "./interfaces";
 import { uuid } from "@dojo/framework/core/util";
 
 // FIXME: 待确认如何实现
@@ -190,6 +190,79 @@ const removeDataConnectorCommand = commandFactory<{ dataConnectorId: string }>(
 	}
 );
 
+const updateSequenceConnectorCommand = commandFactory<{
+	sequenceConnectorId: string;
+	startPort: PortPosition;
+	endPort: PortPosition;
+}>(({ get, path, at, payload: { sequenceConnectorId, startPort, endPort } }) => {
+	const functions = get(path("pageModel", "functions"));
+	const currentFunctionId = get(path("selectedFunctionId"));
+	const currentFunctionIndex = findIndex(functions, (func) => func.id === currentFunctionId);
+	if (currentFunctionIndex === -1) {
+		return;
+	}
+
+	const sequenceConnections = functions[currentFunctionIndex].sequenceConnections || [];
+	const updatedSequenceConnectorIndex = findIndex(
+		sequenceConnections,
+		(connection) => connection.id === sequenceConnectorId
+	);
+	if (updatedSequenceConnectorIndex === -1) {
+		return;
+	}
+
+	return [
+		replace(
+			at(
+				path(at(path("pageModel", "functions"), currentFunctionIndex), "sequenceConnections"),
+				updatedSequenceConnectorIndex
+			),
+			{
+				id: sequenceConnectorId,
+				fromNode: startPort.nodeId,
+				fromOutput: startPort.portId,
+				toNode: endPort.nodeId,
+				toInput: endPort.portId
+			}
+		)
+	];
+});
+
+const updateDataConnectorCommand = commandFactory<{
+	dataConnectorId: string;
+	startPort: PortPosition;
+	endPort: PortPosition;
+}>(({ get, path, at, payload: { dataConnectorId, startPort, endPort } }) => {
+	const functions = get(path("pageModel", "functions"));
+	const currentFunctionId = get(path("selectedFunctionId"));
+	const currentFunctionIndex = findIndex(functions, (func) => func.id === currentFunctionId);
+	if (currentFunctionIndex === -1) {
+		return;
+	}
+
+	const dataConnections = functions[currentFunctionIndex].dataConnections || [];
+	const updatedDataConnectorIndex = findIndex(dataConnections, (connection) => connection.id === dataConnectorId);
+	if (updatedDataConnectorIndex === -1) {
+		return;
+	}
+
+	return [
+		replace(
+			at(
+				path(at(path("pageModel", "functions"), currentFunctionIndex), "dataConnections"),
+				updatedDataConnectorIndex
+			),
+			{
+				id: dataConnectorId,
+				fromNode: startPort.nodeId,
+				fromOutput: startPort.portId,
+				toNode: endPort.nodeId,
+				toInput: endPort.portId
+			}
+		)
+	];
+});
+
 export const newFunctionProcess = createProcess("new-function", [newFunctionCommand]);
 export const activeFunctionProcess = createProcess("active-function", [activeFunctionCommand]);
 export const activeFunctionNodeProcess = createProcess("active-function-node", [activeFunctionNodeCommand]);
@@ -202,3 +275,7 @@ export const removeSequenceConnectorProcess = createProcess("remove-sequence-con
 	removeSequenceConnectorCommand
 ]);
 export const removeDataConnectorProcess = createProcess("remove-data-connector", [removeDataConnectorCommand]);
+export const updateSequenceConnectorProcess = createProcess("update-sequence-connector", [
+	updateSequenceConnectorCommand
+]);
+export const updateDataConnectorProcess = createProcess("update-data-connector", [updateDataConnectorCommand]);

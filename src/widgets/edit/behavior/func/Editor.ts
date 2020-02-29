@@ -10,7 +10,9 @@ import {
 	addSequenceConnectorProcess,
 	addDataConnectorProcess,
 	removeSequenceConnectorProcess,
-	removeDataConnectorProcess
+	removeDataConnectorProcess,
+	updateSequenceConnectorProcess,
+	updateDataConnectorProcess
 } from "../../../../processes/pageFunctionProcesses";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import { find, findIndex } from "@dojo/framework/shim/array";
@@ -44,6 +46,10 @@ let editingSequenceConnectorId: string | undefined;
 let editingDataConnectorId: string | undefined;
 // let connectingEndPort: PortInfo;
 
+/**
+ * FIXME: 这里将 pageFunction 通过属性传入，但是在部件内部却是直接调用 processes 修改。
+ * 感觉这样的设计不够对称，是否应该为此部件公开修改数据的事件，然后在父部件中调用相关的 processes？
+ */
 export default factory(function Editor({ properties, middleware: { store, drag, dimensions, invalidator } }) {
 	const { pageFunction } = properties();
 
@@ -105,11 +111,16 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 				}
 				isConnecting = false;
 
-				// 如果松开鼠标前没有停留在有效的节点上，则视为删除连接线的操作。
+				console.log("connectingHoverPort", connectingHoverPort);
+				// 如果松开鼠标前没有停留在端口上，则视为删除连接线的操作。
 				if (!connectingHoverPort) {
 					removeConnector();
 					return;
 				}
+
+				// FIXME: 即使没有通过校验，也要记得清除临时存放正在编辑的连接线
+
+				// 以下皆是松开鼠标后停留在端口上的处理逻辑
 
 				// 连接线有效校验：
 				// 1. 端口不能自己连接自己
@@ -140,8 +151,61 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 					endPort = connectingStartPort;
 				}
 
-				connectingHoverPort = undefined;
+				if (editingSequenceConnectorId) {
+					// 一次只会修改一个端口，所以就精准的更新一个端口的信息
+					if (connectingHoverPort.portType === "sequence" && connectingHoverPort.flowType === "output") {
+						executor(updateSequenceConnectorProcess)({
+							sequenceConnectorId: editingSequenceConnectorId,
+							startPort,
+							endPort
+						});
+					}
+					return;
+				}
 
+				if (editingDataConnectorId) {
+					if (connectingHoverPort.portType === "data" && connectingHoverPort.flowType === "input") {
+						executor(updateDataConnectorProcess)({
+							dataConnectorId: editingDataConnectorId,
+							startPort,
+							endPort
+						});
+					}
+					return;
+				}
+
+				// 判断 connectingHoverPort 上是否有连接线，如果有的话要先删除之前的连接线，再创建新的连接线
+				if (connectingHoverPort.portType === "sequence" && connectingHoverPort.flowType === "input") {
+					const connector = find(
+						sequenceConnections,
+						(connection) =>
+							connection.toNode === connectingHoverPort!.nodeId &&
+							connection.toInput === connectingHoverPort!.portId
+					);
+					if (connector) {
+						executor(updateSequenceConnectorProcess)({
+							sequenceConnectorId: connector.id,
+							startPort,
+							endPort
+						});
+						return;
+					}
+				}
+
+				if (connectingHoverPort.portType === "data" && connectingHoverPort.flowType === "input") {
+					const connector = find(
+						dataConnections,
+						(connection) =>
+							connection.toNode === connectingHoverPort!.nodeId &&
+							connection.toInput === connectingHoverPort!.portId
+					);
+					if (connector) {
+						executor(updateDataConnectorProcess)({ dataConnectorId: connector.id, startPort, endPort });
+						return;
+					}
+				}
+
+				// TODO: 将此拆分为校验和新增两个方法，然后将校验方法前移。
 				if (connectingStartPort.portType === "sequence") {
 					// 节点-输出型序列端口 -> 节点-输入型序列端口之间的连线已存在
 					// 则从节点-输入型序列端口 往 节点-输出型序列端口之间连线时，不能重复添加
@@ -232,6 +296,11 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 								key: node.outputSequencePorts[0].id,
 								classes: [c.px_1],
 								onpointerdown: (event: PointerEvent) => {
+									// 初始化数据
+									editingDataConnectorId = undefined;
+									editingSequenceConnectorId = undefined;
+									connectingHoverPort = undefined;
+
 									// 要先判断所点击的端口上是否已存在连线
 									// 1. 如果没有连线，则新建一条连线;
 									// 2. 如果已经有连线，则
@@ -323,6 +392,11 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 									key: item.id,
 									classes: [c.px_1, css.dataPointIcon],
 									onpointerdown: (event: PointerEvent) => {
+										// 初始化数据
+										editingDataConnectorId = undefined;
+										editingSequenceConnectorId = undefined;
+										connectingHoverPort = undefined;
+
 										connectingStartPort = {
 											nodeId: node.id,
 											portId: item.id,
@@ -405,6 +479,11 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 								key: node.inputSequencePort!.id,
 								classes: [c.px_1],
 								onpointerdown: (event: PointerEvent) => {
+									// 初始化数据
+									editingDataConnectorId = undefined;
+									editingSequenceConnectorId = undefined;
+									connectingHoverPort = undefined;
+
 									connectingStartPort = {
 										nodeId: node.id,
 										portId: node.inputSequencePort!.id,
@@ -440,6 +519,11 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 								key: node.outputSequencePorts[0].id,
 								classes: [c.px_1],
 								onpointerdown: (event: PointerEvent) => {
+									// 初始化数据
+									editingDataConnectorId = undefined;
+									editingSequenceConnectorId = undefined;
+									connectingHoverPort = undefined;
+
 									const sc = find(
 										sequenceConnections,
 										(sc) =>
@@ -517,6 +601,11 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 										key: item.id,
 										classes: [c.px_1, css.dataPointIcon],
 										onpointerdown: (event: PointerEvent) => {
+											// 初始化数据
+											editingDataConnectorId = undefined;
+											editingSequenceConnectorId = undefined;
+											connectingHoverPort = undefined;
+
 											// 注意，输出型序列端口最多只能连一条线
 											const dc = find(
 												dataConnections,
@@ -609,6 +698,11 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 									key: item.id,
 									classes: [c.px_1, css.dataPointIcon],
 									onpointerdown: (event: PointerEvent) => {
+										// 初始化数据
+										editingDataConnectorId = undefined;
+										editingSequenceConnectorId = undefined;
+										connectingHoverPort = undefined;
+
 										connectingStartPort = {
 											nodeId: node.id,
 											portId: item.id,
@@ -802,11 +896,9 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 		if (editingSequenceConnectorId) {
 			// 删除序列端口之间的连接线
 			executor(removeSequenceConnectorProcess)({ sequenceConnectorId: editingSequenceConnectorId });
-			editingSequenceConnectorId = undefined;
 		} else if (editingDataConnectorId) {
 			// 删除数据端口之间的连接线
 			executor(removeDataConnectorProcess)({ dataConnectorId: editingDataConnectorId });
-			editingDataConnectorId = undefined;
 		} else {
 			// 重新渲染，不再显示新建的连接线
 			invalidator();
