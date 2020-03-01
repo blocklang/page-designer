@@ -133,8 +133,7 @@ describe("processes/pageFunctionProcesses", () => {
 							{
 								id: "idp2",
 								name: "value",
-								type: "string",
-								connected: false
+								type: "string"
 							}
 						],
 						outputDataPorts: []

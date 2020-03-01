@@ -387,8 +387,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "idp1",
 							name: "set",
-							type: "string",
-							connected: false
+							type: "string"
 						}
 					],
 					outputDataPorts: []
@@ -717,9 +716,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "odp1",
 							name: "value",
-							type: "string",
-							left: 2,
-							top: 3
+							type: "string"
 						}
 					]
 				},
@@ -735,10 +732,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "idp2",
 							name: "set",
-							type: "string",
-							left: 11,
-							top: 21,
-							connected: true
+							type: "string"
 						}
 					],
 					outputDataPorts: []
@@ -1426,8 +1420,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "idp1",
 							name: "set",
-							type: "string",
-							connected: false
+							type: "string"
 						}
 					],
 					outputDataPorts: []
@@ -1497,8 +1490,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "idp2",
 							name: "set",
-							type: "string",
-							connected: false
+							type: "string"
 						}
 					],
 					outputDataPorts: []
@@ -1568,8 +1560,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "idp2",
 							name: "set",
-							type: "string",
-							connected: false
+							type: "string"
 						}
 					],
 					outputDataPorts: []
@@ -1617,8 +1608,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "idp1",
 							name: "set",
-							type: "string",
-							connected: false
+							type: "string"
 						}
 					],
 					outputDataPorts: []
@@ -1643,8 +1633,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "idp2",
 							name: "set",
-							type: "string",
-							connected: false
+							type: "string"
 						}
 					],
 					outputDataPorts: []
@@ -1707,8 +1696,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "idp2",
 							name: "value",
-							type: "string",
-							connected: false
+							type: "string"
 						}
 					],
 					outputDataPorts: []
@@ -1769,8 +1757,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "idp2",
 							name: "value",
-							type: "string",
-							connected: false
+							type: "string"
 						}
 					],
 					outputDataPorts: []
@@ -1831,8 +1818,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "idp2",
 							name: "value",
-							type: "string",
-							connected: false
+							type: "string"
 						}
 					],
 					outputDataPorts: []
@@ -2107,8 +2093,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "idp1",
 							name: "value",
-							type: "string",
-							connected: false
+							type: "string"
 						}
 					],
 					outputDataPorts: []
@@ -2533,8 +2518,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "idp2",
 							name: "value",
-							type: "string",
-							connected: false
+							type: "string"
 						}
 					],
 					outputDataPorts: []
@@ -2666,8 +2650,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "idp2",
 							name: "value",
-							type: "string",
-							connected: false
+							type: "string"
 						}
 					],
 					outputDataPorts: []
@@ -2998,8 +2981,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "idp1",
 							name: "value",
-							type: "string",
-							connected: false
+							type: "string"
 						}
 					],
 					outputDataPorts: []
@@ -3071,8 +3053,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "idp1",
 							name: "value",
-							type: "string",
-							connected: false
+							type: "string"
 						}
 					],
 					outputDataPorts: []
@@ -3144,8 +3125,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "idp1",
 							name: "value",
-							type: "string",
-							connected: false
+							type: "string"
 						}
 					],
 					outputDataPorts: []
@@ -3168,8 +3148,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "idp2",
 							name: "value",
-							type: "string",
-							connected: false
+							type: "string"
 						}
 					],
 					outputDataPorts: []
@@ -3308,8 +3287,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "idp2",
 							name: "value",
-							type: "string",
-							connected: false
+							type: "string"
 						}
 					],
 					outputDataPorts: []
@@ -3448,8 +3426,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "idp2",
 							name: "value",
-							type: "string",
-							connected: false
+							type: "string"
 						}
 					],
 					outputDataPorts: []
@@ -3749,8 +3726,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "idp2",
 							name: "value",
-							type: "string",
-							connected: true
+							type: "string"
 						}
 					],
 					outputDataPorts: []
@@ -3773,8 +3749,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "idp3",
 							name: "value",
-							type: "string",
-							connected: false
+							type: "string"
 						}
 					],
 					outputDataPorts: []
@@ -4019,8 +3994,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "idp2",
 							name: "value",
-							type: "string",
-							connected: true
+							type: "string"
 						}
 					],
 					outputDataPorts: []
