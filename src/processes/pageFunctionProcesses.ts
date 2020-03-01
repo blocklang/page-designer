@@ -152,7 +152,7 @@ const addSequenceConnectorCommand = commandFactory<ConnectorPayload>(
 					sequenceConnections.length
 				),
 				{
-					id: uuid().replace("-", ""),
+					id: uuid().replace(/-/g, ""),
 					fromNode: startPort.nodeId,
 					fromOutput: startPort.portId,
 					toNode: endPort.nodeId,
@@ -209,7 +209,7 @@ const addDataConnectorCommand = commandFactory<ConnectorPayload>(
 					dataConnections.length
 				),
 				{
-					id: uuid().replace("-", ""),
+					id: uuid().replace(/-/g, ""),
 					fromNode: startPort.nodeId,
 					fromOutput: startPort.portId,
 					toNode: endPort.nodeId,

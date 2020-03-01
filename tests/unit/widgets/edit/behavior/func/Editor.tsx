@@ -1867,6 +1867,190 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		assert.isTrue(addDataConnectorProcessStub.calledOnce);
 	});
 
+	it("can connect - one GetData node's output data port to multiple SetData's input data port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Get a",
+					text: "",
+					category: "data",
+					outputSequencePorts: [],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp1",
+							name: "value",
+							type: "string"
+						}
+					]
+				},
+				{
+					id: "21",
+					left: 10,
+					top: 20,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp2" },
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [
+						{
+							id: "idp2",
+							name: "value",
+							type: "string"
+						}
+					],
+					outputDataPorts: []
+				},
+				{
+					id: "31",
+					left: 20,
+					top: 30,
+					caption: "Set b",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp3" },
+					outputSequencePorts: [
+						{
+							id: "osp3",
+							text: ""
+						}
+					],
+					inputDataPorts: [
+						{
+							id: "idp3",
+							name: "value",
+							type: "string"
+						}
+					],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: [
+				{
+					id: "dc1",
+					fromNode: "11",
+					fromOutput: "odp1",
+					toNode: "21",
+					toInput: "idp2"
+				}
+			]
+		};
+
+		const addDataConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addDataConnectorProcess, addDataConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@odp1", "onpointerdown", { clientX: 10, clientY: 20 });
+		h.trigger("@idp3", "onpointerenter");
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addDataConnectorProcessStub.calledOnce);
+	});
+
+	it("can connect - multiple SetData's input data port to one GetData node's output data port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Get a",
+					text: "",
+					category: "data",
+					outputSequencePorts: [],
+					inputDataPorts: [],
+					outputDataPorts: [
+						{
+							id: "odp1",
+							name: "value",
+							type: "string"
+						}
+					]
+				},
+				{
+					id: "21",
+					left: 10,
+					top: 20,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp2" },
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
+					inputDataPorts: [
+						{
+							id: "idp2",
+							name: "value",
+							type: "string"
+						}
+					],
+					outputDataPorts: []
+				},
+				{
+					id: "31",
+					left: 20,
+					top: 30,
+					caption: "Set b",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp3" },
+					outputSequencePorts: [
+						{
+							id: "osp3",
+							text: ""
+						}
+					],
+					inputDataPorts: [
+						{
+							id: "idp3",
+							name: "value",
+							type: "string"
+						}
+					],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: [
+				{
+					id: "dc1",
+					fromNode: "11",
+					fromOutput: "odp1",
+					toNode: "21",
+					toInput: "idp2"
+				}
+			]
+		};
+
+		const addDataConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([[addDataConnectorProcess, addDataConnectorProcessStub]]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@idp3", "onpointerdown", { clientX: 10, clientY: 20 });
+		h.trigger("@odp1", "onpointerenter");
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addDataConnectorProcessStub.calledOnce);
+	});
+
 	// 1. sequence port 与 data port 不能互连
 	// 2. output 不能连 output，input 不能连 input
 	// 3. 不能连节点自身的其余 port 上
