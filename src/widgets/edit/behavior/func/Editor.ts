@@ -123,11 +123,9 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 				// 以下皆是松开鼠标后停留在端口上的处理逻辑
 
 				// 连接线有效校验：
-				// 1. 端口不能自己连接自己
-				if (
-					connectingStartPort.nodeId === connectingHoverPort.nodeId &&
-					connectingStartPort.portId === connectingHoverPort.portId
-				) {
+				// 1. 节点内的端口之间不能互相连接
+				// 2. 端口不能自己连接自己
+				if (connectingStartPort.nodeId === connectingHoverPort.nodeId) {
 					invalidator();
 					return;
 				}
@@ -579,7 +577,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 							(connection) => connection.toNode === node.id && connection.toInput === item.id
 						) === -1
 							? v("div", { classes: [c.d_flex, c.justify_content_start] }, [
-									v("div", { classes: [c.d_flex, c.align_items_center] }, [
+									v("div", { key: "left", classes: [c.d_flex, c.align_items_center] }, [
 										v(
 											"span",
 											{
@@ -603,7 +601,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 											[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
 										)
 									]),
-									v("div", {}, [
+									v("div", { key: "right" }, [
 										v("div", {}, [
 											v("small", { classes: [c.font_italic] }, [item.type]),
 											v("span", { classes: [c.ml_1] }, [item.name])
@@ -880,6 +878,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 		endPoint: { x: number; y: number } = { x: 0, y: 0 },
 		svgKey: string
 	) {
+		console.log("svgKey", svgKey);
 		const svgOffset = getConnectorOffset(startPoint, endPoint);
 		const connectorPath = getConnectorPath(startPoint, endPoint);
 		return v(

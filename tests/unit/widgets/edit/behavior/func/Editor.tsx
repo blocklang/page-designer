@@ -338,7 +338,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
 						<div classes={[c.d_flex, c.justify_content_start]}>
-							<div classes={[c.d_flex, c.align_items_center]}>
+							<div key="left" classes={[c.d_flex, c.align_items_center]}>
 								<span
 									key="idp1"
 									classes={[c.px_1, css.dataPointIcon]}
@@ -349,7 +349,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 									<FontAwesomeIcon icon="circle" size="xs" />
 								</span>
 							</div>
-							<div>
+							<div key="right">
 								<div>
 									<small classes={[c.font_italic]}>string</small>
 									<span classes={[c.ml_1]}>set</span>
@@ -1388,7 +1388,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
 						<div classes={[c.d_flex, c.justify_content_start]}>
-							<div classes={[c.d_flex, c.align_items_center]}>
+							<div key="left" classes={[c.d_flex, c.align_items_center]}>
 								<span
 									key="idp1"
 									classes={[c.px_1, css.dataPointIcon]}
@@ -1399,7 +1399,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 									<FontAwesomeIcon icon="circle" size="xs" />
 								</span>
 							</div>
-							<div>
+							<div key="right">
 								<div>
 									<small classes={[c.font_italic]}>string</small>
 									<span classes={[c.ml_1]}>set</span>
@@ -2140,6 +2140,86 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		h.trigger("@root", "onpointerup");
 
 		assert.isTrue(addDataConnectorProcessStub.notCalled);
+	});
+
+	it("can not connect one SetData node - input sequence port to output sequence port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp1" },
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addSequenceConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub]
+		]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@isp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@osp1", "onpointerenter");
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addSequenceConnectorProcessStub.notCalled);
+	});
+
+	it("can not connect one SetData node - output sequence port to input sequence port", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp1" },
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const addSequenceConnectorProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub]
+		]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@osp1", "onpointerdown", { clientX: 0, clientY: 0 });
+		h.trigger("@isp1", "onpointerenter");
+
+		h.trigger("@root", "onpointerup");
+
+		assert.isTrue(addSequenceConnectorProcessStub.notCalled);
 	});
 
 	it("can not connect two Function nodes - Function node's output sequence port to Function node's output sequence port", () => {
