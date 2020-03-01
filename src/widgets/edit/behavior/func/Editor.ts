@@ -1,5 +1,5 @@
 import { create, v, w, invalidator } from "@dojo/framework/core/vdom";
-import { PageFunction, VisualNode, NodeConnection } from "designer-core/interfaces";
+import { PageFunction, VisualNode, NodeConnection, InputDataPort } from "designer-core/interfaces";
 import * as c from "bootstrap-classes";
 import * as css from "./Editor.m.css";
 import { DNode } from "@dojo/framework/core/interfaces";
@@ -360,21 +360,15 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 									}
 								},
 								onpointerenter: (event: PointerEvent) => {
-									if (!isConnecting) {
-										return;
-									}
-									connectingHoverPort = {
+									onHoverPort({
 										nodeId: node.id,
 										portId: node.outputSequencePorts[0].id,
 										portType: "sequence",
 										flowType: "output"
-									};
+									});
 								},
-								onpointerleave: (event: PointerEvent) => {
-									if (!isConnecting) {
-										return;
-									}
-									connectingHoverPort = undefined;
+								onpointerleave: () => {
+									onLeavePort();
 								}
 							},
 							[w(FontAwesomeIcon, { icon: "caret-right" })]
@@ -406,21 +400,15 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 										startConnect(event);
 									},
 									onpointerenter: (event: PointerEvent) => {
-										if (!isConnecting) {
-											return;
-										}
-										connectingHoverPort = {
+										onHoverPort({
 											nodeId: node.id,
 											portId: item.id,
 											portType: "data",
 											flowType: "output"
-										};
+										});
 									},
 									onpointerleave: (event: PointerEvent) => {
-										if (!isConnecting) {
-											return;
-										}
-										connectingHoverPort = undefined;
+										onLeavePort();
 									}
 								},
 								[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
@@ -498,21 +486,15 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 									startConnect(event);
 								},
 								onpointerenter: (event: PointerEvent) => {
-									if (!isConnecting) {
-										return;
-									}
-									connectingHoverPort = {
+									onHoverPort({
 										nodeId: node.id,
 										portId: node.inputSequencePort!.id,
 										portType: "sequence",
 										flowType: "input"
-									};
+									});
 								},
 								onpointerleave: (event: PointerEvent) => {
-									if (!isConnecting) {
-										return;
-									}
-									connectingHoverPort = undefined;
+									onLeavePort();
 								}
 							},
 							[w(FontAwesomeIcon, { icon: "caret-right" })]
@@ -575,21 +557,15 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 									}
 								},
 								onpointerenter: (event: PointerEvent) => {
-									if (!isConnecting) {
-										return;
-									}
-									connectingHoverPort = {
+									onHoverPort({
 										nodeId: node.id,
 										portId: node.outputSequencePorts[0].id,
 										portType: "sequence",
 										flowType: "output"
-									};
+									});
 								},
 								onpointerleave: (event: PointerEvent) => {
-									if (!isConnecting) {
-										return;
-									}
-									connectingHoverPort = undefined;
+									onLeavePort();
 								}
 							},
 							[w(FontAwesomeIcon, { icon: "caret-right" })]
@@ -598,96 +574,69 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 				// data ports
 				...node.inputDataPorts.map((item) =>
 					v("div", { classes: [c.d_flex, c.justify_content_between] }, [
-						v("div", { classes: [c.d_flex, c.justify_content_start] }, [
-							v("div", { classes: [c.d_flex, c.align_items_center] }, [
-								v(
-									"span",
-									{
-										key: item.id,
-										classes: [c.px_1, css.dataPointIcon],
-										onpointerdown: (event: PointerEvent) => {
-											// 初始化数据
-											editingDataConnectorId = undefined;
-											editingSequenceConnectorId = undefined;
-											connectingHoverPort = undefined;
-
-											// 注意，输出型序列端口最多只能连一条线
-											const dc = find(
-												dataConnections,
-												(dc) => dc.toNode === node.id && dc.toInput === item.id
-											);
-											console.log("dataConnection", dc);
-											if (dc) {
-												// 相当于从终点的输入型端口切断了，可看作是从起点的输出型端口开始连线
-												editingDataConnectorId = dc.id;
-
-												console.log("editingDataConnectorId", editingDataConnectorId);
-
-												connectingStartPort = {
-													nodeId: dc.fromNode,
-													portId: dc.fromOutput,
-													portType: "data", // 有效值只能是 data
-													flowType: "output" // 有效值只能是 output
-												};
-
-												const newRootDimensions = dimensions.get("root");
-												const fromOutputPortDimensions = dimensions.get(dc.fromOutput);
-												drawingConnectorStartPort = {
-													x:
-														fromOutputPortDimensions.position.left -
-														newRootDimensions.position.left +
-														fromOutputPortDimensions.size.width / 2,
-													y:
-														fromOutputPortDimensions.position.top -
-														newRootDimensions.position.top +
-														fromOutputPortDimensions.size.height / 2
-												};
-
-												drawingConnectorEndPort = {
-													x: event.clientX - newRootDimensions.position.left,
-													y: event.clientY - newRootDimensions.position.top
-												};
-
-												isConnecting = true;
-											} else {
-												connectingStartPort = {
+						findIndex(
+							dataConnections,
+							(connection) => connection.toNode === node.id && connection.toInput === item.id
+						) === -1
+							? v("div", { classes: [c.d_flex, c.justify_content_start] }, [
+									v("div", { classes: [c.d_flex, c.align_items_center] }, [
+										v(
+											"span",
+											{
+												key: item.id,
+												classes: [c.px_1, css.dataPointIcon],
+												onpointerdown: (event: PointerEvent) => {
+													onPointerDownInputDataPort(node.id, item, event);
+												},
+												onpointerenter: () => {
+													onHoverPort({
+														nodeId: node.id,
+														portId: item.id,
+														portType: "data",
+														flowType: "input"
+													});
+												},
+												onpointerleave: () => {
+													onLeavePort();
+												}
+											},
+											[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
+										)
+									]),
+									v("div", {}, [
+										v("div", {}, [
+											v("small", { classes: [c.font_italic] }, [item.type]),
+											v("span", { classes: [c.ml_1] }, [item.name])
+										]),
+										v("div", {}, [v("input", { classes: [css.inputValue] })])
+									])
+							  ])
+							: v("div", {}, [
+									v(
+										"span",
+										{
+											key: `${item.id}-connected`,
+											classes: [c.px_1, css.dataPointIcon],
+											onpointerdown: (event: PointerEvent) => {
+												onPointerDownInputDataPort(node.id, item, event);
+											},
+											onpointerenter: (event: PointerEvent) => {
+												onHoverPort({
 													nodeId: node.id,
 													portId: item.id,
 													portType: "data",
 													flowType: "input"
-												};
-												startConnect(event);
+												});
+											},
+											onpointerleave: (event: PointerEvent) => {
+												onLeavePort();
 											}
 										},
-										onpointerenter: (event: PointerEvent) => {
-											if (!isConnecting) {
-												return;
-											}
-											connectingHoverPort = {
-												nodeId: node.id,
-												portId: item.id,
-												portType: "data",
-												flowType: "input"
-											};
-										},
-										onpointerleave: (event: PointerEvent) => {
-											if (!isConnecting) {
-												return;
-											}
-											connectingHoverPort = undefined;
-										}
-									},
-									[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
-								)
-							]),
-							v("div", {}, [
-								v("div", {}, [
+										[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
+									),
 									v("small", { classes: [c.font_italic] }, [item.type]),
 									v("span", { classes: [c.ml_1] }, [item.name])
-								]),
-								v("div", {}, [v("input", { classes: [css.inputValue] })])
-							])
-						]),
+							  ]),
 						v("div", { classes: [c.px_1] }, [v("span", { classes: [css.blankPort] })])
 					])
 				),
@@ -717,21 +666,15 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 										startConnect(event);
 									},
 									onpointerenter: (event: PointerEvent) => {
-										if (!isConnecting) {
-											return;
-										}
-										connectingHoverPort = {
+										onHoverPort({
 											nodeId: node.id,
 											portId: item.id,
 											portType: "data",
 											flowType: "output"
-										};
+										});
 									},
 									onpointerleave: (event: PointerEvent) => {
-										if (!isConnecting) {
-											return;
-										}
-										connectingHoverPort = undefined;
+										onLeavePort();
 									}
 								},
 								[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
@@ -741,6 +684,70 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 				)
 			]
 		);
+	}
+
+	function onPointerDownInputDataPort(
+		nodeId: string,
+		inputDataPort: InputDataPort,
+		event: PointerEvent<EventTarget>
+	) {
+		// 初始化数据
+		editingDataConnectorId = undefined;
+		editingSequenceConnectorId = undefined;
+		connectingHoverPort = undefined;
+
+		// 注意，输出型序列端口最多只能连一条线
+		const dc = find(dataConnections, (dc) => dc.toNode === nodeId && dc.toInput === inputDataPort.id);
+		if (dc) {
+			// 相当于从终点的输入型端口切断了，可看作是从起点的输出型端口开始连线
+			editingDataConnectorId = dc.id;
+			console.log("editingDataConnectorId", editingDataConnectorId);
+			connectingStartPort = {
+				nodeId: dc.fromNode,
+				portId: dc.fromOutput,
+				portType: "data",
+				flowType: "output" // 有效值只能是 output
+			};
+			const newRootDimensions = dimensions.get("root");
+			const fromOutputPortDimensions = dimensions.get(dc.fromOutput);
+			drawingConnectorStartPort = {
+				x:
+					fromOutputPortDimensions.position.left -
+					newRootDimensions.position.left +
+					fromOutputPortDimensions.size.width / 2,
+				y:
+					fromOutputPortDimensions.position.top -
+					newRootDimensions.position.top +
+					fromOutputPortDimensions.size.height / 2
+			};
+			drawingConnectorEndPort = {
+				x: event.clientX - newRootDimensions.position.left,
+				y: event.clientY - newRootDimensions.position.top
+			};
+			isConnecting = true;
+		} else {
+			connectingStartPort = {
+				nodeId,
+				portId: inputDataPort.id,
+				portType: "data",
+				flowType: "input"
+			};
+			startConnect(event);
+		}
+	}
+
+	function onHoverPort(portInfo: PortInfo) {
+		if (!isConnecting) {
+			return;
+		}
+		connectingHoverPort = portInfo;
+	}
+
+	function onLeavePort() {
+		if (!isConnecting) {
+			return;
+		}
+		connectingHoverPort = undefined;
 	}
 
 	function startConnect(event: PointerEvent<EventTarget>) {
@@ -849,7 +856,12 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 		}
 
 		const startPortDimension = dimensions.get(startPort.id);
-		const endPortDimension = dimensions.get(endPort.id);
+
+		// 因为连接线的前后，port 的位置会发生变化，所以需要为不同的状态设置不同的 key，
+		// 然后根据具体的 key 来获取位置。
+		const tryConnectedPortDimension = dimensions.get(endPort.id + "-connected");
+		const endPortDimension =
+			tryConnectedPortDimension.size.width === 0 ? dimensions.get(endPort.id) : tryConnectedPortDimension;
 
 		const startPoint = {
 			x: startPortDimension.position.left - rootDimensions.position.left + startPortDimension.size.width / 2,

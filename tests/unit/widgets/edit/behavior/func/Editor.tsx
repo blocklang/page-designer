@@ -293,7 +293,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		h.expect(nodeAssertion);
 	});
 
-	it("a set data node", () => {
+	it("a set data node - input data port not connected", () => {
 		const nodeAssertion = baseAssertion
 			// 以下两个事件专用于在节点间连线。
 			.setProperty("@root", "onpointermove", () => {})
@@ -400,6 +400,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		const h = harness(() => <Editor pageFunction={pageFunction} />);
 		h.expect(nodeAssertion);
 	});
+
+	// FIXME: 为 input data port 设置值
 
 	it("a get data node", () => {
 		const nodeAssertion = baseAssertion
@@ -610,7 +612,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		h.expect(nodeAssertion);
 	});
 
-	it("show data connection", () => {
+	it("show data connection - set data node's input data port connected", () => {
 		const nodeAssertion = baseAssertion
 			// 以下两个事件专用于在节点间连线。
 			.setProperty("@root", "onpointermove", () => {})
@@ -623,7 +625,14 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					onpointerdown={() => {}}
 				>
 					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
-						函数
+						Get a
+						<span
+							classes={[c.float_right, c.text_white, css.close]}
+							onclick={() => {}}
+							onpointerdown={() => {}}
+						>
+							<FontAwesomeIcon icon="times" />
+						</span>
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
 						<div classes={[c.px_1]}>
@@ -645,12 +654,12 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					</div>
 				</div>,
 				<div
-					key="12"
+					key="21"
 					classes={[c.border, undefined, c.bg_light, css.node]}
 					styles={{ top: "20px", left: "10px" }}
 					onpointerdown={() => {}}
 				>
-					<div key="12-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
+					<div key="21-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Set a
 						<span
 							classes={[c.float_right, c.text_white, css.close]}
@@ -661,27 +670,39 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						</span>
 					</div>
 					<div classes={[c.d_flex, c.justify_content_between]}>
-						<div classes={[c.d_flex, c.justify_content_start]}>
-							<div classes={[c.d_flex, c.align_items_center]}>
-								<span
-									key="idp2"
-									classes={[c.px_1, css.dataPointIcon]}
-									onpointerdown={() => {}}
-									onpointerenter={() => {}}
-									onpointerleave={() => {}}
-								>
-									<FontAwesomeIcon icon="circle" size="xs" />
-								</span>
-							</div>
-							<div>
-								<div>
-									<small classes={[c.font_italic]}>string</small>
-									<span classes={[c.ml_1]}>set</span>
-								</div>
-								<div>
-									<input classes={[css.inputValue]} />
-								</div>
-							</div>
+						<div
+							key="isp2"
+							classes={[c.px_1]}
+							onpointerdown={() => {}}
+							onpointerenter={() => {}}
+							onpointerleave={() => {}}
+						>
+							<FontAwesomeIcon icon="caret-right" />
+						</div>
+						<div></div>
+						<div
+							key="osp2"
+							classes={[c.px_1]}
+							onpointerdown={() => {}}
+							onpointerenter={() => {}}
+							onpointerleave={() => {}}
+						>
+							<FontAwesomeIcon icon="caret-right" />
+						</div>
+					</div>
+					<div classes={[c.d_flex, c.justify_content_between]}>
+						<div>
+							<span
+								key="idp2-connected"
+								classes={[c.px_1, css.dataPointIcon]}
+								onpointerdown={() => {}}
+								onpointerenter={() => {}}
+								onpointerleave={() => {}}
+							>
+								<FontAwesomeIcon icon="circle" size="xs" />
+							</span>
+							<small classes={[c.font_italic]}>string</small>
+							<span classes={[c.ml_1]}>set</span>
 						</div>
 						<div classes={[c.px_1]}>
 							<span classes={[css.blankPort]}></span>
@@ -707,9 +728,9 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					id: "11",
 					left: 1,
 					top: 2,
-					caption: "函数",
-					text: "onValue",
-					category: "flowControl",
+					caption: "Get a",
+					text: "",
+					category: "data",
 					outputSequencePorts: [],
 					inputDataPorts: [],
 					outputDataPorts: [
@@ -721,13 +742,19 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					]
 				},
 				{
-					id: "12",
+					id: "21",
 					left: 10,
 					top: 20,
 					caption: "Set a",
 					text: "",
 					category: "data",
-					outputSequencePorts: [],
+					inputSequencePort: { id: "isp2" },
+					outputSequencePorts: [
+						{
+							id: "osp2",
+							text: ""
+						}
+					],
 					inputDataPorts: [
 						{
 							id: "idp2",
@@ -744,7 +771,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					id: "dc1",
 					fromNode: "11",
 					fromOutput: "odp1",
-					toNode: "12",
+					toNode: "21",
 					toInput: "idp2"
 				}
 			]
@@ -3314,7 +3341,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@odp1", "onpointerdown", { clientX: 0, clientY: 0 });
-		h.trigger("@idp2", "onpointerenter");
+		h.trigger("@idp2-connected", "onpointerenter");
 
 		h.trigger("@root", "onpointerup");
 
@@ -3450,7 +3477,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@idp2", "onpointerdown", { clientX: 10, clientY: 20 });
+		h.trigger("@idp2-connected", "onpointerdown", { clientX: 10, clientY: 20 });
 
 		h.trigger("@root", "onpointerup");
 
@@ -3772,7 +3799,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
-		h.trigger("@idp2", "onpointerdown", { clientX: 10, clientY: 20 });
+		h.trigger("@idp2-connected", "onpointerdown", { clientX: 10, clientY: 20 });
 		h.trigger("@idp3", "onpointerenter");
 		h.trigger("@root", "onpointerup");
 
@@ -4041,7 +4068,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
 		h.trigger("@odp3", "onpointerdown", { clientX: 10, clientY: 20 });
-		h.trigger("@idp2", "onpointerenter");
+		h.trigger("@idp2-connected", "onpointerenter");
 		h.trigger("@root", "onpointerup");
 
 		assert.isTrue(updateDataConnectorProcessStub.calledOnce);
