@@ -8,7 +8,8 @@ import {
 	removeDataConnectorProcess,
 	updateSequenceConnectorProcess,
 	updateDataConnectorProcess,
-	removeFunctionNodeProcess
+	removeFunctionNodeProcess,
+	updateInputDataPortValueProcess
 } from "../../../src/processes/pageFunctionProcesses";
 
 const { describe, it, beforeEach } = intern.getInterface("bdd");
@@ -323,5 +324,40 @@ describe("processes/pageFunctionProcesses", () => {
 		assert.equal(actualFunctions[0].dataConnections[0].fromOutput, "22");
 		assert.equal(actualFunctions[0].dataConnections[0].toNode, "33");
 		assert.equal(actualFunctions[0].dataConnections[0].toInput, "44");
+	});
+
+	it("updateInputDataPortValueProcess", () => {
+		const functions: PageFunction[] = [
+			{
+				id: "1",
+				nodes: [
+					{
+						id: "11",
+						left: 1,
+						top: 2,
+						caption: "Set a",
+						text: "",
+						category: "data",
+						outputSequencePorts: [],
+						inputDataPorts: [
+							{
+								id: "idp1",
+								name: "value",
+								type: "string"
+							}
+						],
+						outputDataPorts: []
+					}
+				],
+				sequenceConnections: [],
+				dataConnections: []
+			}
+		];
+		store.apply([add(store.path("pageModel", "functions"), functions), add(store.path("selectedFunctionId"), "1")]);
+
+		updateInputDataPortValueProcess(store)({ inputDataPort: { nodeId: "11", portId: "idp1" }, value: "a" });
+
+		const actualFunctions = store.get(store.path("pageModel", "functions"));
+		assert.equal(actualFunctions[0].nodes[0].inputDataPorts[0].value, "a");
 	});
 });

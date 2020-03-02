@@ -319,6 +319,47 @@ const updateDataConnectorCommand = commandFactory<{
 	];
 });
 
+const updateInputDataPortValueCommand = commandFactory<{ inputDataPort: PortPosition; value: string }>(
+	({ get, path, at, payload: { inputDataPort, value } }) => {
+		const functions = get(path("pageModel", "functions"));
+		const currentFunctionId = get(path("selectedFunctionId"));
+		const currentFunctionIndex = findIndex(functions, (func) => func.id === currentFunctionId);
+		if (currentFunctionIndex === -1) {
+			return;
+		}
+
+		const nodes = functions[currentFunctionIndex].nodes;
+		const functionNodeIndex = findIndex(nodes, (node) => node.id === inputDataPort.nodeId);
+		if (functionNodeIndex === -1) {
+			return;
+		}
+		const functionNode = nodes[functionNodeIndex];
+		const inputDataPortIndex = findIndex(functionNode.inputDataPorts, (port) => port.id === inputDataPort.portId);
+		if (inputDataPortIndex === -1) {
+			return;
+		}
+
+		return [
+			replace(
+				path(
+					at(
+						path(
+							at(
+								path(at(path("pageModel", "functions"), currentFunctionIndex), "nodes"),
+								functionNodeIndex
+							),
+							"inputDataPorts"
+						),
+						inputDataPortIndex
+					),
+					"value"
+				),
+				value
+			)
+		];
+	}
+);
+
 export const newFunctionProcess = createProcess("new-function", [newFunctionCommand]);
 export const activeFunctionProcess = createProcess("active-function", [activeFunctionCommand]);
 export const activeFunctionNodeProcess = createProcess("active-function-node", [activeFunctionNodeCommand]);
@@ -336,3 +377,6 @@ export const updateSequenceConnectorProcess = createProcess("update-sequence-con
 	updateSequenceConnectorCommand
 ]);
 export const updateDataConnectorProcess = createProcess("update-data-connector", [updateDataConnectorCommand]);
+export const updateInputDataPortValueProcess = createProcess("update-input-data-port-value", [
+	updateInputDataPortValueCommand
+]);

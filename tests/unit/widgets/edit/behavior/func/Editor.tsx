@@ -19,7 +19,8 @@ import {
 	removeDataConnectorProcess,
 	updateSequenceConnectorProcess,
 	updateDataConnectorProcess,
-	removeFunctionNodeProcess
+	removeFunctionNodeProcess,
+	updateInputDataPortValueProcess
 } from "../../../../../../src/processes/pageFunctionProcesses";
 import { stub } from "sinon";
 import { add } from "@dojo/framework/stores/state/operations";
@@ -354,9 +355,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 									<small classes={[c.font_italic]}>string</small>
 									<span classes={[c.ml_1]}>set</span>
 								</div>
-								<div>
-									<input classes={[css.inputValue]} />
-								</div>
+								<input key="input" value={undefined} classes={[css.inputValue]} oninput={() => {}} />
 							</div>
 						</div>
 						<div classes={[c.px_1]}>
@@ -402,6 +401,48 @@ describe("widgets/edit/behavior/func/Editor", () => {
 	});
 
 	// FIXME: 为 input data port 设置值
+	it("a set data node - manual set input value", () => {
+		const pageFunction: PageFunction = {
+			id: "1",
+			nodes: [
+				{
+					id: "11",
+					left: 1,
+					top: 2,
+					caption: "Set a",
+					text: "",
+					category: "data",
+					inputSequencePort: { id: "isp1" },
+					outputSequencePorts: [
+						{
+							id: "osp1",
+							text: ""
+						}
+					],
+					inputDataPorts: [
+						{
+							id: "idp1",
+							name: "set",
+							type: "string"
+						}
+					],
+					outputDataPorts: []
+				}
+			],
+			sequenceConnections: [],
+			dataConnections: []
+		};
+
+		const updateInputDataPortValueProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[updateInputDataPortValueProcess, updateInputDataPortValueProcessStub]
+		]);
+		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
+
+		h.trigger("@input", "oninput", { target: { value: "1" } });
+
+		assert.isTrue(updateInputDataPortValueProcessStub.calledOnce);
+	});
 
 	it("a get data node", () => {
 		const nodeAssertion = baseAssertion
@@ -1404,9 +1445,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 									<small classes={[c.font_italic]}>string</small>
 									<span classes={[c.ml_1]}>set</span>
 								</div>
-								<div>
-									<input classes={[css.inputValue]} />
-								</div>
+								<input key="input" value={undefined} classes={[css.inputValue]} oninput={() => {}} />
 							</div>
 						</div>
 						<div classes={[c.px_1]}>

@@ -13,7 +13,8 @@ import {
 	removeDataConnectorProcess,
 	updateSequenceConnectorProcess,
 	updateDataConnectorProcess,
-	removeFunctionNodeProcess
+	removeFunctionNodeProcess,
+	updateInputDataPortValueProcess
 } from "../../../../processes/pageFunctionProcesses";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import { find, findIndex } from "@dojo/framework/shim/array";
@@ -606,7 +607,18 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 											v("small", { classes: [c.font_italic] }, [item.type]),
 											v("span", { classes: [c.ml_1] }, [item.name])
 										]),
-										v("div", {}, [v("input", { classes: [css.inputValue] })])
+										v("input", {
+											key: "input",
+											value: item.value,
+											classes: [css.inputValue],
+											oninput: (event: KeyboardEvent) => {
+												const value = (event.target as HTMLInputElement).value;
+												executor(updateInputDataPortValueProcess)({
+													inputDataPort: { nodeId: node.id, portId: item.id },
+													value
+												});
+											}
+										})
 									])
 							  ])
 							: v("div", {}, [
