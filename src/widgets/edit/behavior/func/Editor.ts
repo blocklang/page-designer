@@ -114,6 +114,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 				isConnecting = false;
 
 				// 如果松开鼠标前没有停留在端口上，则视为删除连接线的操作。
+				// 如果松开鼠标前停留在端口上，但是无效的端口，则也应该视为删除连接线的操作。
 				if (!connectingHoverPort) {
 					removeConnector();
 					return;
@@ -135,7 +136,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 					connectingStartPort.portType !== connectingHoverPort.portType ||
 					connectingStartPort.flowType === connectingHoverPort.flowType
 				) {
-					invalidator();
+					removeConnector();
 					return;
 				}
 
@@ -711,7 +712,6 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 		if (dc) {
 			// 相当于从终点的输入型端口切断了，可看作是从起点的输出型端口开始连线
 			editingDataConnectorId = dc.id;
-			console.log("editingDataConnectorId", editingDataConnectorId);
 			connectingStartPort = {
 				nodeId: dc.fromNode,
 				portId: dc.fromOutput,
@@ -890,7 +890,6 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 		endPoint: { x: number; y: number } = { x: 0, y: 0 },
 		svgKey: string
 	) {
-		console.log("svgKey", svgKey);
 		const svgOffset = getConnectorOffset(startPoint, endPoint);
 		const connectorPath = getConnectorPath(startPoint, endPoint);
 		return v(
