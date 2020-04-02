@@ -44,6 +44,8 @@
     "std-widget-web": "^0.0.6-alpha.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
     "@dojo/cli": "^6.0.0",
     "@dojo/cli-build-app": "^6.0.9",
     "@dojo/cli-build-widget": "^6.0.2",
@@ -64,6 +66,7 @@
   },
   "husky": {
     "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-commit": "lint-staged"
     }
   },
