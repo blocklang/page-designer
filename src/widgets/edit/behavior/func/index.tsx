@@ -79,7 +79,7 @@ export default factory(function Func({ properties, middleware: { store, drag, in
 			const functionDeclaration: FunctionDeclaration = {
 				id: activeWidgetProperty.value!,
 				name: activeWidgetProperty.name,
-				arguments: activeWidgetProperty.arguments || []
+				arguments: activeWidgetProperty.arguments || [],
 			};
 			executor(newFunctionProcess)({ functionDeclaration });
 		} else {

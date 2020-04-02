@@ -39,7 +39,7 @@ export default factory(function Header({ properties, middleware: { store, invali
 		activePageView = "ui",
 		onSwitchEditMode,
 		onSwitchPageView,
-		onGotoGroup
+		onGotoGroup,
 	} = properties();
 
 	let path;
@@ -102,7 +102,7 @@ export default factory(function Header({ properties, middleware: { store, invali
 				onclick={() => onSwitchPageView()}
 			>
 				交互
-			</button>
+			</button>,
 		];
 	} else {
 		switchViewActionButtons = [
@@ -116,7 +116,7 @@ export default factory(function Header({ properties, middleware: { store, invali
 			</button>,
 			<button key="toBehaviorViewButton" type="button" classes={[c.btn, c.btn_outline_secondary, c.active]}>
 				交互
-			</button>
+			</button>,
 		];
 	}
 
@@ -240,7 +240,7 @@ export default factory(function Header({ properties, middleware: { store, invali
 				c.align_items_center,
 				c.p_2,
 				c.position_fixed,
-				css.root
+				css.root,
 			]}
 		>
 			{leftBlock}

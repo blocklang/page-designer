@@ -8,7 +8,7 @@ import {
 	getAllChildCount,
 	inferNextActiveNodeIndex,
 	getPreviousIndex,
-	getNextIndex
+	getNextIndex,
 } from "designer-core/utils/treeUtil";
 
 const insertEmptyDataItemCommand = commandFactory(({ get, path, at }) => {
@@ -31,7 +31,7 @@ const insertEmptyDataItemCommand = commandFactory(({ get, path, at }) => {
 		parentId,
 		name: "",
 		value: "",
-		open: false
+		open: false,
 	};
 	return [add(at(path("pageModel", "data"), insertedIndex), dataItem)];
 });
@@ -150,11 +150,11 @@ const moveDownActiveDataItemCommand = commandFactory(({ get, path, at }) => {
 export const insertDataItemProcess = createProcess("insert-data-item-process", [insertEmptyDataItemCommand]);
 export const activeDataItemProcess = createProcess("active-data-item-process", [activeDataItemCommand]);
 export const changeActiveDataItemPropertyProcess = createProcess("change-active-data-item-property-process", [
-	changeActiveDataItemPropertyCommand
+	changeActiveDataItemPropertyCommand,
 ]);
 export const foldDataGroupProcess = createProcess("fold-data-group-process", [foldDataGroupCommand]);
 export const removeActiveDataItemProcess = createProcess("remove-data-item-process", [removeActiveDataItemCommand]);
 export const moveUpActiveDataItemProcess = createProcess("move-up-data-item-process", [moveUpActiveDataItemCommand]);
 export const moveDownActiveDataItemProcess = createProcess("move-down-data-item-process", [
-	moveDownActiveDataItemCommand
+	moveDownActiveDataItemCommand,
 ]);

@@ -20,7 +20,7 @@
     "test:all": "dojo build --mode unit && dojo build --mode functional && dojo test --all --config local",
     "test:headless": "dojo test -u -c headless",
     "test:ci": "run-s build:test test:headless",
-    "prettier": "prettier --write 'src/**/*.{ts,tsx}' 'src/**/*.css' 'tests/**/*.{ts,tsx}'",
+    "prettier": "prettier --write \"{src,tests}/**/*.{ts,tsx,css}\"",
     "uploadCoverage": "codecov --file=coverage/coverage.json",
     "json-server": "json-server --watch json-server/db.json --routes json-server/routes.json",
     "serve": "cd serve && serve -l 3001"

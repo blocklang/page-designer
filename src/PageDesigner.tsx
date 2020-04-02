@@ -245,6 +245,6 @@ function insertSvgDiv(svgPath: string, symbolIdPrefix: string) {
 				// 为了确保 symbol 的 id 全局唯一，在原有的 id 前加上了组件仓库信息
 				symbol.setAttribute("id", symbolIdPrefix + originId);
 			}
-		}
+		},
 	});
 }

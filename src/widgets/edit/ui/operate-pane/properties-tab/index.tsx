@@ -28,7 +28,7 @@ export default factory(function PropertiesTab({ properties, middleware: { store 
 
 	let _renderMessageNode = (errorMessage: string) =>
 		v("div", { classes: [css.root] }, [
-			v("div", { classes: [c.text_center, c.text_muted, c.py_2] }, [`${errorMessage}`])
+			v("div", { classes: [c.text_center, c.text_muted, c.py_2] }, [`${errorMessage}`]),
 		]);
 
 	// 判断是否存在属性，是基于 layout 判断，而不是基于 widgets.properties

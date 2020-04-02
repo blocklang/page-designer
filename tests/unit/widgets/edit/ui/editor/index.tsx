@@ -70,12 +70,12 @@ describe("edit/ui/editor", () => {
 							code: "0001",
 							value: undefined, // TODO: 需进一步细化
 							valueType: "function",
-							isExpr: false
-						}
-					]
-				}
+							isExpr: false,
+						},
+					],
+				},
 			],
-			data: []
+			data: [],
 		};
 		// 默认包含标准库
 		const ideRepos: ComponentRepo[] = [
@@ -88,8 +88,8 @@ describe("edit/ui/editor", () => {
 				name: "std-ide-widget",
 				category: "widget",
 				version: "0.0.1",
-				std: true
-			}
+				std: true,
+			},
 		];
 
 		mockStore((path) => [replace(path("pageModel"), pageModel), replace(path("ideRepos"), ideRepos)]);
@@ -107,7 +107,7 @@ describe("edit/ui/editor", () => {
 						onHighlight: () => {},
 						onUnhighlight: () => {},
 						onPropertyChanged: () => {},
-						autoFocus: () => true
+						autoFocus: () => true,
 					}}
 					// 原始属性的值，是必须要展开的
 					onLoad={undefined}
@@ -141,9 +141,9 @@ describe("edit/ui/editor", () => {
 							name: "onLoad",
 							value: undefined, // TODO: 需进一步细化
 							valueType: "function",
-							isExpr: false
-						}
-					]
+							isExpr: false,
+						},
+					],
 				},
 				{
 					id: "2",
@@ -153,7 +153,7 @@ describe("edit/ui/editor", () => {
 					widgetName: "Container",
 					widgetCode: "0002",
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "21",
@@ -163,7 +163,7 @@ describe("edit/ui/editor", () => {
 					widgetName: "Container",
 					widgetCode: "0002",
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "3",
@@ -173,10 +173,10 @@ describe("edit/ui/editor", () => {
 					widgetName: "Container",
 					widgetCode: "0002",
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			],
-			data: []
+			data: [],
 		};
 
 		// 默认包含标准库
@@ -190,7 +190,7 @@ describe("edit/ui/editor", () => {
 				name: "std-ide-widget",
 				category: "widget",
 				version: "0.0.1",
-				std: true
+				std: true,
 			},
 			{
 				id: 2,
@@ -201,8 +201,8 @@ describe("edit/ui/editor", () => {
 				name: "ide-widget",
 				category: "widget",
 				version: "0.0.1",
-				std: false
-			}
+				std: false,
+			},
 		];
 
 		blocklang.registerWidgets(
@@ -230,7 +230,7 @@ describe("edit/ui/editor", () => {
 						onHighlight: () => {},
 						onUnhighlight: () => {},
 						onPropertyChanged: () => {},
-						autoFocus: () => false
+						autoFocus: () => false,
 					}}
 					// 原始属性的值，是必须要展开的
 					onLoad={undefined}
@@ -245,7 +245,7 @@ describe("edit/ui/editor", () => {
 							onHighlight: () => {},
 							onUnhighlight: () => {},
 							onPropertyChanged: () => {},
-							autoFocus: () => false
+							autoFocus: () => false,
 						}}
 					>
 						<IdeContainer
@@ -257,7 +257,7 @@ describe("edit/ui/editor", () => {
 								onHighlight: () => {},
 								onUnhighlight: () => {},
 								onPropertyChanged: () => {},
-								autoFocus: () => false
+								autoFocus: () => false,
 							}}
 						></IdeContainer>
 					</IdeContainer>
@@ -271,7 +271,7 @@ describe("edit/ui/editor", () => {
 							onHighlight: () => {},
 							onUnhighlight: () => {},
 							onPropertyChanged: () => {},
-							autoFocus: () => false
+							autoFocus: () => false,
 						}}
 					/>
 				</Page>
@@ -305,12 +305,12 @@ describe("edit/ui/editor", () => {
 							name: "onLoad",
 							value: undefined, // TODO: 需进一步细化
 							valueType: "function",
-							isExpr: false
-						}
-					]
-				}
+							isExpr: false,
+						},
+					],
+				},
 			],
-			data: []
+			data: [],
 		};
 		// 默认包含标准库
 		const ideRepos: ComponentRepo[] = [
@@ -323,14 +323,14 @@ describe("edit/ui/editor", () => {
 				name: "std-ide-widget",
 				category: "widget",
 				version: "0.0.1",
-				std: true
-			}
+				std: true,
+			},
 		];
 
 		mockStore((path) => [
 			replace(path("pageModel"), pageModel),
 			replace(path("ideRepos"), ideRepos),
-			replace(path("selectedWidgetIndex"), 0)
+			replace(path("selectedWidgetIndex"), 0),
 		]);
 
 		const pageWidgets: AttachedWidget[] = [
@@ -349,10 +349,10 @@ describe("edit/ui/editor", () => {
 						name: "onLoad",
 						value: undefined, // TODO: 需进一步细化
 						valueType: "function",
-						isExpr: false
-					}
-				]
-			}
+						isExpr: false,
+					},
+				],
+			},
 		];
 
 		const pageWidget = pageModel.widgets[0];
@@ -369,7 +369,7 @@ describe("edit/ui/editor", () => {
 						onHighlight: () => {},
 						onUnhighlight: () => {},
 						onPropertyChanged: () => {},
-						autoFocus: () => false
+						autoFocus: () => false,
 					}}
 					// 原始属性的值，是必须要展开的
 					onLoad={undefined}
@@ -404,12 +404,12 @@ describe("edit/ui/editor", () => {
 							name: "onLoad",
 							value: undefined, // TODO: 需进一步细化
 							valueType: "function",
-							isExpr: false
-						}
-					]
-				}
+							isExpr: false,
+						},
+					],
+				},
 			],
-			data: []
+			data: [],
 		};
 		// 默认包含标准库
 		const ideRepos: ComponentRepo[] = [
@@ -422,15 +422,15 @@ describe("edit/ui/editor", () => {
 				name: "std-ide-widget",
 				category: "widget",
 				version: "0.0.1",
-				std: true
-			}
+				std: true,
+			},
 		];
 
 		mockStore((path) => [
 			replace(path("pageModel"), pageModel),
 			replace(path("ideRepos"), ideRepos),
 			replace(path("selectedWidgetIndex"), 0),
-			replace(path("highlightWidgetIndex"), 0)
+			replace(path("highlightWidgetIndex"), 0),
 		]);
 
 		const pageWidgets: AttachedWidget[] = [
@@ -449,10 +449,10 @@ describe("edit/ui/editor", () => {
 						name: "onLoad",
 						value: undefined, // TODO: 需进一步细化
 						valueType: "function",
-						isExpr: false
-					}
-				]
-			}
+						isExpr: false,
+					},
+				],
+			},
 		];
 
 		const pageWidget = pageModel.widgets[0];
@@ -469,7 +469,7 @@ describe("edit/ui/editor", () => {
 						onHighlight: () => {},
 						onUnhighlight: () => {},
 						onPropertyChanged: () => {},
-						autoFocus: () => false
+						autoFocus: () => false,
 					}}
 					// 原始属性的值，是必须要展开的
 					onLoad={undefined}
@@ -504,12 +504,12 @@ describe("edit/ui/editor", () => {
 							name: "onLoad",
 							value: undefined, // TODO: 需进一步细化
 							valueType: "function",
-							isExpr: false
-						}
-					]
-				}
+							isExpr: false,
+						},
+					],
+				},
 			],
-			data: []
+			data: [],
 		};
 		// 默认包含标准库
 		const ideRepos: ComponentRepo[] = [
@@ -522,14 +522,14 @@ describe("edit/ui/editor", () => {
 				name: "std-ide-widget",
 				category: "widget",
 				version: "0.0.1",
-				std: true
-			}
+				std: true,
+			},
 		];
 
 		mockStore((path) => [
 			replace(path("pageModel"), pageModel),
 			replace(path("ideRepos"), ideRepos),
-			replace(path("highlightWidgetIndex"), 0)
+			replace(path("highlightWidgetIndex"), 0),
 		]);
 
 		const pageWidget = pageModel.widgets[0];
@@ -546,7 +546,7 @@ describe("edit/ui/editor", () => {
 						onHighlight: () => {},
 						onUnhighlight: () => {},
 						onPropertyChanged: () => {},
-						autoFocus: () => false
+						autoFocus: () => false,
 					}}
 					// 原始属性的值，是必须要展开的
 					onLoad={undefined}

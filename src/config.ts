@@ -20,5 +20,5 @@ export let config = {
 	rootDataParentId: "-1",
 	// route
 	routeProfile: "",
-	routeParentGroup: ""
+	routeParentGroup: "",
 };

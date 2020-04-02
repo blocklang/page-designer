@@ -6,7 +6,7 @@ export function getConnectorOffset(
 		top: Math.min(start.y, end.y),
 		left: Math.min(start.x, end.x),
 		width: Math.abs(end.x - start.x),
-		height: Math.abs(end.y - start.y)
+		height: Math.abs(end.y - start.y),
 	};
 }
 
@@ -34,6 +34,6 @@ export function getConnectorPath(
 
 	return {
 		start: { x: startX, y: startY },
-		end: { x: endX, y: endY }
+		end: { x: endX, y: endY },
 	};
 }

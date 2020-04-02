@@ -12,7 +12,7 @@ describe("edit/ui/editor/Box", () => {
 			left: 0,
 			top: 0,
 			height: 0,
-			width: 0
+			width: 0,
 		};
 		const h = harness(() => <Box {...properties} />);
 
@@ -25,7 +25,7 @@ describe("edit/ui/editor/Box", () => {
 					height: "0px",
 					width: "0px",
 					borderWidth: "1px",
-					borderColor: "#0080ff"
+					borderColor: "#0080ff",
 				}}
 			></div>
 		));
@@ -38,7 +38,7 @@ describe("edit/ui/editor/Box", () => {
 			height: 3,
 			width: 4,
 			borderWidth: 5,
-			borderColor: "6"
+			borderColor: "6",
 		};
 		const h = harness(() => <Box {...properties} />);
 
@@ -51,7 +51,7 @@ describe("edit/ui/editor/Box", () => {
 					height: "3px",
 					width: "4px",
 					borderWidth: "5px",
-					borderColor: "6"
+					borderColor: "6",
 				}}
 			></div>
 		));
@@ -62,7 +62,7 @@ describe("edit/ui/editor/Box", () => {
 			left: 0,
 			top: 0,
 			height: 0,
-			width: 0
+			width: 0,
 		};
 		const h = harness(() => <Box {...properties}>text</Box>);
 
@@ -75,7 +75,7 @@ describe("edit/ui/editor/Box", () => {
 					height: "0px",
 					width: "0px",
 					borderWidth: "1px",
-					borderColor: "#0080ff"
+					borderColor: "#0080ff",
 				}}
 			>
 				text

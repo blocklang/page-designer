@@ -20,7 +20,7 @@ import {
 	updateSequenceConnectorProcess,
 	updateDataConnectorProcess,
 	removeFunctionNodeProcess,
-	updateInputDataPortValueProcess
+	updateInputDataPortValueProcess,
 } from "../../../../../../src/processes/pageFunctionProcesses";
 import { stub } from "sinon";
 import { add } from "@dojo/framework/stores/state/operations";
@@ -69,7 +69,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
-				</div>
+				</div>,
 			]);
 
 		const pageFunction: PageFunction = {
@@ -85,15 +85,15 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const h = harness(() => <Editor pageFunction={pageFunction} />);
@@ -149,7 +149,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							</span>
 						</div>
 					</div>
-				</div>
+				</div>,
 			]);
 
 		const pageFunction: PageFunction = {
@@ -165,21 +165,21 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
 					outputDataPorts: [
 						{
 							id: "odp1",
 							name: "value",
-							type: "string"
-						}
-					]
-				}
+							type: "string",
+						},
+					],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const h = harness(() => <Editor pageFunction={pageFunction} />);
@@ -252,7 +252,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							</span>
 						</div>
 					</div>
-				</div>
+				</div>,
 			]);
 
 		const pageFunction: PageFunction = {
@@ -268,26 +268,26 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
 					outputDataPorts: [
 						{
 							id: "odp1",
 							name: "value",
-							type: "string"
+							type: "string",
 						},
 						{
 							id: "odp2",
 							name: "value2",
-							type: "string"
-						}
-					]
-				}
+							type: "string",
+						},
+					],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const h = harness(() => <Editor pageFunction={pageFunction} />);
@@ -362,7 +362,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							<span classes={[css.blankPort]}></span>
 						</div>
 					</div>
-				</div>
+				</div>,
 			]);
 
 		const pageFunction: PageFunction = {
@@ -379,21 +379,21 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp1",
 							name: "set",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const h = harness(() => <Editor pageFunction={pageFunction} />);
@@ -416,26 +416,26 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp1",
 							name: "set",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const updateInputDataPortValueProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[updateInputDataPortValueProcess, updateInputDataPortValueProcessStub]
+			[updateInputDataPortValueProcess, updateInputDataPortValueProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -484,7 +484,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							</span>
 						</div>
 					</div>
-				</div>
+				</div>,
 			]);
 
 		const pageFunction: PageFunction = {
@@ -503,13 +503,13 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "odp1",
 							name: "value",
-							type: "string"
-						}
-					]
-				}
+							type: "string",
+						},
+					],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const h = harness(() => <Editor pageFunction={pageFunction} />);
@@ -595,7 +595,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					pointer-events="none"
 				>
 					<path d="M0 0 L0 0" fill="none" stroke="#6c757d" stroke-width="2" pointer-events="none" />
-				</svg>
+				</svg>,
 			]);
 
 		const pageFunction: PageFunction = {
@@ -611,11 +611,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "12",
@@ -625,17 +625,17 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					text: "",
 					category: "data",
 					inputSequencePort: {
-						id: "isp2"
+						id: "isp2",
 					},
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [
 				{
@@ -643,10 +643,10 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					fromNode: "11",
 					fromOutput: "osp1",
 					toNode: "12",
-					toInput: "isp2"
-				}
+					toInput: "isp2",
+				},
 			],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const h = harness(() => <Editor pageFunction={pageFunction} />);
@@ -759,7 +759,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					pointer-events="none"
 				>
 					<path d="M0 0 L0 0" fill="none" stroke="#6c757d" stroke-width="2" pointer-events="none" />
-				</svg>
+				</svg>,
 			]);
 
 		const pageFunction: PageFunction = {
@@ -778,9 +778,9 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "odp1",
 							name: "value",
-							type: "string"
-						}
-					]
+							type: "string",
+						},
+					],
 				},
 				{
 					id: "21",
@@ -793,18 +793,18 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp2",
 							name: "set",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
 			dataConnections: [
@@ -813,9 +813,9 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					fromNode: "11",
 					fromOutput: "odp1",
 					toNode: "21",
-					toInput: "idp2"
-				}
-			]
+					toInput: "idp2",
+				},
+			],
 		};
 
 		const h = harness(() => <Editor pageFunction={pageFunction} />);
@@ -852,7 +852,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
-				</div>
+				</div>,
 			]);
 
 		const pageFunction: PageFunction = {
@@ -868,15 +868,15 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const activeFunctionNodeProcessStub = stub();
@@ -912,18 +912,18 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "odp1",
 							name: "value",
-							type: "string"
-						}
-					]
-				}
+							type: "string",
+						},
+					],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const removeFunctionNodeProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[removeFunctionNodeProcess, removeFunctionNodeProcessStub]
+			[removeFunctionNodeProcess, removeFunctionNodeProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -976,7 +976,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					pointer-events="none"
 				>
 					<path d="M0 0 L10 20" fill="none" stroke="#6c757d" stroke-width="2" pointer-events="none" />
-				</svg>
+				</svg>,
 			]);
 
 		const pageFunction: PageFunction = {
@@ -992,15 +992,15 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const h = harness(() => <Editor pageFunction={pageFunction} />);
@@ -1070,7 +1070,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					pointer-events="none"
 				>
 					<path d="M0 0 L10 20" fill="none" stroke="#6c757d" stroke-width="2" pointer-events="none" />
-				</svg>
+				</svg>,
 			]);
 
 		const pageFunction: PageFunction = {
@@ -1087,15 +1087,15 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const h = harness(() => <Editor pageFunction={pageFunction} />);
@@ -1165,7 +1165,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					pointer-events="none"
 				>
 					<path d="M10 20 L0 0" fill="none" stroke="#6c757d" stroke-width="2" pointer-events="none" />
-				</svg>
+				</svg>,
 			]);
 
 		const pageFunction: PageFunction = {
@@ -1182,15 +1182,15 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const h = harness(() => <Editor pageFunction={pageFunction} />);
@@ -1250,7 +1250,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					pointer-events="none"
 				>
 					<path d="M0 0 L10 20" fill="none" stroke="#6c757d" stroke-width="2" pointer-events="none" />
-				</svg>
+				</svg>,
 			]);
 
 		const pageFunction: PageFunction = {
@@ -1269,13 +1269,13 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "odp1",
 							name: "value",
-							type: "string"
-						}
-					]
-				}
+							type: "string",
+						},
+					],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const h = harness(() => <Editor pageFunction={pageFunction} />);
@@ -1342,7 +1342,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					pointer-events="none"
 				>
 					<path d="M0 0 L10 20" fill="none" stroke="#6c757d" stroke-width="2" pointer-events="none" />
-				</svg>
+				</svg>,
 			]);
 
 		const pageFunction: PageFunction = {
@@ -1361,13 +1361,13 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "odp1",
 							name: "value",
-							type: "string"
-						}
-					]
-				}
+							type: "string",
+						},
+					],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const h = harness(() => <Editor pageFunction={pageFunction} />);
@@ -1462,7 +1462,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					pointer-events="none"
 				>
 					<path d="M0 0 L10 20" fill="none" stroke="#6c757d" stroke-width="2" pointer-events="none" />
-				</svg>
+				</svg>,
 			]);
 
 		const pageFunction: PageFunction = {
@@ -1479,21 +1479,21 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp1",
 							name: "set",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const h = harness(() => <Editor pageFunction={pageFunction} />);
@@ -1524,17 +1524,17 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
 					outputDataPorts: [
 						{
 							id: "odp1",
 							name: "value",
-							type: "string"
-						}
-					]
+							type: "string",
+						},
+					],
 				},
 				{
 					id: "12",
@@ -1544,31 +1544,31 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					text: "",
 					category: "data",
 					inputSequencePort: {
-						id: "isp2"
+						id: "isp2",
 					},
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp2",
 							name: "set",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[addSequenceConnectorProcess, addSequenceConnectorProcessStub]
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -1594,17 +1594,17 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
 					outputDataPorts: [
 						{
 							id: "odp1",
 							name: "value",
-							type: "string"
-						}
-					]
+							type: "string",
+						},
+					],
 				},
 				{
 					id: "12",
@@ -1614,31 +1614,31 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					text: "",
 					category: "data",
 					inputSequencePort: {
-						id: "isp2"
+						id: "isp2",
 					},
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp2",
 							name: "set",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[addSequenceConnectorProcess, addSequenceConnectorProcessStub]
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -1662,22 +1662,22 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					text: "",
 					category: "data",
 					inputSequencePort: {
-						id: "isp1"
+						id: "isp1",
 					},
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp1",
 							name: "set",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "12",
@@ -1687,31 +1687,31 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					text: "",
 					category: "data",
 					inputSequencePort: {
-						id: "isp2"
+						id: "isp2",
 					},
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp2",
 							name: "set",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[addSequenceConnectorProcess, addSequenceConnectorProcessStub]
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -1740,9 +1740,9 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "odp1",
 							name: "value",
-							type: "string"
-						}
-					]
+							type: "string",
+						},
+					],
 				},
 				{
 					id: "21",
@@ -1755,21 +1755,21 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp2",
 							name: "value",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addDataConnectorProcessStub = stub();
@@ -1801,9 +1801,9 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "odp1",
 							name: "value",
-							type: "string"
-						}
-					]
+							type: "string",
+						},
+					],
 				},
 				{
 					id: "21",
@@ -1816,21 +1816,21 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp2",
 							name: "value",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addDataConnectorProcessStub = stub();
@@ -1862,9 +1862,9 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "odp1",
 							name: "value",
-							type: "string"
-						}
-					]
+							type: "string",
+						},
+					],
 				},
 				{
 					id: "21",
@@ -1877,21 +1877,21 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp2",
 							name: "value",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addDataConnectorProcessStub = stub();
@@ -1923,9 +1923,9 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "odp1",
 							name: "value",
-							type: "string"
-						}
-					]
+							type: "string",
+						},
+					],
 				},
 				{
 					id: "21",
@@ -1938,17 +1938,17 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp2",
 							name: "value",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "31",
@@ -1961,18 +1961,18 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp3",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp3",
 							name: "value",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
 			dataConnections: [
@@ -1981,9 +1981,9 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					fromNode: "11",
 					fromOutput: "odp1",
 					toNode: "21",
-					toInput: "idp2"
-				}
-			]
+					toInput: "idp2",
+				},
+			],
 		};
 
 		const addDataConnectorProcessStub = stub();
@@ -2015,9 +2015,9 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "odp1",
 							name: "value",
-							type: "string"
-						}
-					]
+							type: "string",
+						},
+					],
 				},
 				{
 					id: "21",
@@ -2030,17 +2030,17 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp2",
 							name: "value",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "31",
@@ -2053,18 +2053,18 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp3",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp3",
 							name: "value",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
 			dataConnections: [
@@ -2073,9 +2073,9 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					fromNode: "11",
 					fromOutput: "odp1",
 					toNode: "21",
-					toInput: "idp2"
-				}
-			]
+					toInput: "idp2",
+				},
+			],
 		};
 
 		const addDataConnectorProcessStub = stub();
@@ -2124,7 +2124,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
-				</div>
+				</div>,
 			]);
 
 		const pageFunction: PageFunction = {
@@ -2140,20 +2140,20 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[addSequenceConnectorProcess, addSequenceConnectorProcessStub]
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -2180,21 +2180,21 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
 					outputDataPorts: [
 						{
 							id: "odp1",
 							name: "value",
-							type: "string"
-						}
-					]
-				}
+							type: "string",
+						},
+					],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addDataConnectorProcessStub = stub();
@@ -2224,20 +2224,20 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[addSequenceConnectorProcess, addSequenceConnectorProcessStub]
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -2264,20 +2264,20 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[addSequenceConnectorProcess, addSequenceConnectorProcessStub]
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -2306,13 +2306,13 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "odp1",
 							name: "value",
-							type: "string"
-						}
-					]
-				}
+							type: "string",
+						},
+					],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addDataConnectorProcessStub = stub();
@@ -2343,14 +2343,14 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "idp1",
 							name: "value",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addDataConnectorProcessStub = stub();
@@ -2380,20 +2380,20 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[addSequenceConnectorProcess, addSequenceConnectorProcessStub]
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -2420,20 +2420,20 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[addSequenceConnectorProcess, addSequenceConnectorProcessStub]
+			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -2500,7 +2500,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							<FontAwesomeIcon icon="caret-right" />
 						</div>
 					</div>
-				</div>
+				</div>,
 			]);
 
 		const pageFunction: PageFunction = {
@@ -2516,11 +2516,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "21",
@@ -2532,22 +2532,22 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const addDataConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
 			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
-			[addDataConnectorProcess, addDataConnectorProcessStub]
+			[addDataConnectorProcess, addDataConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -2575,11 +2575,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "21",
@@ -2591,28 +2591,28 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
 					outputDataPorts: [
 						{
 							id: "odp2",
 							name: "value",
-							type: "string"
-						}
-					]
-				}
+							type: "string",
+						},
+					],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const addDataConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
 			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
-			[addDataConnectorProcess, addDataConnectorProcessStub]
+			[addDataConnectorProcess, addDataConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -2639,11 +2639,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "21",
@@ -2655,28 +2655,28 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
 					outputDataPorts: [
 						{
 							id: "odp2",
 							name: "value",
-							type: "string"
-						}
-					]
-				}
+							type: "string",
+						},
+					],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const addDataConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
 			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
-			[addDataConnectorProcess, addDataConnectorProcessStub]
+			[addDataConnectorProcess, addDataConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -2704,11 +2704,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "21",
@@ -2721,22 +2721,22 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const addDataConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
 			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
-			[addDataConnectorProcess, addDataConnectorProcessStub]
+			[addDataConnectorProcess, addDataConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -2764,11 +2764,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "21",
@@ -2781,22 +2781,22 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const addDataConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
 			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
-			[addDataConnectorProcess, addDataConnectorProcessStub]
+			[addDataConnectorProcess, addDataConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -2824,11 +2824,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "21",
@@ -2841,28 +2841,28 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp2",
 							name: "value",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const addDataConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
 			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
-			[addDataConnectorProcess, addDataConnectorProcessStub]
+			[addDataConnectorProcess, addDataConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -2890,11 +2890,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "21",
@@ -2907,28 +2907,28 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
 					outputDataPorts: [
 						{
 							id: "odp2",
 							name: "value",
-							type: "string"
-						}
-					]
-				}
+							type: "string",
+						},
+					],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const addDataConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
 			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
-			[addDataConnectorProcess, addDataConnectorProcessStub]
+			[addDataConnectorProcess, addDataConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -2956,11 +2956,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "21",
@@ -2973,28 +2973,28 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp2",
 							name: "value",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const addDataConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
 			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
-			[addDataConnectorProcess, addDataConnectorProcessStub]
+			[addDataConnectorProcess, addDataConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -3022,11 +3022,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "21",
@@ -3039,28 +3039,28 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
 					outputDataPorts: [
 						{
 							id: "odp2",
 							name: "value",
-							type: "string"
-						}
-					]
-				}
+							type: "string",
+						},
+					],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const addDataConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
 			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
-			[addDataConnectorProcess, addDataConnectorProcessStub]
+			[addDataConnectorProcess, addDataConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -3088,17 +3088,17 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
 					outputDataPorts: [
 						{
 							id: "odp1",
 							name: "value",
-							type: "string"
-						}
-					]
+							type: "string",
+						},
+					],
 				},
 				{
 					id: "21",
@@ -3111,28 +3111,28 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
 					outputDataPorts: [
 						{
 							id: "odp2",
 							name: "value",
-							type: "string"
-						}
-					]
-				}
+							type: "string",
+						},
+					],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const addDataConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
 			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
-			[addDataConnectorProcess, addDataConnectorProcessStub]
+			[addDataConnectorProcess, addDataConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -3160,17 +3160,17 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
 					outputDataPorts: [
 						{
 							id: "odp1",
 							name: "value",
-							type: "string"
-						}
-					]
+							type: "string",
+						},
+					],
 				},
 				{
 					id: "21",
@@ -3183,28 +3183,28 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
 					outputDataPorts: [
 						{
 							id: "odp2",
 							name: "value",
-							type: "string"
-						}
-					]
-				}
+							type: "string",
+						},
+					],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const addDataConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
 			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
-			[addDataConnectorProcess, addDataConnectorProcessStub]
+			[addDataConnectorProcess, addDataConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -3232,17 +3232,17 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
 					outputDataPorts: [
 						{
 							id: "odp1",
 							name: "value",
-							type: "string"
-						}
-					]
+							type: "string",
+						},
+					],
 				},
 				{
 					id: "21",
@@ -3255,28 +3255,28 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
 					outputDataPorts: [
 						{
 							id: "odp2",
 							name: "value",
-							type: "string"
-						}
-					]
-				}
+							type: "string",
+						},
+					],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const addDataConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
 			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
-			[addDataConnectorProcess, addDataConnectorProcessStub]
+			[addDataConnectorProcess, addDataConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -3304,17 +3304,17 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp1",
 							name: "value",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "21",
@@ -3327,28 +3327,28 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
 					outputDataPorts: [
 						{
 							id: "odp2",
 							name: "value",
-							type: "string"
-						}
-					]
-				}
+							type: "string",
+						},
+					],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const addDataConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
 			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
-			[addDataConnectorProcess, addDataConnectorProcessStub]
+			[addDataConnectorProcess, addDataConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -3376,17 +3376,17 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp1",
 							name: "value",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "21",
@@ -3399,28 +3399,28 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
 					outputDataPorts: [
 						{
 							id: "odp2",
 							name: "value",
-							type: "string"
-						}
-					]
-				}
+							type: "string",
+						},
+					],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const addDataConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
 			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
-			[addDataConnectorProcess, addDataConnectorProcessStub]
+			[addDataConnectorProcess, addDataConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -3448,17 +3448,17 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp1",
 							name: "value",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "21",
@@ -3471,28 +3471,28 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp2",
 							name: "value",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const addDataConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
 			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
-			[addDataConnectorProcess, addDataConnectorProcessStub]
+			[addDataConnectorProcess, addDataConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -3519,11 +3519,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "21",
@@ -3536,12 +3536,12 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [
 				{
@@ -3549,17 +3549,17 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					fromNode: "11",
 					fromOutput: "osp1",
 					toNode: "21",
-					toInput: "isp2"
-				}
+					toInput: "isp2",
+				},
 			],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const addDataConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
 			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
-			[addDataConnectorProcess, addDataConnectorProcessStub]
+			[addDataConnectorProcess, addDataConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -3587,17 +3587,17 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
 					outputDataPorts: [
 						{
 							id: "odp1",
 							name: "value",
-							type: "string"
-						}
-					]
+							type: "string",
+						},
+					],
 				},
 				{
 					id: "21",
@@ -3610,18 +3610,18 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp2",
 							name: "value",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
 			dataConnections: [
@@ -3630,16 +3630,16 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					fromNode: "11",
 					fromOutput: "odp1",
 					toNode: "21",
-					toInput: "idp2"
-				}
-			]
+					toInput: "idp2",
+				},
+			],
 		};
 
 		const addSequenceConnectorProcessStub = stub();
 		const addDataConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
 			[addSequenceConnectorProcess, addSequenceConnectorProcessStub],
-			[addDataConnectorProcess, addDataConnectorProcessStub]
+			[addDataConnectorProcess, addDataConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -3666,11 +3666,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "21",
@@ -3680,17 +3680,17 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					text: "",
 					category: "data",
 					inputSequencePort: {
-						id: "isp2"
+						id: "isp2",
 					},
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [
 				{
@@ -3698,15 +3698,15 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					fromNode: "11",
 					fromOutput: "osp1",
 					toNode: "21",
-					toInput: "isp2"
-				}
+					toInput: "isp2",
+				},
 			],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const removeSequenceConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[removeSequenceConnectorProcess, removeSequenceConnectorProcessStub]
+			[removeSequenceConnectorProcess, removeSequenceConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -3734,9 +3734,9 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "odp1",
 							name: "value",
-							type: "string"
-						}
-					]
+							type: "string",
+						},
+					],
 				},
 				{
 					id: "21",
@@ -3749,18 +3749,18 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp2",
 							name: "value",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
 			dataConnections: [
@@ -3769,14 +3769,14 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					fromNode: "11",
 					fromOutput: "odp1",
 					toNode: "21",
-					toInput: "idp2"
-				}
-			]
+					toInput: "idp2",
+				},
+			],
 		};
 
 		const removeDataConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[removeDataConnectorProcess, removeDataConnectorProcessStub]
+			[removeDataConnectorProcess, removeDataConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -3802,11 +3802,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "21",
@@ -3819,12 +3819,12 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [
 				{
@@ -3832,14 +3832,14 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					fromNode: "11",
 					fromOutput: "osp1",
 					toNode: "21",
-					toInput: "isp2"
-				}
+					toInput: "isp2",
+				},
 			],
-			dataConnections: []
+			dataConnections: [],
 		};
 		const removeSequenceConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[removeSequenceConnectorProcess, removeSequenceConnectorProcessStub]
+			[removeSequenceConnectorProcess, removeSequenceConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -3866,9 +3866,9 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						{
 							id: "odp1",
 							name: "value",
-							type: "string"
-						}
-					]
+							type: "string",
+						},
+					],
 				},
 				{
 					id: "21",
@@ -3881,18 +3881,18 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp2",
 							name: "value",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
 			dataConnections: [
@@ -3901,13 +3901,13 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					fromNode: "11",
 					fromOutput: "odp1",
 					toNode: "21",
-					toInput: "idp2"
-				}
-			]
+					toInput: "idp2",
+				},
+			],
 		};
 		const removeDataConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[removeDataConnectorProcess, removeDataConnectorProcessStub]
+			[removeDataConnectorProcess, removeDataConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -3932,11 +3932,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "21",
@@ -3946,16 +3946,16 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					text: "",
 					category: "data",
 					inputSequencePort: {
-						id: "isp2"
+						id: "isp2",
 					},
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "31",
@@ -3967,12 +3967,12 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp3",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [
 				{
@@ -3980,15 +3980,15 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					fromNode: "11",
 					fromOutput: "osp1",
 					toNode: "21",
-					toInput: "isp2"
-				}
+					toInput: "isp2",
+				},
 			],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const updateSequenceConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[updateSequenceConnectorProcess, updateSequenceConnectorProcessStub]
+			[updateSequenceConnectorProcess, updateSequenceConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -4015,11 +4015,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "21",
@@ -4032,11 +4032,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "31",
@@ -4049,12 +4049,12 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp3",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [
 				{
@@ -4062,14 +4062,14 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					fromNode: "11",
 					fromOutput: "osp1",
 					toNode: "21",
-					toInput: "isp2"
-				}
+					toInput: "isp2",
+				},
 			],
-			dataConnections: []
+			dataConnections: [],
 		};
 		const updateSequenceConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[updateSequenceConnectorProcess, updateSequenceConnectorProcessStub]
+			[updateSequenceConnectorProcess, updateSequenceConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -4095,17 +4095,17 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
 					outputDataPorts: [
 						{
 							id: "odp1",
 							name: "value",
-							type: "string"
-						}
-					]
+							type: "string",
+						},
+					],
 				},
 				{
 					id: "21",
@@ -4118,17 +4118,17 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp2",
 							name: "value",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "31",
@@ -4141,18 +4141,18 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp3",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp3",
 							name: "value",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
 			dataConnections: [
@@ -4161,13 +4161,13 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					fromNode: "11",
 					fromOutput: "odp1",
 					toNode: "21",
-					toInput: "idp2"
-				}
-			]
+					toInput: "idp2",
+				},
+			],
 		};
 		const updateDataConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[updateDataConnectorProcess, updateDataConnectorProcessStub]
+			[updateDataConnectorProcess, updateDataConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -4192,11 +4192,11 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "21",
@@ -4206,16 +4206,16 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					text: "",
 					category: "data",
 					inputSequencePort: {
-						id: "isp2"
+						id: "isp2",
 					},
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "31",
@@ -4227,12 +4227,12 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp3",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [
 				{
@@ -4240,15 +4240,15 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					fromNode: "11",
 					fromOutput: "osp1",
 					toNode: "21",
-					toInput: "isp2"
-				}
+					toInput: "isp2",
+				},
 			],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const updateSequenceConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[updateSequenceConnectorProcess, updateSequenceConnectorProcessStub]
+			[updateSequenceConnectorProcess, updateSequenceConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -4272,16 +4272,16 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					text: "",
 					category: "data",
 					inputSequencePort: {
-						id: "isp1"
+						id: "isp1",
 					},
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "21",
@@ -4291,16 +4291,16 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					text: "",
 					category: "data",
 					inputSequencePort: {
-						id: "isp2"
+						id: "isp2",
 					},
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "31",
@@ -4310,17 +4310,17 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					text: "",
 					category: "data",
 					inputSequencePort: {
-						id: "isp3"
+						id: "isp3",
 					},
 					outputSequencePorts: [
 						{
 							id: "osp3",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [
 				{
@@ -4328,15 +4328,15 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					fromNode: "11",
 					fromOutput: "osp1",
 					toNode: "21",
-					toInput: "isp2"
-				}
+					toInput: "isp2",
+				},
 			],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		const updateSequenceConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[updateSequenceConnectorProcess, updateSequenceConnectorProcessStub]
+			[updateSequenceConnectorProcess, updateSequenceConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 
@@ -4363,17 +4363,17 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp1",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
 					outputDataPorts: [
 						{
 							id: "odp1",
 							name: "value",
-							type: "string"
-						}
-					]
+							type: "string",
+						},
+					],
 				},
 				{
 					id: "21",
@@ -4386,17 +4386,17 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp2",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [
 						{
 							id: "idp2",
 							name: "value",
-							type: "string"
-						}
+							type: "string",
+						},
 					],
-					outputDataPorts: []
+					outputDataPorts: [],
 				},
 				{
 					id: "31",
@@ -4409,18 +4409,18 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					outputSequencePorts: [
 						{
 							id: "osp3",
-							text: ""
-						}
+							text: "",
+						},
 					],
 					inputDataPorts: [],
 					outputDataPorts: [
 						{
 							id: "odp3",
 							name: "value",
-							type: "string"
-						}
-					]
-				}
+							type: "string",
+						},
+					],
+				},
 			],
 			sequenceConnections: [],
 			dataConnections: [
@@ -4429,13 +4429,13 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					fromNode: "11",
 					fromOutput: "odp1",
 					toNode: "21",
-					toInput: "idp2"
-				}
-			]
+					toInput: "idp2",
+				},
+			],
 		};
 		const updateDataConnectorProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[updateDataConnectorProcess, updateDataConnectorProcessStub]
+			[updateDataConnectorProcess, updateDataConnectorProcessStub],
 		]);
 		const h = harness(() => <Editor pageFunction={pageFunction} />, { middleware: [[store, mockStore]] });
 

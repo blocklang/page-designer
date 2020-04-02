@@ -38,55 +38,55 @@ describe("widgets/edit/behavior/func/util", () => {
 	it("getConnectorPath: start.x == end.x and start.y == end.y", () => {
 		assert.deepEqual(getConnectorPath({ x: 0, y: 0 }, { x: 0, y: 0 }), {
 			start: { x: 0, y: 0 },
-			end: { x: 0, y: 0 }
+			end: { x: 0, y: 0 },
 		});
 		assert.deepEqual(getConnectorPath({ x: 1, y: 1 }, { x: 1, y: 1 }), {
 			start: { x: 0, y: 0 },
-			end: { x: 0, y: 0 }
+			end: { x: 0, y: 0 },
 		});
 	});
 
 	it("getConnectorPath: start.x < end.x", () => {
 		assert.deepEqual(getConnectorPath({ x: 0, y: 0 }, { x: 1, y: 0 }), {
 			start: { x: 0, y: 0 },
-			end: { x: 1, y: 0 }
+			end: { x: 1, y: 0 },
 		});
 		assert.deepEqual(getConnectorPath({ x: 1, y: 1 }, { x: 2, y: 1 }), {
 			start: { x: 0, y: 0 },
-			end: { x: 1, y: 0 }
+			end: { x: 1, y: 0 },
 		});
 	});
 
 	it("getConnectorPath: start.x > end.x", () => {
 		assert.deepEqual(getConnectorPath({ x: 1, y: 0 }, { x: 0, y: 0 }), {
 			start: { x: 1, y: 0 },
-			end: { x: 0, y: 0 }
+			end: { x: 0, y: 0 },
 		});
 		assert.deepEqual(getConnectorPath({ x: 2, y: 1 }, { x: 1, y: 1 }), {
 			start: { x: 1, y: 0 },
-			end: { x: 0, y: 0 }
+			end: { x: 0, y: 0 },
 		});
 	});
 
 	it("getConnectorPath: start.y < end.y", () => {
 		assert.deepEqual(getConnectorPath({ x: 0, y: 0 }, { x: 0, y: 1 }), {
 			start: { x: 0, y: 0 },
-			end: { x: 0, y: 1 }
+			end: { x: 0, y: 1 },
 		});
 		assert.deepEqual(getConnectorPath({ x: 1, y: 1 }, { x: 1, y: 2 }), {
 			start: { x: 0, y: 0 },
-			end: { x: 0, y: 1 }
+			end: { x: 0, y: 1 },
 		});
 	});
 
 	it("getConnectorPath: start.y > end.y", () => {
 		assert.deepEqual(getConnectorPath({ x: 0, y: 1 }, { x: 0, y: 0 }), {
 			start: { x: 0, y: 1 },
-			end: { x: 0, y: 0 }
+			end: { x: 0, y: 0 },
 		});
 		assert.deepEqual(getConnectorPath({ x: 1, y: 2 }, { x: 1, y: 1 }), {
 			start: { x: 0, y: 1 },
-			end: { x: 0, y: 0 }
+			end: { x: 0, y: 0 },
 		});
 	});
 });

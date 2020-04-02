@@ -23,7 +23,7 @@ describe("processes/widgetProcesses", () => {
 		initProjectProcess(store)({ project: { id: 1, name: "project1", createUserName: "jack" } });
 
 		const mockResponse = {
-			json: stub().returns([])
+			json: stub().returns([]),
 		};
 		const url = "designer/projects/1/widgets";
 		config.fetchApiRepoWidgetsUrl = url;

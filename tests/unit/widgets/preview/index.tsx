@@ -25,7 +25,7 @@ describe("preview", () => {
 	it("loading page", () => {
 		const permission: Permission = {
 			canRead: true,
-			canWrite: false
+			canWrite: false,
 		};
 
 		const h = harness(() => <Preview permission={permission} onSwitchEditMode={() => {}} />);
@@ -46,11 +46,11 @@ describe("preview", () => {
 
 		const permission: Permission = {
 			canRead: true,
-			canWrite: false
+			canWrite: false,
 		};
 
 		const h = harness(() => <Preview permission={permission} onSwitchEditMode={() => {}} />, {
-			middleware: [[store, mockStore]]
+			middleware: [[store, mockStore]],
 		});
 		mockStore((path) => [replace(path("pageModel", "widgets"), [])]);
 		h.expect(() => (
@@ -67,11 +67,11 @@ describe("preview", () => {
 
 		const permission: Permission = {
 			canRead: true,
-			canWrite: false
+			canWrite: false,
 		};
 
 		const h = harness(() => <Preview permission={permission} onSwitchEditMode={() => {}} />, {
-			middleware: [[store, mockStore]]
+			middleware: [[store, mockStore]],
 		});
 
 		// 设置两个值：
@@ -88,10 +88,10 @@ describe("preview", () => {
 					widgetName: "Page",
 					widgetCode: "0001",
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			],
-			data: []
+			data: [],
 		};
 
 		mockStore((path) => [replace(path("pageModel"), pageModel)]);
@@ -110,12 +110,12 @@ describe("preview", () => {
 
 		const permission: Permission = {
 			canRead: true,
-			canWrite: true
+			canWrite: true,
 		};
 
 		const onSwitchEditModeStub = stub();
 		const h = harness(() => <Preview permission={permission} onSwitchEditMode={onSwitchEditModeStub} />, {
-			middleware: [[store, mockStore]]
+			middleware: [[store, mockStore]],
 		});
 
 		// 设置两个值：
@@ -132,10 +132,10 @@ describe("preview", () => {
 					widgetName: "Page",
 					widgetCode: "0001",
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			],
-			data: []
+			data: [],
 		};
 
 		mockStore((path) => [replace(path("pageModel"), pageModel)]);
@@ -164,10 +164,10 @@ describe("preview", () => {
 
 		const permission: Permission = {
 			canRead: true,
-			canWrite: false
+			canWrite: false,
 		};
 		const h = harness(() => <Preview permission={permission} onSwitchEditMode={() => {}} />, {
-			middleware: [[store, mockStore]]
+			middleware: [[store, mockStore]],
 		});
 
 		// 设置两个值：
@@ -191,9 +191,9 @@ describe("preview", () => {
 							name: "onLoad",
 							value: undefined, // TODO: 需进一步细化
 							valueType: "function",
-							isExpr: false // TODO: 函数名算不算表达式？
-						}
-					]
+							isExpr: false, // TODO: 函数名算不算表达式？
+						},
+					],
 				},
 				{
 					id: "2",
@@ -203,7 +203,7 @@ describe("preview", () => {
 					widgetName: "Container",
 					widgetCode: "0002",
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "21",
@@ -213,7 +213,7 @@ describe("preview", () => {
 					widgetName: "Container",
 					widgetCode: "0002",
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "3",
@@ -223,10 +223,10 @@ describe("preview", () => {
 					widgetName: "Container",
 					widgetCode: "0002",
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			],
-			data: []
+			data: [],
 		};
 
 		// 默认包含标准库
@@ -240,7 +240,7 @@ describe("preview", () => {
 				name: "std-ide-widget",
 				category: "widget",
 				version: "0.0.1",
-				std: true
+				std: true,
 			},
 			{
 				id: 2,
@@ -251,8 +251,8 @@ describe("preview", () => {
 				name: "ide-widget",
 				category: "widget",
 				version: "0.0.1",
-				std: false
-			}
+				std: false,
+			},
 		];
 
 		blocklang.registerWidgets(
@@ -285,10 +285,10 @@ describe("preview", () => {
 
 		const permission: Permission = {
 			canRead: true,
-			canWrite: false
+			canWrite: false,
 		};
 		const h = harness(() => <Preview permission={permission} onSwitchEditMode={() => {}} />, {
-			middleware: [[store, mockStore]]
+			middleware: [[store, mockStore]],
 		});
 
 		// 设置两个值：
@@ -312,9 +312,9 @@ describe("preview", () => {
 							name: "onLoad",
 							value: undefined, // TODO: 需进一步细化
 							valueType: "function",
-							isExpr: false // TODO: 函数名算不算表达式？
-						}
-					]
+							isExpr: false, // TODO: 函数名算不算表达式？
+						},
+					],
 				},
 				{
 					id: "2",
@@ -331,12 +331,12 @@ describe("preview", () => {
 							name: "prop1",
 							value: undefined, // TODO: 需进一步细化
 							valueType: "string",
-							isExpr: false // TODO: 函数名算不算表达式？
-						}
-					]
-				}
+							isExpr: false, // TODO: 函数名算不算表达式？
+						},
+					],
+				},
 			],
-			data: []
+			data: [],
 		};
 
 		// 默认包含标准库
@@ -350,7 +350,7 @@ describe("preview", () => {
 				name: "std-ide-widget",
 				category: "widget",
 				version: "0.0.1",
-				std: true
+				std: true,
 			},
 			{
 				id: 2,
@@ -361,8 +361,8 @@ describe("preview", () => {
 				name: "ide-widget",
 				category: "widget",
 				version: "0.0.1",
-				std: false
-			}
+				std: false,
+			},
 		];
 
 		blocklang.registerWidgets(

@@ -8,7 +8,7 @@ import {
 	foldDataGroupProcess,
 	removeActiveDataItemProcess,
 	moveUpActiveDataItemProcess,
-	moveDownActiveDataItemProcess
+	moveDownActiveDataItemProcess,
 } from "../../../src/processes/pageDataProcesses";
 import Store from "@dojo/framework/stores/Store";
 import { State } from "designer-core/interfaces";
@@ -29,10 +29,10 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "-1",
 					name: "root",
 					type: "Object",
-					open: false
-				}
+					open: false,
+				},
 			]),
-			add(store.path("selectedDataItemIndex"), 0)
+			add(store.path("selectedDataItemIndex"), 0),
 		]);
 
 		insertDataItemProcess(store)({});
@@ -56,7 +56,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "-1",
 					name: "root",
 					type: "Object",
-					open: false
+					open: false,
 				},
 				{
 					id: "2",
@@ -64,10 +64,10 @@ describe("processes/pageDataProcesses", () => {
 					name: "a",
 					type: "String",
 					value: "v",
-					open: false
-				}
+					open: false,
+				},
 			]),
-			add(store.path("selectedDataItemIndex"), 0)
+			add(store.path("selectedDataItemIndex"), 0),
 		]);
 
 		insertDataItemProcess(store)({});
@@ -93,17 +93,17 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "-1",
 					name: "root",
 					type: "Object",
-					open: false
+					open: false,
 				},
 				{
 					id: "2",
 					parentId: "1",
 					name: "child",
 					type: "Object",
-					open: false
-				}
+					open: false,
+				},
 			]),
-			add(store.path("selectedDataItemIndex"), 1)
+			add(store.path("selectedDataItemIndex"), 1),
 		]);
 
 		insertDataItemProcess(store)({});
@@ -128,16 +128,16 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "-1",
 					name: "root",
 					type: "Object",
-					open: false
+					open: false,
 				},
 				{
 					id: "2",
 					parentId: "1",
 					name: "child",
 					type: "Object",
-					open: false
-				}
-			])
+					open: false,
+				},
+			]),
 		]);
 
 		activeDataItemProcess(store)({ id: "not exist id" });
@@ -158,7 +158,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "-1",
 					name: "root",
 					type: "Object",
-					open: false
+					open: false,
 				},
 				{
 					id: "2",
@@ -166,10 +166,10 @@ describe("processes/pageDataProcesses", () => {
 					name: "child",
 					type: "String",
 					value: "",
-					open: false
-				}
+					open: false,
+				},
 			]),
-			add(store.path("selectedDataItemIndex"), 1)
+			add(store.path("selectedDataItemIndex"), 1),
 		]);
 
 		changeActiveDataItemPropertyProcess(store)({ name: "name", value: "name1" });
@@ -193,7 +193,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "-1",
 					name: "root",
 					type: "Object",
-					open: true
+					open: true,
 				},
 				{
 					id: "2",
@@ -201,10 +201,10 @@ describe("processes/pageDataProcesses", () => {
 					name: "child",
 					type: "String",
 					value: "",
-					open: false
-				}
+					open: false,
+				},
 			]),
-			add(store.path("selectedDataItemIndex"), 1)
+			add(store.path("selectedDataItemIndex"), 1),
 		]);
 
 		foldDataGroupProcess(store)({ id: "1" });
@@ -228,10 +228,10 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "-1",
 					name: "root",
 					type: "Object",
-					open: true
-				}
+					open: true,
+				},
 			]),
-			add(store.path("selectedDataItemIndex"), 0)
+			add(store.path("selectedDataItemIndex"), 0),
 		]);
 		// 不能删除根节点
 		removeActiveDataItemProcess(store)({});
@@ -251,7 +251,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "-1",
 					name: "root",
 					type: "Object",
-					open: true
+					open: true,
 				},
 				{
 					id: "2",
@@ -259,10 +259,10 @@ describe("processes/pageDataProcesses", () => {
 					name: "child",
 					type: "String",
 					value: "",
-					open: false
-				}
+					open: false,
+				},
 			]),
-			add(store.path("selectedDataItemIndex"), 1)
+			add(store.path("selectedDataItemIndex"), 1),
 		]);
 
 		removeActiveDataItemProcess(store)({});
@@ -282,7 +282,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "-1",
 					name: "root",
 					type: "Object",
-					open: true
+					open: true,
 				},
 				{
 					id: "2",
@@ -290,7 +290,7 @@ describe("processes/pageDataProcesses", () => {
 					name: "child1",
 					type: "String",
 					value: "",
-					open: false
+					open: false,
 				},
 				{
 					id: "3",
@@ -298,10 +298,10 @@ describe("processes/pageDataProcesses", () => {
 					name: "child2",
 					type: "String",
 					value: "",
-					open: false
-				}
+					open: false,
+				},
 			]),
-			add(store.path("selectedDataItemIndex"), 2)
+			add(store.path("selectedDataItemIndex"), 2),
 		]);
 
 		removeActiveDataItemProcess(store)({});
@@ -321,7 +321,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "-1",
 					name: "root",
 					type: "Object",
-					open: true
+					open: true,
 				},
 				{
 					id: "2",
@@ -329,7 +329,7 @@ describe("processes/pageDataProcesses", () => {
 					name: "child1",
 					type: "String",
 					value: "",
-					open: false
+					open: false,
 				},
 				{
 					id: "3",
@@ -337,10 +337,10 @@ describe("processes/pageDataProcesses", () => {
 					name: "child2",
 					type: "String",
 					value: "",
-					open: false
-				}
+					open: false,
+				},
 			]),
-			add(store.path("selectedDataItemIndex"), 1)
+			add(store.path("selectedDataItemIndex"), 1),
 		]);
 
 		removeActiveDataItemProcess(store)({});
@@ -362,7 +362,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "-1",
 					name: "root",
 					type: "Object",
-					open: true
+					open: true,
 				},
 				{
 					id: "2",
@@ -370,7 +370,7 @@ describe("processes/pageDataProcesses", () => {
 					name: "child",
 					type: "String",
 					value: "",
-					open: false
+					open: false,
 				},
 				{
 					id: "3",
@@ -378,10 +378,10 @@ describe("processes/pageDataProcesses", () => {
 					name: "child",
 					type: "String",
 					value: "",
-					open: false
-				}
+					open: false,
+				},
 			]),
-			add(store.path("selectedDataItemIndex"), 1)
+			add(store.path("selectedDataItemIndex"), 1),
 		]);
 
 		removeActiveDataItemProcess(store)({});
@@ -401,7 +401,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "-1",
 					name: "root",
 					type: "Object",
-					open: true
+					open: true,
 				},
 				{
 					id: "2",
@@ -409,10 +409,10 @@ describe("processes/pageDataProcesses", () => {
 					name: "child",
 					type: "String",
 					value: "",
-					open: false
-				}
+					open: false,
+				},
 			]),
-			add(store.path("selectedDataItemIndex"), 1)
+			add(store.path("selectedDataItemIndex"), 1),
 		]);
 
 		moveUpActiveDataItemProcess(store)({});
@@ -429,7 +429,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "-1",
 					name: "root",
 					type: "Object",
-					open: true
+					open: true,
 				},
 				{
 					id: "2",
@@ -437,7 +437,7 @@ describe("processes/pageDataProcesses", () => {
 					name: "child1",
 					type: "String",
 					value: "",
-					open: false
+					open: false,
 				},
 				{
 					id: "3",
@@ -445,10 +445,10 @@ describe("processes/pageDataProcesses", () => {
 					name: "child2",
 					type: "String",
 					value: "",
-					open: false
-				}
+					open: false,
+				},
 			]),
-			add(store.path("selectedDataItemIndex"), 2)
+			add(store.path("selectedDataItemIndex"), 2),
 		]);
 
 		moveUpActiveDataItemProcess(store)({});
@@ -471,7 +471,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "-1",
 					name: "root",
 					type: "Object",
-					open: true
+					open: true,
 				},
 				{
 					id: "2",
@@ -479,7 +479,7 @@ describe("processes/pageDataProcesses", () => {
 					name: "child1",
 					type: "String",
 					value: "",
-					open: false
+					open: false,
 				},
 				{
 					id: "3",
@@ -487,7 +487,7 @@ describe("processes/pageDataProcesses", () => {
 					name: "child11",
 					type: "String",
 					value: "",
-					open: false
+					open: false,
 				},
 				{
 					id: "4",
@@ -495,7 +495,7 @@ describe("processes/pageDataProcesses", () => {
 					name: "child2",
 					type: "String",
 					value: "",
-					open: false
+					open: false,
 				},
 				{
 					id: "5",
@@ -503,10 +503,10 @@ describe("processes/pageDataProcesses", () => {
 					name: "child21",
 					type: "String",
 					value: "",
-					open: false
-				}
+					open: false,
+				},
 			]),
-			add(store.path("selectedDataItemIndex"), 3)
+			add(store.path("selectedDataItemIndex"), 3),
 		]);
 
 		moveUpActiveDataItemProcess(store)({});
@@ -531,7 +531,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "-1",
 					name: "root",
 					type: "Object",
-					open: true
+					open: true,
 				},
 				{
 					id: "2",
@@ -539,7 +539,7 @@ describe("processes/pageDataProcesses", () => {
 					name: "child1",
 					type: "String",
 					value: "",
-					open: false
+					open: false,
 				},
 				{
 					id: "3",
@@ -547,10 +547,10 @@ describe("processes/pageDataProcesses", () => {
 					name: "child11",
 					type: "String",
 					value: "",
-					open: false
-				}
+					open: false,
+				},
 			]),
-			add(store.path("selectedDataItemIndex"), 1)
+			add(store.path("selectedDataItemIndex"), 1),
 		]);
 
 		moveDownActiveDataItemProcess(store)({});
@@ -567,7 +567,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "-1",
 					name: "root",
 					type: "Object",
-					open: true
+					open: true,
 				},
 				{
 					id: "2",
@@ -575,7 +575,7 @@ describe("processes/pageDataProcesses", () => {
 					name: "child1",
 					type: "String",
 					value: "",
-					open: false
+					open: false,
 				},
 				{
 					id: "3",
@@ -583,10 +583,10 @@ describe("processes/pageDataProcesses", () => {
 					name: "child2",
 					type: "String",
 					value: "",
-					open: false
-				}
+					open: false,
+				},
 			]),
-			add(store.path("selectedDataItemIndex"), 1)
+			add(store.path("selectedDataItemIndex"), 1),
 		]);
 
 		moveDownActiveDataItemProcess(store)({});
@@ -609,7 +609,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "-1",
 					name: "root",
 					type: "Object",
-					open: true
+					open: true,
 				},
 				{
 					id: "2",
@@ -617,7 +617,7 @@ describe("processes/pageDataProcesses", () => {
 					name: "child1",
 					type: "String",
 					value: "",
-					open: false
+					open: false,
 				},
 				{
 					id: "3",
@@ -625,7 +625,7 @@ describe("processes/pageDataProcesses", () => {
 					name: "child11",
 					type: "String",
 					value: "",
-					open: false
+					open: false,
 				},
 				{
 					id: "4",
@@ -633,7 +633,7 @@ describe("processes/pageDataProcesses", () => {
 					name: "child2",
 					type: "String",
 					value: "",
-					open: false
+					open: false,
 				},
 				{
 					id: "5",
@@ -641,10 +641,10 @@ describe("processes/pageDataProcesses", () => {
 					name: "child21",
 					type: "String",
 					value: "",
-					open: false
-				}
+					open: false,
+				},
 			]),
-			add(store.path("selectedDataItemIndex"), 1)
+			add(store.path("selectedDataItemIndex"), 1),
 		]);
 
 		moveDownActiveDataItemProcess(store)({});

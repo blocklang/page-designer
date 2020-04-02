@@ -23,9 +23,9 @@ export default factory(function Preview({ properties, middleware: { store } }) {
 		return v("div", [
 			v("div", { classes: [c.d_flex, c.justify_content_center, css.loadingPage] }, [
 				v("div", { classes: [c.spinner_border, c.text_muted], role: "status", title: "加载中……" }, [
-					v("span", { classes: [c.sr_only] }, ["Loading..."])
-				])
-			])
+					v("span", { classes: [c.sr_only] }, ["Loading..."]),
+				]),
+			]),
 		]);
 	}
 
@@ -37,7 +37,7 @@ export default factory(function Preview({ properties, middleware: { store } }) {
 				"div",
 				{ classes: [c.alert, c.alert_danger, c.mx_auto, c.text_center, c.py_5, css.emptyPage], role: "alert" },
 				["页面中缺少根节点！"]
-			)
+			),
 		]);
 	}
 
@@ -54,9 +54,9 @@ export default factory(function Preview({ properties, middleware: { store } }) {
 							"button",
 							{ classes: [c.btn, c.btn_outline_primary, c.mt_3], onclick: () => onSwitchEditMode() },
 							[w(FontAwesomeIcon, { icon: ["far", "edit"], classes: [c.mr_1] }), "开始编辑"]
-						)
+						),
 				]
-			)
+			),
 		]);
 	}
 

@@ -22,7 +22,7 @@ describe("edit/ui/UndefinedWidget", () => {
 			widgetCode: "0001",
 			canHasChildren: false,
 			apiRepoId: 1,
-			properties: []
+			properties: [],
 		};
 		const h = harness(() => <UndefinedWidget widget={widget} />);
 
@@ -55,7 +55,7 @@ describe("edit/ui/UndefinedWidget", () => {
 			widgetCode: "0001",
 			canHasChildren: false,
 			apiRepoId: 1,
-			properties: []
+			properties: [],
 		};
 		const h = harness(() => <UndefinedWidget widget={widget} editMode="Preview" />);
 
@@ -78,7 +78,7 @@ describe("edit/ui/UndefinedWidget", () => {
 			widgetCode: "0001",
 			canHasChildren: false,
 			apiRepoId: 1,
-			properties: []
+			properties: [],
 		};
 		const componentRepo: ComponentRepo = {
 			id: 1,
@@ -89,7 +89,7 @@ describe("edit/ui/UndefinedWidget", () => {
 			name: "D",
 			category: "E",
 			version: "0.0.1",
-			std: true
+			std: true,
 		};
 		const h = harness(() => <UndefinedWidget widget={widget} componentRepo={componentRepo} />);
 
@@ -122,7 +122,7 @@ describe("edit/ui/UndefinedWidget", () => {
 			widgetCode: "0001",
 			canHasChildren: false,
 			apiRepoId: 1,
-			properties: []
+			properties: [],
 		};
 		const componentRepo: ComponentRepo = {
 			id: 1,
@@ -133,15 +133,15 @@ describe("edit/ui/UndefinedWidget", () => {
 			name: "D",
 			category: "E",
 			version: "0.0.1",
-			std: true
+			std: true,
 		};
 
 		const removeUndefinedWidgetProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[removeUndefinedWidgetProcess, removeUndefinedWidgetProcessStub]
+			[removeUndefinedWidgetProcess, removeUndefinedWidgetProcessStub],
 		]);
 		const h = harness(() => <UndefinedWidget widget={widget} componentRepo={componentRepo} />, {
-			middleware: [[store, mockStore]]
+			middleware: [[store, mockStore]],
 		});
 
 		h.trigger("button", "onclick");

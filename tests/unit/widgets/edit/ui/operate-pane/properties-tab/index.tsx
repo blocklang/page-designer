@@ -50,8 +50,8 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 				widgetName: "Page",
 				widgetCode: "0001",
 				canHasChildren: true,
-				properties: []
-			}
+				properties: [],
+			},
 		];
 		mockStore((path) => [add(path("pageModel", "widgets"), widgets), add(path("selectedWidgetIndex"), 0)]);
 
@@ -81,10 +81,10 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 						code: "0001",
 						name: "Prop1",
 						valueType: "string",
-						isExpr: false
-					}
-				]
-			}
+						isExpr: false,
+					},
+				],
+			},
 		];
 
 		const ideRepos: ComponentRepo[] = [
@@ -97,14 +97,14 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 				name: "std-ide-widget",
 				category: "widget",
 				version: "0.0.1",
-				std: true
-			}
+				std: true,
+			},
 		];
 
 		mockStore((path) => [
 			add(path("pageModel", "widgets"), widgets),
 			add(path("selectedWidgetIndex"), 0),
-			add(path("ideRepos"), ideRepos)
+			add(path("ideRepos"), ideRepos),
 		]);
 
 		findWidgetPropertiesLayoutStub = stub(blocklang, "findWidgetPropertiesLayout").returns([]);
@@ -119,7 +119,7 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 	it("active widget has one property and show the property", () => {
 		const changeActiveWidgetPropertiesProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[changeActiveWidgetPropertiesProcess, changeActiveWidgetPropertiesProcessStub]
+			[changeActiveWidgetPropertiesProcess, changeActiveWidgetPropertiesProcessStub],
 		]);
 		const h = harness(() => <PropertiesTab />, { middleware: [[store, mockStore]] });
 
@@ -138,17 +138,17 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 						code: "0001",
 						name: "Prop1",
 						valueType: "string",
-						isExpr: false
+						isExpr: false,
 					},
 					{
 						id: "2",
 						code: "0001",
 						name: "Prop2",
 						valueType: "string",
-						isExpr: false
-					}
-				]
-			}
+						isExpr: false,
+					},
+				],
+			},
 		];
 
 		const ideRepos: ComponentRepo[] = [
@@ -161,14 +161,14 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 				name: "std-ide-widget",
 				category: "widget",
 				version: "0.0.1",
-				std: true
-			}
+				std: true,
+			},
 		];
 
 		mockStore((path) => [
 			add(path("pageModel", "widgets"), widgets),
 			add(path("selectedWidgetIndex"), 0),
-			add(path("ideRepos"), ideRepos)
+			add(path("ideRepos"), ideRepos),
 		]);
 
 		class Prop1 extends WidgetBase<SingleProperty> {}
@@ -178,13 +178,13 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 			{
 				propertyName: "Prop1",
 				propertyLabel: "属性1",
-				propertyWidget: Prop1
+				propertyWidget: Prop1,
 			},
 			{
 				propertyName: "Prop2",
 				propertyLabel: "属性2",
-				propertyWidget: Prop2
-			}
+				propertyWidget: Prop2,
+			},
 		];
 		findWidgetPropertiesLayoutStub = stub(blocklang, "findWidgetPropertiesLayout").returns(propertiesLayout);
 

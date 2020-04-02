@@ -108,7 +108,7 @@ function renderWidget(widget: AttachedWidget, index: number): WNode {
 		key,
 		widget,
 		extendProperties: roEditableProperties,
-		...originalProperties
+		...originalProperties,
 	};
 
 	// index 指向的是选中的部件，这里要获取选中部件的第一个子节点，所以要 + 1
@@ -153,7 +153,7 @@ function getWidgetType(ideRepo: ComponentRepo, widgetName: string) {
 	const repoKey = blocklang.getRepoUrl({
 		website: ideRepo.gitRepoWebsite,
 		owner: ideRepo.gitRepoOwner,
-		repoName: ideRepo.gitRepoName
+		repoName: ideRepo.gitRepoName,
 	});
 	console.log("repoKey: ", repoKey);
 	// 优先从标准库中查找
@@ -172,8 +172,8 @@ function getWidgetType(ideRepo: ComponentRepo, widgetName: string) {
 // 注意，需要在服务端同步指定这里配置的标准库。
 const stdMap: { [propName: string]: any } = {
 	"github.com/blocklang/std-ide-widget": {
-		Page: { ideWidget: Page, propertiesLayout: [] }
-	}
+		Page: { ideWidget: Page, propertiesLayout: [] },
+	},
 };
 
 function findStdWidgetType(repoUrl: string, widgetName: string) {

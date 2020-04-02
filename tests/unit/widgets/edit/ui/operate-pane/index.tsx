@@ -57,7 +57,7 @@ describe("edit/ui/operate-pane", () => {
 	it("active property tab", () => {
 		const switchUIOperateTabProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[switchUIOperateTabProcess, switchUIOperateTabProcessStub]
+			[switchUIOperateTabProcess, switchUIOperateTabProcessStub],
 		]);
 		const h = harness(() => <UIOperatePane />, { middleware: [[store, mockStore]] });
 
@@ -132,7 +132,7 @@ describe("edit/ui/operate-pane", () => {
 	it("back to widgets tab", () => {
 		const switchUIOperateTabProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[switchUIOperateTabProcess, switchUIOperateTabProcessStub]
+			[switchUIOperateTabProcess, switchUIOperateTabProcessStub],
 		]);
 		const h = harness(() => <UIOperatePane />, { middleware: [[store, mockStore]] });
 

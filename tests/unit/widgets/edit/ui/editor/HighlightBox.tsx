@@ -15,7 +15,7 @@ import { DimensionResults } from "@dojo/framework/core/meta/Dimensions";
 describe("edit/ui/editor/HighlightBox", () => {
 	it("default properties", () => {
 		const properties = {
-			widgetName: "A"
+			widgetName: "A",
 		};
 		const h = harness(() => <HighlightBox {...properties} />);
 
@@ -28,7 +28,7 @@ describe("edit/ui/editor/HighlightBox", () => {
 
 	it("set highlight widget dimensions", () => {
 		const properties = {
-			widgetName: "A"
+			widgetName: "A",
 		};
 
 		const mockStore = createMockStoreMiddleware<State>();
@@ -42,30 +42,30 @@ describe("edit/ui/editor/HighlightBox", () => {
 				left: 1, // 使用此值计算 left
 				top: 2, // 使用此值计算 top
 				bottom: 3,
-				right: 4
+				right: 4,
 			},
 			offset: {
 				left: 5,
 				top: 6,
 				height: 7,
-				width: 8
+				width: 8,
 			},
 			size: {
 				height: 9, // 使用此值计算 height
-				width: 10 // 使用此值计算 width
+				width: 10, // 使用此值计算 width
 			},
 			scroll: {
 				left: 11,
 				top: 12,
 				height: 13,
-				width: 14
+				width: 14,
 			},
 			client: {
 				left: 15,
 				top: 16,
 				height: 17,
-				width: 18
-			}
+				width: 18,
+			},
 		};
 		mockStore((path) => [add(path("highlightWidgetDimensions"), highlightWidgetDimensions)]);
 

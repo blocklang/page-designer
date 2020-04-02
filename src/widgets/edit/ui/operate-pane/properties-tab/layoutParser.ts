@@ -40,7 +40,7 @@ export function parse(
 				classes: [css.propertyItem, c.border, selected ? c.border_primary : c.border_white],
 				onclick: () => {
 					onSelectProperty(index);
-				}
+				},
 			},
 			[v("div", [item.propertyLabel]), w(item.propertyWidget, properties)]
 		);

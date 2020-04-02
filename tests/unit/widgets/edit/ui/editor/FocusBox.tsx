@@ -19,7 +19,7 @@ import {
 	activeParentWidgetProcess,
 	moveActiveWidgetPreviousProcess,
 	moveActiveWidgetNextProcess,
-	removeActiveWidgetProcess
+	removeActiveWidgetProcess,
 } from "../../../../../../src/processes/uiProcesses";
 
 describe("edit/ui/editor/FocusBox", () => {
@@ -27,7 +27,7 @@ describe("edit/ui/editor/FocusBox", () => {
 		const properties: FocusBoxProperties = {
 			widgetName: "A",
 			selectedWidgetIndex: 0,
-			widgets: []
+			widgets: [],
 		};
 		const h = harness(() => <FocusBox {...properties} />);
 
@@ -53,9 +53,9 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
-			]
+					properties: [],
+				},
+			],
 		};
 		const mockStore = createMockStoreMiddleware<State>();
 		const h = harness(() => <FocusBox {...properties} />, { middleware: [[store, mockStore]] });
@@ -76,7 +76,7 @@ describe("edit/ui/editor/FocusBox", () => {
 		const properties: FocusBoxProperties = {
 			widgetName: "A",
 			selectedWidgetIndex: 0,
-			widgets: []
+			widgets: [],
 		};
 		const mockStore = createMockStoreMiddleware<State>();
 		const h = harness(() => <FocusBox {...properties} />, { middleware: [[store, mockStore]] });
@@ -89,30 +89,30 @@ describe("edit/ui/editor/FocusBox", () => {
 				left: 1, // 使用此值计算 left
 				top: 2, // 使用此值计算 top
 				bottom: 3,
-				right: 4
+				right: 4,
 			},
 			offset: {
 				left: 5,
 				top: 6,
 				height: 7,
-				width: 8
+				width: 8,
 			},
 			size: {
 				height: 9, // 使用此值计算 height
-				width: 10 // 使用此值计算 width
+				width: 10, // 使用此值计算 width
 			},
 			scroll: {
 				left: 11,
 				top: 12,
 				height: 13,
-				width: 14
+				width: 14,
 			},
 			client: {
 				left: 15,
 				top: 16,
 				height: 17,
-				width: 18
-			}
+				width: 18,
+			},
 		};
 
 		mockStore((path) => [add(path("activeWidgetDimensions"), activeWidgetDimensions)]);
@@ -139,7 +139,7 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -149,7 +149,7 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "3",
@@ -159,7 +159,7 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "4",
@@ -169,9 +169,9 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
-			]
+					properties: [],
+				},
+			],
 		};
 		const mockStore = createMockStoreMiddleware<State>();
 		const h = harness(() => <FocusBox {...properties} />, { middleware: [[store, mockStore]] });
@@ -240,7 +240,7 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -250,9 +250,9 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
-			]
+					properties: [],
+				},
+			],
 		};
 		const mockStore = createMockStoreMiddleware<State>();
 		const h = harness(() => <FocusBox {...properties} />, { middleware: [[store, mockStore]] });
@@ -321,7 +321,7 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -331,9 +331,9 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
-			]
+					properties: [],
+				},
+			],
 		};
 
 		const activeParentProcessStub = stub();
@@ -358,7 +358,7 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -368,7 +368,7 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "3",
@@ -378,14 +378,14 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
-			]
+					properties: [],
+				},
+			],
 		};
 
 		const moveActiveWidgetPreviousProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[moveActiveWidgetPreviousProcess, moveActiveWidgetPreviousProcessStub]
+			[moveActiveWidgetPreviousProcess, moveActiveWidgetPreviousProcessStub],
 		]);
 		const h = harness(() => <FocusBox {...properties} />, { middleware: [[store, mockStore]] });
 
@@ -407,7 +407,7 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -417,7 +417,7 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "3",
@@ -427,14 +427,14 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
-			]
+					properties: [],
+				},
+			],
 		};
 
 		const moveActiveWidgetNextProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[moveActiveWidgetNextProcess, moveActiveWidgetNextProcessStub]
+			[moveActiveWidgetNextProcess, moveActiveWidgetNextProcessStub],
 		]);
 		const h = harness(() => <FocusBox {...properties} />, { middleware: [[store, mockStore]] });
 
@@ -455,7 +455,7 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -465,14 +465,14 @@ describe("edit/ui/editor/FocusBox", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
-			]
+					properties: [],
+				},
+			],
 		};
 
 		const removeActiveWidgetProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[removeActiveWidgetProcess, removeActiveWidgetProcessStub]
+			[removeActiveWidgetProcess, removeActiveWidgetProcessStub],
 		]);
 		const h = harness(() => <FocusBox {...properties} />, { middleware: [[store, mockStore]] });
 

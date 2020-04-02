@@ -20,5 +20,5 @@ const getProjectIdeDependencesCommand = commandFactory(async ({ path }) => {
 export const initProjectProcess = createProcess("init-project", [initProjectCommand]);
 export const getProjectIdeDependencesProcess = createProcess("get-project-ide-dependences", [
 	clearWidgetsCommand,
-	getProjectIdeDependencesCommand
+	getProjectIdeDependencesCommand,
 ]);

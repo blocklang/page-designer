@@ -17,25 +17,25 @@ export default factory(function App({ middleware: { theme } }) {
 	// TODO: 支持调整参数，随着参数的变化，设计器也跟着改变
 	const user: User = {
 		name: "jack",
-		avatar: "url"
+		avatar: "url",
 	};
 
 	const project: Project = {
 		id: 1,
 		name: "project_1",
-		createUserName: "jack"
+		createUserName: "jack",
 	};
 
 	const permission: Permission = {
 		canRead: true,
-		canWrite: true
+		canWrite: true,
 	};
 
 	const page: Page = {
 		id: 1,
 		key: "page1",
 		name: "页面1",
-		appType: "01" // web
+		appType: "01", // web
 	};
 
 	const pathes: Path[] = [{ name: "page1", path: "page1" }];
@@ -45,12 +45,12 @@ export default factory(function App({ middleware: { theme } }) {
 		fetchPageModel: `http://localhost:3000/designer/pages/${page.id}/model`,
 		fetchIdeDependenceInfos: `http://localhost:3000/designer/projects/${project.id}/dependences?category=dev`,
 		externalScriptAndCssWebsite: "http://localhost:3001",
-		savePageModel: ""
+		savePageModel: "",
 	};
 
 	const routes: RouteName = {
 		profile: "",
-		parentGroup: ""
+		parentGroup: "",
 	};
 
 	return (

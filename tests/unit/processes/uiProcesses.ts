@@ -21,7 +21,7 @@ import {
 	redoProcess,
 	changeActiveWidgetPropertiesProcess,
 	unhighlightWidgetProcess,
-	activeWidgetPropertyProcess
+	activeWidgetPropertyProcess,
 } from "../../../src/processes/uiProcesses";
 import { add } from "@dojo/framework/stores/state/operations";
 import { afterEach } from "intern/lib/interfaces/tdd";
@@ -51,15 +51,15 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			],
 			data: [],
-			functions: []
+			functions: [],
 		};
 		global.fetch = sinon.stub().returns(
 			Promise.resolve({
-				json: () => Promise.resolve(pageModel)
+				json: () => Promise.resolve(pageModel),
 			})
 		);
 
@@ -93,7 +93,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -103,9 +103,9 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 2,
 					canHasChildren: true,
-					properties: []
-				}
-			])
+					properties: [],
+				},
+			]),
 		]);
 
 		assert.isUndefined(store.get(store.path("selectedWidgetIndex")));
@@ -136,7 +136,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -146,9 +146,9 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 2,
 					canHasChildren: true,
-					properties: []
-				}
-			])
+					properties: [],
+				},
+			]),
 		]);
 
 		assert.isUndefined(store.get(store.path("highlightWidgetIndex")));
@@ -173,7 +173,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -183,9 +183,9 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 2,
 					canHasChildren: true,
-					properties: []
-				}
-			])
+					properties: [],
+				},
+			]),
 		]);
 
 		assert.isUndefined(store.get(store.path("highlightWidgetIndex")));
@@ -210,10 +210,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 0)
+			add(store.path("selectedWidgetIndex"), 0),
 		]);
 
 		insertWidgetsProcess(store)({
@@ -224,9 +224,9 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					canHasChildren: true,
 					apiRepoId: 1,
-					properties: []
-				}
-			]
+					properties: [],
+				},
+			],
 		});
 
 		const widgets = store.get(store.path("pageModel", "widgets"));
@@ -250,7 +250,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -260,7 +260,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: false,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "3",
@@ -270,10 +270,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: false,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 1)
+			add(store.path("selectedWidgetIndex"), 1),
 		]);
 
 		insertWidgetsProcess(store)({
@@ -284,9 +284,9 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget3",
 					canHasChildren: false,
 					apiRepoId: 3,
-					properties: []
-				}
-			]
+					properties: [],
+				},
+			],
 		});
 
 		const widgets = store.get(store.path("pageModel", "widgets"));
@@ -312,10 +312,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 0)
+			add(store.path("selectedWidgetIndex"), 0),
 		]);
 
 		insertWidgetsProcess(store)({
@@ -326,7 +326,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					canHasChildren: true,
 					apiRepoId: 1,
-					properties: []
+					properties: [],
 				},
 				{
 					widgetId: 2,
@@ -334,9 +334,9 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					canHasChildren: true,
 					apiRepoId: 1,
-					properties: []
-				}
-			]
+					properties: [],
+				},
+			],
 		});
 
 		const widgets = store.get(store.path("pageModel", "widgets"));
@@ -356,7 +356,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -366,7 +366,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "3",
@@ -376,10 +376,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 1)
+			add(store.path("selectedWidgetIndex"), 1),
 		]);
 
 		insertWidgetsProcess(store)({
@@ -390,9 +390,9 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget3",
 					canHasChildren: true,
 					apiRepoId: 1,
-					properties: []
-				}
-			]
+					properties: [],
+				},
+			],
 		});
 
 		const widgets = store.get(store.path("pageModel", "widgets"));
@@ -419,10 +419,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 0)
+			add(store.path("selectedWidgetIndex"), 0),
 		]);
 
 		insertWidgetsProcess(store)({
@@ -437,11 +437,11 @@ describe("processes/uiProcesses", () => {
 						{
 							code: "0001",
 							name: "prop1",
-							valueType: "string"
-						}
-					]
-				}
-			]
+							valueType: "string",
+						},
+					],
+				},
+			],
 		});
 
 		const widgets = store.get(store.path("pageModel", "widgets"));
@@ -462,10 +462,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 0)
+			add(store.path("selectedWidgetIndex"), 0),
 		]);
 
 		// 同一类型部件，连续添加两次
@@ -479,9 +479,9 @@ describe("processes/uiProcesses", () => {
 				{
 					code: "0001",
 					name: "prop1",
-					valueType: "string"
-				}
-			]
+					valueType: "string",
+				},
+			],
 		};
 
 		// 添加第一个
@@ -509,10 +509,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 0)
+			add(store.path("selectedWidgetIndex"), 0),
 		]);
 
 		insertWidgetsProcess(store)({
@@ -528,11 +528,11 @@ describe("processes/uiProcesses", () => {
 							code: "0001",
 							name: "prop1",
 							valueType: "string",
-							defaultValue: "default_value"
-						}
-					]
-				}
-			]
+							defaultValue: "default_value",
+						},
+					],
+				},
+			],
 		});
 
 		const widgets = store.get(store.path("pageModel", "widgets"));
@@ -553,7 +553,7 @@ describe("processes/uiProcesses", () => {
 				widgetName: "Widget1",
 				apiRepoId: 1,
 				canHasChildren: true,
-				properties: []
+				properties: [],
 			},
 			{
 				id: "2",
@@ -566,16 +566,16 @@ describe("processes/uiProcesses", () => {
 				properties: [
 					{
 						id: "1",
-						name: "prop1"
-					}
-				]
-			}
+						name: "prop1",
+					},
+				],
+			},
 		];
 
 		store.apply([add(store.path("pageModel", "widgets"), widgets), add(store.path("selectedWidgetIndex"), 1)]);
 
 		changeActiveWidgetPropertiesProcess(store)({
-			changedProperties: []
+			changedProperties: [],
 		});
 
 		const secondWidget = store.get(store.path("pageModel", "widgets"))[1];
@@ -596,7 +596,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -612,12 +612,12 @@ describe("processes/uiProcesses", () => {
 							code: "0001",
 							name: "prop1",
 							valueType: "string",
-							isExpr: false
-						}
-					]
-				}
+							isExpr: false,
+						},
+					],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 1)
+			add(store.path("selectedWidgetIndex"), 1),
 		]);
 
 		changeActiveWidgetPropertiesProcess(store)({
@@ -626,9 +626,9 @@ describe("processes/uiProcesses", () => {
 					index: 0,
 					newValue: "1",
 					isChanging: false,
-					isExpr: false
-				}
-			]
+					isExpr: false,
+				},
+			],
 		});
 
 		const widgets = store.get(store.path("pageModel", "widgets"));
@@ -649,7 +649,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -665,12 +665,12 @@ describe("processes/uiProcesses", () => {
 							code: "0001",
 							name: "prop1",
 							valueType: "string",
-							isExpr: false
-						}
-					]
-				}
+							isExpr: false,
+						},
+					],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 1)
+			add(store.path("selectedWidgetIndex"), 1),
 		]);
 
 		changeActiveWidgetPropertiesProcess(store)({
@@ -679,9 +679,9 @@ describe("processes/uiProcesses", () => {
 					index: 0,
 					newValue: "1",
 					isChanging: false,
-					isExpr: true
-				}
-			]
+					isExpr: true,
+				},
+			],
 		});
 
 		const widgets = store.get(store.path("pageModel", "widgets"));
@@ -701,7 +701,7 @@ describe("processes/uiProcesses", () => {
 				widgetName: "Widget1",
 				apiRepoId: 1,
 				canHasChildren: true,
-				properties: []
+				properties: [],
 			},
 			{
 				id: "2",
@@ -717,22 +717,22 @@ describe("processes/uiProcesses", () => {
 						code: "0001",
 						name: "prop1",
 						valueType: "string",
-						isExpr: false
+						isExpr: false,
 					},
 					{
 						id: "2",
 						code: "0002",
 						name: "prop2",
 						valueType: "string",
-						isExpr: false
-					}
-				]
-			}
+						isExpr: false,
+					},
+				],
+			},
 		];
 
 		store.apply([
 			add(store.path("pageModel", "widgets"), attachedWidgets),
-			add(store.path("selectedWidgetIndex"), 1)
+			add(store.path("selectedWidgetIndex"), 1),
 		]);
 
 		changeActiveWidgetPropertiesProcess(store)({
@@ -741,15 +741,15 @@ describe("processes/uiProcesses", () => {
 					index: 0,
 					newValue: "1",
 					isChanging: false,
-					isExpr: false
+					isExpr: false,
 				},
 				{
 					index: 1,
 					newValue: "2",
 					isChanging: false,
-					isExpr: false
-				}
-			]
+					isExpr: false,
+				},
+			],
 		});
 
 		const widgets = store.get(store.path("pageModel", "widgets"));
@@ -770,7 +770,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -780,7 +780,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "3",
@@ -790,10 +790,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 1)
+			add(store.path("selectedWidgetIndex"), 1),
 		]);
 		removeActiveWidgetProcess(store)({});
 		const widgets = store.get(store.path("pageModel", "widgets"));
@@ -816,7 +816,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -826,7 +826,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "3",
@@ -836,10 +836,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 2)
+			add(store.path("selectedWidgetIndex"), 2),
 		]);
 		removeActiveWidgetProcess(store)({});
 		const widgets = store.get(store.path("pageModel", "widgets"));
@@ -862,7 +862,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -872,7 +872,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "3",
@@ -882,10 +882,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 2)
+			add(store.path("selectedWidgetIndex"), 2),
 		]);
 		removeActiveWidgetProcess(store)({});
 		const widgets = store.get(store.path("pageModel", "widgets"));
@@ -908,7 +908,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -918,7 +918,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "3",
@@ -928,10 +928,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 1)
+			add(store.path("selectedWidgetIndex"), 1),
 		]);
 		removeActiveWidgetProcess(store)({});
 		const widgets = store.get(store.path("pageModel", "widgets"));
@@ -956,10 +956,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 0)
+			add(store.path("selectedWidgetIndex"), 0),
 		]);
 		removeActiveWidgetProcess(store)({});
 
@@ -982,9 +982,9 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
-			])
+					properties: [],
+				},
+			]),
 		]);
 
 		removeUndefinedWidgetProcess(store)({ widgetId: "1" });
@@ -1005,7 +1005,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -1015,9 +1015,9 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
-			])
+					properties: [],
+				},
+			]),
 		]);
 
 		removeUndefinedWidgetProcess(store)({ widgetId: "2" });
@@ -1037,7 +1037,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -1047,10 +1047,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 1)
+			add(store.path("selectedWidgetIndex"), 1),
 		]);
 		moveActiveWidgetPreviousProcess(store)({});
 
@@ -1071,7 +1071,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -1081,7 +1081,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "3",
@@ -1091,10 +1091,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 2)
+			add(store.path("selectedWidgetIndex"), 2),
 		]);
 		moveActiveWidgetPreviousProcess(store)({});
 
@@ -1119,7 +1119,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -1129,7 +1129,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "3",
@@ -1139,7 +1139,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "4",
@@ -1149,7 +1149,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "5",
@@ -1159,10 +1159,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 3)
+			add(store.path("selectedWidgetIndex"), 3),
 		]);
 		moveActiveWidgetPreviousProcess(store)({});
 
@@ -1189,7 +1189,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -1199,7 +1199,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "3",
@@ -1209,10 +1209,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 1)
+			add(store.path("selectedWidgetIndex"), 1),
 		]);
 		moveActiveWidgetNextProcess(store)({});
 
@@ -1233,7 +1233,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -1243,7 +1243,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "3",
@@ -1253,10 +1253,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 1)
+			add(store.path("selectedWidgetIndex"), 1),
 		]);
 		moveActiveWidgetNextProcess(store)({});
 
@@ -1281,7 +1281,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -1291,7 +1291,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "3",
@@ -1301,7 +1301,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "4",
@@ -1311,7 +1311,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "5",
@@ -1321,10 +1321,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 1)
+			add(store.path("selectedWidgetIndex"), 1),
 		]);
 		moveActiveWidgetNextProcess(store)({});
 
@@ -1351,7 +1351,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -1361,7 +1361,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "3",
@@ -1371,7 +1371,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "4",
@@ -1381,10 +1381,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 1)
+			add(store.path("selectedWidgetIndex"), 1),
 		]);
 		moveActiveWidgetNextProcess(store)({});
 
@@ -1410,10 +1410,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 0)
+			add(store.path("selectedWidgetIndex"), 0),
 		]);
 		activeParentWidgetProcess(store)({});
 
@@ -1432,7 +1432,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -1442,10 +1442,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 1)
+			add(store.path("selectedWidgetIndex"), 1),
 		]);
 		activeParentWidgetProcess(store)({});
 
@@ -1463,7 +1463,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -1473,7 +1473,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "3",
@@ -1483,10 +1483,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 2)
+			add(store.path("selectedWidgetIndex"), 2),
 		]);
 		activeParentWidgetProcess(store)({});
 
@@ -1504,10 +1504,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 0)
+			add(store.path("selectedWidgetIndex"), 0),
 		]);
 
 		assert.isFalse(uiHistoryManager.canUndo(store));
@@ -1521,9 +1521,9 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					canHasChildren: true,
 					apiRepoId: 1,
-					properties: []
-				}
-			]
+					properties: [],
+				},
+			],
 		});
 
 		assert.isTrue(uiHistoryManager.canUndo(store));
@@ -1541,7 +1541,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -1551,7 +1551,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "3",
@@ -1561,10 +1561,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 2)
+			add(store.path("selectedWidgetIndex"), 2),
 		]);
 
 		assert.isFalse(uiHistoryManager.canUndo(store));
@@ -1587,7 +1587,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -1597,7 +1597,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "3",
@@ -1607,10 +1607,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 1)
+			add(store.path("selectedWidgetIndex"), 1),
 		]);
 
 		assert.isFalse(uiHistoryManager.canUndo(store));
@@ -1633,7 +1633,7 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget1",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
+					properties: [],
 				},
 				{
 					id: "2",
@@ -1643,10 +1643,10 @@ describe("processes/uiProcesses", () => {
 					widgetName: "Widget2",
 					apiRepoId: 1,
 					canHasChildren: true,
-					properties: []
-				}
+					properties: [],
+				},
 			]),
-			add(store.path("selectedWidgetIndex"), 1)
+			add(store.path("selectedWidgetIndex"), 1),
 		]);
 
 		assert.isFalse(uiHistoryManager.canUndo(store));

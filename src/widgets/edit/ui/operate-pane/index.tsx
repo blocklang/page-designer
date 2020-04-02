@@ -52,7 +52,7 @@ export default factory(function UIOperatePane({ properties, middleware: { store,
 
 	const styles = {
 		right: `${dragRight}px`,
-		top: `${top + dragTop}px`
+		top: `${top + dragTop}px`,
 	};
 
 	const { get, path, executor } = store;
@@ -71,7 +71,7 @@ export default factory(function UIOperatePane({ properties, middleware: { store,
 						classes={[
 							c.nav_link,
 							activeNav === "widgets" ? c.active : c.text_muted,
-							activeNav === "widgets" ? css.tabBarActive : css.tabBar
+							activeNav === "widgets" ? css.tabBarActive : css.tabBar,
 						]}
 						href="#"
 						onclick={(event: MouseEvent) => {
@@ -88,7 +88,7 @@ export default factory(function UIOperatePane({ properties, middleware: { store,
 						classes={[
 							c.nav_link,
 							activeNav === "properties" ? c.active : c.text_muted,
-							activeNav === "properties" ? css.tabBarActive : css.tabBar
+							activeNav === "properties" ? css.tabBarActive : css.tabBar,
 						]}
 						href="#"
 						onclick={(event: MouseEvent) => {

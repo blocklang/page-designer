@@ -21,25 +21,25 @@ import { stub } from "sinon";
 // login user
 const user: User = {
 	name: "jack",
-	avatar: "url"
+	avatar: "url",
 };
 
 const project: Project = {
 	id: 1,
 	name: "project",
-	createUserName: "lucy"
+	createUserName: "lucy",
 };
 
 const permission: Permission = {
 	canRead: true,
-	canWrite: false
+	canWrite: false,
 };
 
 const page: Page = {
 	id: 2,
 	key: "page1",
 	name: "页面1",
-	appType: "01"
+	appType: "01",
 };
 
 const pathes: Path[] = [{ name: "page1", path: "page1" }];
@@ -49,12 +49,12 @@ const urls: RequestUrl = {
 	fetchIdeDependenceInfos: "",
 	fetchPageModel: "",
 	savePageModel: "",
-	externalScriptAndCssWebsite: ""
+	externalScriptAndCssWebsite: "",
 };
 
 const routes: RouteName = {
 	profile: "a",
-	parentGroup: "b"
+	parentGroup: "b",
 };
 
 describe("PageDesigner", () => {
@@ -218,7 +218,7 @@ describe("PageDesigner", () => {
 	it("onSwitchPageViewType should be switch between ui and behavior", () => {
 		const switchPageViewTypeProcessStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([
-			[switchPageViewTypeProcess, switchPageViewTypeProcessStub]
+			[switchPageViewTypeProcess, switchPageViewTypeProcessStub],
 		]);
 
 		const h = harness(
@@ -268,7 +268,7 @@ describe("PageDesigner", () => {
 		// 实际修改 store 中的数据
 		mockStore((path) => [
 			replace(path("paneLayout", "editMode"), "Edit"),
-			replace(path("paneLayout", "pageViewType"), "behavior")
+			replace(path("paneLayout", "pageViewType"), "behavior"),
 		]);
 
 		h.expect(() => (

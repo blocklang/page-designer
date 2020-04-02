@@ -9,7 +9,7 @@ import {
 	updateSequenceConnectorProcess,
 	updateDataConnectorProcess,
 	removeFunctionNodeProcess,
-	updateInputDataPortValueProcess
+	updateInputDataPortValueProcess,
 } from "../../../src/processes/pageFunctionProcesses";
 
 const { describe, it, beforeEach } = intern.getInterface("bdd");
@@ -36,12 +36,12 @@ describe("processes/pageFunctionProcesses", () => {
 						category: "data",
 						outputSequencePorts: [],
 						inputDataPorts: [],
-						outputDataPorts: []
-					}
+						outputDataPorts: [],
+					},
 				],
 				sequenceConnections: [],
-				dataConnections: []
-			}
+				dataConnections: [],
+			},
 		];
 		store.apply([add(store.path("pageModel", "functions"), functions), add(store.path("selectedFunctionId"), "1")]);
 
@@ -69,17 +69,17 @@ describe("processes/pageFunctionProcesses", () => {
 						category: "data",
 						outputSequencePorts: [],
 						inputDataPorts: [],
-						outputDataPorts: []
-					}
+						outputDataPorts: [],
+					},
 				],
 				sequenceConnections: [],
-				dataConnections: []
-			}
+				dataConnections: [],
+			},
 		];
 		store.apply([
 			add(store.path("pageModel", "functions"), functions),
 			add(store.path("selectedFunctionId"), "1"),
-			add(store.path("selectedFunctionNodeId"), "11")
+			add(store.path("selectedFunctionNodeId"), "11"),
 		]);
 
 		removeFunctionNodeProcess(store)({ functionNodeId: "not exist id" });
@@ -109,17 +109,17 @@ describe("processes/pageFunctionProcesses", () => {
 						outputSequencePorts: [
 							{
 								id: "osp1",
-								text: ""
-							}
+								text: "",
+							},
 						],
 						inputDataPorts: [],
 						outputDataPorts: [
 							{
 								id: "odp1",
 								name: "value",
-								type: "string"
-							}
-						]
+								type: "string",
+							},
+						],
 					},
 					{
 						id: "21",
@@ -134,11 +134,11 @@ describe("processes/pageFunctionProcesses", () => {
 							{
 								id: "idp2",
 								name: "value",
-								type: "string"
-							}
+								type: "string",
+							},
 						],
-						outputDataPorts: []
-					}
+						outputDataPorts: [],
+					},
 				],
 				sequenceConnections: [
 					{
@@ -146,8 +146,8 @@ describe("processes/pageFunctionProcesses", () => {
 						fromNode: "11",
 						fromOutput: "osp1",
 						toNode: "21",
-						toInput: "isp2"
-					}
+						toInput: "isp2",
+					},
 				],
 				dataConnections: [
 					{
@@ -155,10 +155,10 @@ describe("processes/pageFunctionProcesses", () => {
 						fromNode: "11",
 						fromOutput: "odp1",
 						toNode: "21",
-						toInput: "idp2"
-					}
-				]
-			}
+						toInput: "idp2",
+					},
+				],
+			},
 		];
 		store.apply([add(store.path("pageModel", "functions"), functions), add(store.path("selectedFunctionId"), "1")]);
 
@@ -176,13 +176,13 @@ describe("processes/pageFunctionProcesses", () => {
 				id: "1",
 				nodes: [],
 				sequenceConnections: [],
-				dataConnections: []
-			}
+				dataConnections: [],
+			},
 		];
 		store.apply([add(store.path("pageModel", "functions"), functions), add(store.path("selectedFunctionId"), "1")]);
 		addSequenceConnectorProcess(store)({
 			startPort: { nodeId: "1", portId: "2" },
-			endPort: { nodeId: "3", portId: "4" }
+			endPort: { nodeId: "3", portId: "4" },
 		});
 		const actualFunctions = store.get(store.path("pageModel", "functions"));
 		assert.equal(actualFunctions[0].sequenceConnections.length, 1);
@@ -195,13 +195,13 @@ describe("processes/pageFunctionProcesses", () => {
 				id: "1",
 				nodes: [],
 				sequenceConnections: [],
-				dataConnections: []
-			}
+				dataConnections: [],
+			},
 		];
 		store.apply([add(store.path("pageModel", "functions"), functions), add(store.path("selectedFunctionId"), "1")]);
 		addDataConnectorProcess(store)({
 			startPort: { nodeId: "1", portId: "2" },
-			endPort: { nodeId: "3", portId: "4" }
+			endPort: { nodeId: "3", portId: "4" },
 		});
 		const actualFunctions = store.get(store.path("pageModel", "functions"));
 		assert.equal(actualFunctions[0].sequenceConnections.length, 0);
@@ -219,11 +219,11 @@ describe("processes/pageFunctionProcesses", () => {
 						fromNode: "1",
 						fromOutput: "2",
 						toNode: "3",
-						toInput: "4"
-					}
+						toInput: "4",
+					},
 				],
-				dataConnections: []
-			}
+				dataConnections: [],
+			},
 		];
 		store.apply([add(store.path("pageModel", "functions"), functions), add(store.path("selectedFunctionId"), "1")]);
 		removeSequenceConnectorProcess(store)({ sequenceConnectorId: "sc1" });
@@ -245,10 +245,10 @@ describe("processes/pageFunctionProcesses", () => {
 						fromNode: "1",
 						fromOutput: "2",
 						toNode: "3",
-						toInput: "4"
-					}
-				]
-			}
+						toInput: "4",
+					},
+				],
+			},
 		];
 		store.apply([add(store.path("pageModel", "functions"), functions), add(store.path("selectedFunctionId"), "1")]);
 		removeDataConnectorProcess(store)({ dataConnectorId: "dc1" });
@@ -269,17 +269,17 @@ describe("processes/pageFunctionProcesses", () => {
 						fromNode: "1",
 						fromOutput: "2",
 						toNode: "3",
-						toInput: "4"
-					}
+						toInput: "4",
+					},
 				],
-				dataConnections: []
-			}
+				dataConnections: [],
+			},
 		];
 		store.apply([add(store.path("pageModel", "functions"), functions), add(store.path("selectedFunctionId"), "1")]);
 		updateSequenceConnectorProcess(store)({
 			sequenceConnectorId: "sc1",
 			startPort: { nodeId: "11", portId: "22" },
-			endPort: { nodeId: "33", portId: "44" }
+			endPort: { nodeId: "33", portId: "44" },
 		});
 
 		const actualFunctions = store.get(store.path("pageModel", "functions"));
@@ -304,16 +304,16 @@ describe("processes/pageFunctionProcesses", () => {
 						fromNode: "1",
 						fromOutput: "2",
 						toNode: "3",
-						toInput: "4"
-					}
-				]
-			}
+						toInput: "4",
+					},
+				],
+			},
 		];
 		store.apply([add(store.path("pageModel", "functions"), functions), add(store.path("selectedFunctionId"), "1")]);
 		updateDataConnectorProcess(store)({
 			dataConnectorId: "dc1",
 			startPort: { nodeId: "11", portId: "22" },
-			endPort: { nodeId: "33", portId: "44" }
+			endPort: { nodeId: "33", portId: "44" },
 		});
 
 		const actualFunctions = store.get(store.path("pageModel", "functions"));
@@ -343,15 +343,15 @@ describe("processes/pageFunctionProcesses", () => {
 							{
 								id: "idp1",
 								name: "value",
-								type: "string"
-							}
+								type: "string",
+							},
 						],
-						outputDataPorts: []
-					}
+						outputDataPorts: [],
+					},
 				],
 				sequenceConnections: [],
-				dataConnections: []
-			}
+				dataConnections: [],
+			},
 		];
 		store.apply([add(store.path("pageModel", "functions"), functions), add(store.path("selectedFunctionId"), "1")]);
 

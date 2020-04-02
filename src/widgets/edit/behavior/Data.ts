@@ -11,7 +11,7 @@ import {
 	foldDataGroupProcess,
 	removeActiveDataItemProcess,
 	moveUpActiveDataItemProcess,
-	moveDownActiveDataItemProcess
+	moveDownActiveDataItemProcess,
 } from "../../../processes/pageDataProcesses";
 import * as $ from "jquery";
 import { getChildrenIndex, getPreviousIndex, getNextIndex } from "designer-core/utils/treeUtil";
@@ -36,16 +36,16 @@ export default factory(function Data({ properties, middleware: { store } }) {
 	if (data.length === 0) {
 		return v("div", { key: "root" }, [
 			v("div", { key: "alert-has-no-root", classes: [c.alert, c.alert_danger, c.text_center], role: "alert" }, [
-				"共发现 0 个数据节点，至少要存在一个根节点！"
-			])
+				"共发现 0 个数据节点，至少要存在一个根节点！",
+			]),
 		]);
 	}
 
 	if (data[0].parentId !== config.rootDataParentId) {
 		return v("div", { key: "root" }, [
 			v("div", { key: "alert-not-a-root", classes: [c.alert, c.alert_danger, c.text_center], role: "alert" }, [
-				"第一个节点必须是根节点！"
-			])
+				"第一个节点必须是根节点！",
+			]),
 		]);
 	}
 
@@ -60,12 +60,12 @@ export default factory(function Data({ properties, middleware: { store } }) {
 				classes: [
 					c.position_relative,
 					c.border,
-					activeDataItemId === data[0].id ? c.border_primary : c.border_white
+					activeDataItemId === data[0].id ? c.border_primary : c.border_white,
 				],
 				onclick: (event: MouseEvent) => {
 					event.stopPropagation();
 					executor(activeDataItemProcess)({ id: data[0].id });
-				}
+				},
 			},
 			[
 				v(
@@ -74,12 +74,12 @@ export default factory(function Data({ properties, middleware: { store } }) {
 						classes: [c.position_absolute, css.icon, c.text_muted],
 						onclick: () => {
 							executor(foldDataGroupProcess)({ id: data[0].id });
-						}
+						},
 					},
 					[
 						data[0].open
 							? w(FontAwesomeIcon, { icon: "angle-down" })
-							: w(FontAwesomeIcon, { icon: "angle-right" })
+							: w(FontAwesomeIcon, { icon: "angle-right" }),
 					]
 				),
 				v("span", { classes: [c.ml_1] }, ["data（页面数据）"]),
@@ -96,10 +96,10 @@ export default factory(function Data({ properties, middleware: { store } }) {
 									executor(foldDataGroupProcess)({ id: data[0].id });
 								}
 								executor(insertDataItemProcess)({});
-							}
+							},
 						},
 						[w(FontAwesomeIcon, { icon: "plus" })]
-					)
+					),
 			]
 		),
 		data.length > 1 &&
@@ -108,10 +108,10 @@ export default factory(function Data({ properties, middleware: { store } }) {
 				"div",
 				{
 					key: `${data[0].id}-0-children`,
-					classes: [c.pl_4, c.border_left]
+					classes: [c.pl_4, c.border_left],
 				},
 				_renderChildren(data, data[0], 1, activeDataItemId, selectedDataItemIndex, executor)
-			)
+			),
 	]);
 });
 
@@ -168,14 +168,14 @@ function _renderDataItem(
 			onmouseup: (event: MouseEvent) => {
 				event.stopPropagation();
 				executor(activeDataItemProcess)({ id: data.id });
-			}
+			},
 		},
 		[
 			_renderIcon(data, executor),
 			_renderVariableName(data, index, parentData, executor),
 			_renderDataType(data, index, executor),
 			_renderDefaultValue(data, executor),
-			_renderOperators(data, activeDataItemId, allData, selectedDataItemIndex, executor)
+			_renderOperators(data, activeDataItemId, allData, selectedDataItemIndex, executor),
 		]
 	);
 }
@@ -189,7 +189,7 @@ function _renderIcon(dataItem: PageDataItem, executor: any): VNode | undefined {
 				classes: [c.position_absolute, css.icon, c.text_muted],
 				onclick: () => {
 					executor(foldDataGroupProcess)({ id: dataItem.id });
-				}
+				},
 			},
 			[dataItem.open ? w(FontAwesomeIcon, { icon: "angle-down" }) : w(FontAwesomeIcon, { icon: "angle-right" })]
 		);
@@ -223,9 +223,9 @@ function _renderVariableName(
 			// TODO: 校验数据的有效性
 			executor(changeActiveDataItemPropertyProcess)({
 				name: "name",
-				value: target.value
+				value: target.value,
 			});
-		}
+		},
 	});
 }
 
@@ -249,7 +249,7 @@ function _renderDataType(dataItem: PageDataItem, index: number, executor: any): 
 				"aria-expanded": "false",
 				onclick: (event: MouseEvent) => {
 					($(event.srcElement!) as any).dropdown();
-				}
+				},
 			},
 			[`${dataItem.type}`]
 		),
@@ -266,14 +266,14 @@ function _renderDataType(dataItem: PageDataItem, index: number, executor: any): 
 							event.preventDefault();
 							executor(changeActiveDataItemPropertyProcess)({
 								name: "type",
-								value: dataType
+								value: dataType,
 							});
-						}
+						},
 					},
 					[dataType]
 				)
 			)
-		)
+		),
 	]);
 }
 
@@ -294,9 +294,9 @@ function _renderDefaultValue(dataItem: PageDataItem, executor: any): VNode | und
 				const target = event.target as HTMLInputElement;
 				executor(changeActiveDataItemPropertyProcess)({
 					name: "value",
-					value: String(target.checked)
+					value: String(target.checked),
 				});
-			}
+			},
 		});
 	}
 
@@ -311,9 +311,9 @@ function _renderDefaultValue(dataItem: PageDataItem, executor: any): VNode | und
 				// TODO: 校验数据的有效性
 				executor(changeActiveDataItemPropertyProcess)({
 					name: "value",
-					value: target.value
+					value: target.value,
 				});
-			}
+			},
 		});
 	}
 
@@ -345,10 +345,10 @@ function _renderOperators(
 						executor(foldDataGroupProcess)({ id: dataItem.id });
 					}
 					executor(insertDataItemProcess)({});
-				}
+				},
 			},
 			[w(FontAwesomeIcon, { icon: "plus" })]
-		)
+		),
 	];
 
 	const activeDataIsFirst = getPreviousIndex(allData, selectedDataItemIndex) === -1;
@@ -364,7 +364,7 @@ function _renderOperators(
 						event.stopPropagation();
 						// 上移
 						executor(moveUpActiveDataItemProcess)({});
-					}
+					},
 				},
 				[w(FontAwesomeIcon, { icon: "arrow-up" })]
 			)
@@ -384,7 +384,7 @@ function _renderOperators(
 						event.stopPropagation();
 						// 下移
 						executor(moveDownActiveDataItemProcess)({});
-					}
+					},
 				},
 				[w(FontAwesomeIcon, { icon: "arrow-down" })]
 			)
@@ -401,7 +401,7 @@ function _renderOperators(
 				onclick: (event: MouseEvent) => {
 					event.stopPropagation();
 					executor(removeActiveDataItemProcess)({});
-				}
+				},
 			},
 			[w(FontAwesomeIcon, { icon: "trash-alt" })]
 		)

@@ -68,7 +68,7 @@ function createNodeData(invalidate: () => void): NodeData {
 		dragResults: deepAssign({}, emptyResults),
 		invalidate,
 		last: createPositionMatrix(),
-		start: createPositionMatrix()
+		start: createPositionMatrix(),
 	};
 }
 
@@ -87,7 +87,7 @@ function createPositionMatrix(): PositionMatrix {
 		client: { x: 0, y: 0 },
 		offset: { x: 0, y: 0 },
 		page: { x: 0, y: 0 },
-		screen: { x: 0, y: 0 }
+		screen: { x: 0, y: 0 },
 	};
 }
 
@@ -96,7 +96,7 @@ function createPositionMatrix(): PositionMatrix {
  */
 const emptyResults: DragResults = Object.freeze({
 	delta: Object.freeze(createPosition()),
-	isDragging: false
+	isDragging: false,
 });
 
 /**
@@ -107,20 +107,20 @@ function getPositionMatrix(event: PointerEvent): PositionMatrix {
 	return {
 		client: {
 			x: event.clientX,
-			y: event.clientY
+			y: event.clientY,
 		},
 		offset: {
 			x: event.offsetX,
-			y: event.offsetY
+			y: event.offsetY,
 		},
 		page: {
 			x: event.pageX,
-			y: event.pageY
+			y: event.pageY,
 		},
 		screen: {
 			x: event.screenX,
-			y: event.screenY
-		}
+			y: event.screenY,
+		},
 	};
 }
 
@@ -132,7 +132,7 @@ function getPositionMatrix(event: PointerEvent): PositionMatrix {
 function getDelta(start: PositionMatrix, current: PositionMatrix): Position {
 	return {
 		x: current.client.x - start.client.x,
-		y: current.client.y - start.client.y
+		y: current.client.y - start.client.y,
 	};
 }
 
@@ -273,6 +273,6 @@ export const drag = factory(function drag({ middleware }) {
 			}
 
 			return controller.get(node, middleware.invalidator);
-		}
+		},
 	};
 });

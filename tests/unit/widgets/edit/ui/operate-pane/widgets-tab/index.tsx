@@ -72,8 +72,8 @@ describe("edit/ui/operate-pane/widgets-tab", () => {
 		mockStore((path) => [
 			replace(path("widgetRepos"), [
 				{ apiRepoId: 1, apiRepoName: "widget api repo 1", widgetCategories: [] },
-				{ apiRepoId: 2, apiRepoName: "widget api repo 2", widgetCategories: [] }
-			])
+				{ apiRepoId: 2, apiRepoName: "widget api repo 2", widgetCategories: [] },
+			]),
 		]);
 
 		h.expect(() => (
@@ -119,7 +119,7 @@ describe("edit/ui/operate-pane/widgets-tab", () => {
 
 		// 加载完成，返回两个空的部件仓库
 		mockStore((path) => [
-			replace(path("widgetRepos"), [{ apiRepoId: 1, apiRepoName: "widget api repo 1", widgetCategories: [] }])
+			replace(path("widgetRepos"), [{ apiRepoId: 1, apiRepoName: "widget api repo 1", widgetCategories: [] }]),
 		]);
 
 		h.trigger(`.${css.repoNameBar}`, "onclick");
@@ -182,8 +182,8 @@ describe("edit/ui/operate-pane/widgets-tab", () => {
 
 		mockStore((path) => [
 			replace(path("widgetRepos"), [
-				{ apiRepoId: 1, apiRepoName: "widget api repo 1", widgetCategories: [{ name: "c1", widgets: [] }] }
-			])
+				{ apiRepoId: 1, apiRepoName: "widget api repo 1", widgetCategories: [{ name: "c1", widgets: [] }] },
+			]),
 		]);
 
 		h.expect(() => (
@@ -232,13 +232,13 @@ describe("edit/ui/operate-pane/widgets-tab", () => {
 									widgetName: "widget 1",
 									canHasChildren: false,
 									apiRepoId: 1,
-									properties: []
-								}
-							]
-						}
-					]
-				}
-			])
+									properties: [],
+								},
+							],
+						},
+					],
+				},
+			]),
 		]);
 
 		h.expect(() => (
@@ -302,13 +302,13 @@ describe("edit/ui/operate-pane/widgets-tab", () => {
 									widgetName: "widget 1",
 									canHasChildren: false,
 									apiRepoId: 1,
-									properties: []
-								}
-							]
-						}
-					]
-				}
-			])
+									properties: [],
+								},
+							],
+						},
+					],
+				},
+			]),
 		]);
 
 		h.trigger(`.${css.categoryNameBar}`, "onclick");
@@ -407,13 +407,13 @@ describe("edit/ui/operate-pane/widgets-tab", () => {
 									widgetName: "widget 1",
 									canHasChildren: false,
 									apiRepoId: 1,
-									properties: []
-								}
-							]
-						}
-					]
-				}
-			])
+									properties: [],
+								},
+							],
+						},
+					],
+				},
+			]),
 		]);
 
 		h.expect(() => (
@@ -477,13 +477,13 @@ describe("edit/ui/operate-pane/widgets-tab", () => {
 									widgetName: "widget 1",
 									canHasChildren: false,
 									apiRepoId: 1,
-									properties: []
-								}
-							]
-						}
-					]
-				}
-			])
+									properties: [],
+								},
+							],
+						},
+					],
+				},
+			]),
 		]);
 
 		h.trigger("@search", "oninput", { target: { value: "a" } });

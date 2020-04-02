@@ -28,11 +28,11 @@ const newFunctionCommand = commandFactory<{ functionDeclaration: FunctionDeclara
 					inputSequencePort: undefined,
 					outputSequencePorts: [],
 					inputDataPorts: [],
-					outputDataPorts: []
-				}
+					outputDataPorts: [],
+				},
 			],
 			sequenceConnections: [],
-			dataConnections: []
+			dataConnections: [],
 		};
 
 		return [add(at(path("pageModel", "functions"), length), func), replace(path("selectedFunctionId"), functionId)];
@@ -73,7 +73,7 @@ const moveActiveFunctionNodeCommand = commandFactory<{ left: number; top: number
 		const currentFunctionNodePath = at(path(currentFunctionPath, "nodes"), selectedFunctionNodeIndex);
 		return [
 			replace(path(currentFunctionNodePath, "top"), top),
-			replace(path(currentFunctionNodePath, "left"), left)
+			replace(path(currentFunctionNodePath, "left"), left),
 		];
 	}
 );
@@ -156,9 +156,9 @@ const addSequenceConnectorCommand = commandFactory<ConnectorPayload>(
 					fromNode: startPort.nodeId,
 					fromOutput: startPort.portId,
 					toNode: endPort.nodeId,
-					toInput: endPort.portId
+					toInput: endPort.portId,
 				}
-			)
+			),
 		];
 	}
 );
@@ -187,7 +187,7 @@ const removeSequenceConnectorCommand = commandFactory<{ sequenceConnectorId: str
 					path(at(path("pageModel", "functions"), currentFunctionIndex), "sequenceConnections"),
 					removedSequenceConnectorIndex
 				)
-			)
+			),
 		];
 	}
 );
@@ -213,9 +213,9 @@ const addDataConnectorCommand = commandFactory<ConnectorPayload>(
 					fromNode: startPort.nodeId,
 					fromOutput: startPort.portId,
 					toNode: endPort.nodeId,
-					toInput: endPort.portId
+					toInput: endPort.portId,
 				}
-			)
+			),
 		];
 	}
 );
@@ -241,7 +241,7 @@ const removeDataConnectorCommand = commandFactory<{ dataConnectorId: string }>(
 					path(at(path("pageModel", "functions"), currentFunctionIndex), "dataConnections"),
 					removedDataConnectorIndex
 				)
-			)
+			),
 		];
 	}
 );
@@ -278,9 +278,9 @@ const updateSequenceConnectorCommand = commandFactory<{
 				fromNode: startPort.nodeId,
 				fromOutput: startPort.portId,
 				toNode: endPort.nodeId,
-				toInput: endPort.portId
+				toInput: endPort.portId,
 			}
-		)
+		),
 	];
 });
 
@@ -313,9 +313,9 @@ const updateDataConnectorCommand = commandFactory<{
 				fromNode: startPort.nodeId,
 				fromOutput: startPort.portId,
 				toNode: endPort.nodeId,
-				toInput: endPort.portId
+				toInput: endPort.portId,
 			}
-		)
+		),
 	];
 });
 
@@ -355,7 +355,7 @@ const updateInputDataPortValueCommand = commandFactory<{ inputDataPort: PortPosi
 					"value"
 				),
 				value
-			)
+			),
 		];
 	}
 );
@@ -365,18 +365,18 @@ export const activeFunctionProcess = createProcess("active-function", [activeFun
 export const activeFunctionNodeProcess = createProcess("active-function-node", [activeFunctionNodeCommand]);
 export const removeFunctionNodeProcess = createProcess("remove-function-node", [removeFunctionNodeCommand]);
 export const moveActiveFunctionNodeProcess = createProcess("move-active-function-node", [
-	moveActiveFunctionNodeCommand
+	moveActiveFunctionNodeCommand,
 ]);
 export const addSequenceConnectorProcess = createProcess("add-sequence-connector", [addSequenceConnectorCommand]);
 export const addDataConnectorProcess = createProcess("add-data-connector", [addDataConnectorCommand]);
 export const removeSequenceConnectorProcess = createProcess("remove-sequence-connector", [
-	removeSequenceConnectorCommand
+	removeSequenceConnectorCommand,
 ]);
 export const removeDataConnectorProcess = createProcess("remove-data-connector", [removeDataConnectorCommand]);
 export const updateSequenceConnectorProcess = createProcess("update-sequence-connector", [
-	updateSequenceConnectorCommand
+	updateSequenceConnectorCommand,
 ]);
 export const updateDataConnectorProcess = createProcess("update-data-connector", [updateDataConnectorCommand]);
 export const updateInputDataPortValueProcess = createProcess("update-input-data-port-value", [
-	updateInputDataPortValueCommand
+	updateInputDataPortValueCommand,
 ]);

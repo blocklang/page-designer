@@ -10,7 +10,7 @@ import {
 	activeParentWidgetProcess,
 	moveActiveWidgetPreviousProcess,
 	moveActiveWidgetNextProcess,
-	removeActiveWidgetProcess
+	removeActiveWidgetProcess,
 } from "../../../../processes/uiProcesses";
 import store from "designer-core/store";
 import { AttachedWidget } from "designer-core/interfaces";

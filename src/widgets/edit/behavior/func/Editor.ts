@@ -14,7 +14,7 @@ import {
 	updateSequenceConnectorProcess,
 	updateDataConnectorProcess,
 	removeFunctionNodeProcess,
-	updateInputDataPortValueProcess
+	updateInputDataPortValueProcess,
 } from "../../../../processes/pageFunctionProcesses";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import { find, findIndex } from "@dojo/framework/shim/array";
@@ -58,8 +58,8 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 	if (!pageFunction) {
 		return v("div", { key: "root", classes: [c.border, css.root] }, [
 			v("div", { classes: [c.text_center, c.text_muted, c.mt_5, c.pt_5] }, [
-				`在“界面/操作面板/属性选项卡”中选择一个事件后，在此处定义事件处理函数。`
-			])
+				`在“界面/操作面板/属性选项卡”中选择一个事件后，在此处定义事件处理函数。`,
+			]),
 		]);
 	}
 
@@ -103,7 +103,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 
 				drawingConnectorEndPort = {
 					x: event.clientX - rootDimensions.position.left,
-					y: event.clientY - rootDimensions.position.top
+					y: event.clientY - rootDimensions.position.top,
 				};
 				invalidator();
 			},
@@ -157,7 +157,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 						executor(updateSequenceConnectorProcess)({
 							sequenceConnectorId: editingSequenceConnectorId,
 							startPort,
-							endPort
+							endPort,
 						});
 					}
 					return;
@@ -168,7 +168,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 						executor(updateDataConnectorProcess)({
 							dataConnectorId: editingDataConnectorId,
 							startPort,
-							endPort
+							endPort,
 						});
 					}
 					return;
@@ -186,7 +186,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 						executor(updateSequenceConnectorProcess)({
 							sequenceConnectorId: connector.id,
 							startPort,
-							endPort
+							endPort,
 						});
 						return;
 					}
@@ -242,13 +242,13 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 
 					executor(addDataConnectorProcess)({ startPort, endPort });
 				}
-			}
+			},
 		},
 		[
 			...renderNodes(),
 			...renderSequenceConnections(),
 			...renderDataConnections(),
-			isConnecting && renderDrawingConnection()
+			isConnecting && renderDrawingConnection(),
 		]
 	);
 
@@ -273,7 +273,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 					c.border,
 					node.id === selectedFunctionNodeId ? c.border_primary : undefined,
 					c.bg_light,
-					css.node
+					css.node,
 				],
 				styles: { top: `${node.top}px`, left: `${node.left}px` },
 				onpointerdown: (event: PointerEvent) => {
@@ -282,7 +282,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 					if (selectedFunctionNodeId !== node.id) {
 						executor(activeFunctionNodeProcess)({ functionNodeId: node.id });
 					}
-				}
+				},
 			},
 			[
 				v("div", { key: `${node.id}-caption`, classes: [c.bg_secondary, c.px_1, css.caption] }, [node.caption]),
@@ -326,7 +326,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 											nodeId: sc.toNode,
 											portId: sc.toInput,
 											portType: "sequence", // 有效值只能是 sequence
-											flowType: "input" // 有效值只能是 input
+											flowType: "input", // 有效值只能是 input
 										};
 
 										const newRootDimensions = dimensions.get("root");
@@ -339,12 +339,12 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 											y:
 												toInputPortDimensions.position.top -
 												newRootDimensions.position.top +
-												toInputPortDimensions.size.height / 2
+												toInputPortDimensions.size.height / 2,
 										};
 
 										drawingConnectorEndPort = {
 											x: event.clientX - newRootDimensions.position.left,
-											y: event.clientY - newRootDimensions.position.top
+											y: event.clientY - newRootDimensions.position.top,
 										};
 
 										isConnecting = true;
@@ -353,7 +353,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 											nodeId: node.id,
 											portId: node.outputSequencePorts[0].id,
 											portType: "sequence",
-											flowType: "output"
+											flowType: "output",
 										};
 
 										startConnect(event);
@@ -364,15 +364,15 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 										nodeId: node.id,
 										portId: node.outputSequencePorts[0].id,
 										portType: "sequence",
-										flowType: "output"
+										flowType: "output",
 									});
 								},
 								onpointerleave: () => {
 									onLeavePort();
-								}
+								},
 							},
 							[w(FontAwesomeIcon, { icon: "caret-right" })]
-						)
+						),
 					]),
 				...node.outputDataPorts.map((item) =>
 					v("div", { classes: [c.d_flex, c.justify_content_between] }, [
@@ -395,7 +395,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 											nodeId: node.id,
 											portId: item.id,
 											portType: "data",
-											flowType: "output"
+											flowType: "output",
 										};
 										startConnect(event);
 									},
@@ -404,18 +404,18 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 											nodeId: node.id,
 											portId: item.id,
 											portType: "data",
-											flowType: "output"
+											flowType: "output",
 										});
 									},
 									onpointerleave: (event: PointerEvent) => {
 										onLeavePort();
-									}
+									},
 								},
 								[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
-							)
-						])
+							),
+						]),
 					])
-				)
+				),
 			]
 		);
 	}
@@ -432,7 +432,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 					c.border,
 					node.id === selectedFunctionNodeId ? c.border_primary : undefined,
 					c.bg_light,
-					css.node
+					css.node,
 				],
 				styles: { top: `${node.top}px`, left: `${node.left}px` },
 				// FIXME: 抽取出一个事件 onSelectNode?
@@ -442,7 +442,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 					if (selectedFunctionNodeId !== node.id) {
 						executor(activeFunctionNodeProcess)({ functionNodeId: node.id });
 					}
-				}
+				},
 			},
 			[
 				v("div", { key: `${node.id}-caption`, classes: [c.bg_secondary, c.px_1, css.caption] }, [
@@ -458,10 +458,10 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 								// 点击删除按钮时，不能选中节点和移动节点
 								event.preventDefault();
 								event.stopPropagation();
-							}
+							},
 						},
 						[w(FontAwesomeIcon, { icon: "times" })]
-					)
+					),
 				]),
 				// sequence port
 				singleSequenceInputAndOutput &&
@@ -481,7 +481,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 										nodeId: node.id,
 										portId: node.inputSequencePort!.id,
 										portType: "sequence",
-										flowType: "input"
+										flowType: "input",
 									};
 									startConnect(event);
 								},
@@ -490,12 +490,12 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 										nodeId: node.id,
 										portId: node.inputSequencePort!.id,
 										portType: "sequence",
-										flowType: "input"
+										flowType: "input",
 									});
 								},
 								onpointerleave: (event: PointerEvent) => {
 									onLeavePort();
-								}
+								},
 							},
 							[w(FontAwesomeIcon, { icon: "caret-right" })]
 						),
@@ -524,7 +524,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 											nodeId: sc.toNode,
 											portId: sc.toInput,
 											portType: "sequence", // 有效值只能是 sequence
-											flowType: "input" // 有效值只能是 input
+											flowType: "input", // 有效值只能是 input
 										};
 
 										const newRootDimensions = dimensions.get("root");
@@ -537,12 +537,12 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 											y:
 												toInputPortDimensions.position.top -
 												newRootDimensions.position.top +
-												toInputPortDimensions.size.height / 2
+												toInputPortDimensions.size.height / 2,
 										};
 
 										drawingConnectorEndPort = {
 											x: event.clientX - newRootDimensions.position.left,
-											y: event.clientY - newRootDimensions.position.top
+											y: event.clientY - newRootDimensions.position.top,
 										};
 
 										isConnecting = true;
@@ -551,7 +551,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 											nodeId: node.id,
 											portId: node.outputSequencePorts[0].id,
 											portType: "sequence",
-											flowType: "output"
+											flowType: "output",
 										};
 										startConnect(event);
 									}
@@ -561,15 +561,15 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 										nodeId: node.id,
 										portId: node.outputSequencePorts[0].id,
 										portType: "sequence",
-										flowType: "output"
+										flowType: "output",
 									});
 								},
 								onpointerleave: (event: PointerEvent) => {
 									onLeavePort();
-								}
+								},
 							},
 							[w(FontAwesomeIcon, { icon: "caret-right" })]
-						)
+						),
 					]),
 				// data ports
 				...node.inputDataPorts.map((item) =>
@@ -593,20 +593,20 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 														nodeId: node.id,
 														portId: item.id,
 														portType: "data",
-														flowType: "input"
+														flowType: "input",
 													});
 												},
 												onpointerleave: () => {
 													onLeavePort();
-												}
+												},
 											},
 											[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
-										)
+										),
 									]),
 									v("div", { key: "right" }, [
 										v("div", {}, [
 											v("small", { classes: [c.font_italic] }, [item.type]),
-											v("span", { classes: [c.ml_1] }, [item.name])
+											v("span", { classes: [c.ml_1] }, [item.name]),
 										]),
 										v("input", {
 											key: "input",
@@ -616,11 +616,11 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 												const value = (event.target as HTMLInputElement).value;
 												executor(updateInputDataPortValueProcess)({
 													inputDataPort: { nodeId: node.id, portId: item.id },
-													value
+													value,
 												});
-											}
-										})
-									])
+											},
+										}),
+									]),
 							  ])
 							: v("div", {}, [
 									v(
@@ -636,19 +636,19 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 													nodeId: node.id,
 													portId: item.id,
 													portType: "data",
-													flowType: "input"
+													flowType: "input",
 												});
 											},
 											onpointerleave: (event: PointerEvent) => {
 												onLeavePort();
-											}
+											},
 										},
 										[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
 									),
 									v("small", { classes: [c.font_italic] }, [item.type]),
-									v("span", { classes: [c.ml_1] }, [item.name])
+									v("span", { classes: [c.ml_1] }, [item.name]),
 							  ]),
-						v("div", { classes: [c.px_1] }, [v("span", { classes: [css.blankPort] })])
+						v("div", { classes: [c.px_1] }, [v("span", { classes: [css.blankPort] })]),
 					])
 				),
 				...node.outputDataPorts.map((item) =>
@@ -672,7 +672,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 											nodeId: node.id,
 											portId: item.id,
 											portType: "data",
-											flowType: "output"
+											flowType: "output",
 										};
 										startConnect(event);
 									},
@@ -681,18 +681,18 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 											nodeId: node.id,
 											portId: item.id,
 											portType: "data",
-											flowType: "output"
+											flowType: "output",
 										});
 									},
 									onpointerleave: (event: PointerEvent) => {
 										onLeavePort();
-									}
+									},
 								},
 								[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
-							)
-						])
+							),
+						]),
 					])
-				)
+				),
 			]
 		);
 	}
@@ -716,7 +716,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 				nodeId: dc.fromNode,
 				portId: dc.fromOutput,
 				portType: "data",
-				flowType: "output" // 有效值只能是 output
+				flowType: "output", // 有效值只能是 output
 			};
 			const newRootDimensions = dimensions.get("root");
 			const fromOutputPortDimensions = dimensions.get(dc.fromOutput);
@@ -728,11 +728,11 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 				y:
 					fromOutputPortDimensions.position.top -
 					newRootDimensions.position.top +
-					fromOutputPortDimensions.size.height / 2
+					fromOutputPortDimensions.size.height / 2,
 			};
 			drawingConnectorEndPort = {
 				x: event.clientX - newRootDimensions.position.left,
-				y: event.clientY - newRootDimensions.position.top
+				y: event.clientY - newRootDimensions.position.top,
 			};
 			isConnecting = true;
 		} else {
@@ -740,7 +740,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 				nodeId,
 				portId: inputDataPort.id,
 				portType: "data",
-				flowType: "input"
+				flowType: "input",
 			};
 			startConnect(event);
 		}
@@ -767,7 +767,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 		const newRootDimensions = dimensions.get("root");
 		drawingConnectorStartPort = drawingConnectorEndPort = {
 			x: event.clientX - newRootDimensions.position.left,
-			y: event.clientY - newRootDimensions.position.top
+			y: event.clientY - newRootDimensions.position.top,
 		};
 
 		isConnecting = true;
@@ -828,11 +828,11 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 
 		const startPoint = {
 			x: startPortDimension.position.left - rootDimensions.position.left + startPortDimension.size.width / 2,
-			y: startPortDimension.position.top - rootDimensions.position.top + startPortDimension.size.height / 2
+			y: startPortDimension.position.top - rootDimensions.position.top + startPortDimension.size.height / 2,
 		};
 		const endPoint = {
 			x: endPortDimension.position.left - rootDimensions.position.left + endPortDimension.size.width / 2,
-			y: endPortDimension.position.top - rootDimensions.position.top + endPortDimension.size.height / 2
+			y: endPortDimension.position.top - rootDimensions.position.top + endPortDimension.size.height / 2,
 		};
 
 		return renderConnection(startPoint, endPoint, connection.id);
@@ -875,11 +875,11 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 
 		const startPoint = {
 			x: startPortDimension.position.left - rootDimensions.position.left + startPortDimension.size.width / 2,
-			y: startPortDimension.position.top - rootDimensions.position.top + startPortDimension.size.height / 2
+			y: startPortDimension.position.top - rootDimensions.position.top + startPortDimension.size.height / 2,
 		};
 		const endPoint = {
 			x: endPortDimension.position.left - rootDimensions.position.left + endPortDimension.size.width / 2,
-			y: endPortDimension.position.top - rootDimensions.position.top + endPortDimension.size.height / 2
+			y: endPortDimension.position.top - rootDimensions.position.top + endPortDimension.size.height / 2,
 		};
 
 		return renderConnection(startPoint, endPoint, connection.id);
@@ -900,7 +900,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 				styles: { left: `${svgOffset.left}px`, top: `${svgOffset.top}px` },
 				width: `${Math.max(svgOffset.width, 2)}`,
 				height: `${Math.max(svgOffset.height, 2)}`,
-				"pointer-events": "none"
+				"pointer-events": "none",
 			},
 			[
 				v("path", {
@@ -909,8 +909,8 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 					stroke: "#6c757d",
 					"stroke-width": "2",
 					// 在拖拽时，该值必须是 none，否则在要放置的节点处，节点和 path 之间会不确定性的切换。
-					"pointer-events": "none"
-				})
+					"pointer-events": "none",
+				}),
 			]
 		);
 	}

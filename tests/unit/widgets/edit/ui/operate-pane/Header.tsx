@@ -33,8 +33,8 @@ describe("edit/ui/operate-pane/Header", () => {
 				widgetName: "Page",
 				widgetCode: "0001",
 				canHasChildren: true,
-				properties: []
-			}
+				properties: [],
+			},
 		];
 		mockStore((path) => [add(path("pageModel", "widgets"), widgets), add(path("selectedWidgetIndex"), 0)]);
 
@@ -65,7 +65,7 @@ describe("edit/ui/operate-pane/Header", () => {
 				widgetName: "Page",
 				widgetCode: "0001",
 				canHasChildren: true,
-				properties: []
+				properties: [],
 			},
 			{
 				id: "2",
@@ -75,8 +75,8 @@ describe("edit/ui/operate-pane/Header", () => {
 				widgetName: "Widget1",
 				widgetCode: "0002",
 				canHasChildren: true,
-				properties: []
-			}
+				properties: [],
+			},
 		];
 		mockStore((path) => [add(path("pageModel", "widgets"), widgets), add(path("selectedWidgetIndex"), 1)]);
 
@@ -113,7 +113,7 @@ describe("edit/ui/operate-pane/Header", () => {
 				widgetName: "Page",
 				widgetCode: "0001",
 				canHasChildren: true,
-				properties: []
+				properties: [],
 			},
 			{
 				id: "2",
@@ -123,8 +123,8 @@ describe("edit/ui/operate-pane/Header", () => {
 				widgetName: "Widget1",
 				widgetCode: "0002",
 				canHasChildren: true,
-				properties: []
-			}
+				properties: [],
+			},
 		];
 		mockStore((path) => [add(path("pageModel", "widgets"), widgets), add(path("selectedWidgetIndex"), 1)]);
 

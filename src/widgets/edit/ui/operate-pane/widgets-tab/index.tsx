@@ -146,7 +146,7 @@ export default factory(function WidgetsTab({ properties, middleware: { store, ic
 																				onclick={(event: MouseEvent) => {
 																					widget.apiRepoId = repo.apiRepoId;
 																					executor(insertWidgetsProcess)({
-																						widgets: [widget]
+																						widgets: [widget],
 																					});
 																				}}
 																			>

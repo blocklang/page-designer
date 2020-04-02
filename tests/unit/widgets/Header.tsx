@@ -31,12 +31,12 @@ describe("Header", () => {
 		const project: Project = {
 			id: 1,
 			name: "project",
-			createUserName: "tom"
+			createUserName: "tom",
 		};
 
 		const permission: Permission = {
 			canRead: true,
-			canWrite: false
+			canWrite: false,
 		};
 
 		const pathes: Path[] = [{ name: "page1", path: "page1" }];
@@ -60,7 +60,7 @@ describe("Header", () => {
 					c.align_items_center,
 					c.p_2,
 					c.position_fixed,
-					css.root
+					css.root,
 				]}
 			>
 				<div key="left">
@@ -76,18 +76,18 @@ describe("Header", () => {
 	it("header when login user access, has read permission", () => {
 		const user: User = {
 			name: "jack",
-			avatar: "url"
+			avatar: "url",
 		};
 
 		const project: Project = {
 			id: 1,
 			name: "project",
-			createUserName: "tom"
+			createUserName: "tom",
 		};
 
 		const permission: Permission = {
 			canRead: true,
-			canWrite: false
+			canWrite: false,
 		};
 
 		const pathes: Path[] = [{ name: "page1", path: "page1" }];
@@ -112,7 +112,7 @@ describe("Header", () => {
 					c.align_items_center,
 					c.p_2,
 					c.position_fixed,
-					css.root
+					css.root,
 				]}
 			>
 				<div key="left">
@@ -136,18 +136,18 @@ describe("Header", () => {
 	it("header when login user access, has write permission, in preview mode", () => {
 		const user: User = {
 			name: "jack",
-			avatar: "url"
+			avatar: "url",
 		};
 
 		const project: Project = {
 			id: 1,
 			name: "project",
-			createUserName: "tom"
+			createUserName: "tom",
 		};
 
 		const permission: Permission = {
 			canRead: true,
-			canWrite: true
+			canWrite: true,
 		};
 
 		const pathes: Path[] = [{ name: "page1", path: "page1" }];
@@ -172,7 +172,7 @@ describe("Header", () => {
 					c.align_items_center,
 					c.p_2,
 					c.position_fixed,
-					css.root
+					css.root,
 				]}
 			>
 				<div key="left">
@@ -203,18 +203,18 @@ describe("Header", () => {
 	it("header when login user access, has write permission, in edit mode and show ui view", () => {
 		const user: User = {
 			name: "jack",
-			avatar: "url"
+			avatar: "url",
 		};
 
 		const project: Project = {
 			id: 1,
 			name: "project",
-			createUserName: "tom"
+			createUserName: "tom",
 		};
 
 		const permission: Permission = {
 			canRead: true,
-			canWrite: true
+			canWrite: true,
 		};
 
 		const editMode: EditMode = "Edit";
@@ -243,7 +243,7 @@ describe("Header", () => {
 					c.align_items_center,
 					c.p_2,
 					c.position_fixed,
-					css.root
+					css.root,
 				]}
 			>
 				<div key="left">
@@ -324,18 +324,18 @@ describe("Header", () => {
 	it("header when login user access, has write permission, in edit mode and show behavior view", () => {
 		const user: User = {
 			name: "jack",
-			avatar: "url"
+			avatar: "url",
 		};
 
 		const project: Project = {
 			id: 1,
 			name: "project",
-			createUserName: "tom"
+			createUserName: "tom",
 		};
 
 		const permission: Permission = {
 			canRead: true,
-			canWrite: true
+			canWrite: true,
 		};
 
 		const editMode: EditMode = "Edit";
@@ -367,7 +367,7 @@ describe("Header", () => {
 					c.align_items_center,
 					c.p_2,
 					c.position_fixed,
-					css.root
+					css.root,
 				]}
 			>
 				<div key="left">
@@ -453,18 +453,18 @@ describe("Header", () => {
 	it("save button, active save button if dirty is true", () => {
 		const user: User = {
 			name: "jack",
-			avatar: "url"
+			avatar: "url",
 		};
 
 		const project: Project = {
 			id: 1,
 			name: "project",
-			createUserName: "tom"
+			createUserName: "tom",
 		};
 
 		const permission: Permission = {
 			canRead: true,
-			canWrite: true
+			canWrite: true,
 		};
 
 		const editMode: EditMode = "Edit";
@@ -500,18 +500,18 @@ describe("Header", () => {
 	it("save button, disable save button if dirty is false", () => {
 		const user: User = {
 			name: "jack",
-			avatar: "url"
+			avatar: "url",
 		};
 
 		const project: Project = {
 			id: 1,
 			name: "project",
-			createUserName: "tom"
+			createUserName: "tom",
 		};
 
 		const permission: Permission = {
 			canRead: true,
-			canWrite: true
+			canWrite: true,
 		};
 
 		const editMode: EditMode = "Edit";
@@ -554,18 +554,18 @@ describe("Header", () => {
 	it("save button, trigger save button", () => {
 		const user: User = {
 			name: "jack",
-			avatar: "url"
+			avatar: "url",
 		};
 
 		const project: Project = {
 			id: 1,
 			name: "project",
-			createUserName: "tom"
+			createUserName: "tom",
 		};
 
 		const permission: Permission = {
 			canRead: true,
-			canWrite: true
+			canWrite: true,
 		};
 
 		const editMode: EditMode = "Edit";
@@ -598,18 +598,18 @@ describe("Header", () => {
 	it("undo button - disable undo button if historyManager canUndo return false", () => {
 		const user: User = {
 			name: "jack",
-			avatar: "url"
+			avatar: "url",
 		};
 
 		const project: Project = {
 			id: 1,
 			name: "project",
-			createUserName: "tom"
+			createUserName: "tom",
 		};
 
 		const permission: Permission = {
 			canRead: true,
-			canWrite: true
+			canWrite: true,
 		};
 
 		const editMode: EditMode = "Edit";
@@ -648,18 +648,18 @@ describe("Header", () => {
 	it("undo button - active undo button if historyManager canUndo return true", () => {
 		const user: User = {
 			name: "jack",
-			avatar: "url"
+			avatar: "url",
 		};
 
 		const project: Project = {
 			id: 1,
 			name: "project",
-			createUserName: "tom"
+			createUserName: "tom",
 		};
 
 		const permission: Permission = {
 			canRead: true,
-			canWrite: true
+			canWrite: true,
 		};
 
 		const editMode: EditMode = "Edit";
@@ -692,18 +692,18 @@ describe("Header", () => {
 	it("undo button - trigger undo button", () => {
 		const user: User = {
 			name: "jack",
-			avatar: "url"
+			avatar: "url",
 		};
 
 		const project: Project = {
 			id: 1,
 			name: "project",
-			createUserName: "tom"
+			createUserName: "tom",
 		};
 
 		const permission: Permission = {
 			canRead: true,
-			canWrite: true
+			canWrite: true,
 		};
 
 		const editMode: EditMode = "Edit";
@@ -734,18 +734,18 @@ describe("Header", () => {
 	it("redo button - disable redo button if historyManager canRedo return false", () => {
 		const user: User = {
 			name: "jack",
-			avatar: "url"
+			avatar: "url",
 		};
 
 		const project: Project = {
 			id: 1,
 			name: "project",
-			createUserName: "tom"
+			createUserName: "tom",
 		};
 
 		const permission: Permission = {
 			canRead: true,
-			canWrite: true
+			canWrite: true,
 		};
 
 		const editMode: EditMode = "Edit";
@@ -784,18 +784,18 @@ describe("Header", () => {
 	it("redo button - active redo button if historyManager canRedo return true", () => {
 		const user: User = {
 			name: "jack",
-			avatar: "url"
+			avatar: "url",
 		};
 
 		const project: Project = {
 			id: 1,
 			name: "project",
-			createUserName: "tom"
+			createUserName: "tom",
 		};
 
 		const permission: Permission = {
 			canRead: true,
-			canWrite: true
+			canWrite: true,
 		};
 
 		const editMode: EditMode = "Edit";
@@ -828,18 +828,18 @@ describe("Header", () => {
 	it("redo button - trigger redo button", () => {
 		const user: User = {
 			name: "jack",
-			avatar: "url"
+			avatar: "url",
 		};
 
 		const project: Project = {
 			id: 1,
 			name: "project",
-			createUserName: "tom"
+			createUserName: "tom",
 		};
 
 		const permission: Permission = {
 			canRead: true,
-			canWrite: true
+			canWrite: true,
 		};
 
 		const editMode: EditMode = "Edit";

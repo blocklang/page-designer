@@ -35,8 +35,8 @@ describe("edit/behavior/data", () => {
 				name: "str",
 				value: "a string value",
 				type: "String",
-				open: false
-			}
+				open: false,
+			},
 		];
 		const h = harness(() => <Data data={pageData} />, { middleware: [[store, mockStore]] });
 
@@ -60,8 +60,8 @@ describe("edit/behavior/data", () => {
 				parentId: "-1",
 				name: "str",
 				type: "Object",
-				open: true
-			}
+				open: true,
+			},
 		];
 		const h = harness(() => <Data data={pageData} />, { middleware: [[store, mockStore]] });
 
@@ -91,7 +91,7 @@ describe("edit/behavior/data", () => {
 				parentId: "-1",
 				name: "root",
 				type: "Object",
-				open: true
+				open: true,
 			},
 			{
 				id: "2",
@@ -99,8 +99,8 @@ describe("edit/behavior/data", () => {
 				name: "str",
 				value: "a string value",
 				type: "String",
-				open: false
-			}
+				open: false,
+			},
 		];
 		const h = harness(() => <Data data={pageData} />, { middleware: [[store, mockStore]] });
 		mockStore((path) => [replace(path("pageModel", "data"), pageData)]);
@@ -172,7 +172,7 @@ describe("edit/behavior/data", () => {
 				parentId: "-1",
 				name: "root",
 				type: "Object",
-				open: true
+				open: true,
 			},
 			{
 				id: "2",
@@ -180,8 +180,8 @@ describe("edit/behavior/data", () => {
 				name: "num",
 				value: "1",
 				type: "Number",
-				open: false
-			}
+				open: false,
+			},
 		];
 		const h = harness(() => <Data data={pageData} />, { middleware: [[store, mockStore]] });
 		mockStore((path) => [replace(path("pageModel", "data"), pageData)]);
@@ -253,15 +253,15 @@ describe("edit/behavior/data", () => {
 				parentId: "-1",
 				name: "root",
 				type: "Object",
-				open: true
+				open: true,
 			},
 			{
 				id: "2",
 				parentId: "1",
 				name: "obj",
 				type: "Object",
-				open: false
-			}
+				open: false,
+			},
 		];
 		const h = harness(() => <Data data={pageData} />, { middleware: [[store, mockStore]] });
 		mockStore((path) => [replace(path("pageModel", "data"), pageData)]);

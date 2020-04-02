@@ -42,8 +42,8 @@ describe("Func", () => {
 				widgetName: "Widget1",
 				canHasChildren: false,
 				apiRepoId: 1,
-				properties: []
-			}
+				properties: [],
+			},
 		];
 
 		const mockStore = createMockStoreMiddleware<State>();
@@ -61,8 +61,8 @@ describe("Func", () => {
 				widgetName: "Widget1",
 				canHasChildren: false,
 				apiRepoId: 1,
-				properties: []
-			}
+				properties: [],
+			},
 		];
 
 		const mockStore = createMockStoreMiddleware<State>();
@@ -81,8 +81,8 @@ describe("Func", () => {
 				widgetName: "Widget1",
 				canHasChildren: false,
 				apiRepoId: 1,
-				properties: []
-			}
+				properties: [],
+			},
 		];
 
 		const mockStore = createMockStoreMiddleware<State>();
@@ -101,15 +101,15 @@ describe("Func", () => {
 				widgetName: "Widget1",
 				canHasChildren: false,
 				apiRepoId: 1,
-				properties: []
-			}
+				properties: [],
+			},
 		];
 
 		const propertyIndexAssertion = baseAssertion.setProperties("~titleBar", {
 			selectedWidgetIndex: 0,
 			activeWidget: widgets[0],
 			widgets,
-			activeWidgetProperty: undefined
+			activeWidgetProperty: undefined,
 		});
 
 		const mockStore = createMockStoreMiddleware<State>();
@@ -128,15 +128,15 @@ describe("Func", () => {
 				widgetName: "Widget1",
 				canHasChildren: false,
 				apiRepoId: 1,
-				properties: []
-			}
+				properties: [],
+			},
 		];
 
 		const propertyIndexAssertion = baseAssertion.setProperties("~titleBar", {
 			selectedWidgetIndex: 0,
 			activeWidget: widgets[0],
 			widgets,
-			activeWidgetProperty: undefined
+			activeWidgetProperty: undefined,
 		});
 
 		const mockStore = createMockStoreMiddleware<State>();
@@ -161,17 +161,17 @@ describe("Func", () => {
 						code: "0001",
 						name: "prop1",
 						isExpr: false,
-						valueType: "string"
-					}
-				]
-			}
+						valueType: "string",
+					},
+				],
+			},
 		];
 
 		const propertyIndexAssertion = baseAssertion.setProperties("~titleBar", {
 			selectedWidgetIndex: 0,
 			activeWidget: widgets[0],
 			widgets,
-			activeWidgetProperty: undefined
+			activeWidgetProperty: undefined,
 		});
 
 		const mockStore = createMockStoreMiddleware<State>();
@@ -197,17 +197,17 @@ describe("Func", () => {
 						code: "0001",
 						name: "prop1",
 						isExpr: false,
-						valueType: "string"
-					}
-				]
-			}
+						valueType: "string",
+					},
+				],
+			},
 		];
 
 		const propertyIndexAssertion = baseAssertion.setProperties("~titleBar", {
 			selectedWidgetIndex: 0,
 			activeWidget: widgets[0],
 			widgets,
-			activeWidgetProperty: undefined
+			activeWidgetProperty: undefined,
 		});
 
 		const mockStore = createMockStoreMiddleware<State>();
@@ -233,17 +233,17 @@ describe("Func", () => {
 						code: "0001",
 						name: "onValue",
 						isExpr: false,
-						valueType: "function"
-					}
-				]
-			}
+						valueType: "function",
+					},
+				],
+			},
 		];
 
 		const showToolbarAssertion = baseAssertion.setProperties("~titleBar", {
 			selectedWidgetIndex: 0,
 			activeWidget: widgets[0],
 			widgets,
-			activeWidgetProperty: widgets[0].properties[0]
+			activeWidgetProperty: widgets[0].properties[0],
 		});
 
 		const mockStore = createMockStoreMiddleware<State>();
@@ -269,10 +269,10 @@ describe("Func", () => {
 						name: "onValue",
 						value: "func1",
 						isExpr: false,
-						valueType: "function"
-					}
-				]
-			}
+						valueType: "function",
+					},
+				],
+			},
 		];
 
 		const functions: PageFunction[] = [
@@ -280,8 +280,8 @@ describe("Func", () => {
 				id: "func1",
 				nodes: [],
 				sequenceConnections: [],
-				dataConnections: []
-			}
+				dataConnections: [],
+			},
 		];
 
 		const showToolbarAssertion = baseAssertion
@@ -289,7 +289,7 @@ describe("Func", () => {
 				selectedWidgetIndex: 0,
 				activeWidget: widgets[0],
 				widgets,
-				activeWidgetProperty: widgets[0].properties[0]
+				activeWidgetProperty: widgets[0].properties[0],
 			})
 			.setProperties("~editor", { pageFunction: functions[0] });
 

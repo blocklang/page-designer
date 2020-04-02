@@ -23,7 +23,7 @@ export default factory(function Box({ properties, children }) {
 				height: `${height}px`,
 				width: `${width}px`,
 				borderWidth: `${borderWidth}px`,
-				borderColor
+				borderColor,
 			}}
 		>
 			{children()}

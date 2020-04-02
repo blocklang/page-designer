@@ -10,7 +10,7 @@ import {
 	getPreviousIndex,
 	getNextIndex,
 	getParentIndex,
-	inferNextActiveNodeIndex
+	inferNextActiveNodeIndex,
 } from "designer-core/utils/treeUtil";
 import { DimensionResults } from "@dojo/framework/core/meta/Dimensions";
 import { ChangedPropertyValue } from "designer-core/interfaces";
@@ -60,7 +60,7 @@ const highlightWidgetCommand = commandFactory<{
 	}
 	return [
 		replace(path("highlightWidgetIndex"), highlightWidgetIndex),
-		replace(path("highlightWidgetDimensions"), highlightWidgetDimensions)
+		replace(path("highlightWidgetDimensions"), highlightWidgetDimensions),
 	];
 });
 
@@ -126,7 +126,7 @@ const changeActiveWidgetPropertiesCommand = commandFactory<{ changedProperties: 
 			const targetProperty = {
 				...originProperty,
 				value: changedProperty.newValue,
-				isExpr: changedProperty.isExpr
+				isExpr: changedProperty.isExpr,
 			};
 			result.push(
 				replace(
@@ -270,7 +270,7 @@ const savePageModelCommand = commandFactory(async ({ path, get }) => {
 		method: "PUT",
 		credentials: "same-origin",
 		headers: { "Content-type": "application/json;charset=UTF-8", ...config.customFetchHeaders() },
-		body: JSON.stringify(pageModel)
+		body: JSON.stringify(pageModel),
 	});
 
 	if (response.ok) {
@@ -342,14 +342,14 @@ const undoCallback: ProcessCallback = () => ({
 	after(error, result) {
 		uiHistoryManager.undo(result.store);
 		result.store.invalidate();
-	}
+	},
 });
 
 const redoCallback: ProcessCallback = () => ({
 	after(error, result) {
 		uiHistoryManager.redo(result.store);
 		result.store.invalidate();
-	}
+	},
 });
 
 export const getPageModelProcess = createProcess("get-page-model", [getPageModelCommand]);
@@ -357,13 +357,13 @@ export const savePageModelProcess = createProcess("save-page-model", [savePageMo
 export const activeWidgetProcess = createProcess("active-widget", [activeWidgetCommand]);
 export const activeWidgetPropertyProcess = createProcess("active-widget-property", [activeWidgetPropertyCommand]);
 export const changeActiveWidgetDimensionsProcess = createProcess("change-active-widget-dimensions", [
-	changeActiveWidgetDimensionsCommand
+	changeActiveWidgetDimensionsCommand,
 ]);
 export const highlightWidgetProcess = createProcess("highlight-widget", [highlightWidgetCommand]);
 export const unhighlightWidgetProcess = createProcess("unhighlight-widget", [unhighlightWidgetCommand]);
 export const insertWidgetsProcess = createProcess("insert-widgets", [insertWidgetsCommand], uiHistoryManager.callback);
 export const changeActiveWidgetPropertiesProcess = createProcess("change-active-widget-properties", [
-	changeActiveWidgetPropertiesCommand
+	changeActiveWidgetPropertiesCommand,
 ]);
 export const moveActiveWidgetPreviousProcess = createProcess(
 	"move-active-widget-previous",
