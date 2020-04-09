@@ -12,6 +12,8 @@ import {
 	removeActiveDataItemProcess,
 	moveUpActiveDataItemProcess,
 	moveDownActiveDataItemProcess,
+	addVariableSetNodeProcess,
+	addVariableGetNodeProcess,
 } from "../../../processes/pageDataProcesses";
 import * as $ from "jquery";
 import { getChildrenIndex, getPreviousIndex, getNextIndex } from "designer-core/utils/treeUtil";
@@ -52,6 +54,8 @@ export default factory(function Data({ properties, middleware: { store } }) {
 	const selectedDataItemIndex = get(path("selectedDataItemIndex")) || 0;
 	const activeDataItemId = data[selectedDataItemIndex].id;
 
+	const selectedFunctionId = get(path("selectedFunctionId"));
+
 	return v("div", { key: "root", classes: [c.ml_4] }, [
 		v(
 			"div",
@@ -89,7 +93,7 @@ export default factory(function Data({ properties, middleware: { store } }) {
 						{
 							key: `op-add-${data[0].id}`,
 							title: "加变量",
-							classes: [c.ml_3, c.text_muted],
+							classes: [c.ml_3, c.text_muted, css.op],
 							onclick: (event: MouseEvent) => {
 								event.stopPropagation();
 								if (!data[0].open) {
@@ -110,7 +114,7 @@ export default factory(function Data({ properties, middleware: { store } }) {
 					key: `${data[0].id}-0-children`,
 					classes: [c.pl_4, c.border_left],
 				},
-				_renderChildren(data, data[0], 1, activeDataItemId, selectedDataItemIndex, executor)
+				_renderChildren(data, data[0], 1, activeDataItemId, selectedDataItemIndex, selectedFunctionId, executor)
 			),
 	]);
 });
@@ -121,6 +125,7 @@ function _renderChildren(
 	firstChildIndex: number,
 	activeDataItemId: string,
 	selectedDataItemIndex: number,
+	selectedFunctionId: string,
 	executor: any
 ): VNode[] {
 	const children = getChildrenIndex(pageData, currentData.id, firstChildIndex);
@@ -128,7 +133,16 @@ function _renderChildren(
 	for (let i = 0; i < children.length; i++) {
 		const eachData = pageData[children[i]];
 		result.push(
-			_renderDataItem(eachData, i, currentData, activeDataItemId, pageData, selectedDataItemIndex, executor)
+			_renderDataItem(
+				eachData,
+				i,
+				currentData,
+				activeDataItemId,
+				pageData,
+				selectedDataItemIndex,
+				selectedFunctionId,
+				executor
+			)
 		);
 
 		if (eachData.open) {
@@ -138,6 +152,7 @@ function _renderChildren(
 				children[i] + 1,
 				activeDataItemId,
 				selectedDataItemIndex,
+				selectedFunctionId,
 				executor
 			);
 			if (subChildren.length > 0) {
@@ -157,6 +172,7 @@ function _renderDataItem(
 	activeDataItemId: string,
 	allData: PageDataItem[],
 	selectedDataItemIndex: number,
+	selectedFunctionId: string,
 	executor: any
 ): VNode {
 	return v(
@@ -175,7 +191,7 @@ function _renderDataItem(
 			_renderVariableName(data, index, parentData, executor),
 			_renderDataType(data, index, executor),
 			_renderDefaultValue(data, executor),
-			_renderOperators(data, activeDataItemId, allData, selectedDataItemIndex, executor),
+			_renderOperators(data, activeDataItemId, allData, selectedDataItemIndex, selectedFunctionId, executor),
 		]
 	);
 }
@@ -289,6 +305,7 @@ function _renderDefaultValue(dataItem: PageDataItem, executor: any): VNode | und
 			key: "defaultValue",
 			type: "checkbox",
 			checked: dataItem.value === "true",
+			title: "默认值",
 			classes: [c.ml_1],
 			onchange: (event: MouseEvent) => {
 				const target = event.target as HTMLInputElement;
@@ -304,6 +321,7 @@ function _renderDefaultValue(dataItem: PageDataItem, executor: any): VNode | und
 		return v("input", {
 			key: "defaultValue",
 			value: dataItem.value,
+			placeholder: "默认值",
 			type: "text",
 			classes: [c.form_control, c.form_control_sm, c.ml_1, css.defaultValue],
 			oninput: (event: KeyboardEvent) => {
@@ -325,6 +343,7 @@ function _renderOperators(
 	activeDataItemId: string,
 	allData: PageDataItem[],
 	selectedDataItemIndex: number,
+	selectedFunctionId: string,
 	executor: any
 ): VNode | undefined {
 	const isActive = activeDataItemId === dataItem.id;
@@ -332,12 +351,47 @@ function _renderOperators(
 		return;
 	}
 
-	const ops = [
+	const ops = [];
+
+	// 为数据项添加 Getter 和 Setter 按钮，要满足一个条件：
+	// 1. 当前有选中一个事件
+	if (selectedFunctionId) {
+		ops.push(
+			v(
+				"span",
+				{
+					classes: [c.text_muted, css.op, css.getter],
+					title: "在函数设计器中添加 Get 节点",
+					onclick: (event: MouseEvent) => {
+						event.stopPropagation();
+						executor(addVariableGetNodeProcess)({ dataItem });
+					},
+				},
+				["Get"]
+			)
+		);
+		ops.push(
+			v(
+				"span",
+				{
+					classes: [c.text_muted, c.ml_1, c.mr_3, css.op, css.setter],
+					title: "在函数设计器中添加 Set 节点",
+					onclick: (event: MouseEvent) => {
+						event.stopPropagation();
+						executor(addVariableSetNodeProcess)({ dataItem });
+					},
+				},
+				["Set"]
+			)
+		);
+	}
+
+	ops.push(
 		v(
 			"span",
 			{
 				key: `op-add-${dataItem.id}`,
-				classes: [c.text_muted],
+				classes: [c.text_muted, css.op],
 				title: "加变量",
 				onclick: (event: MouseEvent) => {
 					event.stopPropagation();
@@ -348,8 +402,8 @@ function _renderOperators(
 				},
 			},
 			[w(FontAwesomeIcon, { icon: "plus" })]
-		),
-	];
+		)
+	);
 
 	const activeDataIsFirst = getPreviousIndex(allData, selectedDataItemIndex) === -1;
 	if (!activeDataIsFirst) {
@@ -358,7 +412,7 @@ function _renderOperators(
 				"span",
 				{
 					key: `op-up-${dataItem.id}`,
-					classes: [c.ml_1, c.text_muted],
+					classes: [c.ml_1, c.text_muted, css.op],
 					title: "上移",
 					onclick: (event: MouseEvent) => {
 						event.stopPropagation();
@@ -378,7 +432,7 @@ function _renderOperators(
 				"span",
 				{
 					key: `op-down-${dataItem.id}`,
-					classes: [c.ml_1, c.text_muted],
+					classes: [c.ml_1, c.text_muted, css.op],
 					title: "下移",
 					onclick: (event: MouseEvent) => {
 						event.stopPropagation();
@@ -397,7 +451,7 @@ function _renderOperators(
 			{
 				key: `op-remove-${dataItem.id}`,
 				title: "删除变量",
-				classes: [c.ml_1, c.text_muted],
+				classes: [c.ml_1, c.text_muted, css.op],
 				onclick: (event: MouseEvent) => {
 					event.stopPropagation();
 					executor(removeActiveDataItemProcess)({});

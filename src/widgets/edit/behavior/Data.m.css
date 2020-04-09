@@ -12,6 +12,19 @@
 }
 
 .icon {
+	cursor: pointer;
 	left: -15px;
 	top: 3px;
+}
+
+.op {
+	cursor: pointer;
+}
+
+.getter {
+	user-select: none;
+}
+
+.setter {
+	user-select: none;
 }

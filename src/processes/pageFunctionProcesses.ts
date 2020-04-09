@@ -1,34 +1,44 @@
 import { createProcess } from "@dojo/framework/stores/process";
 import { commandFactory } from "./utils";
-import { FunctionDeclaration, PageFunction, NodeConnection } from "designer-core/interfaces";
+import { EventHandler, PageFunction, NodeConnection } from "designer-core/interfaces";
 import { add, replace, remove } from "@dojo/framework/stores/state/operations";
 import { findIndex } from "@dojo/framework/shim/array";
 import { ConnectorPayload, PortPosition } from "./interfaces";
 import { uuid } from "@dojo/framework/core/util";
 
 // FIXME: 待确认如何实现
-const newFunctionCommand = commandFactory<{ functionDeclaration: FunctionDeclaration }>(
-	({ get, path, at, payload: { functionDeclaration } }) => {
+const newFunctionCommand = commandFactory<{ eventHandler: EventHandler }>(
+	({ get, path, at, payload: { eventHandler } }) => {
 		const functions = get(path("pageModel", "functions")) || [];
 		const length = functions.length;
 
 		// functionId 是否应设置为 uuid？
-		const functionId = functionDeclaration.id;
+		const functionId = eventHandler.handlerId;
+		const eventName = eventHandler.eventName;
+		const args = eventHandler.eventInputArguments;
+
+		const outputDataPorts = args.map((arg) => ({
+			id: uuid().replace(/-/g, ""),
+			name: arg.name,
+			type: arg.valueType,
+		}));
 
 		const func: PageFunction = {
 			id: functionId,
 			nodes: [
 				{
-					id: functionDeclaration.id,
-					top: 20, // 默认位置
+					id: uuid().replace(/-/g, ""),
+					// 默认位置
 					left: 20,
-					caption: "函数",
-					text: "",
-					category: "flowControl",
+					top: 20,
+					caption: "事件处理函数",
+					text: eventName,
+					layout: "flowControl",
 					inputSequencePort: undefined,
-					outputSequencePorts: [],
+					outputSequencePorts: [{ id: uuid().replace(/-/g, ""), text: "" }],
 					inputDataPorts: [],
-					outputDataPorts: [],
+					outputDataPorts, // 由事件的输入参数确定
+					category: "function",
 				},
 			],
 			sequenceConnections: [],

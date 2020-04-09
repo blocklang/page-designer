@@ -1,7 +1,7 @@
 import { createProcess } from "@dojo/framework/stores/process";
 import { commandFactory } from "./utils";
 import { add, replace, remove } from "@dojo/framework/stores/state/operations";
-import { PageDataItem } from "designer-core/interfaces";
+import { PageDataItem, VisualNode, PropertyValueType } from "designer-core/interfaces";
 import { uuid } from "@dojo/framework/core/util";
 import { findIndex } from "@dojo/framework/shim/array";
 import {
@@ -44,12 +44,47 @@ const activeDataItemCommand = commandFactory(({ payload: { id }, get, path, at }
 	return [replace(path("selectedDataItemIndex"), selectedIndex)];
 });
 
-const changeActiveDataItemPropertyCommand = commandFactory(({ payload: { name, value }, at, get, path }) => {
-	const selectedDataItemIndex = get(path("selectedDataItemIndex")) || 0;
-	const selectedPageDataPath = at(path("pageModel", "data"), selectedDataItemIndex);
+const changeActiveDataItemPropertyCommand = commandFactory<{ name: keyof PageDataItem; value: string }>(
+	({ payload: { name, value }, at, get, path }) => {
+		const selectedDataItemIndex = get(path("selectedDataItemIndex")) || 0;
 
-	return [replace(path(selectedPageDataPath, name), value)];
-});
+		const result = [];
+
+		// 当变量名和变量类型发生变化时，尝试修改 functions/nodes/ 中的数据
+		const pageData = get(path("pageModel", "data")) || [];
+		const selectedDataItem = pageData[selectedDataItemIndex];
+		// 找到所有 dataItemId 为 selectedDataItem.id 的所有 getter 和 setter 节点
+		const selectedFunctionId = get(path("selectedFunctionId"));
+		const functions = get(path("pageModel", "functions")) || [];
+		const selectedFunctionIndex = findIndex(functions, (func) => func.id === selectedFunctionId);
+		const nodes = functions[selectedFunctionIndex].nodes || [];
+		debugger;
+		const functionPath = at(path("pageModel", "functions"), selectedFunctionIndex);
+		nodes.forEach((node, index) => {
+			if (node.dataItemId && node.dataItemId === selectedDataItem.id) {
+				const currentNodePath = at(path(functionPath, "nodes"), index);
+				if (name === "name") {
+					// 修改了变量名
+					const caption = node.category === "variableGet" ? `Get ${value}` : `Set ${value}`;
+					result.push(replace(path(currentNodePath, "caption"), caption));
+				} else if (name === "type") {
+					// 修改变量类型
+					// variableGet 和 variableSet 的端口都是固定不变的
+					if (node.category === "variableGet") {
+						result.push(replace(path(at(path(currentNodePath, "outputDataPorts"), 0), "type"), value));
+					} else if (node.category === "variableSet") {
+						result.push(replace(path(at(path(currentNodePath, "inputDataPorts"), 0), "type"), value));
+					}
+				}
+			}
+		});
+
+		const selectedPageDataPath = at(path("pageModel", "data"), selectedDataItemIndex);
+		result.push(replace(path(selectedPageDataPath, name), value));
+
+		return result;
+	}
+);
 
 const foldDataGroupCommand = commandFactory(({ payload: { id }, get, path, at }) => {
 	const pageData = get(path("pageModel", "data"));
@@ -84,6 +119,9 @@ const removeActiveDataItemCommand = commandFactory(({ get, path, at }) => {
 	if (newSelectedDataItemIndex > -1) {
 		result.push(replace(path("selectedDataItemIndex"), newSelectedDataItemIndex));
 	}
+
+	// 删除 functions 中的 getter 和 setter，包括要删除所有的子数据项
+	// TOOD:
 
 	return result;
 });
@@ -147,6 +185,64 @@ const moveDownActiveDataItemCommand = commandFactory(({ get, path, at }) => {
 	return result;
 });
 
+const addVariableGetNodeCommand = commandFactory<{ dataItem: PageDataItem }>(
+	({ get, path, at, payload: { dataItem } }) => {
+		const functions = get(path("pageModel", "functions"));
+		const selectedFunctionId = get(path("selectedFunctionId"));
+		const selectedFunctionIndex = findIndex(functions, (func) => func.id === selectedFunctionId);
+
+		const node: VisualNode = {
+			id: uuid().replace(/-/g, ""),
+			left: 30, // 跟第一个函数定义节点的位置错开
+			top: 30,
+			caption: `Get ${dataItem.name}`,
+			text: "",
+			layout: "data",
+			category: "variableGet",
+			dataItemId: dataItem.id,
+			inputSequencePort: undefined,
+			outputSequencePorts: [],
+			inputDataPorts: [],
+			outputDataPorts: [
+				{ id: uuid().replace(/-/g, ""), name: "value", type: dataItem.type as PropertyValueType },
+			],
+		};
+
+		const selectedFunctionPath = at(path("pageModel", "functions"), selectedFunctionIndex);
+		const nodesLength = functions[selectedFunctionIndex].nodes.length;
+
+		return [add(at(path(selectedFunctionPath, "nodes"), nodesLength), node)];
+	}
+);
+
+const addVariableSetNodeCommand = commandFactory<{ dataItem: PageDataItem }>(
+	({ get, path, at, payload: { dataItem } }) => {
+		const functions = get(path("pageModel", "functions"));
+		const selectedFunctionId = get(path("selectedFunctionId"));
+		const selectedFunctionIndex = findIndex(functions, (func) => func.id === selectedFunctionId);
+
+		const node: VisualNode = {
+			id: uuid().replace(/-/g, ""),
+			left: 30, // 跟第一个函数定义节点的位置错开
+			top: 30,
+			caption: `Set ${dataItem.name}`,
+			text: "",
+			layout: "data",
+			category: "variableSet",
+			dataItemId: dataItem.id,
+			inputSequencePort: { id: uuid().replace(/-/g, "") },
+			outputSequencePorts: [{ id: uuid().replace(/-/g, ""), text: "" }],
+			inputDataPorts: [{ id: uuid().replace(/-/g, ""), name: "set", type: dataItem.type as PropertyValueType }],
+			outputDataPorts: [],
+		};
+
+		const selectedFunctionPath = at(path("pageModel", "functions"), selectedFunctionIndex);
+		const nodesLength = functions[selectedFunctionIndex].nodes.length;
+
+		return [add(at(path(selectedFunctionPath, "nodes"), nodesLength), node)];
+	}
+);
+
 export const insertDataItemProcess = createProcess("insert-data-item-process", [insertEmptyDataItemCommand]);
 export const activeDataItemProcess = createProcess("active-data-item-process", [activeDataItemCommand]);
 export const changeActiveDataItemPropertyProcess = createProcess("change-active-data-item-property-process", [
@@ -158,3 +254,5 @@ export const moveUpActiveDataItemProcess = createProcess("move-up-data-item-proc
 export const moveDownActiveDataItemProcess = createProcess("move-down-data-item-process", [
 	moveDownActiveDataItemCommand,
 ]);
+export const addVariableGetNodeProcess = createProcess("add-variable-get-node", [addVariableGetNodeCommand]);
+export const addVariableSetNodeProcess = createProcess("add-variable-set-node", [addVariableSetNodeCommand]);

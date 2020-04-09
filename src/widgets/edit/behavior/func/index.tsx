@@ -1,5 +1,5 @@
 import { create, tsx, invalidator } from "@dojo/framework/core/vdom";
-import { PageFunction, AttachedWidget, AttachedWidgetProperty, FunctionDeclaration } from "designer-core/interfaces";
+import { PageFunction, AttachedWidget, AttachedWidgetProperty, EventHandler } from "designer-core/interfaces";
 import store from "designer-core/store";
 import { drag } from "../../../../middleware/drag";
 import { find } from "@dojo/framework/shim/array";
@@ -70,18 +70,19 @@ export default factory(function Func({ properties, middleware: { store, drag, in
 	// FIXME: 获取函数的逻辑，应该移到父部件中去，这样就不会在每次渲染时都要重复计算当前函数
 	let currentFunction;
 	if (activeWidgetProperty) {
+		// 部件的事件所设置的值并不是一段函数代码，而是函数定义标识
 		currentFunction = find(functions, (item) => item.id === activeWidgetProperty.value);
 		// 如果在 functions 中没有找到 id 标识的函数，则创建一个。
 		if (!currentFunction) {
-			// TODO: pageModel 中还需要存储函数定义信息
+			// TODO: pageModel 中还需要存储函数定义信息，函数签名信息应该来自部件的事件定义
 
 			// 新建一个函数
-			const functionDeclaration: FunctionDeclaration = {
-				id: activeWidgetProperty.value!,
-				name: activeWidgetProperty.name,
-				arguments: activeWidgetProperty.arguments || [],
+			const eventHandler: EventHandler = {
+				handlerId: activeWidgetProperty.value!,
+				eventName: activeWidgetProperty.name,
+				eventInputArguments: activeWidgetProperty.arguments || [],
 			};
-			executor(newFunctionProcess)({ functionDeclaration });
+			executor(newFunctionProcess)({ eventHandler });
 		} else {
 			executor(activeFunctionProcess)({ functionId: currentFunction.id });
 		}

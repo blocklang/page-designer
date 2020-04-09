@@ -248,18 +248,19 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 			...renderNodes(),
 			...renderSequenceConnections(),
 			...renderDataConnections(),
-			isConnecting && renderDrawingConnection(),
+			isConnecting && renderDrawingConnection(connectingStartPort.portType),
 		]
 	);
 
 	function renderNodes(): DNode[] {
 		return nodes.map((node) => {
-			if (node.category === "flowControl") {
+			debugger;
+			if (node.layout === "flowControl") {
 				return renderFlowControlNode(node);
-			} else if (node.category === "data") {
+			} else if (node.layout === "data") {
 				return renderDataNode(node);
 			} else {
-				return v("div", { classes: [c.border, css.node] }, ["未实现"]);
+				return v("div", { classes: [c.border, css.node] }, [`未实现 layout 为"${node.layout}"的节点`]);
 			}
 		});
 	}
@@ -450,7 +451,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 					v(
 						"span",
 						{
-							classes: [c.float_right, c.text_white, css.close],
+							classes: [c.float_right, c.text_white, c.ml_2, css.close],
 							onclick: (event: MouseEvent) => {
 								executor(removeFunctionNodeProcess)({ functionNodeId: node.id });
 							},
@@ -835,7 +836,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 			y: endPortDimension.position.top - rootDimensions.position.top + endPortDimension.size.height / 2,
 		};
 
-		return renderConnection(startPoint, endPoint, connection.id);
+		return renderConnection(startPoint, endPoint, connection.id, "sequence");
 	}
 
 	function renderDataConnection(connection: NodeConnection): DNode {
@@ -882,13 +883,14 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 			y: endPortDimension.position.top - rootDimensions.position.top + endPortDimension.size.height / 2,
 		};
 
-		return renderConnection(startPoint, endPoint, connection.id);
+		return renderConnection(startPoint, endPoint, connection.id, "data");
 	}
 
 	function renderConnection(
 		startPoint: { x: number; y: number } = { x: 0, y: 0 },
 		endPoint: { x: number; y: number } = { x: 0, y: 0 },
-		svgKey: string
+		svgKey: string,
+		portType: PortType
 	) {
 		const svgOffset = getConnectorOffset(startPoint, endPoint);
 		const connectorPath = getConnectorPath(startPoint, endPoint);
@@ -906,7 +908,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 				v("path", {
 					d: `M${connectorPath.start.x} ${connectorPath.start.y} L${connectorPath.end.x} ${connectorPath.end.y}`,
 					fill: "none",
-					stroke: "#6c757d",
+					stroke: portType === "sequence" ? "#6c757d" : "#17a2b8",
 					"stroke-width": "2",
 					// 在拖拽时，该值必须是 none，否则在要放置的节点处，节点和 path 之间会不确定性的切换。
 					"pointer-events": "none",
@@ -915,8 +917,8 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 		);
 	}
 
-	function renderDrawingConnection(): DNode {
-		return renderConnection(drawingConnectorStartPort, drawingConnectorEndPort, "drawingConnector");
+	function renderDrawingConnection(portType: PortType): DNode {
+		return renderConnection(drawingConnectorStartPort, drawingConnectorEndPort, "drawingConnector", portType);
 	}
 
 	function removeConnector(): void {
