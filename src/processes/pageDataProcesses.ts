@@ -1,7 +1,7 @@
 import { createProcess } from "@dojo/framework/stores/process";
 import { commandFactory } from "./utils";
 import { add, replace, remove } from "@dojo/framework/stores/state/operations";
-import { PageDataItem, VisualNode, PropertyValueType } from "designer-core/interfaces";
+import { PageDataItem, VisualNode, PropertyValueType, NodeConnection } from "designer-core/interfaces";
 import { uuid } from "@dojo/framework/core/util";
 import { findIndex } from "@dojo/framework/shim/array";
 import {
@@ -111,20 +111,77 @@ const removeActiveDataItemCommand = commandFactory(({ get, path, at }) => {
 
 	const pageData = get(path("pageModel", "data"));
 	const allChildCount = getAllChildCount(pageData, selectedDataItemIndex);
+	// 删除当前数据项及其所有子数据项
 	for (let i = 0; i <= allChildCount; i++) {
 		result.push(remove(at(path("pageModel", "data"), selectedDataItemIndex)));
 	}
+
+	// 删除 functions 中的 getter 和 setter，包括要删除所有的子数据项，包括对应的连接
+	const selectedFunctionId = get(path("selectedFunctionId"));
+	const functions = get(path("pageModel", "functions")) || [];
+	const selectedFunctionIndex = findIndex(functions, (func) => func.id === selectedFunctionId);
+	if (selectedFunctionIndex > -1) {
+		const selectedFunction = functions[selectedFunctionIndex];
+		const funcNodes = selectedFunction.nodes;
+
+		for (let i = 0; i <= allChildCount; i++) {
+			// 1. 获取 data item id
+			const dataItem = pageData[selectedDataItemIndex + i];
+
+			// 2. 确定是否包含对应的 getter 和 setter node
+			// 3. 删除节点上的连接
+			funcNodes
+				.filter((node) => node.dataItemId && node.dataItemId === dataItem.id)
+				.forEach((node) => {
+					// 4. 如果当前节点已选中，则删除选中信息
+					if (get(path("selectedFunctionNodeId")) === node.id) {
+						result.push(remove(path("selectedFunctionNodeId")));
+					}
+
+					// 5. 如果当前节点上有连线，则删除所有连线
+					const sequenceConnections = selectedFunction.sequenceConnections || [];
+					if (findIndex(sequenceConnections, (connection) => isConnected(node.id, connection)) > -1) {
+						result.push(
+							replace(
+								path(at(path("pageModel", "functions"), selectedFunctionIndex), "sequenceConnections"),
+								sequenceConnections.filter((connection) => !isConnected(node.id, connection))
+							)
+						);
+					}
+
+					const dataConnections = selectedFunction.dataConnections || [];
+					if (findIndex(dataConnections, (connection) => isConnected(node.id, connection)) > -1) {
+						result.push(
+							replace(
+								path(at(path("pageModel", "functions"), selectedFunctionIndex), "dataConnections"),
+								dataConnections.filter((connection) => !isConnected(node.id, connection))
+							)
+						);
+					}
+				});
+
+			// 6. 删除匹配的节点
+			result.push(
+				replace(
+					path(at(path("pageModel", "functions"), selectedFunctionIndex), "nodes"),
+					funcNodes.filter((node) => !(node.dataItemId && node.dataItemId === dataItem.id))
+				)
+			);
+		}
+	}
+
 	// 重新聚焦
 	const newSelectedDataItemIndex = inferNextActiveNodeIndex(pageData, selectedDataItemIndex);
 	if (newSelectedDataItemIndex > -1) {
 		result.push(replace(path("selectedDataItemIndex"), newSelectedDataItemIndex));
 	}
 
-	// 删除 functions 中的 getter 和 setter，包括要删除所有的子数据项
-	// TOOD:
-
 	return result;
 });
+
+function isConnected(nodeId: string, connection: NodeConnection) {
+	return connection.fromNode === nodeId || connection.toNode === nodeId;
+}
 
 const moveUpActiveDataItemCommand = commandFactory(({ get, path, at }) => {
 	const pageData = get(path("pageModel", "data"));
