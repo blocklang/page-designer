@@ -30,7 +30,7 @@ const insertEmptyDataItemCommand = commandFactory(({ get, path, at }) => {
 		type: "String",
 		parentId,
 		name: "",
-		value: "",
+		defaultValue: "",
 		open: false,
 	};
 	return [add(at(path("pageModel", "data"), insertedIndex), dataItem)];

@@ -304,13 +304,13 @@ function _renderDefaultValue(dataItem: PageDataItem, executor: any): VNode | und
 		return v("input", {
 			key: "defaultValue",
 			type: "checkbox",
-			checked: dataItem.value === "true",
+			checked: dataItem.defaultValue === "true",
 			title: "默认值",
 			classes: [c.ml_1],
 			onchange: (event: MouseEvent) => {
 				const target = event.target as HTMLInputElement;
 				executor(changeActiveDataItemPropertyProcess)({
-					name: "value",
+					name: "defaultValue",
 					value: String(target.checked),
 				});
 			},
@@ -320,7 +320,7 @@ function _renderDefaultValue(dataItem: PageDataItem, executor: any): VNode | und
 	if (dataItem.type === "String" || dataItem.type === "Number" || dataItem.type === "Date") {
 		return v("input", {
 			key: "defaultValue",
-			value: dataItem.value,
+			value: dataItem.defaultValue,
 			placeholder: "默认值",
 			type: "text",
 			classes: [c.form_control, c.form_control_sm, c.ml_1, css.defaultValue],
@@ -328,7 +328,7 @@ function _renderDefaultValue(dataItem: PageDataItem, executor: any): VNode | und
 				const target = event.target as HTMLInputElement;
 				// TODO: 校验数据的有效性
 				executor(changeActiveDataItemPropertyProcess)({
-					name: "value",
+					name: "defaultValue",
 					value: target.value,
 				});
 			},
