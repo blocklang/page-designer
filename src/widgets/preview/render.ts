@@ -82,7 +82,12 @@ function renderWidget(widget: AttachedWidget, index: number): WNode {
 			if (item.valueType === "function") {
 				// 如果 value 存在值，则说明该事件已绑定函数
 				// 如果 value 的值为 undefined，则说明该事件未绑定函数
-				value = item.value;
+				if (item.value != undefined) {
+					// 绑定一个函数
+					value = () => {
+						// 根据 item.value 定位到函数，然后开始执行函数节点
+					};
+				}
 			} else {
 				value = item.value || "";
 			}

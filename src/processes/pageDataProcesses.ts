@@ -50,33 +50,35 @@ const changeActiveDataItemPropertyCommand = commandFactory<{ name: keyof PageDat
 
 		const result = [];
 
+		// 不能只修改当前选中的函数，而是要检查页面中的所有函数
 		// 当变量名和变量类型发生变化时，尝试修改 functions/nodes/ 中的数据
 		const pageData = get(path("pageModel", "data")) || [];
 		const selectedDataItem = pageData[selectedDataItemIndex];
 		// 找到所有 dataItemId 为 selectedDataItem.id 的所有 getter 和 setter 节点
-		const selectedFunctionId = get(path("selectedFunctionId"));
+
 		const functions = get(path("pageModel", "functions")) || [];
-		const selectedFunctionIndex = findIndex(functions, (func) => func.id === selectedFunctionId);
-		const nodes = functions[selectedFunctionIndex].nodes || [];
-		debugger;
-		const functionPath = at(path("pageModel", "functions"), selectedFunctionIndex);
-		nodes.forEach((node, index) => {
-			if (node.dataItemId && node.dataItemId === selectedDataItem.id) {
-				const currentNodePath = at(path(functionPath, "nodes"), index);
-				if (name === "name") {
-					// 修改了变量名
-					const caption = node.category === "variableGet" ? `Get ${value}` : `Set ${value}`;
-					result.push(replace(path(currentNodePath, "caption"), caption));
-				} else if (name === "type") {
-					// 修改变量类型
-					// variableGet 和 variableSet 的端口都是固定不变的
-					if (node.category === "variableGet") {
-						result.push(replace(path(at(path(currentNodePath, "outputDataPorts"), 0), "type"), value));
-					} else if (node.category === "variableSet") {
-						result.push(replace(path(at(path(currentNodePath, "inputDataPorts"), 0), "type"), value));
+		functions.forEach((func, funcIndex) => {
+			const nodes = func.nodes || [];
+			const functionPath = at(path("pageModel", "functions"), funcIndex);
+
+			nodes.forEach((node, index) => {
+				if (node.dataItemId && node.dataItemId === selectedDataItem.id) {
+					const currentNodePath = at(path(functionPath, "nodes"), index);
+					if (name === "name") {
+						// 修改了变量名
+						const caption = node.category === "variableGet" ? `Get ${value}` : `Set ${value}`;
+						result.push(replace(path(currentNodePath, "caption"), caption));
+					} else if (name === "type") {
+						// 修改变量类型
+						// variableGet 和 variableSet 的端口都是固定不变的
+						if (node.category === "variableGet") {
+							result.push(replace(path(at(path(currentNodePath, "outputDataPorts"), 0), "type"), value));
+						} else if (node.category === "variableSet") {
+							result.push(replace(path(at(path(currentNodePath, "inputDataPorts"), 0), "type"), value));
+						}
 					}
 				}
-			}
+			});
 		});
 
 		const selectedPageDataPath = at(path("pageModel", "data"), selectedDataItemIndex);
@@ -117,12 +119,13 @@ const removeActiveDataItemCommand = commandFactory(({ get, path, at }) => {
 	}
 
 	// 删除 functions 中的 getter 和 setter，包括要删除所有的子数据项，包括对应的连接
-	const selectedFunctionId = get(path("selectedFunctionId"));
+
+	// 不能只删除当前选中的函数中的节点，要检查页面中的所有函数
+
 	const functions = get(path("pageModel", "functions")) || [];
-	const selectedFunctionIndex = findIndex(functions, (func) => func.id === selectedFunctionId);
-	if (selectedFunctionIndex > -1) {
-		const selectedFunction = functions[selectedFunctionIndex];
-		const funcNodes = selectedFunction.nodes;
+	const selectedFunctionNodeId = get(path("selectedFunctionNodeId"));
+	functions.forEach((func, funcIndex) => {
+		const funcNodes = func.nodes;
 
 		for (let i = 0; i <= allChildCount; i++) {
 			// 1. 获取 data item id
@@ -134,26 +137,26 @@ const removeActiveDataItemCommand = commandFactory(({ get, path, at }) => {
 				.filter((node) => node.dataItemId && node.dataItemId === dataItem.id)
 				.forEach((node) => {
 					// 4. 如果当前节点已选中，则删除选中信息
-					if (get(path("selectedFunctionNodeId")) === node.id) {
+					if (selectedFunctionNodeId && selectedFunctionNodeId === node.id) {
 						result.push(remove(path("selectedFunctionNodeId")));
 					}
 
 					// 5. 如果当前节点上有连线，则删除所有连线
-					const sequenceConnections = selectedFunction.sequenceConnections || [];
+					const sequenceConnections = func.sequenceConnections || [];
 					if (findIndex(sequenceConnections, (connection) => isConnected(node.id, connection)) > -1) {
 						result.push(
 							replace(
-								path(at(path("pageModel", "functions"), selectedFunctionIndex), "sequenceConnections"),
+								path(at(path("pageModel", "functions"), funcIndex), "sequenceConnections"),
 								sequenceConnections.filter((connection) => !isConnected(node.id, connection))
 							)
 						);
 					}
 
-					const dataConnections = selectedFunction.dataConnections || [];
+					const dataConnections = func.dataConnections || [];
 					if (findIndex(dataConnections, (connection) => isConnected(node.id, connection)) > -1) {
 						result.push(
 							replace(
-								path(at(path("pageModel", "functions"), selectedFunctionIndex), "dataConnections"),
+								path(at(path("pageModel", "functions"), funcIndex), "dataConnections"),
 								dataConnections.filter((connection) => !isConnected(node.id, connection))
 							)
 						);
@@ -163,12 +166,12 @@ const removeActiveDataItemCommand = commandFactory(({ get, path, at }) => {
 			// 6. 删除匹配的节点
 			result.push(
 				replace(
-					path(at(path("pageModel", "functions"), selectedFunctionIndex), "nodes"),
+					path(at(path("pageModel", "functions"), funcIndex), "nodes"),
 					funcNodes.filter((node) => !(node.dataItemId && node.dataItemId === dataItem.id))
 				)
 			);
 		}
-	}
+	});
 
 	// 重新聚焦
 	const newSelectedDataItemIndex = inferNextActiveNodeIndex(pageData, selectedDataItemIndex);

@@ -81,7 +81,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [
 						{
 							id: "osp1",
@@ -161,7 +162,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [
 						{
 							id: "osp1",
@@ -264,7 +266,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [
 						{
 							id: "osp1",
@@ -309,7 +312,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Set a
 						<span
-							classes={[c.float_right, c.text_white, css.close]}
+							classes={[c.float_right, c.text_white, c.ml_2, css.close]}
 							onclick={() => {}}
 							onpointerdown={() => {}}
 						>
@@ -374,7 +377,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -411,7 +415,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -459,7 +464,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Get a
 						<span
-							classes={[c.float_right, c.text_white, css.close]}
+							classes={[c.float_right, c.text_white, c.ml_2, css.close]}
 							onclick={() => {}}
 							onpointerdown={() => {}}
 						>
@@ -496,7 +501,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Get a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableGet",
 					outputSequencePorts: [],
 					inputDataPorts: [],
 					outputDataPorts: [
@@ -557,7 +563,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					<div key="12-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Set a
 						<span
-							classes={[c.float_right, c.text_white, css.close]}
+							classes={[c.float_right, c.text_white, c.ml_2, css.close]}
 							onclick={() => {}}
 							onpointerdown={() => {}}
 						>
@@ -607,7 +613,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [
 						{
 							id: "osp1",
@@ -623,7 +630,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: {
 						id: "isp2",
 					},
@@ -668,7 +676,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Get a
 						<span
-							classes={[c.float_right, c.text_white, css.close]}
+							classes={[c.float_right, c.text_white, c.ml_2, css.close]}
 							onclick={() => {}}
 							onpointerdown={() => {}}
 						>
@@ -703,7 +711,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					<div key="21-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Set a
 						<span
-							classes={[c.float_right, c.text_white, css.close]}
+							classes={[c.float_right, c.text_white, c.ml_2, css.close]}
 							onclick={() => {}}
 							onpointerdown={() => {}}
 						>
@@ -758,7 +766,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					height="2"
 					pointer-events="none"
 				>
-					<path d="M0 0 L0 0" fill="none" stroke="#6c757d" stroke-width="2" pointer-events="none" />
+					<path d="M0 0 L0 0" fill="none" stroke="#17a2b8" stroke-width="2" pointer-events="none" />
 				</svg>,
 			]);
 
@@ -771,7 +779,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Get a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableGet",
 					outputSequencePorts: [],
 					inputDataPorts: [],
 					outputDataPorts: [
@@ -788,7 +797,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableGet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -864,7 +874,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [
 						{
 							id: "osp1",
@@ -905,7 +916,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Get a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableGet",
 					outputSequencePorts: [],
 					inputDataPorts: [],
 					outputDataPorts: [
@@ -988,7 +1000,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [
 						{
 							id: "osp1",
@@ -1032,7 +1045,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Set a
 						<span
-							classes={[c.float_right, c.text_white, css.close]}
+							classes={[c.float_right, c.text_white, c.ml_2, css.close]}
 							onclick={() => {}}
 							onpointerdown={() => {}}
 						>
@@ -1082,7 +1095,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -1127,7 +1141,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Set a
 						<span
-							classes={[c.float_right, c.text_white, css.close]}
+							classes={[c.float_right, c.text_white, c.ml_2, css.close]}
 							onclick={() => {}}
 							onpointerdown={() => {}}
 						>
@@ -1177,7 +1191,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -1249,7 +1264,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					height="20"
 					pointer-events="none"
 				>
-					<path d="M0 0 L10 20" fill="none" stroke="#6c757d" stroke-width="2" pointer-events="none" />
+					<path d="M0 0 L10 20" fill="none" stroke="#17a2b8" stroke-width="2" pointer-events="none" />
 				</svg>,
 			]);
 
@@ -1262,7 +1277,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [],
 					inputDataPorts: [],
 					outputDataPorts: [
@@ -1307,7 +1323,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Get a
 						<span
-							classes={[c.float_right, c.text_white, css.close]}
+							classes={[c.float_right, c.text_white, c.ml_2, css.close]}
 							onclick={() => {}}
 							onpointerdown={() => {}}
 						>
@@ -1341,7 +1357,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					height="20"
 					pointer-events="none"
 				>
-					<path d="M0 0 L10 20" fill="none" stroke="#6c757d" stroke-width="2" pointer-events="none" />
+					<path d="M0 0 L10 20" fill="none" stroke="#17a2b8" stroke-width="2" pointer-events="none" />
 				</svg>,
 			]);
 
@@ -1354,7 +1370,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Get a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableGet",
 					outputSequencePorts: [],
 					inputDataPorts: [],
 					outputDataPorts: [
@@ -1399,7 +1416,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Set a
 						<span
-							classes={[c.float_right, c.text_white, css.close]}
+							classes={[c.float_right, c.text_white, c.ml_2, css.close]}
 							onclick={() => {}}
 							onpointerdown={() => {}}
 						>
@@ -1461,7 +1478,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					height="20"
 					pointer-events="none"
 				>
-					<path d="M0 0 L10 20" fill="none" stroke="#6c757d" stroke-width="2" pointer-events="none" />
+					<path d="M0 0 L10 20" fill="none" stroke="#17a2b8" stroke-width="2" pointer-events="none" />
 				</svg>,
 			]);
 
@@ -1474,7 +1491,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -1520,7 +1538,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [
 						{
 							id: "osp1",
@@ -1542,7 +1561,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: {
 						id: "isp2",
 					},
@@ -1590,7 +1610,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [
 						{
 							id: "osp1",
@@ -1612,7 +1633,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: {
 						id: "isp2",
 					},
@@ -1660,7 +1682,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: {
 						id: "isp1",
 					},
@@ -1685,7 +1708,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: {
 						id: "isp2",
 					},
@@ -1733,7 +1757,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [],
 					inputDataPorts: [],
 					outputDataPorts: [
@@ -1750,7 +1775,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -1794,7 +1820,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [],
 					inputDataPorts: [],
 					outputDataPorts: [
@@ -1811,7 +1838,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -1855,7 +1883,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Get a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableGet",
 					outputSequencePorts: [],
 					inputDataPorts: [],
 					outputDataPorts: [
@@ -1872,7 +1901,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -1916,7 +1946,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Get a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableGet",
 					outputSequencePorts: [],
 					inputDataPorts: [],
 					outputDataPorts: [
@@ -1933,7 +1964,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -1956,7 +1988,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 30,
 					caption: "Set b",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp3" },
 					outputSequencePorts: [
 						{
@@ -2008,7 +2041,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Get a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableGet",
 					outputSequencePorts: [],
 					inputDataPorts: [],
 					outputDataPorts: [
@@ -2025,7 +2059,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -2048,7 +2083,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 30,
 					caption: "Set b",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp3" },
 					outputSequencePorts: [
 						{
@@ -2136,7 +2172,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [
 						{
 							id: "osp1",
@@ -2176,7 +2213,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [
 						{
 							id: "osp1",
@@ -2219,7 +2257,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -2259,7 +2298,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -2299,7 +2339,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					outputSequencePorts: [],
 					inputDataPorts: [],
 					outputDataPorts: [
@@ -2337,7 +2378,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					outputSequencePorts: [],
 					inputDataPorts: [
 						{
@@ -2375,7 +2417,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -2415,7 +2458,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -2512,7 +2556,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [
 						{
 							id: "osp1",
@@ -2528,7 +2573,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [
 						{
 							id: "osp2",
@@ -2571,7 +2617,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [
 						{
 							id: "osp1",
@@ -2587,7 +2634,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [
 						{
 							id: "osp2",
@@ -2635,7 +2683,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [
 						{
 							id: "osp1",
@@ -2651,7 +2700,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [
 						{
 							id: "osp2",
@@ -2699,7 +2749,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -2716,7 +2767,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -2759,7 +2811,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -2776,7 +2829,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -2819,7 +2873,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -2836,7 +2891,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -2885,7 +2941,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -2902,7 +2959,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -2951,7 +3009,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -2968,7 +3027,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -3017,7 +3077,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -3034,7 +3095,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -3083,7 +3145,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -3106,7 +3169,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -3155,7 +3219,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -3178,7 +3243,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -3227,7 +3293,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -3250,7 +3317,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -3299,7 +3367,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -3322,7 +3391,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -3371,7 +3441,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -3394,7 +3465,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -3443,7 +3515,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -3466,7 +3539,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -3515,7 +3589,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [
 						{
 							id: "osp1",
@@ -3531,7 +3606,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -3582,7 +3658,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -3605,7 +3682,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -3662,7 +3740,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [
 						{
 							id: "osp1",
@@ -3678,7 +3757,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: {
 						id: "isp2",
 					},
@@ -3727,7 +3807,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Get a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableGet",
 					outputSequencePorts: [],
 					inputDataPorts: [],
 					outputDataPorts: [
@@ -3744,7 +3825,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -3797,7 +3879,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -3814,7 +3897,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set b",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -3859,7 +3943,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Get a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableGet",
 					outputSequencePorts: [],
 					inputDataPorts: [],
 					outputDataPorts: [
@@ -3876,7 +3961,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set b",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -3928,7 +4014,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [
 						{
 							id: "osp1",
@@ -3944,7 +4031,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: {
 						id: "isp2",
 					},
@@ -3963,7 +4051,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 40,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [
 						{
 							id: "osp3",
@@ -4010,7 +4099,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -4027,7 +4117,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set b",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -4044,7 +4135,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 30,
 					caption: "Set c",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp3" },
 					outputSequencePorts: [
 						{
@@ -4090,7 +4182,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -4113,7 +4206,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set b",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -4136,7 +4230,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 30,
 					caption: "Set c",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp3" },
 					outputSequencePorts: [
 						{
@@ -4188,7 +4283,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [
 						{
 							id: "osp1",
@@ -4204,7 +4300,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: {
 						id: "isp2",
 					},
@@ -4223,7 +4320,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 40,
 					caption: "函数",
 					text: "onValue",
-					category: "flowControl",
+					layout: "flowControl",
+					category: "function",
 					outputSequencePorts: [
 						{
 							id: "osp3",
@@ -4270,7 +4368,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: {
 						id: "isp1",
 					},
@@ -4289,7 +4388,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set b",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: {
 						id: "isp2",
 					},
@@ -4308,7 +4408,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 30,
 					caption: "Set c",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: {
 						id: "isp3",
 					},
@@ -4358,7 +4459,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 2,
 					caption: "Set a",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp1" },
 					outputSequencePorts: [
 						{
@@ -4381,7 +4483,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 20,
 					caption: "Set b",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp2" },
 					outputSequencePorts: [
 						{
@@ -4404,7 +4507,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					top: 30,
 					caption: "Set c",
 					text: "",
-					category: "data",
+					layout: "data",
+					category: "variableSet",
 					inputSequencePort: { id: "isp3" },
 					outputSequencePorts: [
 						{

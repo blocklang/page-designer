@@ -33,7 +33,7 @@ describe("edit/behavior/data", () => {
 				id: "1",
 				parentId: "invalid parent id",
 				name: "str",
-				value: "a string value",
+				defaultValue: "a string value",
 				type: "String",
 				open: false,
 			},
@@ -74,7 +74,7 @@ describe("edit/behavior/data", () => {
 						<FontAwesomeIcon icon="angle-down" />
 					</span>
 					<span classes={[c.ml_1]}>data（页面数据）</span>
-					<span key="op-add-1" title="加变量" classes={[c.ml_3, c.text_muted]} onclick={() => {}}>
+					<span key="op-add-1" title="加变量" classes={[c.ml_3, c.text_muted, css.op]} onclick={() => {}}>
 						<FontAwesomeIcon icon="plus" />
 					</span>
 				</div>
@@ -97,7 +97,7 @@ describe("edit/behavior/data", () => {
 				id: "2",
 				parentId: "1",
 				name: "str",
-				value: "a string value",
+				defaultValue: "a string value",
 				type: "String",
 				open: false,
 			},
@@ -155,6 +155,7 @@ describe("edit/behavior/data", () => {
 					<input
 						key="defaultValue"
 						value="a string value"
+						placeholder="默认值"
 						type="text"
 						classes={[c.form_control, c.form_control_sm, c.ml_1, css.defaultValue]}
 						oninput={() => {}}
@@ -178,7 +179,7 @@ describe("edit/behavior/data", () => {
 				id: "2",
 				parentId: "1",
 				name: "num",
-				value: "1",
+				defaultValue: "1",
 				type: "Number",
 				open: false,
 			},
@@ -236,6 +237,7 @@ describe("edit/behavior/data", () => {
 					<input
 						key="defaultValue"
 						value="1"
+						placeholder="默认值"
 						type="text"
 						classes={[c.form_control, c.form_control_sm, c.ml_1, css.defaultValue]}
 						oninput={() => {}}

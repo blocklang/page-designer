@@ -43,7 +43,7 @@ describe("processes/pageDataProcesses", () => {
 		const newData = data[1];
 		assert.isNotNull(newData.id);
 		assert.equal(newData.parentId, "1"), assert.isEmpty(newData.name);
-		assert.isEmpty(newData.value);
+		assert.isEmpty(newData.defaultValue);
 		assert.equal(newData.type, "String");
 		assert.isFalse(newData.open);
 	});
@@ -63,7 +63,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "1",
 					name: "a",
 					type: "String",
-					value: "v",
+					defaultValue: "v",
 					open: false,
 				},
 			]),
@@ -80,7 +80,7 @@ describe("processes/pageDataProcesses", () => {
 
 		assert.isNotNull(newData.id);
 		assert.equal(newData.parentId, "1"), assert.isEmpty(newData.name);
-		assert.isEmpty(newData.value);
+		assert.isEmpty(newData.defaultValue);
 		assert.equal(newData.type, "String");
 		assert.isFalse(newData.open);
 	});
@@ -115,7 +115,7 @@ describe("processes/pageDataProcesses", () => {
 
 		assert.isNotNull(newData.id);
 		assert.equal(newData.parentId, "2"), assert.isEmpty(newData.name);
-		assert.isEmpty(newData.value);
+		assert.isEmpty(newData.defaultValue);
 		assert.equal(newData.type, "String");
 		assert.isFalse(newData.open);
 	});
@@ -165,7 +165,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "1",
 					name: "child",
 					type: "String",
-					value: "",
+					defaultValue: "",
 					open: false,
 				},
 			]),
@@ -179,8 +179,9 @@ describe("processes/pageDataProcesses", () => {
 		const updatedData = data[1];
 
 		assert.equal(updatedData.id, "2");
-		assert.equal(updatedData.parentId, "1"), assert.equal(updatedData.name, "name1");
-		assert.isEmpty(updatedData.value);
+		assert.equal(updatedData.parentId, "1");
+		assert.equal(updatedData.name, "name1");
+		assert.isEmpty(updatedData.defaultValue);
 		assert.equal(updatedData.type, "String");
 		assert.isFalse(updatedData.open);
 	});
@@ -200,7 +201,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "1",
 					name: "child",
 					type: "String",
-					value: "",
+					defaultValue: "",
 					open: false,
 				},
 			]),
@@ -258,7 +259,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "1",
 					name: "child",
 					type: "String",
-					value: "",
+					defaultValue: "",
 					open: false,
 				},
 			]),
@@ -289,7 +290,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "1",
 					name: "child1",
 					type: "String",
-					value: "",
+					defaultValue: "",
 					open: false,
 				},
 				{
@@ -297,7 +298,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "1",
 					name: "child2",
 					type: "String",
-					value: "",
+					defaultValue: "",
 					open: false,
 				},
 			]),
@@ -328,7 +329,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "1",
 					name: "child1",
 					type: "String",
-					value: "",
+					defaultValue: "",
 					open: false,
 				},
 				{
@@ -336,7 +337,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "1",
 					name: "child2",
 					type: "String",
-					value: "",
+					defaultValue: "",
 					open: false,
 				},
 			]),
@@ -369,7 +370,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "1",
 					name: "child",
 					type: "String",
-					value: "",
+					defaultValue: "",
 					open: false,
 				},
 				{
@@ -377,7 +378,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "2",
 					name: "child",
 					type: "String",
-					value: "",
+					defaultValue: "",
 					open: false,
 				},
 			]),
@@ -408,7 +409,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "1",
 					name: "child",
 					type: "String",
-					value: "",
+					defaultValue: "",
 					open: false,
 				},
 			]),
@@ -436,7 +437,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "1",
 					name: "child1",
 					type: "String",
-					value: "",
+					defaultValue: "",
 					open: false,
 				},
 				{
@@ -444,7 +445,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "1",
 					name: "child2",
 					type: "String",
-					value: "",
+					defaultValue: "",
 					open: false,
 				},
 			]),
@@ -478,7 +479,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "1",
 					name: "child1",
 					type: "String",
-					value: "",
+					defaultValue: "",
 					open: false,
 				},
 				{
@@ -486,7 +487,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "2",
 					name: "child11",
 					type: "String",
-					value: "",
+					defaultValue: "",
 					open: false,
 				},
 				{
@@ -494,7 +495,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "1",
 					name: "child2",
 					type: "String",
-					value: "",
+					defaultValue: "",
 					open: false,
 				},
 				{
@@ -502,7 +503,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "4",
 					name: "child21",
 					type: "String",
-					value: "",
+					defaultValue: "",
 					open: false,
 				},
 			]),
@@ -538,7 +539,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "1",
 					name: "child1",
 					type: "String",
-					value: "",
+					defaultValue: "",
 					open: false,
 				},
 				{
@@ -546,7 +547,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "2",
 					name: "child11",
 					type: "String",
-					value: "",
+					defaultValue: "",
 					open: false,
 				},
 			]),
@@ -574,7 +575,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "1",
 					name: "child1",
 					type: "String",
-					value: "",
+					defaultValue: "",
 					open: false,
 				},
 				{
@@ -582,7 +583,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "1",
 					name: "child2",
 					type: "String",
-					value: "",
+					defaultValue: "",
 					open: false,
 				},
 			]),
@@ -616,7 +617,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "1",
 					name: "child1",
 					type: "String",
-					value: "",
+					defaultValue: "",
 					open: false,
 				},
 				{
@@ -624,7 +625,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "2",
 					name: "child11",
 					type: "String",
-					value: "",
+					defaultValue: "",
 					open: false,
 				},
 				{
@@ -632,7 +633,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "1",
 					name: "child2",
 					type: "String",
-					value: "",
+					defaultValue: "",
 					open: false,
 				},
 				{
@@ -640,7 +641,7 @@ describe("processes/pageDataProcesses", () => {
 					parentId: "4",
 					name: "child21",
 					type: "String",
-					value: "",
+					defaultValue: "",
 					open: false,
 				},
 			]),
