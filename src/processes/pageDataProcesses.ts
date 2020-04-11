@@ -50,36 +50,42 @@ const changeActiveDataItemPropertyCommand = commandFactory<{ name: keyof PageDat
 
 		const result = [];
 
-		// 不能只修改当前选中的函数，而是要检查页面中的所有函数
-		// 当变量名和变量类型发生变化时，尝试修改 functions/nodes/ 中的数据
-		const pageData = get(path("pageModel", "data")) || [];
-		const selectedDataItem = pageData[selectedDataItemIndex];
-		// 找到所有 dataItemId 为 selectedDataItem.id 的所有 getter 和 setter 节点
+		if (name === "name" || name === "type") {
+			// 不能只修改当前选中的函数，而是要检查页面中的所有函数
+			// 当变量名和变量类型发生变化时，尝试修改 functions/nodes/ 中的数据
+			const pageData = get(path("pageModel", "data")) || [];
+			const selectedDataItem = pageData[selectedDataItemIndex];
+			// 找到所有 dataItemId 为 selectedDataItem.id 的所有 getter 和 setter 节点
 
-		const functions = get(path("pageModel", "functions")) || [];
-		functions.forEach((func, funcIndex) => {
-			const nodes = func.nodes || [];
-			const functionPath = at(path("pageModel", "functions"), funcIndex);
+			const functions = get(path("pageModel", "functions")) || [];
+			functions.forEach((func, funcIndex) => {
+				const nodes = func.nodes || [];
+				const functionPath = at(path("pageModel", "functions"), funcIndex);
 
-			nodes.forEach((node, index) => {
-				if (node.dataItemId && node.dataItemId === selectedDataItem.id) {
-					const currentNodePath = at(path(functionPath, "nodes"), index);
-					if (name === "name") {
-						// 修改了变量名
-						const caption = node.category === "variableGet" ? `Get ${value}` : `Set ${value}`;
-						result.push(replace(path(currentNodePath, "caption"), caption));
-					} else if (name === "type") {
-						// 修改变量类型
-						// variableGet 和 variableSet 的端口都是固定不变的
-						if (node.category === "variableGet") {
-							result.push(replace(path(at(path(currentNodePath, "outputDataPorts"), 0), "type"), value));
-						} else if (node.category === "variableSet") {
-							result.push(replace(path(at(path(currentNodePath, "inputDataPorts"), 0), "type"), value));
+				nodes.forEach((node, index) => {
+					if (node.dataItemId && node.dataItemId === selectedDataItem.id) {
+						const currentNodePath = at(path(functionPath, "nodes"), index);
+						if (name === "name") {
+							// 修改了变量名
+							const caption = node.category === "variableGet" ? `Get ${value}` : `Set ${value}`;
+							result.push(replace(path(currentNodePath, "caption"), caption));
+						} else if (name === "type") {
+							// 修改变量类型
+							// variableGet 和 variableSet 的端口都是固定不变的
+							if (node.category === "variableGet") {
+								result.push(
+									replace(path(at(path(currentNodePath, "outputDataPorts"), 0), "type"), value)
+								);
+							} else if (node.category === "variableSet") {
+								result.push(
+									replace(path(at(path(currentNodePath, "inputDataPorts"), 0), "type"), value)
+								);
+							}
 						}
 					}
-				}
+				});
 			});
-		});
+		}
 
 		const selectedPageDataPath = at(path("pageModel", "data"), selectedDataItemIndex);
 		result.push(replace(path(selectedPageDataPath, name), value));
