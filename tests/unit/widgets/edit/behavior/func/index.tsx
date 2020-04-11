@@ -3,17 +3,15 @@ const { describe, it } = intern.getInterface("bdd");
 import assertionTemplate from "@dojo/framework/testing/assertionTemplate";
 import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
-import * as c from "bootstrap-classes";
 import Func from "../../../../../../src/widgets/edit/behavior/func";
 import { AttachedWidget, State, PageFunction } from "designer-core/interfaces";
 import store from "designer-core/store";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
 import { add } from "@dojo/framework/stores/state/operations";
-import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import TitleBar from "../../../../../../src/widgets/edit/behavior/func/TitleBar";
 import Editor from "../../../../../../src/widgets/edit/behavior/func/Editor";
 
-describe("Func", () => {
+describe("widgets/edit/behavior/func", () => {
 	const baseAssertion = assertionTemplate(() => (
 		<div key="root">
 			<TitleBar

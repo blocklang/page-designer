@@ -33,7 +33,8 @@ describe("processes/pageFunctionProcesses", () => {
 						top: 2,
 						caption: "Get a",
 						text: "",
-						category: "data",
+						layout: "data",
+						category: "variableGet",
 						outputSequencePorts: [],
 						inputDataPorts: [],
 						outputDataPorts: [],
@@ -66,7 +67,8 @@ describe("processes/pageFunctionProcesses", () => {
 						top: 2,
 						caption: "Get a",
 						text: "",
-						category: "data",
+						layout: "data",
+						category: "variableGet",
 						outputSequencePorts: [],
 						inputDataPorts: [],
 						outputDataPorts: [],
@@ -105,7 +107,8 @@ describe("processes/pageFunctionProcesses", () => {
 						top: 2,
 						caption: "Set a",
 						text: "",
-						category: "data",
+						layout: "data",
+						category: "variableSet",
 						outputSequencePorts: [
 							{
 								id: "osp1",
@@ -127,7 +130,8 @@ describe("processes/pageFunctionProcesses", () => {
 						top: 2,
 						caption: "Set b",
 						text: "",
-						category: "data",
+						layout: "data",
+						category: "variableSet",
 						inputSequencePort: { id: "isp2" },
 						outputSequencePorts: [],
 						inputDataPorts: [
@@ -337,7 +341,8 @@ describe("processes/pageFunctionProcesses", () => {
 						top: 2,
 						caption: "Set a",
 						text: "",
-						category: "data",
+						layout: "data",
+						category: "variableSet",
 						outputSequencePorts: [],
 						inputDataPorts: [
 							{

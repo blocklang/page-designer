@@ -61,5 +61,5 @@ export default factory(function Preview({ properties, middleware: { store } }) {
 	}
 
 	const ideRepos = get(path("ideRepos"));
-	return v("div", [renderPage(pageWidgets, ideRepos)]);
+	return v("div", [renderPage(pageWidgets, ideRepos, store)]);
 });

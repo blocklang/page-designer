@@ -8,6 +8,7 @@ import { config } from "../../config";
 import * as blocklang from "designer-core/blocklang";
 import UndefinedWidget from "../UndefinedWidget";
 import { getChildrenIndex } from "designer-core/utils/treeUtil";
+import { execute } from "./executor";
 
 // 有两种方式共享 widgets 和 ideRepos 的值，以避免在每个函数中多次传递
 // 1. 在此处缓存 widgets 和 ideRepos 的值
@@ -15,6 +16,7 @@ import { getChildrenIndex } from "designer-core/utils/treeUtil";
 // 这里使用缓存数据的方式，且必须是只读的
 let roWidgets: ReadonlyArray<AttachedWidget>;
 let roIdeRepos: ReadonlyArray<ComponentRepo>;
+let store: any;
 
 /**
  * @function renderPage
@@ -24,7 +26,7 @@ let roIdeRepos: ReadonlyArray<ComponentRepo>;
  * @param widgets                页面部件列表
  * @param ideRepos               项目引用的 ide 版组件库
  */
-export function renderPage(widgets: AttachedWidget[], ideRepos: ComponentRepo[]): WNode {
+export function renderPage(widgets: AttachedWidget[], ideRepos: ComponentRepo[], store: any): WNode {
 	if (widgets.length === 0) {
 		throw new Error("页面中的部件个数不能为0，至少要包含一个根部件！");
 	}
@@ -86,6 +88,7 @@ function renderWidget(widget: AttachedWidget, index: number): WNode {
 					// 绑定一个函数
 					value = () => {
 						// 根据 item.value 定位到函数，然后开始执行函数节点
+						execute(store, item.value!);
 					};
 				}
 			} else {

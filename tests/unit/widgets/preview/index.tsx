@@ -17,7 +17,7 @@ import WidgetBase from "@dojo/framework/core/WidgetBase";
 import * as blocklang from "designer-core/blocklang";
 import Page from "std-widget-web/page";
 
-describe("preview", () => {
+describe("widgets/preview", () => {
 	beforeEach(() => {
 		blocklang.clearExtensionComponents();
 	});
@@ -92,6 +92,7 @@ describe("preview", () => {
 				},
 			],
 			data: [],
+			functions: [],
 		};
 
 		mockStore((path) => [replace(path("pageModel"), pageModel)]);
@@ -136,6 +137,7 @@ describe("preview", () => {
 				},
 			],
 			data: [],
+			functions: [],
 		};
 
 		mockStore((path) => [replace(path("pageModel"), pageModel)]);
@@ -227,6 +229,7 @@ describe("preview", () => {
 				},
 			],
 			data: [],
+			functions: [],
 		};
 
 		// 默认包含标准库
@@ -337,6 +340,7 @@ describe("preview", () => {
 				},
 			],
 			data: [],
+			functions: [],
 		};
 
 		// 默认包含标准库

@@ -76,6 +76,7 @@ describe("edit/ui/editor", () => {
 				},
 			],
 			data: [],
+			functions: [],
 		};
 		// 默认包含标准库
 		const ideRepos: ComponentRepo[] = [
@@ -177,6 +178,7 @@ describe("edit/ui/editor", () => {
 				},
 			],
 			data: [],
+			functions: [],
 		};
 
 		// 默认包含标准库
@@ -311,6 +313,7 @@ describe("edit/ui/editor", () => {
 				},
 			],
 			data: [],
+			functions: [],
 		};
 		// 默认包含标准库
 		const ideRepos: ComponentRepo[] = [
@@ -410,6 +413,7 @@ describe("edit/ui/editor", () => {
 				},
 			],
 			data: [],
+			functions: [],
 		};
 		// 默认包含标准库
 		const ideRepos: ComponentRepo[] = [
@@ -510,6 +514,7 @@ describe("edit/ui/editor", () => {
 				},
 			],
 			data: [],
+			functions: [],
 		};
 		// 默认包含标准库
 		const ideRepos: ComponentRepo[] = [
