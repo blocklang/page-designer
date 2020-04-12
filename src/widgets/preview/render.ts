@@ -1,6 +1,6 @@
 import Page from "std-widget-web/page";
 import { InstWidgetProperties } from "../../interfaces";
-import { ComponentRepo, AttachedWidget } from "designer-core/interfaces";
+import { ComponentRepo, AttachedWidget, PageFunction } from "designer-core/interfaces";
 import { find } from "@dojo/framework/shim/array";
 import { w } from "@dojo/framework/core/vdom";
 import { WNode } from "@dojo/framework/core/interfaces";
@@ -16,7 +16,8 @@ import { execute } from "./executor";
 // 这里使用缓存数据的方式，且必须是只读的
 let roWidgets: ReadonlyArray<AttachedWidget>;
 let roIdeRepos: ReadonlyArray<ComponentRepo>;
-let store: any;
+let roFunctions: ReadonlyArray<PageFunction>;
+let cachedStore: any;
 
 /**
  * @function renderPage
@@ -25,6 +26,7 @@ let store: any;
  *
  * @param widgets                页面部件列表
  * @param ideRepos               项目引用的 ide 版组件库
+ * @param functions              页面函数列表
  */
 export function renderPage(widgets: AttachedWidget[], ideRepos: ComponentRepo[], store: any): WNode {
 	if (widgets.length === 0) {
@@ -39,6 +41,8 @@ export function renderPage(widgets: AttachedWidget[], ideRepos: ComponentRepo[],
 	// 缓存数据
 	roWidgets = widgets;
 	roIdeRepos = ideRepos;
+	cachedStore = store;
+	roFunctions = store.get(store.path("pageModel", "functions")) || [];
 
 	return renderWidget(rootWidget, 0);
 }
@@ -86,9 +90,12 @@ function renderWidget(widget: AttachedWidget, index: number): WNode {
 				// 如果 value 的值为 undefined，则说明该事件未绑定函数
 				if (item.value != undefined) {
 					// 绑定一个函数
-					value = () => {
+					value = (eventValue: string) => {
 						// 根据 item.value 定位到函数，然后开始执行函数节点
-						execute(store, item.value!);
+						const func = find(roFunctions, (funcItem) => funcItem.id === item.value);
+						if (func) {
+							execute(cachedStore, func, eventValue);
+						}
 					};
 				}
 			} else {

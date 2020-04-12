@@ -60,7 +60,7 @@
               "properties": [
                 {
                   "id": "1",
-                  "name": "dataId"
+                  "name": "dataItemId"
                 }
               ]
             }

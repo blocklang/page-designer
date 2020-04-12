@@ -18,6 +18,7 @@ export default factory(function Preview({ properties, middleware: { store } }) {
 	const { permission, onSwitchEditMode } = properties();
 	const { get, path } = store;
 	const pageWidgets = get(path("pageModel", "widgets"));
+
 	if (!pageWidgets) {
 		// 正在加载
 		return v("div", [

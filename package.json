@@ -26,13 +26,13 @@
     "serve": "cd serve && serve -l 3001"
   },
   "dependencies": {
-    "@tanem/svg-injector": "^8.0.47",
+    "@tanem/svg-injector": "^8.0.48",
     "@types/jquery": "^3.3.34",
     "@types/scriptjs": "^0.0.2",
     "bootstrap-classes": "~0.0.3-alpha.5",
-    "designer-core": "~0.0.1-alpha.72",
+    "designer-core": "~0.0.1-alpha.73",
     "dojo-fontawesome": "^0.0.3-alpha.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "popper.js": "^1.16.1",
     "scriptjs": "^2.5.9",
     "std-ide-widget": "~0.0.3-alpha.21",

@@ -2,7 +2,7 @@ const { describe, it, beforeEach } = intern.getInterface("bdd");
 const { assert } = intern.getPlugin("chai");
 
 import harness from "@dojo/framework/testing/harness";
-import { tsx } from "@dojo/framework/core/vdom";
+import { tsx, create } from "@dojo/framework/core/vdom";
 import * as c from "bootstrap-classes";
 import Preview from "../../../../src/widgets/preview";
 import * as css from "../../../../src/widgets/preview/index.m.css";
@@ -16,6 +16,7 @@ import { stub } from "sinon";
 import WidgetBase from "@dojo/framework/core/WidgetBase";
 import * as blocklang from "designer-core/blocklang";
 import Page from "std-widget-web/page";
+import { changeDataItemValueProcess } from "../../../../src/processes/pageDataProcesses";
 
 describe("widgets/preview", () => {
 	beforeEach(() => {
@@ -383,5 +384,172 @@ describe("widgets/preview", () => {
 				</Page>
 			</div>
 		));
+	});
+
+	// 执行函数
+	it("trigger event - set data", () => {
+		const factory = create({}).properties<{ onValue: (value: string) => void }>();
+		const TextInput = factory(function TextInput({ properties }) {
+			return <virtual></virtual>;
+		});
+		class IdeTextInput extends WidgetBase {}
+
+		const changeDataItemValueProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[changeDataItemValueProcess, changeDataItemValueProcessStub],
+		]);
+
+		const permission: Permission = {
+			canRead: true,
+			canWrite: true,
+		};
+		const h = harness(() => <Preview permission={permission} onSwitchEditMode={() => {}} />, {
+			middleware: [[store, mockStore]],
+		});
+
+		// 设置两个值：
+		// 1. pageModel
+		// 2. ideRepos
+		const pageModel: PageModel = {
+			pageId: 1,
+			widgets: [
+				{
+					id: "1",
+					parentId: "-1",
+					apiRepoId: 1,
+					widgetId: 1,
+					widgetName: "Page",
+					widgetCode: "0001",
+					canHasChildren: true,
+					properties: [],
+				},
+				{
+					id: "2",
+					parentId: "1",
+					apiRepoId: 2,
+					widgetId: 2,
+					widgetName: "TextInput",
+					widgetCode: "0002",
+					canHasChildren: true,
+					properties: [
+						{
+							id: "1",
+							code: "0001",
+							name: "onValue",
+							value: "func_id_0",
+							valueType: "function",
+							isExpr: false,
+							arguments: [
+								{
+									id: "func_arg_01",
+									name: "value",
+									valueType: "string",
+								},
+							],
+						},
+					],
+				},
+			],
+			data: [
+				{
+					id: "data1",
+					parentId: "-1",
+					name: "root",
+					type: "Object",
+					open: true,
+				},
+				{
+					id: "data2",
+					parentId: "data1",
+					name: "foo",
+					type: "String",
+					open: false,
+					defaultValue: "bar",
+				},
+			],
+			functions: [
+				{
+					id: "func_id_0",
+					nodes: [
+						{
+							id: "node_id_0",
+							left: 20,
+							top: 20,
+							caption: "事件处理函数",
+							text: "onValue",
+							layout: "flowControl",
+							category: "function",
+							inputSequencePort: undefined,
+							outputSequencePorts: [{ id: "osp1", text: "" }],
+							inputDataPorts: [],
+							outputDataPorts: [{ id: "odp1", name: "value", type: "string" }],
+						},
+						{
+							id: "node_id_1",
+							left: 50,
+							top: 50,
+							caption: "Set foo",
+							text: "",
+							layout: "data",
+							category: "variableSet",
+							inputSequencePort: { id: "isp2" },
+							outputSequencePorts: [{ id: "osp2", text: "" }],
+							inputDataPorts: [{ id: "idp2", name: "value", type: "string" }],
+							outputDataPorts: [],
+						},
+					],
+					sequenceConnections: [
+						{ id: "sc1", fromNode: "node_id_0", fromOutput: "osp1", toNode: "node_id_1", toInput: "isp2" },
+					],
+					dataConnections: [
+						{ id: "dc1", fromNode: "node_id_0", fromOutput: "odp1", toNode: "node_id_1", toInput: "idp2" },
+					],
+				},
+			],
+		};
+
+		// 默认包含标准库
+		const ideRepos: ComponentRepo[] = [
+			{
+				id: 1,
+				apiRepoId: 1,
+				gitRepoWebsite: "github.com",
+				gitRepoOwner: "blocklang",
+				gitRepoName: "std-ide-widget",
+				name: "std-ide-widget",
+				category: "widget",
+				version: "0.0.1",
+				std: true,
+			},
+			{
+				id: 2,
+				apiRepoId: 2,
+				gitRepoWebsite: "github.com",
+				gitRepoOwner: "blocklang",
+				gitRepoName: "ide-widget",
+				name: "ide-widget",
+				category: "widget",
+				version: "0.0.1",
+				std: false,
+			},
+		];
+
+		blocklang.registerWidgets(
+			{ website: "github.com", owner: "blocklang", repoName: "ide-widget" },
+			{ TextInput: { widget: TextInput, ideWidget: IdeTextInput, propertiesLayout: [] } }
+		);
+
+		mockStore((path) => [replace(path("pageModel"), pageModel), replace(path("ideRepos"), ideRepos)]);
+
+		h.expect(() => (
+			<div>
+				<Page key="0_1">
+					<TextInput key="0_2" onValue={() => {}}></TextInput>
+				</Page>
+			</div>
+		));
+
+		h.trigger("@0_2", "onValue", "another bar");
+		assert.isTrue(changeDataItemValueProcessStub.calledOnce);
 	});
 });

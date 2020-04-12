@@ -85,6 +85,8 @@ export default factory(function PropertiesTab({ properties, middleware: { store 
 			executor(changeActiveWidgetPropertiesProcess)({ changedProperties });
 		},
 		(paneLayout: Partial<PaneLayout>, data: { propertyIndex: number; propertyValue: string }) => {
+			// FIXME: paneLayout 属性并没有用到，是否可以删除？
+
 			// 1. 记录下选中的属性
 			// 暂时考虑不缓存当前的属性值，而是在目标面板中根据属性索引来获取属性值
 			const { propertyIndex } = data;

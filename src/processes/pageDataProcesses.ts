@@ -94,6 +94,21 @@ const changeActiveDataItemPropertyCommand = commandFactory<{ name: keyof PageDat
 	}
 );
 
+/**
+ * 在运行时设置值
+ */
+const changeDataItemValueCommand = commandFactory<{ dataItemId: string; value: string }>(
+	({ at, get, path, payload: { dataItemId, value } }) => {
+		// TODO: 如果是 Object 或 Array，需要修改对应的子项
+
+		const allData = get(path("pageModel", "data")) || [];
+		const dataItemIndex = findIndex(allData, (dataItem) => dataItem.id === dataItemId);
+
+		const dataItemPath = at(path("pageModel", "data"), dataItemIndex);
+		return [replace(path(dataItemPath, "value"), value)];
+	}
+);
+
 const foldDataGroupCommand = commandFactory(({ payload: { id }, get, path, at }) => {
 	const pageData = get(path("pageModel", "data"));
 	const selectedIndex = findIndex(pageData, (item) => {
@@ -314,6 +329,7 @@ export const activeDataItemProcess = createProcess("active-data-item-process", [
 export const changeActiveDataItemPropertyProcess = createProcess("change-active-data-item-property-process", [
 	changeActiveDataItemPropertyCommand,
 ]);
+export const changeDataItemValueProcess = createProcess("change-data-item-value", [changeDataItemValueCommand]);
 export const foldDataGroupProcess = createProcess("fold-data-group-process", [foldDataGroupCommand]);
 export const removeActiveDataItemProcess = createProcess("remove-data-item-process", [removeActiveDataItemCommand]);
 export const moveUpActiveDataItemProcess = createProcess("move-up-data-item-process", [moveUpActiveDataItemCommand]);
