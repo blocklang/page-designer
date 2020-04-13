@@ -1,6 +1,7 @@
 import { changeDataItemValueProcess } from "../../processes/pageDataProcesses";
 import { find } from "@dojo/framework/shim/array";
-import { PageFunction } from "designer-core/interfaces";
+import { PageFunction, VisualNode } from "designer-core/interfaces";
+import { getValue } from "designer-core/utils/pageDataUtil";
 
 /**
  * 执行函数
@@ -21,35 +22,52 @@ export function execute(store: any, func: PageFunction, eventValue: string) {
 		return;
 	}
 
-	// 找到下一个节点
-	const sequenceConnect = find(
-		sequenceConnections,
-		(sc) => sc.fromNode === firstNode.id && sc.fromOutput === firstOsp.id
-	);
-	if (!sequenceConnect) {
-		// 没有连接线，则不再往后执行
-		return;
+	const pageData = store.get(store.path("pageModel", "data")) || [];
+	let nextNode: VisualNode | undefined = firstNode;
+
+	while ((nextNode = findNextNode(nextNode))) {
+		// 从这个节点起开始执行
+		if (nextNode.category === "variableSet") {
+			// 找到输入参数
+			// 不能直接传 eventValue，需要根据 dataConnections 判断
+			// Set 只有一个输入参数
+			const dc = find(
+				dataConnections,
+				(dc) => dc.toNode === nextNode!.id && dc.toInput === nextNode!.inputDataPorts[0].id
+			);
+			let value = "";
+			if (dc) {
+				if (dc.fromNode === firstNode.id && dc.fromOutput === firstNode.outputDataPorts[0].id) {
+					// 如果连接线的起点是函数定义节点
+					value = eventValue;
+				} else {
+					// 如果连接线的起点是 variableGet 节点
+					const previousNode = find(nodes, (node) => node.id === dc.fromNode);
+					if (previousNode && previousNode.category === "variableGet") {
+						value = getValue(pageData, previousNode.dataItemId!);
+					}
+				}
+			} else {
+				// 如果没有通过连接线设置值，则尝试获取节点的默认值
+				value = nextNode.inputDataPorts[0].value || "";
+			}
+			store.executor(changeDataItemValueProcess)({ dataItemId: nextNode.dataItemId, value });
+		}
 	}
 
-	const nextNode = find(nodes, (node) => node.id === sequenceConnect.toNode);
-	if (!nextNode) {
-		return;
-	}
-	// 从这个节点起开始执行
-	if (nextNode.category === "variableSet") {
-		// 找到输入参数
-		// 不能直接传 eventValue，需要根据 dataConnections 判断
-		// Set 只有一个输入参数
-		const dc = find(
-			dataConnections,
-			(dc) => dc.toNode === nextNode.id && dc.toInput === nextNode.inputDataPorts[0].id
+	function findNextNode(node: VisualNode): VisualNode | undefined {
+		const sequenceConnect = find(
+			sequenceConnections,
+			(sc) => sc.fromNode === node.id && sc.fromOutput === node.outputSequencePorts[0].id
 		);
-		let value = "";
-		if (dc) {
-			if (dc.fromNode === firstNode.id && dc.fromOutput === firstNode.outputDataPorts[0].id) {
-				value = eventValue;
-			}
+		if (!sequenceConnect) {
+			// 没有连接线，则不再往后执行
+			return;
 		}
-		store.executor(changeDataItemValueProcess)({ dataItemId: nextNode.dataItemId, value });
+
+		return find(nodes, (node) => node.id === sequenceConnect.toNode);
 	}
 }
+
+// 1. 找到节点的执行顺序
+// 2. 计算每个节点的输入参数

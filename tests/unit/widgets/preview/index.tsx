@@ -387,7 +387,7 @@ describe("widgets/preview", () => {
 	});
 
 	// 执行函数
-	it("trigger event - set data", () => {
+	it("trigger event - call one set data", () => {
 		const factory = create({}).properties<{ onValue: (value: string) => void }>();
 		const TextInput = factory(function TextInput({ properties }) {
 			return <virtual></virtual>;
@@ -551,5 +551,194 @@ describe("widgets/preview", () => {
 
 		h.trigger("@0_2", "onValue", "another bar");
 		assert.isTrue(changeDataItemValueProcessStub.calledOnce);
+	});
+
+	it("trigger event - call two set data", () => {
+		const factory = create({}).properties<{ onValue: (value: string) => void }>();
+		const TextInput = factory(function TextInput({ properties }) {
+			return <virtual></virtual>;
+		});
+		class IdeTextInput extends WidgetBase {}
+
+		const changeDataItemValueProcessStub = stub();
+		const mockStore = createMockStoreMiddleware<State>([
+			[changeDataItemValueProcess, changeDataItemValueProcessStub],
+		]);
+
+		const permission: Permission = {
+			canRead: true,
+			canWrite: true,
+		};
+		const h = harness(() => <Preview permission={permission} onSwitchEditMode={() => {}} />, {
+			middleware: [[store, mockStore]],
+		});
+
+		// 设置两个值：
+		// 1. pageModel
+		// 2. ideRepos
+		const pageModel: PageModel = {
+			pageId: 1,
+			widgets: [
+				{
+					id: "1",
+					parentId: "-1",
+					apiRepoId: 1,
+					widgetId: 1,
+					widgetName: "Page",
+					widgetCode: "0001",
+					canHasChildren: true,
+					properties: [],
+				},
+				{
+					id: "2",
+					parentId: "1",
+					apiRepoId: 2,
+					widgetId: 2,
+					widgetName: "TextInput",
+					widgetCode: "0002",
+					canHasChildren: true,
+					properties: [
+						{
+							id: "1",
+							code: "0001",
+							name: "onValue",
+							value: "func_id_0",
+							valueType: "function",
+							isExpr: false,
+							arguments: [
+								{
+									id: "func_arg_01",
+									name: "value",
+									valueType: "string",
+								},
+							],
+						},
+					],
+				},
+			],
+			data: [
+				{
+					id: "data1",
+					parentId: "-1",
+					name: "root",
+					type: "Object",
+					open: true,
+				},
+				{
+					id: "data2",
+					parentId: "data1",
+					name: "foo",
+					type: "String",
+					open: false,
+					defaultValue: "bar",
+				},
+				{
+					id: "data3",
+					parentId: "data1",
+					name: "foo1",
+					type: "String",
+					open: false,
+					defaultValue: "bar1",
+				},
+			],
+			functions: [
+				{
+					id: "func_id_0",
+					nodes: [
+						{
+							id: "node_id_0",
+							left: 20,
+							top: 20,
+							caption: "事件处理函数",
+							text: "onValue",
+							layout: "flowControl",
+							category: "function",
+							inputSequencePort: undefined,
+							outputSequencePorts: [{ id: "osp1", text: "" }],
+							inputDataPorts: [],
+							outputDataPorts: [{ id: "odp1", name: "value", type: "string" }],
+						},
+						{
+							id: "node_id_1",
+							left: 50,
+							top: 50,
+							caption: "Set foo",
+							text: "",
+							layout: "data",
+							category: "variableSet",
+							inputSequencePort: { id: "isp2" },
+							outputSequencePorts: [{ id: "osp2", text: "" }],
+							inputDataPorts: [{ id: "idp2", name: "value", type: "string" }],
+							outputDataPorts: [],
+						},
+						{
+							id: "node_id_2",
+							left: 100,
+							top: 100,
+							caption: "Set foo1",
+							text: "",
+							layout: "data",
+							category: "variableSet",
+							inputSequencePort: { id: "isp3" },
+							outputSequencePorts: [{ id: "osp3", text: "" }],
+							inputDataPorts: [{ id: "idp3", name: "value", type: "string" }],
+							outputDataPorts: [],
+						},
+					],
+					sequenceConnections: [
+						{ id: "sc1", fromNode: "node_id_0", fromOutput: "osp1", toNode: "node_id_1", toInput: "isp2" },
+						{ id: "sc2", fromNode: "node_id_1", fromOutput: "osp2", toNode: "node_id_2", toInput: "isp3" },
+					],
+					dataConnections: [
+						{ id: "dc1", fromNode: "node_id_0", fromOutput: "odp1", toNode: "node_id_1", toInput: "idp2" },
+						{ id: "dc2", fromNode: "node_id_0", fromOutput: "odp1", toNode: "node_id_2", toInput: "idp3" },
+					],
+				},
+			],
+		};
+
+		// 默认包含标准库
+		const ideRepos: ComponentRepo[] = [
+			{
+				id: 1,
+				apiRepoId: 1,
+				gitRepoWebsite: "github.com",
+				gitRepoOwner: "blocklang",
+				gitRepoName: "std-ide-widget",
+				name: "std-ide-widget",
+				category: "widget",
+				version: "0.0.1",
+				std: true,
+			},
+			{
+				id: 2,
+				apiRepoId: 2,
+				gitRepoWebsite: "github.com",
+				gitRepoOwner: "blocklang",
+				gitRepoName: "ide-widget",
+				name: "ide-widget",
+				category: "widget",
+				version: "0.0.1",
+				std: false,
+			},
+		];
+
+		blocklang.registerWidgets(
+			{ website: "github.com", owner: "blocklang", repoName: "ide-widget" },
+			{ TextInput: { widget: TextInput, ideWidget: IdeTextInput, propertiesLayout: [] } }
+		);
+
+		mockStore((path) => [replace(path("pageModel"), pageModel), replace(path("ideRepos"), ideRepos)]);
+
+		h.expect(() => (
+			<div>
+				<Page key="0_1">
+					<TextInput key="0_2" onValue={() => {}}></TextInput>
+				</Page>
+			</div>
+		));
+
+		h.trigger("@0_2", "onValue", "another bar");
+		assert.isTrue(changeDataItemValueProcessStub.calledTwice);
 	});
 });
