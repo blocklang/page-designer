@@ -7,6 +7,7 @@ import { newFunctionProcess, activeFunctionProcess } from "../../../../processes
 import dimensions from "@dojo/framework/core/middleware/dimensions";
 import TitleBar from "./TitleBar";
 import Editor from "./Editor";
+import OperatePane from "./operate-pane";
 
 export interface EditorProperties {
 	functions: PageFunction[];
@@ -88,6 +89,9 @@ export default factory(function Func({ properties, middleware: { store, drag, in
 		}
 	}
 
+	// 使用 dimensions 设置 OperatePane 的初始位置
+	const top = currentFunction ? dimensions.get("editor").offset.top : 0;
+
 	return (
 		<div key="root">
 			<TitleBar
@@ -96,7 +100,10 @@ export default factory(function Func({ properties, middleware: { store, drag, in
 				widgets={activeWidget ? widgets : []}
 				activeWidgetProperty={activeWidgetProperty}
 			/>
-			<Editor pageFunction={currentFunction} />
+			<div key="editor">
+				{currentFunction && <OperatePane top={top} />}
+				<Editor pageFunction={currentFunction} />
+			</div>
 		</div>
 	);
 });

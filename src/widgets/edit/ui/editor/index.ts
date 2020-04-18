@@ -38,9 +38,9 @@ export default factory(function Editor({ properties, middleware: { store } }) {
 	// 如果聚焦的部件和高亮显示的部件是同一个，则只显示聚焦框
 	const onlyShowFocusBox = highlightWidgetIndex != undefined && selectedWidgetIndex === highlightWidgetIndex;
 
-	const ideRepos = get(path("ideRepos"));
+	const widgetIdeRepos = (get(path("projectDependencies")) || []).filter((repo) => repo.category === "Widget");
 	return v("div", {}, [
-		renderPage(pageWidgets, ideRepos, {
+		renderPage(pageWidgets, widgetIdeRepos, {
 			onFocusing: (activeWidgetId) => {
 				executor(activeWidgetProcess)({ activeWidgetId });
 			},

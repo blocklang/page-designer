@@ -40,7 +40,7 @@ export default factory(function PropertiesTab({ properties, middleware: { store 
 	}
 
 	// 因为属性的布局信息是存在 ide 仓库中的，所以这里需要找到组件所在的 ide 仓库
-	const ideRepos = get(path("ideRepos")) || [];
+	const ideRepos = (get(path("projectDependencies")) || []).filter((repo) => repo.category === "Widget");
 	const ideRepo = find(ideRepos, (item) => item.apiRepoId === activeWidget!.apiRepoId);
 	if (!ideRepo) {
 		return _renderMessageNode("没有找到聚焦部件所属的 ide 组件仓库信息");

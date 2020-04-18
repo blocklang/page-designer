@@ -95,7 +95,7 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 				gitRepoOwner: "blocklang",
 				gitRepoName: "std-ide-widget",
 				name: "std-ide-widget",
-				category: "widget",
+				category: "Widget",
 				version: "0.0.1",
 				std: true,
 			},
@@ -104,7 +104,7 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 		mockStore((path) => [
 			add(path("pageModel", "widgets"), widgets),
 			add(path("selectedWidgetIndex"), 0),
-			add(path("ideRepos"), ideRepos),
+			add(path("projectDependencies"), ideRepos),
 		]);
 
 		findWidgetPropertiesLayoutStub = stub(blocklang, "findWidgetPropertiesLayout").returns([]);
@@ -159,7 +159,7 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 				gitRepoOwner: "blocklang",
 				gitRepoName: "std-ide-widget",
 				name: "std-ide-widget",
-				category: "widget",
+				category: "Widget",
 				version: "0.0.1",
 				std: true,
 			},
@@ -168,7 +168,7 @@ describe("edit/ui/operate-pane/properties-tab", () => {
 		mockStore((path) => [
 			add(path("pageModel", "widgets"), widgets),
 			add(path("selectedWidgetIndex"), 0),
-			add(path("ideRepos"), ideRepos),
+			add(path("projectDependencies"), ideRepos),
 		]);
 
 		class Prop1 extends WidgetBase<SingleProperty> {}

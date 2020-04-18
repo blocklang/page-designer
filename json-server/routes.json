@@ -1,5 +1,6 @@
 {
     "/designer/pages/:id/model": "/pages/:id",
     "/designer/projects/:projectId/dependences/widgets": "/widgets?projectId=:projectId",
-    "/designer/projects/:projectId/dependences?category=dev": "/ideDependences?projectId=:projectId"
+    "/designer/projects/:projectId/dependences/services": "/services?projectId=:projectId",
+    "/designer/projects/:projectId/dependences?category=dev": "/projectDependences?projectId=:projectId"
 }

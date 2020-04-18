@@ -1,0 +1,16 @@
+.repoNameBar {
+	background-color: #e9ecef;
+	cursor: pointer;
+}
+
+.groupNameBar {
+	cursor: pointer;
+}
+
+.opItem {
+	cursor: pointer;
+}
+
+.httpMethodBadge {
+	width: 5em;
+}

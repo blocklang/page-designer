@@ -10,15 +10,18 @@ const initProjectCommand = commandFactory<{ project: Project }>(({ path, payload
 	return [add(path("project"), project)];
 });
 
-const getProjectIdeDependencesCommand = commandFactory(async ({ path }) => {
-	console.log("run get project ide dependences command(如果此文本多次出现，则要考虑去除多余的设置)");
+/**
+ * 这里是获取设计器专用的依赖，包括 widget 的 ide 版和 service 仓库
+ */
+const getProjectDependenciesCommand = commandFactory(async ({ path }) => {
+	console.log("run get project dependences command(如果此文本多次出现，则要考虑去除多余的设置)");
 	const response = await fetch(config.fetchIdeDependenceInfosUrl, { headers: config.customFetchHeaders() });
 	const json = await response.json();
-	return [add(path("ideRepos"), json)];
+	return [add(path("projectDependencies"), json)];
 });
 
 export const initProjectProcess = createProcess("init-project", [initProjectCommand]);
-export const getProjectIdeDependencesProcess = createProcess("get-project-ide-dependences", [
+export const getProjectDependenciesProcess = createProcess("get-project-dependencies", [
 	clearWidgetsCommand,
-	getProjectIdeDependencesCommand,
+	getProjectDependenciesCommand,
 ]);

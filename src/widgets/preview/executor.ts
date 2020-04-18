@@ -68,6 +68,3 @@ export function execute(store: any, func: PageFunction, eventValue: string) {
 		return find(nodes, (node) => node.id === sequenceConnect.toNode);
 	}
 }
-
-// 1. 找到节点的执行顺序
-// 2. 计算每个节点的输入参数

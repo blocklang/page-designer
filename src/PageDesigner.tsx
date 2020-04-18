@@ -12,7 +12,7 @@ import UIView from "./widgets/edit/ui";
 import BehaviorView from "./widgets/edit/behavior";
 
 import { config } from "./config";
-import { initProjectProcess, getProjectIdeDependencesProcess } from "./processes/projectProcesses";
+import { initProjectProcess, getProjectDependenciesProcess } from "./processes/projectProcesses";
 import * as scriptjs from "scriptjs";
 
 import { Project, ComponentRepo } from "designer-core/interfaces";
@@ -53,6 +53,7 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 	// 初始化数据
 	// 1. 本地数据
 	config.fetchApiRepoWidgetsUrl = urls.fetchApiRepoWidgets;
+	config.fetchApiRepoServicesUrl = urls.fetchApiRepoServices;
 	config.fetchPageModelUrl = urls.fetchPageModel;
 	config.fetchIdeDependenceInfosUrl = urls.fetchIdeDependenceInfos;
 	config.savePageModelUrl = urls.savePageModel;
@@ -86,16 +87,20 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 		executor(getPageModelProcess)({ pageId: page.id });
 	}
 
-	// 获取项目的 ide 依赖
+	// TODO: 提取出加载项目依赖的函数
+
+	// 获取项目的依赖
 	// TODO: 要考虑如何避免重复加载，以及漏加载
-	const ideReposIsLoading = cache.get<boolean>("ideReposIsLoading") || false;
-	if (!ideReposIsLoading) {
-		executor(getProjectIdeDependencesProcess)({});
-		cache.set<boolean>("ideReposIsLoading", true);
+	const projectDependenciesIsLoading = cache.get<boolean>("projectDependenciesIsLoading") || false;
+	if (!projectDependenciesIsLoading) {
+		executor(getProjectDependenciesProcess)({});
+		cache.set<boolean>("projectDependenciesIsLoading", true);
 	}
 
-	const ideRepos = get(path("ideRepos"));
-	if (!ideRepos) {
+	// 此处取名 projectDependences 也是非常合理的，因为在设计器这个环境下，就是项目依赖，只是在实现层面加载不同版本的依赖
+	// 直接就是返回设计器专用的依赖项：Service repo 和 widget 的 ide 版仓库，因为 url 中已包含 designer
+	const projectDependencies = get(path("projectDependencies"));
+	if (!projectDependencies) {
 		return (
 			<div classes={[c.text_muted, c.text_center, c.mt_5]}>
 				<div classes={[c.spinner_border]} role="status">
@@ -108,7 +113,8 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 	// 此处不需要使用 executor()().then(); 直接判断 store 中是否存在值，存在时则执行即可
 	// 获取完依赖之后要加载相应的 js 脚本
 	// 去除掉标准库，因为已默认引用标准库
-	const externalResources = ideRepos.filter((item) => item.std === false);
+	// 同时也要排除掉 Service 仓库，因为 Service 仓库不需要在浏览器中加载 js 文件
+	const externalResources = projectDependencies.filter((item) => item.category === "Widget" && item.std === false);
 	if (externalResources.length > 0) {
 		const externalResourcesLoaded = icache.getOrSet<boolean>("externalResourcesLoaded", false);
 		if (!externalResourcesLoaded) {
@@ -176,16 +182,16 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
  * TODO: 后续版本再考虑 css
  * TODO: 避免重复加载 script，删除项目用不到的 script
  *
- * @param ideRepos
+ * @param widgetIdeRepos
  */
-function loadExternalResources(ideRepos: ComponentRepo[], loadSuccess: (resourceType: "js" | "css") => void) {
+function loadExternalResources(widgetIdeRepos: ComponentRepo[], loadSuccess: (resourceType: "js" | "css") => void) {
 	console.log("config.externalScriptAndCssWebsite:", config.externalScriptAndCssWebsite);
-	if (!ideRepos) {
-		console.log("ideRepos 为 undefined");
+	if (!widgetIdeRepos) {
+		console.log("widgetIdeRepos 为 undefined");
 		return;
 	}
 
-	const jsUrls = ideRepos.map(
+	const jsUrls = widgetIdeRepos.map(
 		(item) =>
 			`/designer/assets/${item.gitRepoWebsite}/${item.gitRepoOwner}/${item.gitRepoName}/${item.version}/main.bundle.js`
 	);
@@ -200,10 +206,10 @@ function loadExternalResources(ideRepos: ComponentRepo[], loadSuccess: (resource
 	});
 
 	// 加载 css 文件
-	const cssFileCount = ideRepos.length;
+	const cssFileCount = widgetIdeRepos.length;
 	console.log(`共需加载 ${cssFileCount} 个 css 文件。`);
 	let loadedCount = 0;
-	ideRepos.forEach((item) => {
+	widgetIdeRepos.forEach((item) => {
 		const cssHref = `${config.externalScriptAndCssWebsite}/designer/assets/${item.gitRepoWebsite}/${item.gitRepoOwner}/${item.gitRepoName}/${item.version}/main.bundle.css`;
 		// 如果已经加载过，则不重复加载
 		// FIXME: 添加此逻辑之后，firefox 中同一个 css 文件依然会加载两次, 查找原因。
@@ -218,7 +224,7 @@ function loadExternalResources(ideRepos: ComponentRepo[], loadSuccess: (resource
 		});
 	});
 
-	ideRepos.forEach((item) => {
+	widgetIdeRepos.forEach((item) => {
 		const svgHref = `${config.externalScriptAndCssWebsite}/designer/assets/${item.gitRepoWebsite}/${item.gitRepoOwner}/${item.gitRepoName}/${item.version}/icons.svg`;
 		// 约定的前缀，注意使用的是 ide 版仓库信息，而不是 api 版的仓库信息
 		const idPrefix = `${item.gitRepoWebsite}-${item.gitRepoOwner}-${item.gitRepoName}-`;

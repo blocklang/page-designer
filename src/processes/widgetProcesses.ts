@@ -4,14 +4,14 @@ import { config } from "../config";
 import { add, replace } from "@dojo/framework/stores/state/operations";
 
 export const clearWidgetsCommand = commandFactory(({ path }) => {
-	return [replace(path("widgetRepos"), undefined)];
+	return [replace(path("repoWidgets"), undefined)];
 });
 
 const getWidgetsCommand = commandFactory<{}>(async ({ path }) => {
 	console.log("get widgets command");
 	const response = await fetch(config.fetchApiRepoWidgetsUrl, { headers: config.customFetchHeaders() });
 	const json = await response.json();
-	return [add(path("widgetRepos"), json)];
+	return [add(path("repoWidgets"), json)];
 });
 
 // 获取项目依赖的部件列表

@@ -24,7 +24,7 @@ let roEditableProperties: Readonly<EditableProperties>;
  * 返回渲染页面的节点，只能有一个根节点。
  *
  * @param widgets                页面部件列表
- * @param ideRepos               项目引用的 ide 版组件库
+ * @param ideRepos               项目引用的 ide 版组件库，只传入 widget ide 版仓库就足够了
  * @param editableProperties     为部件扩展的属性，支持在设计器中交互
  */
 export function renderPage(

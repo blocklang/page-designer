@@ -3,7 +3,7 @@ import icache from "@dojo/framework/core/middleware/icache";
 import cache from "@dojo/framework/core/middleware/cache";
 import { find } from "@dojo/framework/shim/array";
 import store from "designer-core/store";
-import { WidgetRepo } from "designer-core/interfaces";
+import { RepoWidgetList } from "designer-core/interfaces";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import { getWidgetsProcess } from "../../../../../processes/widgetProcesses";
 import { deepMixin } from "@dojo/framework/core/util";
@@ -21,8 +21,8 @@ export default factory(function WidgetsTab({ properties, middleware: { store, ic
 
 	// 1. 每次进入新页面，都要刷新(所以要在 PageDesigner 清空部件列表)
 	// 2. 在属性和部件之间切换时，不要刷新
-	const widgetRepos = get(path("widgetRepos"));
-	if (!widgetRepos) {
+	const allRepoWidgets = get(path("repoWidgets"));
+	if (!allRepoWidgets) {
 		const widgetRepoIsLoading = cache.get<boolean>("widgetRepoIsLoading") || false;
 		if (!widgetRepoIsLoading) {
 			executor(getWidgetsProcess)({});
@@ -30,9 +30,12 @@ export default factory(function WidgetsTab({ properties, middleware: { store, ic
 		}
 	}
 
-	let filterWidgetRepos: WidgetRepo[] | undefined;
-	if (widgetRepos) {
-		filterWidgetRepos = deepMixin([], widgetRepos);
+	let filterWidgetRepos: RepoWidgetList[] | undefined;
+	if (allRepoWidgets) {
+		// FIXME:
+		// 如果不克隆一份，则一个页面中多处使用同一个部件时，就会指向同一个部件
+		// 此处是全体克隆，尝试改为在此时不可能，而是往页面中添加部件时，一次只克隆一个部件
+		filterWidgetRepos = deepMixin([], allRepoWidgets);
 	}
 
 	const searchText = icache.getOrSet<string>("searchText", "");
@@ -53,7 +56,7 @@ export default factory(function WidgetsTab({ properties, middleware: { store, ic
 		);
 	}
 
-	const ideRepos = get(path("ideRepos")) || [];
+	const widgetIdeRepos = (get(path("projectDependencies")) || []).filter((repo) => repo.category === "Widget");
 
 	// 为什么使用 _ 表示未分类
 	// 1. 在 rust 语言中，使用 _ 模式来匹配任何值
@@ -83,7 +86,7 @@ export default factory(function WidgetsTab({ properties, middleware: { store, ic
 							// 默认是展开的
 							const apiRepoFold = icache.getOrSet<boolean>(`fold-repo-${repo.apiRepoId}`, false);
 
-							const ideRepo = find(ideRepos, (item) => item.apiRepoId === repo.apiRepoId);
+							const ideRepo = find(widgetIdeRepos, (item) => item.apiRepoId === repo.apiRepoId);
 
 							let symboIdPrefix = "";
 							if (ideRepo) {
@@ -113,7 +116,7 @@ export default factory(function WidgetsTab({ properties, middleware: { store, ic
 											) : (
 												repo.widgetCategories.map((category) => {
 													const categoryFold = icache.getOrSet<boolean>(
-														`fold-category-${repo.apiRepoId}`,
+														`fold-category-${repo.apiRepoId}-${category.name}`,
 														false
 													);
 													return (
@@ -122,7 +125,7 @@ export default factory(function WidgetsTab({ properties, middleware: { store, ic
 																classes={[c.pl_1, c.text_muted, css.categoryNameBar]}
 																onclick={() => {
 																	icache.set<boolean>(
-																		`fold-category-${repo.apiRepoId}`,
+																		`fold-category-${repo.apiRepoId}-${category.name}`,
 																		!categoryFold
 																	);
 																}}
@@ -146,6 +149,7 @@ export default factory(function WidgetsTab({ properties, middleware: { store, ic
 																				onclick={(event: MouseEvent) => {
 																					widget.apiRepoId = repo.apiRepoId;
 																					executor(insertWidgetsProcess)({
+																						// FIXME: 在此处克隆？
 																						widgets: [widget],
 																					});
 																				}}

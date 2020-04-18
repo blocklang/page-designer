@@ -46,6 +46,7 @@ const pathes: Path[] = [{ name: "page1", path: "page1" }];
 
 const urls: RequestUrl = {
 	fetchApiRepoWidgets: "",
+	fetchApiRepoServices: "",
 	fetchIdeDependenceInfos: "",
 	fetchPageModel: "",
 	savePageModel: "",
@@ -98,7 +99,7 @@ describe("PageDesigner", () => {
 			{ middleware: [[store, mockStore]] }
 		);
 
-		mockStore((path) => [replace(path("ideRepos"), [])]);
+		mockStore((path) => [replace(path("projectDependencies"), [])]);
 
 		h.expect(() => (
 			<div classes={[c.container_fluid, css.root]}>
@@ -140,7 +141,7 @@ describe("PageDesigner", () => {
 			{ middleware: [[store, mockStore]] }
 		);
 
-		mockStore((path) => [replace(path("ideRepos"), [])]);
+		mockStore((path) => [replace(path("projectDependencies"), [])]);
 
 		h.expect(() => (
 			<div classes={[c.container_fluid, css.root]}>
@@ -236,7 +237,7 @@ describe("PageDesigner", () => {
 			{ middleware: [[store, mockStore]] }
 		);
 
-		mockStore((path) => [replace(path("ideRepos"), [])]);
+		mockStore((path) => [replace(path("projectDependencies"), [])]);
 
 		h.expect(() => (
 			<div classes={[c.container_fluid, css.root]}>

@@ -87,13 +87,13 @@ describe("edit/ui/editor", () => {
 				gitRepoOwner: "blocklang",
 				gitRepoName: "std-ide-widget",
 				name: "std-ide-widget",
-				category: "widget",
+				category: "Widget",
 				version: "0.0.1",
 				std: true,
 			},
 		];
 
-		mockStore((path) => [replace(path("pageModel"), pageModel), replace(path("ideRepos"), ideRepos)]);
+		mockStore((path) => [replace(path("pageModel"), pageModel), replace(path("projectDependencies"), ideRepos)]);
 
 		// activeWidgetId 的作用是什么？可否用 focused 属性代替
 		// widget 属性是否可以替换或者精简？
@@ -190,7 +190,7 @@ describe("edit/ui/editor", () => {
 				gitRepoOwner: "blocklang",
 				gitRepoName: "std-ide-widget",
 				name: "std-ide-widget",
-				category: "widget",
+				category: "Widget",
 				version: "0.0.1",
 				std: true,
 			},
@@ -201,7 +201,7 @@ describe("edit/ui/editor", () => {
 				gitRepoOwner: "blocklang",
 				gitRepoName: "ide-widget",
 				name: "ide-widget",
-				category: "widget",
+				category: "Widget",
 				version: "0.0.1",
 				std: false,
 			},
@@ -212,7 +212,7 @@ describe("edit/ui/editor", () => {
 			{ Container: { widget: Container, ideWidget: IdeContainer, propertiesLayout: [] } }
 		);
 
-		mockStore((path) => [replace(path("pageModel"), pageModel), replace(path("ideRepos"), ideRepos)]);
+		mockStore((path) => [replace(path("pageModel"), pageModel), replace(path("projectDependencies"), ideRepos)]);
 
 		const pageWidget = pageModel.widgets[0];
 		const containerWidget1 = pageModel.widgets[1];
@@ -324,7 +324,7 @@ describe("edit/ui/editor", () => {
 				gitRepoOwner: "blocklang",
 				gitRepoName: "std-ide-widget",
 				name: "std-ide-widget",
-				category: "widget",
+				category: "Widget",
 				version: "0.0.1",
 				std: true,
 			},
@@ -332,7 +332,7 @@ describe("edit/ui/editor", () => {
 
 		mockStore((path) => [
 			replace(path("pageModel"), pageModel),
-			replace(path("ideRepos"), ideRepos),
+			replace(path("projectDependencies"), ideRepos),
 			replace(path("selectedWidgetIndex"), 0),
 		]);
 
@@ -424,7 +424,7 @@ describe("edit/ui/editor", () => {
 				gitRepoOwner: "blocklang",
 				gitRepoName: "std-ide-widget",
 				name: "std-ide-widget",
-				category: "widget",
+				category: "Widget",
 				version: "0.0.1",
 				std: true,
 			},
@@ -432,7 +432,7 @@ describe("edit/ui/editor", () => {
 
 		mockStore((path) => [
 			replace(path("pageModel"), pageModel),
-			replace(path("ideRepos"), ideRepos),
+			replace(path("projectDependencies"), ideRepos),
 			replace(path("selectedWidgetIndex"), 0),
 			replace(path("highlightWidgetIndex"), 0),
 		]);
@@ -525,7 +525,7 @@ describe("edit/ui/editor", () => {
 				gitRepoOwner: "blocklang",
 				gitRepoName: "std-ide-widget",
 				name: "std-ide-widget",
-				category: "widget",
+				category: "Widget",
 				version: "0.0.1",
 				std: true,
 			},
@@ -533,7 +533,7 @@ describe("edit/ui/editor", () => {
 
 		mockStore((path) => [
 			replace(path("pageModel"), pageModel),
-			replace(path("ideRepos"), ideRepos),
+			replace(path("projectDependencies"), ideRepos),
 			replace(path("highlightWidgetIndex"), 0),
 		]);
 

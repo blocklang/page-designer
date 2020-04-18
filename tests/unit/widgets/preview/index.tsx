@@ -242,7 +242,7 @@ describe("widgets/preview", () => {
 				gitRepoOwner: "blocklang",
 				gitRepoName: "std-ide-widget",
 				name: "std-ide-widget",
-				category: "widget",
+				category: "Widget",
 				version: "0.0.1",
 				std: true,
 			},
@@ -253,7 +253,7 @@ describe("widgets/preview", () => {
 				gitRepoOwner: "blocklang",
 				gitRepoName: "ide-widget",
 				name: "ide-widget",
-				category: "widget",
+				category: "Widget",
 				version: "0.0.1",
 				std: false,
 			},
@@ -264,7 +264,7 @@ describe("widgets/preview", () => {
 			{ Container: { widget: Container, ideWidget: IdeContainer, propertiesLayout: [] } }
 		);
 
-		mockStore((path) => [replace(path("pageModel"), pageModel), replace(path("ideRepos"), ideRepos)]);
+		mockStore((path) => [replace(path("pageModel"), pageModel), replace(path("projectDependencies"), ideRepos)]);
 
 		h.expect(() => (
 			<div>
@@ -353,7 +353,7 @@ describe("widgets/preview", () => {
 				gitRepoOwner: "blocklang",
 				gitRepoName: "std-ide-widget",
 				name: "std-ide-widget",
-				category: "widget",
+				category: "Widget",
 				version: "0.0.1",
 				std: true,
 			},
@@ -364,7 +364,7 @@ describe("widgets/preview", () => {
 				gitRepoOwner: "blocklang",
 				gitRepoName: "ide-widget",
 				name: "ide-widget",
-				category: "widget",
+				category: "Widget",
 				version: "0.0.1",
 				std: false,
 			},
@@ -375,7 +375,7 @@ describe("widgets/preview", () => {
 			{ TextInput: { widget: TextInput, ideWidget: IdeTextInput, propertiesLayout: [] } }
 		);
 
-		mockStore((path) => [replace(path("pageModel"), pageModel), replace(path("ideRepos"), ideRepos)]);
+		mockStore((path) => [replace(path("pageModel"), pageModel), replace(path("projectDependencies"), ideRepos)]);
 
 		h.expect(() => (
 			<div>
@@ -517,7 +517,7 @@ describe("widgets/preview", () => {
 				gitRepoOwner: "blocklang",
 				gitRepoName: "std-ide-widget",
 				name: "std-ide-widget",
-				category: "widget",
+				category: "Widget",
 				version: "0.0.1",
 				std: true,
 			},
@@ -528,7 +528,7 @@ describe("widgets/preview", () => {
 				gitRepoOwner: "blocklang",
 				gitRepoName: "ide-widget",
 				name: "ide-widget",
-				category: "widget",
+				category: "Widget",
 				version: "0.0.1",
 				std: false,
 			},
@@ -539,7 +539,7 @@ describe("widgets/preview", () => {
 			{ TextInput: { widget: TextInput, ideWidget: IdeTextInput, propertiesLayout: [] } }
 		);
 
-		mockStore((path) => [replace(path("pageModel"), pageModel), replace(path("ideRepos"), ideRepos)]);
+		mockStore((path) => [replace(path("pageModel"), pageModel), replace(path("projectDependencies"), ideRepos)]);
 
 		h.expect(() => (
 			<div>
@@ -706,7 +706,7 @@ describe("widgets/preview", () => {
 				gitRepoOwner: "blocklang",
 				gitRepoName: "std-ide-widget",
 				name: "std-ide-widget",
-				category: "widget",
+				category: "Widget",
 				version: "0.0.1",
 				std: true,
 			},
@@ -717,7 +717,7 @@ describe("widgets/preview", () => {
 				gitRepoOwner: "blocklang",
 				gitRepoName: "ide-widget",
 				name: "ide-widget",
-				category: "widget",
+				category: "Widget",
 				version: "0.0.1",
 				std: false,
 			},
@@ -728,7 +728,7 @@ describe("widgets/preview", () => {
 			{ TextInput: { widget: TextInput, ideWidget: IdeTextInput, propertiesLayout: [] } }
 		);
 
-		mockStore((path) => [replace(path("pageModel"), pageModel), replace(path("ideRepos"), ideRepos)]);
+		mockStore((path) => [replace(path("pageModel"), pageModel), replace(path("projectDependencies"), ideRepos)]);
 
 		h.expect(() => (
 			<div>

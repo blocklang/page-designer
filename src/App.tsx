@@ -42,6 +42,7 @@ export default factory(function App({ middleware: { theme } }) {
 
 	const urls: RequestUrl = {
 		fetchApiRepoWidgets: `http://localhost:3000/designer/projects/${project.id}/dependences/widgets`,
+		fetchApiRepoServices: `http://localhost:3000/designer/projects/${project.id}/dependences/services`,
 		fetchPageModel: `http://localhost:3000/designer/pages/${page.id}/model`,
 		fetchIdeDependenceInfos: `http://localhost:3000/designer/projects/${project.id}/dependences?category=dev`,
 		externalScriptAndCssWebsite: "http://localhost:3001",

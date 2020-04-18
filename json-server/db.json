@@ -75,6 +75,95 @@
       "widgetCategories": []
     }
   ],
+  "services": [
+    {
+      "projectId": 1,
+      "apiRepoId": 3,
+      "apiRepoName": "api-service-1",
+      "groups": [
+        {
+          "name": "users",
+          "paths": [
+            {
+              "name": "/users/{userId}",
+              "operations": [{
+                "operationId": "getUserById",
+                "httpMethod": "GET",
+                "description": "根据用户标识获取详细信息",
+                "parameters": [{
+                  "name": "userId",
+                  "in": "path",
+                  "required": true,
+                  "schema": {
+                    "type": "string"
+                  }
+                }],
+                "responses": [
+                  {
+                    "name": "200",
+                    "content": [
+                      {
+                        "name": "application/json",
+                        "schema": {
+                          "type": "object",
+                          "properties": [
+                            {
+                              "name": "userId",
+                              "type": "string"
+                            },
+                            {
+                              "name": "username",
+                              "type": "string"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "operationId": "deleteUserById",
+                "httpMethod": "DELETE",
+                "description": "删除用户",
+                "parameters": [{
+                  "name": "userId",
+                  "in": "path",
+                  "required": true,
+                  "schema": {
+                    "type": "string"
+                  }
+                }],
+                "responses": [
+                  {
+                    "name": "200",
+                    "content": [
+                      {
+                        "name": "application/json",
+                        "schema": {
+                          "type": "object",
+                          "properties": [
+                            {
+                              "name": "userId",
+                              "type": "string"
+                            },
+                            {
+                              "name": "username",
+                              "type": "string"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }]
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "pages": [
     {
       "id": 1,
@@ -136,7 +225,7 @@
       ]
     }
   ],
-  "ideDependences": [
+  "projectDependences": [
     {
       "projectId": 1,
       "id": 1,
@@ -158,6 +247,18 @@
       "gitRepoName": "ide-widgets-bootstrap",
       "name": "ide-widgets-bootstrap",
       "category": "Widget",
+      "version": "0.1.0",
+      "std": false
+    },
+    {
+      "projectId": 1,
+      "id": 3,
+      "apiRepoId": 3,
+      "gitRepoWebsite": "github.com",
+      "gitRepoOwner": "blocklang",
+      "gitRepoName": "service-1",
+      "name": "service-1",
+      "category": "Service",
       "version": "0.1.0",
       "std": false
     }

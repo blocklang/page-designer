@@ -125,6 +125,7 @@ export interface InstWidgetProperties extends WidgetProperties {
  */
 export interface RequestUrl {
 	fetchApiRepoWidgets: string;
+	fetchApiRepoServices: string;
 	fetchPageModel: string;
 	fetchIdeDependenceInfos: string;
 	savePageModel: string;
