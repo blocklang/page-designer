@@ -9,7 +9,7 @@ import store from "designer-core/store";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
 import { add } from "@dojo/framework/stores/state/operations";
 import TitleBar from "../../../../../../src/widgets/edit/behavior/func/TitleBar";
-import Editor from "../../../../../../src/widgets/edit/behavior/func/Editor";
+import Editor from "../../../../../../src/widgets/edit/behavior/func/editor";
 
 describe("widgets/edit/behavior/func", () => {
 	const baseAssertion = assertionTemplate(() => (

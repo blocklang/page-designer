@@ -6,7 +6,7 @@ import { find } from "@dojo/framework/shim/array";
 import { newFunctionProcess, activeFunctionProcess } from "../../../../processes/pageFunctionProcesses";
 import dimensions from "@dojo/framework/core/middleware/dimensions";
 import TitleBar from "./TitleBar";
-import Editor from "./Editor";
+import Editor from "./editor";
 import OperatePane from "./operate-pane";
 
 export interface EditorProperties {

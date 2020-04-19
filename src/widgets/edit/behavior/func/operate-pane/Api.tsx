@@ -113,7 +113,12 @@ export default factory(function Api({ properties, middleware: { store, icache } 
 																{group.paths.map((pathItem) => {
 																	return pathItem.operations.map((op) => {
 																		return (
-																			<div classes={[css.opItem]}>
+																			<div
+																				classes={[css.opItem]}
+																				onclick={() => {
+																					//executor(addServiceNodeProcess)({});
+																				}}
+																			>
 																				<span
 																					classes={[
 																						c.badge,

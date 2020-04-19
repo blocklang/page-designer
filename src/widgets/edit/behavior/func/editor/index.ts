@@ -1,7 +1,7 @@
 import { create, v, w, invalidator } from "@dojo/framework/core/vdom";
 import { PageFunction, VisualNode, NodeConnection, InputDataPort } from "designer-core/interfaces";
 import * as c from "bootstrap-classes";
-import * as css from "./Editor.m.css";
+import * as css from "./index.m.css";
 import { DNode } from "@dojo/framework/core/interfaces";
 import store from "designer-core/store";
 import {
@@ -15,13 +15,13 @@ import {
 	updateDataConnectorProcess,
 	removeFunctionNodeProcess,
 	updateInputDataPortValueProcess,
-} from "../../../../processes/pageFunctionProcesses";
+} from "../../../../../processes/pageFunctionProcesses";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import { find, findIndex } from "@dojo/framework/shim/array";
-import { getConnectorOffset, getConnectorPath } from "./util";
-import { drag, DragResults } from "../../../../middleware/drag";
+import { getConnectorOffset, getConnectorPath } from "../util";
+import { drag, DragResults } from "../../../../../middleware/drag";
 import dimensions from "@dojo/framework/core/middleware/dimensions";
-import { PortPosition } from "../../../../processes/interfaces";
+import { PortPosition } from "../../../../../processes/interfaces";
 
 export interface EditorProperties {
 	pageFunction?: PageFunction;
