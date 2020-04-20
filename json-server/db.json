@@ -133,6 +133,20 @@
                   "schema": {
                     "type": "string"
                   }
+                },{
+                  "name": "a",
+                  "in": "query",
+                  "required": true,
+                  "schema": {
+                    "type": "string"
+                  }
+                },{
+                  "name": "b",
+                  "in": "header",
+                  "required": true,
+                  "schema": {
+                    "type": "string"
+                  }
                 }],
                 "responses": [
                   {
@@ -221,8 +235,7 @@
           "open": true
         }
       ],
-      "functions": [
-      ]
+      "functions": []
     }
   ],
   "projectDependences": [

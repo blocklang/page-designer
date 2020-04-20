@@ -1,5 +1,12 @@
 import { create, v, w, invalidator } from "@dojo/framework/core/vdom";
-import { PageFunction, VisualNode, NodeConnection, InputDataPort } from "designer-core/interfaces";
+import {
+	PageFunction,
+	VisualNode,
+	NodeConnection,
+	InputDataPort,
+	OutputSequencePort,
+	DataPort,
+} from "designer-core/interfaces";
 import * as c from "bootstrap-classes";
 import * as css from "./index.m.css";
 import { DNode } from "@dojo/framework/core/interfaces";
@@ -222,6 +229,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 						invalidator();
 						return;
 					}
+
 					executor(addSequenceConnectorProcess)({ startPort, endPort });
 				} else if (connectingStartPort.portType === "data") {
 					// 节点-输出型数据端口 -> 节点-输入型数据端口之间的连线已存在
@@ -254,11 +262,12 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 
 	function renderNodes(): DNode[] {
 		return nodes.map((node) => {
-			debugger;
 			if (node.layout === "flowControl") {
 				return renderFlowControlNode(node);
 			} else if (node.layout === "data") {
 				return renderDataNode(node);
+			} else if (node.layout === "async") {
+				return renderAsyncNode(node);
 			} else {
 				return v("div", { classes: [c.border, css.node] }, [`未实现 layout 为"${node.layout}"的节点`]);
 			}
@@ -289,7 +298,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 				v("div", { key: `${node.id}-caption`, classes: [c.bg_secondary, c.px_1, css.caption] }, [node.caption]),
 				node.outputSequencePorts.length === 1 &&
 					v("div", { classes: [c.d_flex, c.justify_content_between] }, [
-						v("div", { classes: [c.px_1] }, [v("span", { classes: [css.blankPort] })]),
+						renderBlankPort(),
 						v("div", {}, [node.text]),
 						v(
 							"div",
@@ -377,7 +386,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 					]),
 				...node.outputDataPorts.map((item) =>
 					v("div", { classes: [c.d_flex, c.justify_content_between] }, [
-						v("div", { classes: [c.px_1] }, [v("span", { classes: [css.blankPort] })]),
+						renderBlankPort(),
 						v("div", { classes: [c.pl_1] }, [
 							v("span", {}, [item.name]),
 							v("small", { classes: [c.ml_1, c.font_italic] }, [item.type]),
@@ -649,12 +658,12 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 									v("small", { classes: [c.font_italic] }, [item.type]),
 									v("span", { classes: [c.ml_1] }, [item.name]),
 							  ]),
-						v("div", { classes: [c.px_1] }, [v("span", { classes: [css.blankPort] })]),
+						renderBlankPort(),
 					])
 				),
 				...node.outputDataPorts.map((item) =>
 					v("div", { classes: [c.d_flex, c.justify_content_between] }, [
-						v("div", { classes: [c.px_1] }, [v("span", { classes: [css.blankPort] })]),
+						renderBlankPort(),
 						v("div", { classes: [c.pl_1] }, [
 							v("span", {}, [item.name]),
 							v("small", { classes: [c.ml_1, c.font_italic] }, [item.type]),
@@ -696,6 +705,384 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 				),
 			]
 		);
+	}
+
+	function renderAsyncNode(node: VisualNode): DNode {
+		const { inputSequencePort, outputSequencePorts, inputDataPorts, outputDataPorts } = node;
+		const primaryOutputSequencePort = find(outputSequencePorts, (osp) => osp.text === "");
+		const asyncOutputSequencePorts = outputSequencePorts.filter((osp) => osp.text !== "");
+		const outputPorts = [...asyncOutputSequencePorts, ...outputDataPorts];
+
+		if (!inputSequencePort || !primaryOutputSequencePort) {
+			return;
+		}
+
+		function renderDataPortRows(): DNode[] {
+			const maxDataPortRow = Math.max(inputDataPorts.length, outputPorts.length);
+			const result: DNode[] = [];
+			for (let i = 0; i < maxDataPortRow; i++) {
+				const idp = inputDataPorts[i];
+				const op = outputPorts[i];
+				result.push(
+					v("div", { classes: [c.d_flex, c.justify_content_between] }, [
+						idp ? renderInputDataPort(idp) : renderBlankPort(),
+						op ? renderOutputPort(op) : renderBlankPort(),
+					])
+				);
+			}
+			return result;
+		}
+
+		function renderInputDataPort(idp: InputDataPort): DNode {
+			const connected =
+				findIndex(
+					dataConnections,
+					(connection) => connection.toNode === node.id && connection.toInput === idp.id
+				) > -1;
+			if (connected) {
+				return v("div", { classes: [c.mr_2] }, [
+					v(
+						"span",
+						{
+							key: `${idp.id}-connected`,
+							classes: [c.px_1, css.dataPointIcon],
+							onpointerdown: (event: PointerEvent) => {
+								onPointerDownInputDataPort(node.id, idp, event);
+							},
+							onpointerenter: (event: PointerEvent) => {
+								onHoverPort({
+									nodeId: node.id,
+									portId: idp.id,
+									portType: "data",
+									flowType: "input",
+								});
+							},
+							onpointerleave: (event: PointerEvent) => {
+								onLeavePort();
+							},
+						},
+						[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
+					),
+					v("small", { classes: [c.font_italic] }, [idp.type]),
+					v("span", { classes: [c.ml_1] }, [idp.name]),
+				]);
+			}
+
+			return v("div", { classes: [c.d_flex, c.justify_content_start, c.mr_2] }, [
+				v("div", { key: "left", classes: [c.d_flex, c.align_items_center] }, [
+					v(
+						"span",
+						{
+							key: idp.id,
+							classes: [c.px_1, css.dataPointIcon],
+							onpointerdown: (event: PointerEvent) => {
+								onPointerDownInputDataPort(node.id, idp, event);
+							},
+							onpointerenter: () => {
+								onHoverPort({
+									nodeId: node.id,
+									portId: idp.id,
+									portType: "data",
+									flowType: "input",
+								});
+							},
+							onpointerleave: () => {
+								onLeavePort();
+							},
+						},
+						[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
+					),
+				]),
+				v("div", { key: "right" }, [
+					v("div", {}, [
+						v("small", { classes: [c.font_italic] }, [idp.type]),
+						v("span", { classes: [c.ml_1] }, [idp.name]),
+					]),
+					v("input", {
+						key: "input",
+						value: idp.value,
+						classes: [css.inputValue],
+						oninput: (event: KeyboardEvent) => {
+							const value = (event.target as HTMLInputElement).value;
+							executor(updateInputDataPortValueProcess)({
+								inputDataPort: { nodeId: node.id, portId: idp.id },
+								value,
+							});
+						},
+					}),
+				]),
+			]);
+		}
+
+		function renderOutputPort(outputPort: OutputSequencePort | DataPort): DNode {
+			if ((<OutputSequencePort>outputPort).text) {
+				const op = outputPort as OutputSequencePort;
+				return renderOutputSequencePort(op);
+			}
+			const op = outputPort as DataPort;
+			return renderOutputDataPort(op);
+		}
+
+		function renderOutputDataPort(op: DataPort): DNode<any> {
+			return v("div", { classes: [c.pl_1] }, [
+				v("span", {}, [op.name]),
+				v("small", { classes: [c.ml_1, c.font_italic] }, [op.type]),
+				v(
+					"span",
+					{
+						key: op.id,
+						classes: [c.px_1, css.dataPointIcon],
+						onpointerdown: (event: PointerEvent) => {
+							// 初始化数据
+							editingDataConnectorId = undefined;
+							editingSequenceConnectorId = undefined;
+							connectingHoverPort = undefined;
+							connectingStartPort = {
+								nodeId: node.id,
+								portId: op.id,
+								portType: "data",
+								flowType: "output",
+							};
+							startConnect(event);
+						},
+						onpointerenter: (event: PointerEvent) => {
+							onHoverPort({
+								nodeId: node.id,
+								portId: op.id,
+								portType: "data",
+								flowType: "output",
+							});
+						},
+						onpointerleave: (event: PointerEvent) => {
+							onLeavePort();
+						},
+					},
+					[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
+				),
+			]);
+		}
+
+		function renderOutputSequencePort(osp: OutputSequencePort): DNode<any> {
+			return v("div", { classes: [] }, [
+				v("span", {}, [osp.text]),
+				v(
+					"span",
+					{
+						key: osp.id,
+						classes: [c.px_1],
+						onpointerdown: (event: PointerEvent) => {
+							// 初始化数据
+							editingDataConnectorId = undefined;
+							editingSequenceConnectorId = undefined;
+							connectingHoverPort = undefined;
+							const sc = find(
+								sequenceConnections,
+								(sc) => sc.fromNode === node.id && sc.fromOutput === osp.id
+							);
+							// 编辑已有节点
+							if (sc) {
+								// 相当于从起点的输出型端口切断了，可看作是从终点的输入型端口开始连线
+								editingSequenceConnectorId = sc.id;
+								connectingStartPort = {
+									nodeId: sc.toNode,
+									portId: sc.toInput,
+									portType: "sequence",
+									flowType: "input",
+								};
+								const newRootDimensions = dimensions.get("root");
+								const toInputPortDimensions = dimensions.get(sc.toInput);
+								drawingConnectorStartPort = {
+									x:
+										toInputPortDimensions.position.left -
+										newRootDimensions.position.left +
+										toInputPortDimensions.size.width / 2,
+									y:
+										toInputPortDimensions.position.top -
+										newRootDimensions.position.top +
+										toInputPortDimensions.size.height / 2,
+								};
+								drawingConnectorEndPort = {
+									x: event.clientX - newRootDimensions.position.left,
+									y: event.clientY - newRootDimensions.position.top,
+								};
+								isConnecting = true;
+							} else {
+								connectingStartPort = {
+									nodeId: node.id,
+									portId: osp.id,
+									portType: "sequence",
+									flowType: "output",
+								};
+								startConnect(event);
+							}
+						},
+						onpointerenter: (event: PointerEvent) => {
+							onHoverPort({
+								nodeId: node.id,
+								portId: osp.id,
+								portType: "sequence",
+								flowType: "output",
+							});
+						},
+						onpointerleave: (event: PointerEvent) => {
+							onLeavePort();
+						},
+					},
+					[w(FontAwesomeIcon, { icon: "caret-right" })]
+				),
+			]);
+		}
+
+		return v(
+			"div",
+			{
+				key: node.id,
+				classes: [
+					c.border,
+					node.id === selectedFunctionNodeId ? c.border_primary : undefined,
+					c.bg_light,
+					css.node,
+				],
+				styles: { top: `${node.top}px`, left: `${node.left}px` },
+				onpointerdown: (event: PointerEvent) => {
+					// 用于选中节点
+					// 如果已经选中了，则不再重复选中
+					if (selectedFunctionNodeId !== node.id) {
+						executor(activeFunctionNodeProcess)({ functionNodeId: node.id });
+					}
+				},
+			},
+			[
+				v("div", { key: `${node.id}-caption`, classes: [c.bg_secondary, c.px_1, css.caption] }, [
+					node.caption,
+					v(
+						"span",
+						{
+							classes: [c.float_right, c.text_white, c.ml_2, css.close],
+							onclick: (event: MouseEvent) => {
+								executor(removeFunctionNodeProcess)({ functionNodeId: node.id });
+							},
+							onpointerdown: (event: PointerEvent) => {
+								// 点击删除按钮时，不能选中节点和移动节点
+								event.preventDefault();
+								event.stopPropagation();
+							},
+						},
+						[w(FontAwesomeIcon, { icon: "times" })]
+					),
+				]),
+				v("div", { classes: [c.d_flex, c.justify_content_between] }, [
+					v(
+						"div",
+						{
+							key: inputSequencePort.id,
+							classes: [c.px_1],
+							onpointerdown: (event: PointerEvent) => {
+								// 初始化数据
+								editingDataConnectorId = undefined;
+								editingSequenceConnectorId = undefined;
+								connectingHoverPort = undefined;
+
+								connectingStartPort = {
+									nodeId: node.id,
+									portId: inputSequencePort.id,
+									portType: "sequence",
+									flowType: "input",
+								};
+								startConnect(event);
+							},
+							onpointerenter: (event: PointerEvent) => {
+								onHoverPort({
+									nodeId: node.id,
+									portId: inputSequencePort.id,
+									portType: "sequence",
+									flowType: "input",
+								});
+							},
+							onpointerleave: (event: PointerEvent) => {
+								onLeavePort();
+							},
+						},
+						[w(FontAwesomeIcon, { icon: "caret-right" })]
+					),
+					v("div", {}, [node.text]),
+					v(
+						"div",
+						{
+							key: node.outputSequencePorts[0].id,
+							classes: [c.px_1],
+							onpointerdown: (event: PointerEvent) => {
+								// 初始化数据
+								editingDataConnectorId = undefined;
+								editingSequenceConnectorId = undefined;
+								connectingHoverPort = undefined;
+
+								const sc = find(
+									sequenceConnections,
+									(sc) => sc.fromNode === node.id && sc.fromOutput === primaryOutputSequencePort.id
+								);
+								// 编辑已有节点
+								if (sc) {
+									// 相当于从起点的输出型端口切断了，可看作是从终点的输入型端口开始连线
+									editingSequenceConnectorId = sc.id;
+									connectingStartPort = {
+										nodeId: sc.toNode,
+										portId: sc.toInput,
+										portType: "sequence", // 有效值只能是 sequence
+										flowType: "input", // 有效值只能是 input
+									};
+
+									const newRootDimensions = dimensions.get("root");
+									const toInputPortDimensions = dimensions.get(sc.toInput);
+									drawingConnectorStartPort = {
+										x:
+											toInputPortDimensions.position.left -
+											newRootDimensions.position.left +
+											toInputPortDimensions.size.width / 2,
+										y:
+											toInputPortDimensions.position.top -
+											newRootDimensions.position.top +
+											toInputPortDimensions.size.height / 2,
+									};
+
+									drawingConnectorEndPort = {
+										x: event.clientX - newRootDimensions.position.left,
+										y: event.clientY - newRootDimensions.position.top,
+									};
+
+									isConnecting = true;
+								} else {
+									connectingStartPort = {
+										nodeId: node.id,
+										portId: primaryOutputSequencePort.id,
+										portType: "sequence",
+										flowType: "output",
+									};
+									startConnect(event);
+								}
+							},
+							onpointerenter: (event: PointerEvent) => {
+								onHoverPort({
+									nodeId: node.id,
+									portId: primaryOutputSequencePort.id,
+									portType: "sequence",
+									flowType: "output",
+								});
+							},
+							onpointerleave: (event: PointerEvent) => {
+								onLeavePort();
+							},
+						},
+						[w(FontAwesomeIcon, { icon: "caret-right" })]
+					),
+				]),
+				...renderDataPortRows(),
+			]
+		);
+	}
+
+	function renderBlankPort(): DNode {
+		return v("div", { classes: [c.px_1] }, [v("span", { classes: [css.blankPort] })]);
 	}
 
 	function onPointerDownInputDataPort(

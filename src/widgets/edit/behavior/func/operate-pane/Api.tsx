@@ -1,7 +1,7 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
 import store from "designer-core/store";
 import icache from "@dojo/framework/core/middleware/icache";
-import { getServicesProcess } from "../../../../../processes/serviceProcesses";
+import { getServicesProcess, addServiceNodeProcess } from "../../../../../processes/serviceProcesses";
 import * as c from "bootstrap-classes";
 import * as css from "./Api.m.css";
 import { find } from "@dojo/framework/shim/array";
@@ -116,7 +116,12 @@ export default factory(function Api({ properties, middleware: { store, icache } 
 																			<div
 																				classes={[css.opItem]}
 																				onclick={() => {
-																					//executor(addServiceNodeProcess)({});
+																					executor(addServiceNodeProcess)({
+																						service: {
+																							path: pathItem.name,
+																							...op,
+																						},
+																					});
 																				}}
 																			>
 																				<span
