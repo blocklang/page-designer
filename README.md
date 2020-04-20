@@ -4,9 +4,13 @@
 [![Build Status](https://travis-ci.org/blocklang/page-designer.svg?branch=master)](https://travis-ci.org/blocklang/page-designer)
 [![codecov](https://codecov.io/gh/blocklang/page-designer/branch/master/graph/badge.svg)](https://codecov.io/gh/blocklang/page-designer)
 
-可视化页面设计器
+可视化的页面设计器。支持设计静态页面和动态页面。
 
-详见[开发文档](./docs/README.md)
+基于 [Dojo](https://dojo.io) 开发。
+
+## 演示图
+
+![static page](./docs/images/page_designer_static_page.gif)
 
 ## 开发
 
