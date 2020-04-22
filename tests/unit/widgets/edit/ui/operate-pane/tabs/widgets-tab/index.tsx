@@ -7,14 +7,14 @@ import { add, replace } from "@dojo/framework/stores/state/operations";
 import * as c from "bootstrap-classes";
 import { stub } from "sinon";
 
-import WidgetsTab from "../../../../../../../src/widgets/edit/ui/operate-pane/tabs/widgets-tab";
-import * as css from "../../../../../../../src/widgets/edit/ui/operate-pane/tabs/widgets-tab/index.m.css";
+import WidgetsTab from "../../../../../../../../src/widgets/edit/ui/operate-pane/tabs/widgets-tab";
+import * as css from "../../../../../../../../src/widgets/edit/ui/operate-pane/tabs/widgets-tab/index.m.css";
 import { State } from "designer-core/interfaces";
 import store from "designer-core/store";
-import { getWidgetsProcess } from "../../../../../../../src/processes/widgetProcesses";
+import { getWidgetsProcess } from "../../../../../../../../src/processes/projectDependenciesProcesses";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 
-describe("edit/ui/operate-pane/widgets-tab", () => {
+describe("edit/ui/operate-pane/tabs/widgets-tab", () => {
 	it("No widget repo", () => {
 		const processStub = stub();
 		const mockStore = createMockStoreMiddleware<State>([[getWidgetsProcess, processStub]]);
@@ -42,7 +42,7 @@ describe("edit/ui/operate-pane/widgets-tab", () => {
 		));
 
 		// 加载完成，返回空数组
-		mockStore((path) => [add(path("widgetRepos"), [])]);
+		mockStore((path) => [add(path("repoWidgets"), [])]);
 		h.expect(() => (
 			<div>
 				<div classes={[c.mt_1]}>
@@ -70,7 +70,7 @@ describe("edit/ui/operate-pane/widgets-tab", () => {
 
 		// 加载完成，返回两个空的部件仓库
 		mockStore((path) => [
-			replace(path("widgetRepos"), [
+			replace(path("repoWidgets"), [
 				{ apiRepoId: 1, apiRepoName: "widget api repo 1", widgetCategories: [] },
 				{ apiRepoId: 2, apiRepoName: "widget api repo 2", widgetCategories: [] },
 			]),
@@ -119,7 +119,7 @@ describe("edit/ui/operate-pane/widgets-tab", () => {
 
 		// 加载完成，返回两个空的部件仓库
 		mockStore((path) => [
-			replace(path("widgetRepos"), [{ apiRepoId: 1, apiRepoName: "widget api repo 1", widgetCategories: [] }]),
+			replace(path("repoWidgets"), [{ apiRepoId: 1, apiRepoName: "widget api repo 1", widgetCategories: [] }]),
 		]);
 
 		h.trigger(`.${css.repoNameBar}`, "onclick");
@@ -181,7 +181,7 @@ describe("edit/ui/operate-pane/widgets-tab", () => {
 		const h = harness(() => <WidgetsTab />, { middleware: [[store, mockStore]] });
 
 		mockStore((path) => [
-			replace(path("widgetRepos"), [
+			replace(path("repoWidgets"), [
 				{ apiRepoId: 1, apiRepoName: "widget api repo 1", widgetCategories: [{ name: "c1", widgets: [] }] },
 			]),
 		]);
@@ -218,7 +218,7 @@ describe("edit/ui/operate-pane/widgets-tab", () => {
 		const h = harness(() => <WidgetsTab />, { middleware: [[store, mockStore]] });
 
 		mockStore((path) => [
-			replace(path("widgetRepos"), [
+			replace(path("repoWidgets"), [
 				{
 					apiRepoId: 1,
 					apiRepoName: "widget api repo 1",
@@ -288,7 +288,7 @@ describe("edit/ui/operate-pane/widgets-tab", () => {
 		const h = harness(() => <WidgetsTab />, { middleware: [[store, mockStore]] });
 
 		mockStore((path) => [
-			replace(path("widgetRepos"), [
+			replace(path("repoWidgets"), [
 				{
 					apiRepoId: 1,
 					apiRepoName: "widget api repo 1",
@@ -393,7 +393,7 @@ describe("edit/ui/operate-pane/widgets-tab", () => {
 		const h = harness(() => <WidgetsTab />, { middleware: [[store, mockStore]] });
 
 		mockStore((path) => [
-			replace(path("widgetRepos"), [
+			replace(path("repoWidgets"), [
 				{
 					apiRepoId: 1,
 					apiRepoName: "widget api repo 1",
@@ -463,7 +463,7 @@ describe("edit/ui/operate-pane/widgets-tab", () => {
 		const h = harness(() => <WidgetsTab />, { middleware: [[store, mockStore]] });
 
 		mockStore((path) => [
-			replace(path("widgetRepos"), [
+			replace(path("repoWidgets"), [
 				{
 					apiRepoId: 1,
 					apiRepoName: "widget api repo 1",

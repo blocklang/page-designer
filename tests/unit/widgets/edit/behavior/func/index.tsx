@@ -10,6 +10,7 @@ import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/
 import { add } from "@dojo/framework/stores/state/operations";
 import TitleBar from "../../../../../../src/widgets/edit/behavior/func/TitleBar";
 import Editor from "../../../../../../src/widgets/edit/behavior/func/editor";
+import OperatePane from "../../../../../../src/widgets/edit/behavior/func/operate-pane";
 
 describe("widgets/edit/behavior/func", () => {
 	const baseAssertion = assertionTemplate(() => (
@@ -21,7 +22,9 @@ describe("widgets/edit/behavior/func", () => {
 				widgets={[]}
 				activeWidgetProperty={undefined}
 			/>
-			<Editor assertion-key="editor" pageFunction={undefined} />
+			<div key="editor" assertion-key="container">
+				<Editor assertion-key="editor" pageFunction={undefined} />
+			</div>
 		</div>
 	));
 
@@ -289,7 +292,8 @@ describe("widgets/edit/behavior/func", () => {
 				widgets,
 				activeWidgetProperty: widgets[0].properties[0],
 			})
-			.setProperties("~editor", { pageFunction: functions[0] });
+			.setProperties("~editor", { pageFunction: functions[0] })
+			.setChildren("~container", () => [<OperatePane top={0} />, <Editor pageFunction={functions[0]} />]);
 
 		const mockStore = createMockStoreMiddleware<State>();
 		mockStore((path) => [add(path("selectedWidgetIndex"), 0), add(path("selectedWidgetPropertyIndex"), 0)]);

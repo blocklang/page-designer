@@ -4,10 +4,10 @@ const { assert } = intern.getPlugin("chai");
 import global from "@dojo/framework/shim/global";
 import { stub } from "sinon";
 
-import { getWidgetsProcess } from "../../../src/processes/widgetProcesses";
+import { getWidgetsProcess } from "../../../src/processes/projectDependenciesProcesses";
+import { initProjectProcess } from "../../../src/processes/projectProcesses";
 import Store from "@dojo/framework/stores/Store";
 import { State } from "designer-core/interfaces";
-import { initProjectProcess } from "../../../src/processes/projectProcesses";
 import { config } from "../../../src/config";
 
 const fetchStub = stub();
@@ -31,6 +31,6 @@ describe("processes/widgetProcesses", () => {
 		fetchStub.withArgs(url).returns(mockResponse);
 		const executor = getWidgetsProcess(store);
 		await executor({});
-		assert.deepEqual(store.get(store.path("widgetRepos")), []);
+		assert.deepEqual(store.get(store.path("repoWidgets")), []);
 	});
 });
