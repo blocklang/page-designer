@@ -3,7 +3,7 @@ const { assert } = intern.getPlugin("chai");
 
 import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
-import PropertiesTab from "../../../../../../../src/widgets/edit/ui/operate-pane/properties-tab";
+import PropertiesTab from "../../../../../../../src/widgets/edit/ui/operate-pane/tabs/properties-tab";
 import store from "designer-core/store";
 import { State, ComponentRepo } from "designer-core/interfaces";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
@@ -16,7 +16,7 @@ import { SingleProperty } from "designer-core/interfaces";
 import { changeActiveWidgetPropertiesProcess } from "../../../../../../../src/processes/uiProcesses";
 
 import * as c from "bootstrap-classes";
-import * as css from "../../../../../../../src/widgets/edit/ui/operate-pane/properties-tab/index.m.css";
+import * as css from "../../../../../../../src/widgets/edit/ui/operate-pane/tabs/properties-tab/index.m.css";
 
 let findWidgetPropertiesLayoutStub: SinonStub<[GitUrlSegment | string, string], PropertyLayout[]>;
 

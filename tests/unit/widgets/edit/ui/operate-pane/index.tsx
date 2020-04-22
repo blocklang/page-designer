@@ -10,8 +10,8 @@ import * as css from "../../../../../../src/widgets/edit/ui/operate-pane/index.m
 
 import UIOperatePane from "../../../../../../src/widgets/edit/ui/operate-pane";
 import Header from "../../../../../../src/widgets/edit/ui/operate-pane/Header";
-import WidgetsTab from "../../../../../../src/widgets/edit/ui/operate-pane/widgets-tab";
-import PropertiesTab from "../../../../../../src/widgets/edit/ui/operate-pane/properties-tab";
+import WidgetsTab from "../../../../../../src/widgets/edit/ui/operate-pane/tabs/widgets-tab";
+import PropertiesTab from "../../../../../../src/widgets/edit/ui/operate-pane/tabs/properties-tab";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
 import { State } from "designer-core/interfaces";
 import store from "designer-core/store";

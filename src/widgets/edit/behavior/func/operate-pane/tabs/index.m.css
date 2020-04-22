@@ -1,0 +1,7 @@
+.tabBar {
+	border-bottom: 1px solid #ced4da;
+}
+
+.tabBarActive {
+	border-bottom: 1px solid #007bff;
+}

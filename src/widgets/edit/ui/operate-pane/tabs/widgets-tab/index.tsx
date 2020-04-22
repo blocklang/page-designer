@@ -5,9 +5,9 @@ import { find } from "@dojo/framework/shim/array";
 import store from "designer-core/store";
 import { RepoWidgetList } from "designer-core/interfaces";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
-import { getWidgetsProcess } from "../../../../../processes/projectDependenciesProcesses";
+import { getWidgetsProcess } from "../../../../../../processes/projectDependenciesProcesses";
 import { deepMixin } from "@dojo/framework/core/util";
-import { insertWidgetsProcess } from "../../../../../processes/uiProcesses";
+import { insertWidgetsProcess } from "../../../../../../processes/uiProcesses";
 import * as c from "bootstrap-classes";
 import * as css from "./index.m.css";
 

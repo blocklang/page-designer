@@ -1,13 +1,10 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
 
-import * as c from "bootstrap-classes";
 import * as css from "./index.m.css";
 import Header from "./Header";
 import store from "designer-core/store";
-import WidgetsTab from "./widgets-tab";
-import PropertiesTab from "./properties-tab";
 import { drag } from "../../../../middleware/drag";
-import { switchUIOperateTabProcess } from "../../../../processes/designerProcesses";
+import Tab from "./tabs";
 
 export interface UIOperatePaneProperties {
 	top?: number; // 设置初始化位置
@@ -55,52 +52,12 @@ export default factory(function UIOperatePane({ properties, middleware: { store,
 		top: `${top + dragTop}px`,
 	};
 
-	const { get, path, executor } = store;
-
-	const activeNav = get(path("paneLayout", "uiOperateTab")) || "widgets";
-
 	return (
 		<div key="root" classes={[css.root]} styles={styles}>
 			<div key="header">
 				<Header />
 			</div>
-			<ul classes={[c.nav, "nav-fill"]}>
-				<li classes={[c.nav_item]}>
-					<a
-						key="nav-widgets"
-						classes={[
-							c.nav_link,
-							activeNav === "widgets" ? c.active : c.text_muted,
-							activeNav === "widgets" ? css.tabBarActive : css.tabBar,
-						]}
-						href="#"
-						onclick={(event: MouseEvent) => {
-							event.preventDefault();
-							executor(switchUIOperateTabProcess)({});
-						}}
-					>
-						部件
-					</a>
-				</li>
-				<li classes={[c.nav_item]}>
-					<a
-						key="nav-properties"
-						classes={[
-							c.nav_link,
-							activeNav === "properties" ? c.active : c.text_muted,
-							activeNav === "properties" ? css.tabBarActive : css.tabBar,
-						]}
-						href="#"
-						onclick={(event: MouseEvent) => {
-							event.preventDefault();
-							executor(switchUIOperateTabProcess)({});
-						}}
-					>
-						属性
-					</a>
-				</li>
-			</ul>
-			{activeNav === "widgets" ? <WidgetsTab /> : <PropertiesTab />}
+			<Tab />
 		</div>
 	);
 });

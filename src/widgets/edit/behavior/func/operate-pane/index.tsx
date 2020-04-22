@@ -2,7 +2,7 @@ import { create, tsx } from "@dojo/framework/core/vdom";
 import * as css from "./index.m.css";
 import { drag } from "../../../../../middleware/drag";
 import Header from "./Header";
-import Api from "./Api";
+import Tab from "./tabs";
 
 export interface OperatePaneProperties {
 	top: number;
@@ -54,7 +54,7 @@ export default factory(function OperatePane({ properties, middleware: { drag } }
 			<div key="header">
 				<Header />
 			</div>
-			<Api />
+			<Tab />
 		</div>
 	);
 });

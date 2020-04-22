@@ -7,8 +7,11 @@ import { AttachedWidget, PaneLayout } from "designer-core/interfaces";
 import { find } from "@dojo/framework/shim/array";
 import * as layoutParser from "./layoutParser";
 import { PropertyLayout, ChangedPropertyValue } from "designer-core/interfaces";
-import { changeActiveWidgetPropertiesProcess, activeWidgetPropertyProcess } from "../../../../../processes/uiProcesses";
-import { switchPageViewTypeProcess } from "../../../../../processes/designerProcesses";
+import {
+	changeActiveWidgetPropertiesProcess,
+	activeWidgetPropertyProcess,
+} from "../../../../../../processes/uiProcesses";
+import { switchPageViewTypeProcess } from "../../../../../../processes/designerProcesses";
 
 export interface PropertiesTabProperties {}
 

@@ -7,8 +7,8 @@ import { add, replace } from "@dojo/framework/stores/state/operations";
 import * as c from "bootstrap-classes";
 import { stub } from "sinon";
 
-import WidgetsTab from "../../../../../../../src/widgets/edit/ui/operate-pane/widgets-tab";
-import * as css from "../../../../../../../src/widgets/edit/ui/operate-pane/widgets-tab/index.m.css";
+import WidgetsTab from "../../../../../../../src/widgets/edit/ui/operate-pane/tabs/widgets-tab";
+import * as css from "../../../../../../../src/widgets/edit/ui/operate-pane/tabs/widgets-tab/index.m.css";
 import { State } from "designer-core/interfaces";
 import store from "designer-core/store";
 import { getWidgetsProcess } from "../../../../../../../src/processes/widgetProcesses";
