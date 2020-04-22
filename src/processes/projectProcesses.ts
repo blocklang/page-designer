@@ -3,7 +3,7 @@ import { commandFactory } from "./utils";
 import { Project } from "designer-core/interfaces";
 import { add } from "@dojo/framework/stores/state/operations";
 import { config } from "../config";
-import { clearWidgetsCommand } from "./widgetProcesses";
+import { clearWidgetsCommand } from "./projectDependenciesProcesses";
 
 const initProjectCommand = commandFactory<{ project: Project }>(({ path, payload: { project } }) => {
 	console.log("run init project command(如果此文本多次出现，则要考虑去除多余的设置)");

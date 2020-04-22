@@ -6,6 +6,7 @@
 export let config = {
 	fetchApiRepoWidgetsUrl: "", // 获取项目依赖的所有 Widget 组件库中的部件
 	fetchApiRepoServicesUrl: "", // 获取项目依赖的所有 Service 仓库中的 Service
+	fetchApiRepoFunctionsUrl: "", // 获取项目依赖的所有 Function 仓库中的函数
 	fetchPageModelUrl: "", // 获取页面模型
 	savePageModelUrl: "", // 保存页面模型
 	// 获取一个项目的 IDE 依赖，其中仅包含依赖的描述信息，不包含依赖文件

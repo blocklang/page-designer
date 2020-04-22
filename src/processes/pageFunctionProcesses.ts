@@ -1,9 +1,17 @@
 import { createProcess } from "@dojo/framework/stores/process";
 import { commandFactory } from "./utils";
-import { EventHandler, PageFunction, NodeConnection } from "designer-core/interfaces";
+import {
+	EventHandler,
+	PageFunction,
+	NodeConnection,
+	VisualNode,
+	DataPort,
+	PropertyValueType,
+	PageDataItem,
+} from "designer-core/interfaces";
 import { add, replace, remove } from "@dojo/framework/stores/state/operations";
 import { findIndex } from "@dojo/framework/shim/array";
-import { ConnectorPayload, PortPosition } from "./interfaces";
+import { ConnectorPayload, PortPosition, ServicePayload } from "./interfaces";
 import { uuid } from "@dojo/framework/core/util";
 
 // FIXME: 待确认如何实现
@@ -370,6 +378,125 @@ const updateInputDataPortValueCommand = commandFactory<{ inputDataPort: PortPosi
 	}
 );
 
+const addServiceNodeCommand = commandFactory<{ service: ServicePayload }>(({ get, path, at, payload: { service } }) => {
+	const functions = get(path("pageModel", "functions"));
+	const selectedFunctionId = get(path("selectedFunctionId"));
+	const selectedFunctionIndex = findIndex(functions, (func) => func.id === selectedFunctionId);
+
+	// 按照 path, query, head, cookie, requestBody 顺序排列
+	// 按照 path, query, header, cookie 排序
+	const inOrder = { path: 1, query: 2, header: 3, cookie: 4 };
+	const inputDataPorts = service.parameters
+		.sort((a, b) => inOrder[a.in] - inOrder[b.in])
+		.map((param) => ({
+			id: uuid().replace(/-/g, ""),
+			name: `${param.name}(${param.in})`,
+			type: param.schema!.type as PropertyValueType,
+		}));
+
+	if (service.requestBody) {
+		inputDataPorts.push({
+			id: uuid().replace(/-/g, ""),
+			name: "body",
+			type: service.requestBody.content[0].schema.type as PropertyValueType,
+		});
+	}
+
+	const outputDataPorts: DataPort[] = [
+		{
+			id: uuid().replace(/-/g, ""),
+			name: "result",
+			type: "object",
+		},
+		{
+			id: uuid().replace(/-/g, ""),
+			name: "error",
+			type: "object",
+		},
+	];
+
+	const node: VisualNode = {
+		id: uuid().replace(/-/g, ""),
+		left: 30, // 跟第一个函数定义节点的位置错开
+		top: 30,
+		caption: `${service.httpMethod} ${service.path}`,
+		text: "",
+		layout: "async",
+		category: "service",
+		inputSequencePort: { id: uuid().replace(/-/g, "") },
+		outputSequencePorts: [
+			{ id: uuid().replace(/-/g, ""), text: "" },
+			{ id: uuid().replace(/-/g, ""), text: "onSuccess" },
+			{ id: uuid().replace(/-/g, ""), text: "onFail" },
+		],
+		inputDataPorts,
+		outputDataPorts,
+	};
+
+	const selectedFunctionPath = at(path("pageModel", "functions"), selectedFunctionIndex);
+	const nodesLength = functions[selectedFunctionIndex].nodes.length;
+
+	return [add(at(path(selectedFunctionPath, "nodes"), nodesLength), node)];
+});
+
+const addVariableGetNodeCommand = commandFactory<{ dataItem: PageDataItem }>(
+	({ get, path, at, payload: { dataItem } }) => {
+		const functions = get(path("pageModel", "functions"));
+		const selectedFunctionId = get(path("selectedFunctionId"));
+		const selectedFunctionIndex = findIndex(functions, (func) => func.id === selectedFunctionId);
+
+		const node: VisualNode = {
+			id: uuid().replace(/-/g, ""),
+			left: 30, // 跟第一个函数定义节点的位置错开
+			top: 30,
+			caption: `Get ${dataItem.name}`,
+			text: "",
+			layout: "data",
+			category: "variableGet",
+			dataItemId: dataItem.id,
+			inputSequencePort: undefined,
+			outputSequencePorts: [],
+			inputDataPorts: [],
+			outputDataPorts: [
+				{ id: uuid().replace(/-/g, ""), name: "value", type: dataItem.type as PropertyValueType },
+			],
+		};
+
+		const selectedFunctionPath = at(path("pageModel", "functions"), selectedFunctionIndex);
+		const nodesLength = functions[selectedFunctionIndex].nodes.length;
+
+		return [add(at(path(selectedFunctionPath, "nodes"), nodesLength), node)];
+	}
+);
+
+const addVariableSetNodeCommand = commandFactory<{ dataItem: PageDataItem }>(
+	({ get, path, at, payload: { dataItem } }) => {
+		const functions = get(path("pageModel", "functions"));
+		const selectedFunctionId = get(path("selectedFunctionId"));
+		const selectedFunctionIndex = findIndex(functions, (func) => func.id === selectedFunctionId);
+
+		const node: VisualNode = {
+			id: uuid().replace(/-/g, ""),
+			left: 30, // 跟第一个函数定义节点的位置错开
+			top: 30,
+			caption: `Set ${dataItem.name}`,
+			text: "",
+			layout: "data",
+			category: "variableSet",
+			dataItemId: dataItem.id,
+			inputSequencePort: { id: uuid().replace(/-/g, "") },
+			outputSequencePorts: [{ id: uuid().replace(/-/g, ""), text: "" }],
+			inputDataPorts: [{ id: uuid().replace(/-/g, ""), name: "set", type: dataItem.type as PropertyValueType }],
+			outputDataPorts: [],
+		};
+
+		const selectedFunctionPath = at(path("pageModel", "functions"), selectedFunctionIndex);
+		const nodesLength = functions[selectedFunctionIndex].nodes.length;
+
+		return [add(at(path(selectedFunctionPath, "nodes"), nodesLength), node)];
+	}
+);
+
 export const newFunctionProcess = createProcess("new-function", [newFunctionCommand]);
 export const activeFunctionProcess = createProcess("active-function", [activeFunctionCommand]);
 export const activeFunctionNodeProcess = createProcess("active-function-node", [activeFunctionNodeCommand]);
@@ -390,3 +517,7 @@ export const updateDataConnectorProcess = createProcess("update-data-connector",
 export const updateInputDataPortValueProcess = createProcess("update-input-data-port-value", [
 	updateInputDataPortValueCommand,
 ]);
+
+export const addServiceNodeProcess = createProcess("add-service-node", [addServiceNodeCommand]);
+export const addVariableGetNodeProcess = createProcess("add-variable-get-node", [addVariableGetNodeCommand]);
+export const addVariableSetNodeProcess = createProcess("add-variable-set-node", [addVariableSetNodeCommand]);

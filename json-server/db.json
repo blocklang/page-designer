@@ -178,6 +178,32 @@
       ]
     }
   ],
+  "functions": [
+    {
+      "projectId": 1,
+      "apiRepoId": 4,
+      "apiRepoName": "api-func-1",
+      "funcs": [{
+        "name": "console.log",
+        "parameters": [{
+          "name": "message",
+          "type": "any",
+          "optional": true,
+          "variable": true
+        }],
+        "returnType": "void"
+      },{
+        "name": "console.warn",
+        "parameters": [{
+          "name": "message",
+          "type": "any",
+          "optional": true,
+          "variable": true
+        }],
+        "returnType": "void"
+      }]
+    }
+  ],
   "pages": [
     {
       "id": 1,
@@ -272,6 +298,19 @@
       "gitRepoName": "service-1",
       "name": "service-1",
       "category": "Service",
+      "version": "0.1.0",
+      "std": false,
+      "url": "http://localhost:3000/services" 
+    },
+    {
+      "projectId": 1,
+      "id": 4,
+      "apiRepoId": 4,
+      "gitRepoWebsite": "github.com",
+      "gitRepoOwner": "blocklang",
+      "gitRepoName": "func-1",
+      "name": "func-1",
+      "category": "ClientAPI",
       "version": "0.1.0",
       "std": false
     }

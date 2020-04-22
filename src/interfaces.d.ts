@@ -122,10 +122,12 @@ export interface InstWidgetProperties extends WidgetProperties {
  *
  * @property fetchApiRepoWidgets  用户获取 API 仓库中的部件列表
  * @function customFetchHeaders   自定义 fetch 请求的 header 信息
+ * @deprecated
  */
 export interface RequestUrl {
 	fetchApiRepoWidgets: string;
 	fetchApiRepoServices: string;
+	fetchApiRepoFunctions: string;
 	fetchPageModel: string;
 	fetchIdeDependenceInfos: string;
 	savePageModel: string;

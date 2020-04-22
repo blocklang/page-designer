@@ -12,8 +12,6 @@ import {
 	removeActiveDataItemProcess,
 	moveUpActiveDataItemProcess,
 	moveDownActiveDataItemProcess,
-	addVariableSetNodeProcess,
-	addVariableGetNodeProcess,
 } from "../../../processes/pageDataProcesses";
 import * as $ from "jquery";
 import { getChildrenIndex, getPreviousIndex, getNextIndex } from "designer-core/utils/treeUtil";
@@ -21,6 +19,7 @@ import { getChildrenIndex, getPreviousIndex, getNextIndex } from "designer-core/
 import "bootstrap";
 import * as c from "bootstrap-classes";
 import * as css from "./Data.m.css";
+import { addVariableGetNodeProcess, addVariableSetNodeProcess } from "../../../processes/pageFunctionProcesses";
 
 const dataTypes = ["String", "Number", "Date", "Boolean", "Object", "Array"];
 

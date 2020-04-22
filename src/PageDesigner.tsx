@@ -54,6 +54,7 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 	// 1. 本地数据
 	config.fetchApiRepoWidgetsUrl = urls.fetchApiRepoWidgets;
 	config.fetchApiRepoServicesUrl = urls.fetchApiRepoServices;
+	config.fetchApiRepoFunctionsUrl = urls.fetchApiRepoFunctions;
 	config.fetchPageModelUrl = urls.fetchPageModel;
 	config.fetchIdeDependenceInfosUrl = urls.fetchIdeDependenceInfos;
 	config.savePageModelUrl = urls.savePageModel;

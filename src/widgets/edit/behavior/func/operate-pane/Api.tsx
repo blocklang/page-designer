@@ -1,7 +1,8 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
 import store from "designer-core/store";
 import icache from "@dojo/framework/core/middleware/icache";
-import { getServicesProcess, addServiceNodeProcess } from "../../../../../processes/serviceProcesses";
+import { getServicesProcess } from "../../../../../processes/projectDependenciesProcesses";
+import { addServiceNodeProcess } from "../../../../../processes/pageFunctionProcesses";
 import * as c from "bootstrap-classes";
 import * as css from "./Api.m.css";
 import { find } from "@dojo/framework/shim/array";
