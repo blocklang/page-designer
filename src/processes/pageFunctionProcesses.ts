@@ -14,7 +14,6 @@ import { findIndex } from "@dojo/framework/shim/array";
 import { ConnectorPayload, PortPosition, ServicePayload } from "./interfaces";
 import { uuid } from "@dojo/framework/core/util";
 
-// FIXME: 待确认如何实现
 const newFunctionCommand = commandFactory<{ eventHandler: EventHandler }>(
 	({ get, path, at, payload: { eventHandler } }) => {
 		const functions = get(path("pageModel", "functions")) || [];

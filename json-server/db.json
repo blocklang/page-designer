@@ -38,7 +38,12 @@
                 {
                   "id": "2",
                   "name": "onValue",
-                  "valueType": "function"
+                  "valueType": "function",
+                  "arguments": [{
+                    "id": "1",
+                    "name": "value",
+                    "valueType": "string"
+                  }]
                 }
               ]
             },
