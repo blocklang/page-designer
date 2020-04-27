@@ -188,7 +188,7 @@
       "projectId": 1,
       "apiRepoId": 4,
       "apiRepoName": "api-func-1",
-      "funcs": [{
+      "functions": [{
         "name": "console.log",
         "parameters": [{
           "name": "message",

@@ -43,6 +43,9 @@ export default factory(function Api({ properties, middleware: { store, icache } 
 
 	return (
 		<div>
+			{
+				// TODO: 增加搜索输入框
+			}
 			<div>
 				{!repoServices && (
 					<div classes={[c.text_muted, c.text_center]}>
