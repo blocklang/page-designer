@@ -213,7 +213,7 @@ export default factory(function Header({ properties, middleware: { store, invali
 			switchEditModeBlock = (
 				<button type="button" classes={[css.btn]} key="toPreviewButton" onclick={() => onSwitchEditMode()}>
 					<FontAwesomeIcon icon={["far", "caret-square-right"]} />
-					<span classes={[c.ml_1]}>浏览</span>
+					<span classes={[c.ml_1]}>预览</span>
 				</button>
 			);
 		}

@@ -9,6 +9,7 @@ import {
 	PropertyValueType,
 	PageDataItem,
 	MethodSignature,
+	JsObject,
 } from "designer-core/interfaces";
 import { add, replace, remove } from "@dojo/framework/stores/state/operations";
 import { findIndex } from "@dojo/framework/shim/array";
@@ -497,49 +498,55 @@ const addVariableSetNodeCommand = commandFactory<{ dataItem: PageDataItem }>(
 	}
 );
 
-const addFunctionNodeCommand = commandFactory<{ methodSignature: MethodSignature }>(
-	({ get, path, at, payload: { methodSignature } }) => {
-		const functions = get(path("pageModel", "functions"));
-		const selectedFunctionId = get(path("selectedFunctionId"));
-		const selectedFunctionIndex = findIndex(functions, (item) => item.id === selectedFunctionId);
+const addFunctionNodeCommand = commandFactory<{
+	apiRepoId: number;
+	jsObject: JsObject;
+	methodSignature: MethodSignature;
+}>(({ get, path, at, payload: { apiRepoId, jsObject, methodSignature } }) => {
+	const functions = get(path("pageModel", "functions"));
+	const selectedFunctionId = get(path("selectedFunctionId"));
+	const selectedFunctionIndex = findIndex(functions, (item) => item.id === selectedFunctionId);
 
-		const { parameters, returnType } = methodSignature;
-		// TODO: 要支持可变参数，可变参数必须是最后一个参数。
-		const inputDataPorts = parameters.map((param) => ({
+	const { code: funcCode, name: funcName, parameters, returnType } = methodSignature;
+	// TODO: 要支持可变参数，可变参数必须是最后一个参数。
+	const inputDataPorts = parameters.map((param) => ({
+		id: uuid().replace(/-/g, ""),
+		name: param.name,
+		type: param.type as PropertyValueType,
+	}));
+	// 一个函数只能由一个返回结果
+	const outputDataPorts = [];
+	if (returnType && returnType !== "void") {
+		outputDataPorts.push({
 			id: uuid().replace(/-/g, ""),
-			name: param.name,
-			type: param.type as PropertyValueType,
-		}));
-		// 一个函数只能由一个返回结果
-		const outputDataPorts = [];
-		if (returnType && returnType !== "void") {
-			outputDataPorts.push({
-				id: uuid().replace(/-/g, ""),
-				name: "", // 返回结果可不显示文本，因为只有一个返回结果，可以不用文本区分
-				type: returnType as PropertyValueType, //TODO: 支持自定义接口
-			});
-		}
-
-		const node: VisualNode = {
-			id: uuid().replace(/-/g, ""),
-			left: 30, // 跟第一个函数定义节点的位置错开
-			top: 30,
-			caption: `${methodSignature.name}`,
-			text: "",
-			layout: "data", // TODO: 如果只有一套布局，则不再需要此属性
-			category: "functionCall",
-			inputSequencePort: { id: uuid().replace(/-/g, "") },
-			outputSequencePorts: [{ id: uuid().replace(/-/g, ""), text: "" }],
-			inputDataPorts,
-			outputDataPorts,
-		};
-
-		const selectedFunctionPath = at(path("pageModel", "functions"), selectedFunctionIndex);
-		const nodesLength = functions[selectedFunctionIndex].nodes.length;
-
-		return [add(at(path(selectedFunctionPath, "nodes"), nodesLength), node)];
+			name: "", // 返回结果可不显示文本，因为只有一个返回结果，可以不用文本区分
+			type: returnType as PropertyValueType, //TODO: 支持自定义接口
+		});
 	}
-);
+
+	const node: VisualNode = {
+		id: uuid().replace(/-/g, ""),
+		left: 30, // 跟第一个函数定义节点的位置错开
+		top: 30,
+		caption: `${jsObject.name}.${methodSignature.name}`,
+		text: "",
+		layout: "data", // TODO: 如果只有一套布局，则不再需要此属性
+		category: "functionCall",
+		inputSequencePort: { id: uuid().replace(/-/g, "") },
+		outputSequencePorts: [{ id: uuid().replace(/-/g, ""), text: "" }],
+		inputDataPorts,
+		outputDataPorts,
+
+		bindSource: "webApi",
+		apiRepoId,
+		funcInfo: { objectCode: jsObject.code, objectName: jsObject.name, funcCode, funcName },
+	};
+
+	const selectedFunctionPath = at(path("pageModel", "functions"), selectedFunctionIndex);
+	const nodesLength = functions[selectedFunctionIndex].nodes.length;
+
+	return [add(at(path(selectedFunctionPath, "nodes"), nodesLength), node)];
+});
 
 export const newFunctionProcess = createProcess("new-function", [newFunctionCommand]);
 export const activeFunctionProcess = createProcess("active-function", [activeFunctionCommand]);

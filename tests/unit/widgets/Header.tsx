@@ -302,7 +302,7 @@ describe("Header", () => {
 				<div key="right">
 					<button type="button" key="toPreviewButton" classes={[css.btn]} onclick={() => {}}>
 						<FontAwesomeIcon icon={["far", "caret-square-right"]} />
-						<span classes={[c.ml_1]}>浏览</span>
+						<span classes={[c.ml_1]}>预览</span>
 					</button>
 					<span classes={[c.ml_2]}>
 						<Link to={""} params={{ user: "jack" }}>
@@ -430,7 +430,7 @@ describe("Header", () => {
 				<div key="right">
 					<button key="toPreviewButton" type="button" classes={[css.btn]} onclick={() => {}}>
 						<FontAwesomeIcon icon={["far", "caret-square-right"]} />
-						<span classes={[c.ml_1]}>浏览</span>
+						<span classes={[c.ml_1]}>预览</span>
 					</button>
 					<span classes={[c.ml_2]}>
 						<Link to={""} params={{ user: "jack" }}>

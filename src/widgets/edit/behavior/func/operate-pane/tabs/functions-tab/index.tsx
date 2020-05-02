@@ -22,7 +22,7 @@ export default factory(function Func({ properties, middleware: { store, icache }
 	}
 
 	// 存储函数列表的仓库
-	const funcRepos = (get(path("projectDependencies")) || []).filter((repo) => repo.category === "ClientAPI");
+	const funcRepos = (get(path("projectDependencies")) || []).filter((repo) => repo.category === "WebAPI");
 
 	return (
 		<div>
@@ -65,19 +65,25 @@ export default factory(function Func({ properties, middleware: { store, icache }
 								</div>
 								{!apiRepoFold && (
 									<div classes={[c.mx_1]}>
-										{repo.functions.length === 0 ? (
+										{!repo.jsObjects || repo.jsObjects.length === 0 ? (
 											<p classes={[c.text_muted, c.text_center]}>没有发现函数</p>
 										) : (
-											repo.functions.map((func) => (
-												<div
-													classes={[css.funcItem]}
-													onclick={() => {
-														executor(addFunctionNodeProcess)({ methodSignature: func });
-													}}
-												>
-													{func.name}
-												</div>
-											))
+											repo.jsObjects.map((jsObject) =>
+												jsObject.functions.map((func) => (
+													<div
+														classes={[css.funcItem]}
+														onclick={() => {
+															executor(addFunctionNodeProcess)({
+																apiRepoId: repo.apiRepoId,
+																jsObject,
+																methodSignature: func,
+															});
+														}}
+													>
+														{`${jsObject.name}.${func.name}`}
+													</div>
+												))
+											)
 										)}
 									</div>
 								)}

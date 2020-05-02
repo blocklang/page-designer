@@ -189,7 +189,7 @@ describe("PageDesigner", () => {
 			</div>
 		));
 
-		// 切换回浏览模式
+		// 切换回预览模式
 		h.trigger("@header", "onSwitchEditMode");
 		assert.isTrue(switchEditModeProcessStub.calledTwice);
 

@@ -61,6 +61,6 @@ export default factory(function Preview({ properties, middleware: { store } }) {
 		]);
 	}
 
-	const ideRepos = (get(path("projectDependencies")) || []).filter((repo) => repo.category === "Widget");
+	const ideRepos = get(path("projectDependencies")) || [];
 	return v("div", [renderPage(pageWidgets, ideRepos, store)]);
 });

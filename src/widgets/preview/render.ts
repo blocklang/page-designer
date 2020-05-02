@@ -15,7 +15,8 @@ import { execute } from "./executor";
 // 2. 将其他函数作为 renderPage 的内嵌函数
 // 这里使用缓存数据的方式，且必须是只读的
 let roWidgets: ReadonlyArray<AttachedWidget>;
-let roIdeRepos: ReadonlyArray<ComponentRepo>;
+let roIdeWidgetRepos: ReadonlyArray<ComponentRepo>;
+let roIdeWebApiRepos: ReadonlyArray<ComponentRepo>;
 let roFunctions: ReadonlyArray<PageFunction>;
 let cachedStore: any;
 
@@ -40,7 +41,8 @@ export function renderPage(widgets: AttachedWidget[], ideRepos: ComponentRepo[],
 
 	// 缓存数据
 	roWidgets = widgets;
-	roIdeRepos = ideRepos;
+	roIdeWidgetRepos = ideRepos.filter((repo) => repo.category === "Widget");
+	roIdeWebApiRepos = ideRepos.filter((repo) => repo.category === "WebAPI");
 	cachedStore = store;
 	roFunctions = store.get(store.path("pageModel", "functions")) || [];
 
@@ -62,7 +64,7 @@ function renderWidget(widget: AttachedWidget, index: number): WNode {
 	// 2. 根据 componentRepoId 获取到 componentRepo 信息
 	// 注意，页面模型中只存 api 组件库信息，不存任何实现相关的信息
 
-	const ideRepo = find(roIdeRepos, (item) => item.apiRepoId === widget.apiRepoId);
+	const ideRepo = find(roIdeWidgetRepos, (item) => item.apiRepoId === widget.apiRepoId);
 	if (!ideRepo) {
 		return w(UndefinedWidget, { widget, editMode: "Preview" });
 	}
@@ -94,7 +96,7 @@ function renderWidget(widget: AttachedWidget, index: number): WNode {
 						// 根据 item.value 定位到函数，然后开始执行函数节点
 						const func = find(roFunctions, (funcItem) => funcItem.id === item.value);
 						if (func) {
-							execute(cachedStore, func, eventValue);
+							execute(cachedStore, func, eventValue, roIdeWebApiRepos);
 						}
 					};
 				}

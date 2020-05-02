@@ -115,7 +115,9 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 	// 获取完依赖之后要加载相应的 js 脚本
 	// 去除掉标准库，因为已默认引用标准库
 	// 同时也要排除掉 Service 仓库，因为 Service 仓库不需要在浏览器中加载 js 文件
-	const externalResources = projectDependencies.filter((item) => item.category === "Widget" && item.std === false);
+	const externalResources = projectDependencies.filter(
+		(item) => (item.category === "Widget" || item.category === "WebAPI") && item.std === false
+	);
 	if (externalResources.length > 0) {
 		const externalResourcesLoaded = icache.getOrSet<boolean>("externalResourcesLoaded", false);
 		if (!externalResourcesLoaded) {
@@ -123,6 +125,7 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 			loadExternalResources(externalResources, () => {
 				loadCount++;
 				if (loadCount === 2) {
+					// 在 loadExternalResources 中被调用了两次
 					icache.set("externalResourcesLoaded", true);
 				}
 			});
@@ -183,16 +186,23 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
  * TODO: 后续版本再考虑 css
  * TODO: 避免重复加载 script，删除项目用不到的 script
  *
- * @param widgetIdeRepos
+ * @param ideRepos
  */
-function loadExternalResources(widgetIdeRepos: ComponentRepo[], loadSuccess: (resourceType: "js" | "css") => void) {
+function loadExternalResources(ideRepos: ComponentRepo[], loadSuccess: (resourceType: "js" | "css") => void) {
 	console.log("config.externalScriptAndCssWebsite:", config.externalScriptAndCssWebsite);
-	if (!widgetIdeRepos) {
-		console.log("widgetIdeRepos 为 undefined");
+	if (!ideRepos) {
+		console.log("ideRepos 为 undefined");
 		return;
 	}
 
-	const jsUrls = widgetIdeRepos.map(
+	// widget 加载的内容
+	// 1. main.bundle.js
+	// 2. main.bundle.css
+	// 3. icons.svg
+	// webAPI 加载的内容
+	// 1. main.bundle.js
+
+	const jsUrls = ideRepos.map(
 		(item) =>
 			`/designer/assets/${item.gitRepoWebsite}/${item.gitRepoOwner}/${item.gitRepoName}/${item.version}/main.bundle.js`
 	);
@@ -206,6 +216,7 @@ function loadExternalResources(widgetIdeRepos: ComponentRepo[], loadSuccess: (re
 		loadSuccess("js");
 	});
 
+	const widgetIdeRepos = ideRepos.filter((item) => item.category === "Widget");
 	// 加载 css 文件
 	const cssFileCount = widgetIdeRepos.length;
 	console.log(`共需加载 ${cssFileCount} 个 css 文件。`);
@@ -238,7 +249,7 @@ function insertSvgDiv(svgPath: string, symbolIdPrefix: string) {
 	const svgInjectorDiv = document.createElement("div");
 	svgInjectorDiv.setAttribute("data-src", svgPath);
 	svgInjectorDiv.className = "inject-me";
-	// 因为 img 有默认高度，因此这里要将将 display 设置为 'none;
+	// 因为 img 有默认高度，因此这里要将 display 设置为 'none;
 	// 否则会造成初始聚焦框计算错位的问题。
 	svgInjectorDiv.style.display = "none";
 	document.body.appendChild(svgInjectorDiv);

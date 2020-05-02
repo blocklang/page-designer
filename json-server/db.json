@@ -188,24 +188,47 @@
       "projectId": 1,
       "apiRepoId": 4,
       "apiRepoName": "api-func-1",
-      "functions": [{
-        "name": "console.log",
-        "parameters": [{
-          "name": "message",
-          "type": "any",
-          "optional": true,
-          "variable": true
-        }],
-        "returnType": "void"
-      },{
-        "name": "console.warn",
-        "parameters": [{
-          "name": "message",
-          "type": "any",
-          "optional": true,
-          "variable": true
-        }],
-        "returnType": "void"
+      "jsObjects": [{
+        "name": "console",
+        "functions": [
+          {
+            "name": "log",
+            "parameters": [{
+              "name": "message",
+              "type": "any",
+              "optional": true,
+              "variable": true
+            }],
+            "returnType": "void"
+          },{
+            "name": "info",
+            "parameters": [{
+              "name": "message",
+              "type": "any",
+              "optional": true,
+              "variable": true
+            }],
+            "returnType": "void"
+          },{
+            "name": "warn",
+            "parameters": [{
+              "name": "message",
+              "type": "any",
+              "optional": true,
+              "variable": true
+            }],
+            "returnType": "void"
+          },{
+            "name": "error",
+            "parameters": [{
+              "name": "message",
+              "type": "any",
+              "optional": true,
+              "variable": true
+            }],
+            "returnType": "void"
+          }
+        ]
       }]
     }
   ],
@@ -313,9 +336,9 @@
       "apiRepoId": 4,
       "gitRepoWebsite": "github.com",
       "gitRepoOwner": "blocklang",
-      "gitRepoName": "func-1",
-      "name": "func-1",
-      "category": "ClientAPI",
+      "gitRepoName": "ide-web-api",
+      "name": "ide-web-api",
+      "category": "WebAPI",
       "version": "0.1.0",
       "std": false
     }
