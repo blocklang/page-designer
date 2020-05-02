@@ -12,7 +12,7 @@ export default factory(function Header({ properties, middleware: { store } }) {
 	return (
 		<div classes={[css.root]}>
 			<FontAwesomeIcon icon="arrows-alt" classes={[c.text_muted, c.ml_1]} />
-			<span classes={[c.text_muted, c.ml_2]}>数据服务</span>
+			<span classes={[c.text_muted, c.ml_2]}></span>
 		</div>
 	);
 });
