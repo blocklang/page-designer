@@ -3,7 +3,7 @@ import icache from "@dojo/framework/core/middleware/icache";
 import cache from "@dojo/framework/core/middleware/cache";
 import dimensions from "@dojo/framework/core/middleware/dimensions";
 import { widgetInstanceMap } from "@dojo/framework/core/vdom";
-import * as css from "./PageDesigner.m.css";
+import * as css from "./index.m.css";
 import * as c from "bootstrap-classes";
 import Header from "./widgets/Header";
 import { User, Page, Path, Permission, RequestUrl, RouteName } from "./interfaces";

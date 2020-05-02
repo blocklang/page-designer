@@ -1,7 +1,7 @@
 {
 	"build-widget": {
 		"widgets": [
-			"src/PageDesigner"
+			"src/index"
 		]
 	}
 }

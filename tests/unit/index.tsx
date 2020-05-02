@@ -4,8 +4,8 @@ const { assert } = intern.getPlugin("chai");
 import harness from "@dojo/framework/testing/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 import * as c from "bootstrap-classes";
-import * as css from "../../src/PageDesigner.m.css";
-import PageDesigner from "../../src/PageDesigner";
+import * as css from "../../src/index.m.css";
+import PageDesigner from "../../src";
 import Header from "../../src/widgets/Header";
 import { User, Path, Page, Permission, RequestUrl, RouteName } from "../../src/interfaces";
 import Preview from "../../src/widgets/preview";
@@ -47,6 +47,7 @@ const pathes: Path[] = [{ name: "page1", path: "page1" }];
 const urls: RequestUrl = {
 	fetchApiRepoWidgets: "",
 	fetchApiRepoServices: "",
+	fetchApiRepoFunctions: "",
 	fetchIdeDependenceInfos: "",
 	fetchPageModel: "",
 	savePageModel: "",

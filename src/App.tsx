@@ -4,7 +4,7 @@ import dojo from "@dojo/themes/dojo";
 // 注意： 此样式要放在 import PageDesigner 语句之上，这样 PageDesigner 及其子部件中的样式优先级就会提高
 import "bootstrap/dist/css/bootstrap.min.css";
 import * as css from "./App.m.css";
-import PageDesigner from "./PageDesigner";
+import PageDesigner from ".";
 import { Project } from "designer-core/interfaces";
 import { User, Permission, Page, Path, RequestUrl, RouteName } from "./interfaces";
 
