@@ -1,6 +1,6 @@
 {
-  "name": "page-designer",
-  "version": "0.0.3-alpha.16",
+  "name": "@blocklang/page-designer",
+  "version": "0.0.3-alpha.17",
   "repository": {
     "type": "git",
     "url": "https://github.com/blocklang/page-designer.git"
@@ -30,7 +30,7 @@
     "@types/jquery": "^3.3.36",
     "@types/scriptjs": "^0.0.2",
     "bootstrap-classes": "~0.0.3-alpha.6",
-    "designer-core": "~0.0.1-alpha.86",
+    "@blocklang/designer-core": "~0.0.1-alpha.87",
     "dojo-fontawesome": "^0.0.3-alpha.1",
     "jquery": "^3.5.0",
     "popper.js": "^1.16.1",
