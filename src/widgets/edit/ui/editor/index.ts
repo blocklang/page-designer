@@ -1,7 +1,7 @@
 import { create, v, w } from "@dojo/framework/core/vdom";
 import { renderPage } from "./render";
 import * as c from "bootstrap-classes";
-import store from "designer-core/store";
+import store from "@blocklang/designer-core/store";
 import FocusBox from "./FocusBox";
 import HighlightBox from "./HighlightBox";
 import {
@@ -11,7 +11,7 @@ import {
 	unhighlightWidgetProcess,
 	changeActiveWidgetPropertiesProcess,
 } from "../../../../processes/uiProcesses";
-import { ChangedPropertyValue } from "designer-core/interfaces";
+import { ChangedPropertyValue } from "@blocklang/designer-core/interfaces";
 
 export interface EditorProperties {}
 

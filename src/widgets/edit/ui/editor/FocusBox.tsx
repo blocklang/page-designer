@@ -4,7 +4,7 @@ import Box from "./Box";
 import * as css from "./FocusBox.m.css";
 import * as c from "bootstrap-classes";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
-import { getPreviousIndex, getNextIndex } from "designer-core/utils/treeUtil";
+import { getPreviousIndex, getNextIndex } from "@blocklang/designer-core/utils/treeUtil";
 import { calculateOffset } from "../../../util";
 import {
 	activeParentWidgetProcess,
@@ -12,8 +12,8 @@ import {
 	moveActiveWidgetNextProcess,
 	removeActiveWidgetProcess,
 } from "../../../../processes/uiProcesses";
-import store from "designer-core/store";
-import { AttachedWidget } from "designer-core/interfaces";
+import store from "@blocklang/designer-core/store";
+import { AttachedWidget } from "@blocklang/designer-core/interfaces";
 
 export interface FocusBoxProperties extends HighlightBoxProperties {
 	selectedWidgetIndex: number;

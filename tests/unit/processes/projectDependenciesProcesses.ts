@@ -7,7 +7,7 @@ import { stub } from "sinon";
 import { getWidgetsProcess } from "../../../src/processes/projectDependenciesProcesses";
 import { initProjectProcess } from "../../../src/processes/projectProcesses";
 import Store from "@dojo/framework/stores/Store";
-import { State } from "designer-core/interfaces";
+import { State } from "@blocklang/designer-core/interfaces";
 import { config } from "../../../src/config";
 
 const fetchStub = stub();

@@ -5,7 +5,7 @@ import dojo from "@dojo/themes/dojo";
 import "bootstrap/dist/css/bootstrap.min.css";
 import * as css from "./App.m.css";
 import PageDesigner from ".";
-import { Project } from "designer-core/interfaces";
+import { Project } from "@blocklang/designer-core/interfaces";
 import { User, Permission, Page, Path, RequestUrl, RouteName } from "./interfaces";
 
 const factory = create({ theme });

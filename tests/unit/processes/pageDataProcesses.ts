@@ -11,7 +11,7 @@ import {
 	moveDownActiveDataItemProcess,
 } from "../../../src/processes/pageDataProcesses";
 import Store from "@dojo/framework/stores/Store";
-import { State } from "designer-core/interfaces";
+import { State } from "@blocklang/designer-core/interfaces";
 import { add } from "@dojo/framework/stores/state/operations";
 
 describe("processes/pageDataProcesses", () => {

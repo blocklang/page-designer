@@ -1,5 +1,3 @@
-import { DimensionResults } from "@dojo/framework/core/meta/Dimensions";
-import { Widget, AttachedWidget } from "designer-core/interfaces";
 import { WidgetProperties } from "@dojo/framework/core/interfaces";
 
 export interface User {

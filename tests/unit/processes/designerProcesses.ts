@@ -1,5 +1,5 @@
 import Store from "@dojo/framework/stores/Store";
-import { State } from "designer-core/interfaces";
+import { State } from "@blocklang/designer-core/interfaces";
 import { switchEditModeProcess, switchPageViewTypeProcess } from "../../../src/processes/designerProcesses";
 import { add } from "@dojo/framework/stores/state/operations";
 

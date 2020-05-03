@@ -1,6 +1,6 @@
 import { v, w } from "@dojo/framework/core/vdom";
-import { PropertyLayout, ChangedPropertyValue, PaneLayout } from "designer-core/interfaces";
-import { AttachedWidgetProperty } from "designer-core/interfaces";
+import { PropertyLayout, ChangedPropertyValue, PaneLayout } from "@blocklang/designer-core/interfaces";
+import { AttachedWidgetProperty } from "@blocklang/designer-core/interfaces";
 import { findIndex } from "@dojo/framework/shim/array";
 import * as css from "./index.m.css";
 import * as c from "bootstrap-classes";

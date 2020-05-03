@@ -1,7 +1,7 @@
 import { createProcess } from "@dojo/framework/stores/process";
 import { commandFactory } from "./utils";
 import { replace } from "@dojo/framework/stores/state/operations";
-import { UIOperateTab, BehaviorFunctionOperateTab } from "designer-core/interfaces";
+import { UIOperateTab, BehaviorFunctionOperateTab } from "@blocklang/designer-core/interfaces";
 
 const switchEditModeCommand = commandFactory(({ get, path }) => {
 	let editMode = get(path("paneLayout", "editMode")) || "Preview";

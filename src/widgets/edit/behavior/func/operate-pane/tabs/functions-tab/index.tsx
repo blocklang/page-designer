@@ -1,5 +1,5 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
-import store from "designer-core/store";
+import store from "@blocklang/designer-core/store";
 import icache from "@dojo/framework/core/middleware/icache";
 import { getFunctionsProcess } from "../../../../../../../processes/projectDependenciesProcesses";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";

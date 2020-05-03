@@ -2,7 +2,7 @@ import { create, tsx } from "@dojo/framework/core/vdom";
 
 import * as css from "./index.m.css";
 import Header from "./Header";
-import store from "designer-core/store";
+import store from "@blocklang/designer-core/store";
 import { drag } from "../../../../middleware/drag";
 import Tab from "./tabs";
 

@@ -1,6 +1,11 @@
 import { create, tsx, invalidator } from "@dojo/framework/core/vdom";
-import { PageFunction, AttachedWidget, AttachedWidgetProperty, EventHandler } from "designer-core/interfaces";
-import store from "designer-core/store";
+import {
+	PageFunction,
+	AttachedWidget,
+	AttachedWidgetProperty,
+	EventHandler,
+} from "@blocklang/designer-core/interfaces";
+import store from "@blocklang/designer-core/store";
 import { drag } from "../../../../middleware/drag";
 import { find } from "@dojo/framework/shim/array";
 import { newFunctionProcess, activeFunctionProcess } from "../../../../processes/pageFunctionProcesses";

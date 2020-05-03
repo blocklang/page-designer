@@ -32,7 +32,7 @@ npm install page-designer
 ```tsx
 import PageDesigner from "page-designer";
 import { User, Permission, Page, Path, RequestUrl, RouteName } from "page-designer/interfaces";
-import { Project } from "designer-core/interfaces";
+import { Project } from "@blocklang/designer-core/interfaces";
 
 // 登录用户的基本信息
 const user: User = { name: "jack", avatar: "url" };

@@ -1,4 +1,4 @@
-import { Operation } from "designer-core/interfaces";
+import { Operation } from "@blocklang/designer-core/interfaces";
 
 export interface PortPosition {
 	nodeId: string;

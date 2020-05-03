@@ -1,8 +1,8 @@
 import { changeDataItemValueProcess } from "../../processes/pageDataProcesses";
 import { find } from "@dojo/framework/shim/array";
-import { PageFunction, VisualNode, InputDataPort, ComponentRepo } from "designer-core/interfaces";
-import { getValue } from "designer-core/utils/pageDataUtil";
-import * as blocklang from "designer-core/blocklang";
+import { PageFunction, VisualNode, InputDataPort, ComponentRepo } from "@blocklang/designer-core/interfaces";
+import { getValue } from "@blocklang/designer-core/utils/pageDataUtil";
+import * as blocklang from "@blocklang/designer-core/blocklang";
 
 /**
  * 执行函数

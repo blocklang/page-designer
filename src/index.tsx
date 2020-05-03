@@ -15,9 +15,9 @@ import { config } from "./config";
 import { initProjectProcess, getProjectDependenciesProcess } from "./processes/projectProcesses";
 import * as scriptjs from "scriptjs";
 
-import { Project, ComponentRepo } from "designer-core/interfaces";
-import store from "designer-core/store";
-import * as blocklang from "designer-core/blocklang";
+import { Project, ComponentRepo } from "@blocklang/designer-core/interfaces";
+import store from "@blocklang/designer-core/store";
+import * as blocklang from "@blocklang/designer-core/blocklang";
 
 import { getPageModelProcess } from "./processes/uiProcesses";
 import { loadCSS } from "./utils/fg-loadcss/loadCSS";

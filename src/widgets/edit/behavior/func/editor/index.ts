@@ -6,11 +6,11 @@ import {
 	InputDataPort,
 	OutputSequencePort,
 	DataPort,
-} from "designer-core/interfaces";
+} from "@blocklang/designer-core/interfaces";
 import * as c from "bootstrap-classes";
 import * as css from "./index.m.css";
 import { DNode } from "@dojo/framework/core/interfaces";
-import store from "designer-core/store";
+import store from "@blocklang/designer-core/store";
 import {
 	activeFunctionNodeProcess,
 	moveActiveFunctionNodeProcess,

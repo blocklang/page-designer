@@ -1,5 +1,5 @@
 import Store from "@dojo/framework/stores/Store";
-import { State, PageFunction } from "designer-core/interfaces";
+import { State, PageFunction } from "@blocklang/designer-core/interfaces";
 import { add } from "@dojo/framework/stores/state/operations";
 import {
 	addSequenceConnectorProcess,

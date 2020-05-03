@@ -1,13 +1,13 @@
 import Page from "std-widget-web/page";
 import { InstWidgetProperties } from "../../interfaces";
-import { ComponentRepo, AttachedWidget, PageFunction } from "designer-core/interfaces";
+import { ComponentRepo, AttachedWidget, PageFunction } from "@blocklang/designer-core/interfaces";
 import { find } from "@dojo/framework/shim/array";
 import { w } from "@dojo/framework/core/vdom";
 import { WNode } from "@dojo/framework/core/interfaces";
 import { config } from "../../config";
-import * as blocklang from "designer-core/blocklang";
+import * as blocklang from "@blocklang/designer-core/blocklang";
 import UndefinedWidget from "../UndefinedWidget";
-import { getChildrenIndex } from "designer-core/utils/treeUtil";
+import { getChildrenIndex } from "@blocklang/designer-core/utils/treeUtil";
 import { execute } from "./executor";
 
 // 有两种方式共享 widgets 和 ideRepos 的值，以避免在每个函数中多次传递

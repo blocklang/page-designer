@@ -1,5 +1,5 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
-import store from "designer-core/store";
+import store from "@blocklang/designer-core/store";
 import * as c from "bootstrap-classes";
 import * as css from "./index.m.css";
 

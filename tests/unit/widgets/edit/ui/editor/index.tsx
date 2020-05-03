@@ -4,15 +4,15 @@ import harness from "@dojo/framework/testing/harness";
 import { create, tsx } from "@dojo/framework/core/vdom";
 import Editor from "../../../../../../src/widgets/edit/ui/editor";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
-import { State, ComponentRepo, PageModel } from "designer-core/interfaces";
-import store from "designer-core/store";
+import { State, ComponentRepo, PageModel } from "@blocklang/designer-core/interfaces";
+import store from "@blocklang/designer-core/store";
 import * as c from "bootstrap-classes";
 import { replace } from "@dojo/framework/stores/state/operations";
 import Page from "std-ide-widget/page";
-import { AttachedWidget, EditableWidgetProperties } from "designer-core/interfaces";
+import { AttachedWidget, EditableWidgetProperties } from "@blocklang/designer-core/interfaces";
 import FocusBox from "../../../../../../src/widgets/edit/ui/editor/FocusBox";
 import HighlightBox from "../../../../../../src/widgets/edit/ui/editor/HighlightBox";
-import * as blocklang from "designer-core/blocklang";
+import * as blocklang from "@blocklang/designer-core/blocklang";
 
 describe("edit/ui/editor", () => {
 	// 创建一个在测试用例中使用的部件

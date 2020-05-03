@@ -12,8 +12,8 @@ import Tab from "../../../../../../../src/widgets/edit/ui/operate-pane/tabs";
 import WidgetsTab from "../../../../../../../src/widgets/edit/ui/operate-pane/tabs/widgets-tab";
 import PropertiesTab from "../../../../../../../src/widgets/edit/ui/operate-pane/tabs/properties-tab";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
-import { State } from "designer-core/interfaces";
-import store from "designer-core/store";
+import { State } from "@blocklang/designer-core/interfaces";
+import store from "@blocklang/designer-core/store";
 import { switchUIOperateTabProcess } from "../../../../../../../src/processes/designerProcesses";
 import { add } from "@dojo/framework/stores/state/operations";
 

@@ -1,5 +1,5 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
-import store from "designer-core/store";
+import store from "@blocklang/designer-core/store";
 import Data from "./Data";
 import * as c from "bootstrap-classes";
 import Func from "./func";

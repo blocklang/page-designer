@@ -1,14 +1,15 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
-import { Project, State, EditMode, PageViewType } from "designer-core/interfaces";
-import { User, Path, Permission } from "../interfaces";
 import { DNode } from "@dojo/framework/core/interfaces";
-import store from "designer-core/store";
 import { invalidator } from "@dojo/framework/core/vdom";
-import { savePageModelProcess, undoProcess, redoProcess } from "../processes/uiProcesses";
-import { uiHistoryManager } from "../processes/utils";
 import Store from "@dojo/framework/stores/Store";
 import Link from "@dojo/framework/routing/Link";
+import { Project, State, EditMode, PageViewType } from "@blocklang/designer-core/interfaces";
+import store from "@blocklang/designer-core/store";
+import { User, Path, Permission } from "../interfaces";
+import { savePageModelProcess, undoProcess, redoProcess } from "../processes/uiProcesses";
+import { uiHistoryManager } from "../processes/utils";
+
 import { config } from "../config";
 
 import * as css from "./Header.m.css";

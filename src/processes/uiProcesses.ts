@@ -1,19 +1,20 @@
 import { createProcess, ProcessCallback } from "@dojo/framework/stores/process";
-import { commandFactory, uiHistoryManager } from "./utils";
-import { Widget, AttachedWidget } from "designer-core/interfaces";
-import { config } from "../config";
+import { DimensionResults } from "@dojo/framework/core/meta/Dimensions";
 import { add, replace, remove } from "@dojo/framework/stores/state/operations";
 import { findIndex } from "@dojo/framework/shim/array";
 import { uuid, deepMixin } from "@dojo/framework/core/util";
+import { Widget, AttachedWidget } from "@blocklang/designer-core/interfaces";
 import {
 	getAllChildCount,
 	getPreviousIndex,
 	getNextIndex,
 	getParentIndex,
 	inferNextActiveNodeIndex,
-} from "designer-core/utils/treeUtil";
-import { DimensionResults } from "@dojo/framework/core/meta/Dimensions";
-import { ChangedPropertyValue } from "designer-core/interfaces";
+} from "@blocklang/designer-core/utils/treeUtil";
+import { ChangedPropertyValue } from "@blocklang/designer-core/interfaces";
+
+import { config } from "../config";
+import { commandFactory, uiHistoryManager } from "./utils";
 
 const activeWidgetCommand = commandFactory<{ activeWidgetId: string }>(({ get, path, payload: { activeWidgetId } }) => {
 	const pageWidgets = get(path("pageModel", "widgets"));

@@ -1,7 +1,7 @@
 import { createProcess } from "@dojo/framework/stores/process";
 import { commandFactory } from "./utils";
 import { add, replace, remove } from "@dojo/framework/stores/state/operations";
-import { PageDataItem, NodeConnection } from "designer-core/interfaces";
+import { PageDataItem, NodeConnection } from "@blocklang/designer-core/interfaces";
 import { uuid } from "@dojo/framework/core/util";
 import { findIndex } from "@dojo/framework/shim/array";
 import {
@@ -9,7 +9,7 @@ import {
 	inferNextActiveNodeIndex,
 	getPreviousIndex,
 	getNextIndex,
-} from "designer-core/utils/treeUtil";
+} from "@blocklang/designer-core/utils/treeUtil";
 
 const insertEmptyDataItemCommand = commandFactory(({ get, path, at }) => {
 	// 默认添加在距离父节点最近的位置，参考自 vscode 中的在文件夹下新建文件的逻辑

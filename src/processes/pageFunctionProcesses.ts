@@ -10,7 +10,7 @@ import {
 	PageDataItem,
 	MethodSignature,
 	JsObject,
-} from "designer-core/interfaces";
+} from "@blocklang/designer-core/interfaces";
 import { add, replace, remove } from "@dojo/framework/stores/state/operations";
 import { findIndex } from "@dojo/framework/shim/array";
 import { ConnectorPayload, PortPosition, ServicePayload } from "./interfaces";

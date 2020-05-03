@@ -7,14 +7,14 @@ import * as c from "bootstrap-classes";
 import Preview from "../../../../src/widgets/preview";
 import * as css from "../../../../src/widgets/preview/index.m.css";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
-import { State, PageModel, ComponentRepo } from "designer-core/interfaces";
-import store from "designer-core/store";
+import { State, PageModel, ComponentRepo } from "@blocklang/designer-core/interfaces";
+import store from "@blocklang/designer-core/store";
 import { replace } from "@dojo/framework/stores/state/operations";
 import { Permission } from "../../../../src/interfaces";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import { stub } from "sinon";
 import WidgetBase from "@dojo/framework/core/WidgetBase";
-import * as blocklang from "designer-core/blocklang";
+import * as blocklang from "@blocklang/designer-core/blocklang";
 import Page from "std-widget-web/page";
 import { changeDataItemValueProcess } from "../../../../src/processes/pageDataProcesses";
 

@@ -1,7 +1,7 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
 import * as css from "./HighlightBox.m.css";
 import Box from "./Box";
-import store from "designer-core/store";
+import store from "@blocklang/designer-core/store";
 import { calculateOffset } from "../../../util";
 
 export interface HighlightBoxProperties {

@@ -1,10 +1,10 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
-import store from "designer-core/store";
+import store from "@blocklang/designer-core/store";
 import { activeWidgetProcess } from "../../../../processes/uiProcesses";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import * as c from "bootstrap-classes";
 import * as css from "./Header.m.css";
-import { getNodePath } from "designer-core/utils/treeUtil";
+import { getNodePath } from "@blocklang/designer-core/utils/treeUtil";
 
 export interface HeaderProperties {}
 

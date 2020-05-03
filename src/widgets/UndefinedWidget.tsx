@@ -1,6 +1,6 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
-import { AttachedWidget, ComponentRepo, EditMode } from "designer-core/interfaces";
-import store from "designer-core/store";
+import { AttachedWidget, ComponentRepo, EditMode } from "@blocklang/designer-core/interfaces";
+import store from "@blocklang/designer-core/store";
 import { removeUndefinedWidgetProcess } from "../processes/uiProcesses";
 
 import * as c from "bootstrap-classes";

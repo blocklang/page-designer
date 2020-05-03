@@ -1,7 +1,7 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
-import { AttachedWidget, AttachedWidgetProperty } from "designer-core/interfaces";
+import { AttachedWidget, AttachedWidgetProperty } from "@blocklang/designer-core/interfaces";
 import * as c from "bootstrap-classes";
-import { getNodePath } from "designer-core/utils/treeUtil";
+import { getNodePath } from "@blocklang/designer-core/utils/treeUtil";
 export interface TitleBarProperties {
 	selectedWidgetIndex: number;
 	activeWidget?: AttachedWidget;

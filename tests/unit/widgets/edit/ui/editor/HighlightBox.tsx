@@ -7,8 +7,8 @@ import HighlightBox from "../../../../../../src/widgets/edit/ui/editor/Highlight
 import * as css from "../../../../../../src/widgets/edit/ui/editor/HighlightBox.m.css";
 import Box from "../../../../../../src/widgets/edit/ui/editor/Box";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
-import { State } from "designer-core/interfaces";
-import store from "designer-core/store";
+import { State } from "@blocklang/designer-core/interfaces";
+import store from "@blocklang/designer-core/store";
 import { add } from "@dojo/framework/stores/state/operations";
 import { DimensionResults } from "@dojo/framework/core/meta/Dimensions";
 

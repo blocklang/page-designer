@@ -1,12 +1,12 @@
 import { create, v } from "@dojo/framework/core/vdom";
 import * as c from "bootstrap-classes";
 import * as css from "./index.m.css";
-import store from "designer-core/store";
-import * as blocklang from "designer-core/blocklang";
-import { AttachedWidget, PaneLayout } from "designer-core/interfaces";
+import store from "@blocklang/designer-core/store";
+import * as blocklang from "@blocklang/designer-core/blocklang";
+import { AttachedWidget, PaneLayout } from "@blocklang/designer-core/interfaces";
 import { find } from "@dojo/framework/shim/array";
 import * as layoutParser from "./layoutParser";
-import { PropertyLayout, ChangedPropertyValue } from "designer-core/interfaces";
+import { PropertyLayout, ChangedPropertyValue } from "@blocklang/designer-core/interfaces";
 import {
 	changeActiveWidgetPropertiesProcess,
 	activeWidgetPropertyProcess,
