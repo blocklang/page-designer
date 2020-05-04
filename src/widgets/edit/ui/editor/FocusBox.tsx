@@ -53,7 +53,7 @@ export default factory(function FocusBox({ properties, middleware: { store } }) 
 							type="button"
 							title="选择父部件"
 							classes={[c.btn, c.btn_primary]}
-							onclick={() => {
+							onclick={(): void => {
 								executor(activeParentWidgetProcess)({});
 							}}
 						>
@@ -68,7 +68,7 @@ export default factory(function FocusBox({ properties, middleware: { store } }) 
 							onclick={
 								disableMovePreviousButton
 									? undefined
-									: () => {
+									: (): void => {
 											executor(moveActiveWidgetPreviousProcess)({});
 									  }
 							}
@@ -85,7 +85,7 @@ export default factory(function FocusBox({ properties, middleware: { store } }) 
 							onclick={
 								disableMoveNextButton
 									? undefined
-									: () => {
+									: (): void => {
 											executor(moveActiveWidgetNextProcess)({});
 									  }
 							}
@@ -99,7 +99,7 @@ export default factory(function FocusBox({ properties, middleware: { store } }) 
 							type="button"
 							title="删除"
 							classes={[c.btn, c.btn_primary]}
-							onclick={() => {
+							onclick={(): void => {
 								executor(removeActiveWidgetProcess)({});
 							}}
 						>

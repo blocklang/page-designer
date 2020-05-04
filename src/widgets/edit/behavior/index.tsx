@@ -4,12 +4,9 @@ import Data from "./Data";
 import * as c from "bootstrap-classes";
 import Func from "./func";
 
-export interface BehaviorViewProperties {}
+const factory = create({ store }).properties();
 
-const factory = create({ store }).properties<BehaviorViewProperties>();
-
-export default factory(function BehaviorView({ properties, middleware: { store } }) {
-	const {} = properties();
+export default factory(function BehaviorView({ middleware: { store } }) {
 	const { get, path } = store;
 	const pageModel = get(path("pageModel"));
 

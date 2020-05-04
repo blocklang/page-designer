@@ -35,7 +35,7 @@ export default factory(function UndefinedWidget({ properties, middleware: { stor
 						data-dismiss="alert"
 						aria-label="删除"
 						title="删除"
-						onclick={() => {
+						onclick={(): void => {
 							executor(removeUndefinedWidgetProcess)({ widgetId: widget.id });
 						}}
 					>

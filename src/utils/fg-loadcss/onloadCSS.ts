@@ -3,9 +3,9 @@
 /*! onloadCSS. (onload callback for loadCSS) [c]2017 Filament Group, Inc. MIT License */
 /* global navigator */
 /* exported onloadCSS */
-export default function onloadCSS(ss: any, callback: () => void) {
+export default function onloadCSS(ss: any, callback: () => void): void {
 	let called: boolean;
-	function newcb() {
+	function newcb(): void {
 		if (!called && callback) {
 			called = true;
 			callback.call(ss);

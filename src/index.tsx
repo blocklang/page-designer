@@ -42,6 +42,93 @@ blocklang.registerDimensionsMiddleware(dimensions);
 blocklang.registerICacheMiddleware(icache);
 blocklang.registerStoreMiddleware(store);
 
+// <div class="inject-me" data-src="icon-two.svg"></div>
+function insertSvgDiv(svgPath: string, symbolIdPrefix: string): void {
+	const svgInjectorDiv = document.createElement("div");
+	svgInjectorDiv.setAttribute("data-src", svgPath);
+	svgInjectorDiv.className = "inject-me";
+	// 因为 img 有默认高度，因此这里要将 display 设置为 'none;
+	// 否则会造成初始聚焦框计算错位的问题。
+	svgInjectorDiv.style.display = "none";
+	document.body.appendChild(svgInjectorDiv);
+
+	SVGInjector(svgInjectorDiv, {
+		beforeEach(svg) {
+			const symbols = svg.children;
+			for (let i = 0; i < symbols.length; i++) {
+				const symbol = symbols[i];
+				const originId = symbol.getAttribute("id");
+				// 为了确保 symbol 的 id 全局唯一，在原有的 id 前加上了组件仓库信息
+				symbol.setAttribute("id", symbolIdPrefix + originId);
+			}
+		},
+	});
+}
+
+/**
+ * 加载外部的 javascript 文件和 css 文件
+ *
+ * TODO: 后续版本再考虑 css
+ * TODO: 避免重复加载 script，删除项目用不到的 script
+ *
+ * @param ideRepos
+ */
+function loadExternalResources(ideRepos: ComponentRepo[], loadSuccess: (resourceType: "js" | "css") => void): void {
+	console.log("config.externalScriptAndCssWebsite:", config.externalScriptAndCssWebsite);
+	if (!ideRepos) {
+		console.log("ideRepos 为 undefined");
+		return;
+	}
+
+	// widget 加载的内容
+	// 1. main.bundle.js
+	// 2. main.bundle.css
+	// 3. icons.svg
+	// webAPI 加载的内容
+	// 1. main.bundle.js
+
+	const jsUrls = ideRepos.map(
+		(item) =>
+			`/designer/assets/${item.gitRepoWebsite}/${item.gitRepoOwner}/${item.gitRepoName}/${item.version}/main.bundle.js`
+	);
+
+	scriptjs.path(config.externalScriptAndCssWebsite);
+	scriptjs(jsUrls, "extension_js");
+	// dojo 支持 single-bundle 命令
+	scriptjs.ready("extension_js", () => {
+		console.log("第三方 js 库加载完毕。");
+		blocklang.watchingWidgetInstanceMap(widgetInstanceMap);
+		loadSuccess("js");
+	});
+
+	const widgetIdeRepos = ideRepos.filter((item) => item.category === "Widget");
+	// 加载 css 文件
+	const cssFileCount = widgetIdeRepos.length;
+	console.log(`共需加载 ${cssFileCount} 个 css 文件。`);
+	let loadedCount = 0;
+	widgetIdeRepos.forEach((item) => {
+		const cssHref = `${config.externalScriptAndCssWebsite}/designer/assets/${item.gitRepoWebsite}/${item.gitRepoOwner}/${item.gitRepoName}/${item.version}/main.bundle.css`;
+		// 如果已经加载过，则不重复加载
+		// FIXME: 添加此逻辑之后，firefox 中同一个 css 文件依然会加载两次, 查找原因。
+		const stylesheet = loadCSS(cssHref);
+		onloadCSS(stylesheet, () => {
+			loadedCount++;
+			console.log(`加载第 ${loadedCount} 个 css 文件。`);
+			if (loadedCount === cssFileCount) {
+				console.log(`全部加载完成，共加载 ${loadedCount} 个文件。`);
+				loadSuccess("css");
+			}
+		});
+	});
+
+	widgetIdeRepos.forEach((item) => {
+		const svgHref = `${config.externalScriptAndCssWebsite}/designer/assets/${item.gitRepoWebsite}/${item.gitRepoOwner}/${item.gitRepoName}/${item.version}/icons.svg`;
+		// 约定的前缀，注意使用的是 ide 版仓库信息，而不是 api 版的仓库信息
+		const idPrefix = `${item.gitRepoWebsite}-${item.gitRepoOwner}-${item.gitRepoName}-`;
+		insertSvgDiv(svgHref, idPrefix);
+	});
+}
+
 const factory = create({ icache, store, cache }).properties<PageDesignerProperties>();
 
 // 注意，根据单一职责原则，以及参数宜集中不宜分散的原则，在调用 PageDesigner 只有一个设置参数入口，
@@ -144,7 +231,7 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 	const editMode = get(path("paneLayout", "editMode")) || "Preview";
 	const activePageView = get(path("paneLayout", "pageViewType")) || "ui";
 
-	const onSwitchEditMode = () => {
+	const onSwitchEditMode = (): void => {
 		executor(switchEditModeProcess)({});
 	};
 
@@ -159,11 +246,11 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 				editMode={editMode}
 				activePageView={activePageView}
 				onSwitchEditMode={onSwitchEditMode}
-				onSwitchPageView={() => {
+				onSwitchPageView={(): void => {
 					executor(switchPageViewTypeProcess)({});
 				}}
 				// 当路由支持通配符后删除此段代码
-				onGotoGroup={(owner: string, project: string, parentPath: string) => {
+				onGotoGroup={(owner: string, project: string, parentPath: string): void => {
 					routes.gotoGroup && routes.gotoGroup(owner, project, parentPath);
 				}}
 			/>
@@ -179,90 +266,3 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 		</div>
 	);
 });
-
-/**
- * 加载外部的 javascript 文件和 css 文件
- *
- * TODO: 后续版本再考虑 css
- * TODO: 避免重复加载 script，删除项目用不到的 script
- *
- * @param ideRepos
- */
-function loadExternalResources(ideRepos: ComponentRepo[], loadSuccess: (resourceType: "js" | "css") => void) {
-	console.log("config.externalScriptAndCssWebsite:", config.externalScriptAndCssWebsite);
-	if (!ideRepos) {
-		console.log("ideRepos 为 undefined");
-		return;
-	}
-
-	// widget 加载的内容
-	// 1. main.bundle.js
-	// 2. main.bundle.css
-	// 3. icons.svg
-	// webAPI 加载的内容
-	// 1. main.bundle.js
-
-	const jsUrls = ideRepos.map(
-		(item) =>
-			`/designer/assets/${item.gitRepoWebsite}/${item.gitRepoOwner}/${item.gitRepoName}/${item.version}/main.bundle.js`
-	);
-
-	scriptjs.path(config.externalScriptAndCssWebsite);
-	scriptjs(jsUrls, "extension_js");
-	// dojo 支持 single-bundle 命令
-	scriptjs.ready("extension_js", () => {
-		console.log("第三方 js 库加载完毕。");
-		blocklang.watchingWidgetInstanceMap(widgetInstanceMap);
-		loadSuccess("js");
-	});
-
-	const widgetIdeRepos = ideRepos.filter((item) => item.category === "Widget");
-	// 加载 css 文件
-	const cssFileCount = widgetIdeRepos.length;
-	console.log(`共需加载 ${cssFileCount} 个 css 文件。`);
-	let loadedCount = 0;
-	widgetIdeRepos.forEach((item) => {
-		const cssHref = `${config.externalScriptAndCssWebsite}/designer/assets/${item.gitRepoWebsite}/${item.gitRepoOwner}/${item.gitRepoName}/${item.version}/main.bundle.css`;
-		// 如果已经加载过，则不重复加载
-		// FIXME: 添加此逻辑之后，firefox 中同一个 css 文件依然会加载两次, 查找原因。
-		const stylesheet = loadCSS(cssHref);
-		onloadCSS(stylesheet, () => {
-			loadedCount++;
-			console.log(`加载第 ${loadedCount} 个 css 文件。`);
-			if (loadedCount === cssFileCount) {
-				console.log(`全部加载完成，共加载 ${loadedCount} 个文件。`);
-				loadSuccess("css");
-			}
-		});
-	});
-
-	widgetIdeRepos.forEach((item) => {
-		const svgHref = `${config.externalScriptAndCssWebsite}/designer/assets/${item.gitRepoWebsite}/${item.gitRepoOwner}/${item.gitRepoName}/${item.version}/icons.svg`;
-		// 约定的前缀，注意使用的是 ide 版仓库信息，而不是 api 版的仓库信息
-		const idPrefix = `${item.gitRepoWebsite}-${item.gitRepoOwner}-${item.gitRepoName}-`;
-		insertSvgDiv(svgHref, idPrefix);
-	});
-}
-
-// <div class="inject-me" data-src="icon-two.svg"></div>
-function insertSvgDiv(svgPath: string, symbolIdPrefix: string) {
-	const svgInjectorDiv = document.createElement("div");
-	svgInjectorDiv.setAttribute("data-src", svgPath);
-	svgInjectorDiv.className = "inject-me";
-	// 因为 img 有默认高度，因此这里要将 display 设置为 'none;
-	// 否则会造成初始聚焦框计算错位的问题。
-	svgInjectorDiv.style.display = "none";
-	document.body.appendChild(svgInjectorDiv);
-
-	SVGInjector(svgInjectorDiv, {
-		beforeEach(svg) {
-			const symbols = svg.children;
-			for (let i = 0; i < symbols.length; i++) {
-				const symbol = symbols[i];
-				const originId = symbol.getAttribute("id");
-				// 为了确保 symbol 的 id 全局唯一，在原有的 id 前加上了组件仓库信息
-				symbol.setAttribute("id", symbolIdPrefix + originId);
-			}
-		},
-	});
-}

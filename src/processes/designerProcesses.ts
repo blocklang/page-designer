@@ -14,7 +14,6 @@ const switchEditModeCommand = commandFactory(({ get, path }) => {
 });
 
 const switchPageViewTypeCommand = commandFactory(({ get, path }) => {
-	debugger;
 	const result = [];
 	const editMode = get(path("paneLayout", "editMode")) || "Preview";
 	if (editMode === "Preview") {
@@ -39,7 +38,7 @@ const switchUIOperateTabCommand = commandFactory<{ tab: UIOperateTab }>(({ get, 
 		result.push(replace(path("paneLayout", "editMode"), "Edit"));
 	}
 
-	let activePageView = get(path("paneLayout", "pageViewType")) || "ui";
+	const activePageView = get(path("paneLayout", "pageViewType")) || "ui";
 	if (activePageView === "behavior") {
 		result.push(replace(path("paneLayout", "pageViewType"), "ui"));
 	}
@@ -67,7 +66,7 @@ const switchBehaviorFunctionOperateTabCommand = commandFactory<{ tab: BehaviorFu
 			result.push(replace(path("paneLayout", "editMode"), "Edit"));
 		}
 
-		let activePageView = get(path("paneLayout", "pageViewType")) || "behavior";
+		const activePageView = get(path("paneLayout", "pageViewType")) || "behavior";
 		if (activePageView === "ui") {
 			result.push(replace(path("paneLayout", "pageViewType"), "behavior"));
 		}

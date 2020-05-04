@@ -22,7 +22,7 @@ import { faCaretRight } from "@fortawesome/free-solid-svg-icons/faCaretRight";
 import { faCircle } from "@fortawesome/free-solid-svg-icons/faCircle";
 import { faTimes } from "@fortawesome/free-solid-svg-icons/faTimes";
 
-export function init() {
+export function init(): void {
 	library.add(
 		faArrowAltCircleLeft,
 		faEdit,

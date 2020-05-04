@@ -11,12 +11,9 @@ import { insertWidgetsProcess } from "../../../../../../processes/uiProcesses";
 import * as c from "bootstrap-classes";
 import * as css from "./index.m.css";
 
-export interface WidgetsTabProperties {}
+const factory = create({ store, icache, cache }).properties();
 
-const factory = create({ store, icache, cache }).properties<WidgetsTabProperties>();
-
-export default factory(function WidgetsTab({ properties, middleware: { store, icache, cache } }) {
-	const {} = properties();
+export default factory(function WidgetsTab({ middleware: { store, icache, cache } }) {
 	const { path, get, executor } = store;
 
 	// 1. 每次进入新页面，都要刷新(所以要在 PageDesigner 清空部件列表)
@@ -69,7 +66,7 @@ export default factory(function WidgetsTab({ properties, middleware: { store, ic
 					value={searchText}
 					classes={[c.form_control, c.form_control_sm, css.searchInput]}
 					placeholder="搜索部件"
-					oninput={(event: KeyboardEvent) => {
+					oninput={(event: KeyboardEvent): void => {
 						const target = event.target as HTMLInputElement;
 						icache.set("searchText", target.value);
 					}}
@@ -98,7 +95,7 @@ export default factory(function WidgetsTab({ properties, middleware: { store, ic
 								<div key={`${repo.apiRepoId}`}>
 									<div
 										classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]}
-										onclick={() => {
+										onclick={(): void => {
 											icache.set<boolean>(`fold-repo-${repo.apiRepoId}`, !apiRepoFold);
 										}}
 									>
@@ -123,7 +120,7 @@ export default factory(function WidgetsTab({ properties, middleware: { store, ic
 														<div key={category.name}>
 															<div
 																classes={[c.pl_1, c.text_muted, css.categoryNameBar]}
-																onclick={() => {
+																onclick={(): void => {
 																	icache.set<boolean>(
 																		`fold-category-${repo.apiRepoId}-${category.name}`,
 																		!categoryFold
@@ -146,7 +143,7 @@ export default factory(function WidgetsTab({ properties, middleware: { store, ic
 																			<li
 																				key={`${widget.widgetId}`}
 																				classes={[css.widgetItem]}
-																				onclick={(event: MouseEvent) => {
+																				onclick={(): void => {
 																					widget.apiRepoId = repo.apiRepoId;
 																					executor(insertWidgetsProcess)({
 																						// FIXME: 在此处克隆？

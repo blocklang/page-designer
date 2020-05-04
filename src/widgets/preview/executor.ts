@@ -11,7 +11,12 @@ import * as blocklang from "@blocklang/designer-core/blocklang";
  *
  * @property ideRepos      只包含 web api
  */
-export function execute(store: any, func: PageFunction, eventValue: string, ideRepos: ReadonlyArray<ComponentRepo>) {
+export function execute(
+	store: any,
+	func: PageFunction,
+	eventValue: string,
+	ideRepos: ReadonlyArray<ComponentRepo>
+): void {
 	const { nodes = [], sequenceConnections, dataConnections } = func;
 
 	if (nodes.length === 0) {
@@ -28,38 +33,41 @@ export function execute(store: any, func: PageFunction, eventValue: string, ideR
 	const pageData = store.get(store.path("pageModel", "data")) || [];
 	let nextNode: VisualNode | undefined = firstNode;
 
-	while ((nextNode = findNextNode(nextNode))) {
-		// 从这个节点起开始执行
-		if (nextNode.category === "variableSet") {
-			// 找到输入参数
-			// 不能直接传 eventValue，需要根据 dataConnections 判断
-			// Set 只有一个输入参数
+	function findNextNode(node: VisualNode): VisualNode | undefined {
+		const sequenceConnect = find(
+			sequenceConnections,
+			(sc) => sc.fromNode === node.id && sc.fromOutput === node.outputSequencePorts[0].id
+		);
+		if (!sequenceConnect) {
+			// 没有连接线，则不再往后执行
+			return;
+		}
 
-			const inputDataPort = nextNode.inputDataPorts[0];
-			let value = getInputDataPortValue(inputDataPort);
-			store.executor(changeDataItemValueProcess)({ dataItemId: nextNode.dataItemId, value });
-		} else if (nextNode.category === "functionCall") {
-			// node 节点中存放函数信息
-			const ideRepo = find(ideRepos, (item) => item.apiRepoId === nextNode!.apiRepoId);
-			debugger;
-			if (ideRepo) {
-				const funcInfo = nextNode.funcInfo;
-				if (funcInfo) {
-					const func = getFunc(ideRepo, funcInfo.objectName, funcInfo.funcName);
-					if (!func) {
-						console.error(`未找到函数 ${nextNode.caption}`);
-					} else {
-						const paramValues = nextNode.inputDataPorts.map((item) => getInputDataPortValue(item));
-						func(...paramValues);
-					}
-				}
-			}
+		return find(nodes, (node) => node.id === sequenceConnect.toNode);
+	}
+
+	function getInputDataPortValue(nextNodeId: string, inputDataPort: InputDataPort): string | undefined {
+		const dc = find(dataConnections, (dc) => dc.toNode === nextNodeId && dc.toInput === inputDataPort.id);
+		if (!dc) {
+			// 如果没有通过连接线设置值，则尝试获取节点的默认值
+			return inputDataPort.value || "";
+		}
+		if (dc.fromNode === firstNode.id && dc.fromOutput === firstNode.outputDataPorts[0].id) {
+			// 如果连接线的起点是函数定义节点
+			return eventValue;
+		}
+
+		const previousNode = find(nodes, (node) => node.id === dc.fromNode);
+		if (!previousNode) {
+			return;
+		}
+		// 如果连接线的起点是 variableGet 节点
+		if (previousNode.category === "variableGet" && previousNode.dataItemId) {
+			return getValue(pageData, previousNode.dataItemId);
 		}
 	}
 
 	function getFunc(ideRepo: ComponentRepo, objectName: string, funcName: string): any {
-		debugger;
-
 		const repoKey = blocklang.getRepoUrl({
 			website: ideRepo.gitRepoWebsite,
 			owner: ideRepo.gitRepoOwner,
@@ -78,37 +86,35 @@ export function execute(store: any, func: PageFunction, eventValue: string, ideR
 		return func;
 	}
 
-	function getInputDataPortValue(inputDataPort: InputDataPort) {
-		const dc = find(dataConnections, (dc) => dc.toNode === nextNode!.id && dc.toInput === inputDataPort.id);
-		if (!dc) {
-			// 如果没有通过连接线设置值，则尝试获取节点的默认值
-			return inputDataPort.value || "";
-		}
-		if (dc.fromNode === firstNode.id && dc.fromOutput === firstNode.outputDataPorts[0].id) {
-			// 如果连接线的起点是函数定义节点
-			return eventValue;
-		}
+	while ((nextNode = findNextNode(nextNode))) {
+		// 从这个节点起开始执行
+		if (nextNode.category === "variableSet") {
+			// 找到输入参数
+			// 不能直接传 eventValue，需要根据 dataConnections 判断
+			// Set 只有一个输入参数
 
-		// 如果连接线的起点是 variableGet 节点
-		const previousNode = find(nodes, (node) => node.id === dc.fromNode);
-		if (!previousNode) {
-			return;
+			const nextNodeId = nextNode.id;
+			const inputDataPort = nextNode.inputDataPorts[0];
+			const value = getInputDataPortValue(nextNodeId, inputDataPort);
+			store.executor(changeDataItemValueProcess)({ dataItemId: nextNode.dataItemId, value });
+		} else if (nextNode.category === "functionCall") {
+			// node 节点中存放函数信息
+			const ideRepo = find(ideRepos, (item) => item.apiRepoId === (nextNode as VisualNode).apiRepoId);
+			if (ideRepo) {
+				const funcInfo = nextNode.funcInfo;
+				if (funcInfo) {
+					const func = getFunc(ideRepo, funcInfo.objectName, funcInfo.funcName);
+					if (!func) {
+						console.error(`未找到函数 ${nextNode.caption}`);
+					} else {
+						const nextNodeId = nextNode.id;
+						const paramValues = nextNode.inputDataPorts.map((item) =>
+							getInputDataPortValue(nextNodeId, item)
+						);
+						func(...paramValues);
+					}
+				}
+			}
 		}
-		if (previousNode.category === "variableGet") {
-			return getValue(pageData, previousNode.dataItemId!);
-		}
-	}
-
-	function findNextNode(node: VisualNode): VisualNode | undefined {
-		const sequenceConnect = find(
-			sequenceConnections,
-			(sc) => sc.fromNode === node.id && sc.fromOutput === node.outputSequencePorts[0].id
-		);
-		if (!sequenceConnect) {
-			// 没有连接线，则不再往后执行
-			return;
-		}
-
-		return find(nodes, (node) => node.id === sequenceConnect.toNode);
 	}
 }

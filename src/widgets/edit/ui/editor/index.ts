@@ -13,14 +13,10 @@ import {
 } from "../../../../processes/uiProcesses";
 import { ChangedPropertyValue } from "@blocklang/designer-core/interfaces";
 
-export interface EditorProperties {}
+const factory = create({ store }).properties();
 
-const factory = create({ store }).properties<EditorProperties>();
-
-export default factory(function Editor({ properties, middleware: { store } }) {
+export default factory(function Editor({ middleware: { store } }) {
 	const { get, path, executor } = store;
-
-	const {} = properties();
 
 	const pageWidgets = get(path("pageModel", "widgets")) || [];
 	if (pageWidgets.length === 0) {

@@ -63,21 +63,20 @@ export interface PositionMatrix {
 	screen: Position;
 }
 
-function createNodeData(invalidate: () => void): NodeData {
-	return {
-		dragResults: deepAssign({}, emptyResults),
-		invalidate,
-		last: createPositionMatrix(),
-		start: createPositionMatrix(),
-	};
-}
-
 /**
  * Creates an empty position
  */
 function createPosition(): Position {
 	return { x: 0, y: 0 };
 }
+
+/**
+ * A frozen empty result object, frozen to ensure that no one downstream modifies it
+ */
+const emptyResults: DragResults = Object.freeze({
+	delta: Object.freeze(createPosition()),
+	isDragging: false,
+});
 
 /**
  * Create an empty position matrix
@@ -91,13 +90,14 @@ function createPositionMatrix(): PositionMatrix {
 	};
 }
 
-/**
- * A frozen empty result object, frozen to ensure that no one downstream modifies it
- */
-const emptyResults: DragResults = Object.freeze({
-	delta: Object.freeze(createPosition()),
-	isDragging: false,
-});
+function createNodeData(invalidate: () => void): NodeData {
+	return {
+		dragResults: deepAssign({}, emptyResults),
+		invalidate,
+		last: createPositionMatrix(),
+		start: createPositionMatrix(),
+	};
+}
 
 /**
  * Return the x/y position matrix for an event

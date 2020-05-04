@@ -3,17 +3,14 @@ import store from "@blocklang/designer-core/store";
 import icache from "@dojo/framework/core/middleware/icache";
 import { getFunctionsProcess } from "../../../../../../../processes/projectDependenciesProcesses";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
-
-export interface FuncProperties {}
-
-const factory = create({ store, icache }).properties<FuncProperties>();
 import * as c from "bootstrap-classes";
 import * as css from "./index.m.css";
 import { find } from "@dojo/framework/shim/array";
 import { addFunctionNodeProcess } from "../../../../../../../processes/pageFunctionProcesses";
 
-export default factory(function Func({ properties, middleware: { store, icache } }) {
-	const {} = properties();
+const factory = create({ store, icache }).properties();
+
+export default factory(function Func({ middleware: { store, icache } }) {
 	const { path, get, executor } = store;
 	// 项目依赖的所有函数
 	const repoFunctions = get(path("repoFunctions"));
@@ -54,7 +51,9 @@ export default factory(function Func({ properties, middleware: { store, icache }
 							<div key={repo.apiRepoId} classes={[c.pb_2]}>
 								<div
 									classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]}
-									onclick={() => icache.set<boolean>(`fold-repo-${repo.apiRepoId}`, !apiRepoFold)}
+									onclick={(): void =>
+										icache.set<boolean>(`fold-repo-${repo.apiRepoId}`, !apiRepoFold)
+									}
 								>
 									{apiRepoFold ? (
 										<FontAwesomeIcon icon="angle-right" />
@@ -69,10 +68,11 @@ export default factory(function Func({ properties, middleware: { store, icache }
 											<p classes={[c.text_muted, c.text_center]}>没有发现函数</p>
 										) : (
 											repo.jsObjects.map((jsObject) =>
-												jsObject.functions.map((func) => (
+												jsObject.functions.map((func, index) => (
 													<div
+														key={index}
 														classes={[css.funcItem]}
-														onclick={() => {
+														onclick={(): void => {
 															executor(addFunctionNodeProcess)({
 																apiRepoId: repo.apiRepoId,
 																jsObject,

@@ -67,7 +67,7 @@ export default factory(function Header({ properties, middleware: { store, invali
 		gotoGroupNodes = (
 			<a
 				title="到上级目录"
-				onclick={(event: MouseEvent) => {
+				onclick={(event: MouseEvent): boolean => {
 					event.stopPropagation();
 					event.preventDefault();
 					onGotoGroup && onGotoGroup(project.createUserName, project.name, parentPath);
@@ -100,7 +100,7 @@ export default factory(function Header({ properties, middleware: { store, invali
 				key="toBehaviorViewButton"
 				type="button"
 				classes={[c.btn, c.btn_outline_secondary]}
-				onclick={() => onSwitchPageView()}
+				onclick={(): void => onSwitchPageView()}
 			>
 				交互
 			</button>,
@@ -111,7 +111,7 @@ export default factory(function Header({ properties, middleware: { store, invali
 				key="toUIViewButton"
 				type="button"
 				classes={[c.btn, c.btn_outline_secondary]}
-				onclick={() => onSwitchPageView()}
+				onclick={(): void => onSwitchPageView()}
 			>
 				界面
 			</button>,
@@ -140,7 +140,7 @@ export default factory(function Header({ properties, middleware: { store, invali
 						disabled={!canSave}
 						onclick={
 							canSave
-								? () => {
+								? (): void => {
 										store.executor(savePageModelProcess)({});
 								  }
 								: undefined
@@ -156,7 +156,7 @@ export default factory(function Header({ properties, middleware: { store, invali
 						disabled={!canUndo}
 						onclick={
 							canUndo
-								? () => {
+								? (): void => {
 										store.executor(undoProcess)({});
 										// 注意，必须要在部件中失效，才会每次都刷新 Header
 										// 只使用 store 的 middleware 中使用 store.invalidate()，在一些情况下不刷页面
@@ -175,7 +175,7 @@ export default factory(function Header({ properties, middleware: { store, invali
 						disabled={!canRedo}
 						onclick={
 							canRedo
-								? () => {
+								? (): void => {
 										store.executor(redoProcess)({});
 										// 注意，必须要在部件中失效，才会每次都刷新 Header
 										// 只使用 store 的 middleware 中使用 store.invalidate()，在一些情况下不刷页面
@@ -205,14 +205,19 @@ export default factory(function Header({ properties, middleware: { store, invali
 	if (permission.canWrite) {
 		if (editMode === "Preview") {
 			switchEditModeBlock = (
-				<button type="button" classes={[css.btn]} key="toEditButton" onclick={() => onSwitchEditMode()}>
+				<button type="button" classes={[css.btn]} key="toEditButton" onclick={(): void => onSwitchEditMode()}>
 					<FontAwesomeIcon icon={["far", "edit"]} />
 					<span classes={[c.ml_1]}>编辑</span>
 				</button>
 			);
 		} else {
 			switchEditModeBlock = (
-				<button type="button" classes={[css.btn]} key="toPreviewButton" onclick={() => onSwitchEditMode()}>
+				<button
+					type="button"
+					classes={[css.btn]}
+					key="toPreviewButton"
+					onclick={(): void => onSwitchEditMode()}
+				>
 					<FontAwesomeIcon icon={["far", "caret-square-right"]} />
 					<span classes={[c.ml_1]}>预览</span>
 				</button>

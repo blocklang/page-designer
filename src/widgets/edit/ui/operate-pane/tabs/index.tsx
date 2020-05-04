@@ -7,12 +7,9 @@ import { switchUIOperateTabProcess } from "../../../../../processes/designerProc
 import WidgetsTab from "./widgets-tab";
 import PropertiesTab from "./properties-tab";
 
-export interface TabProperties {}
+const factory = create({ store }).properties();
 
-const factory = create({ store }).properties<TabProperties>();
-
-export default factory(function Tab({ properties, children, middleware: { store } }) {
-	const {} = properties();
+export default factory(function Tab({ middleware: { store } }) {
 	const { get, path, executor } = store;
 	const activeNav = get(path("paneLayout", "uiOperateTab")) || "widgets";
 
@@ -28,7 +25,7 @@ export default factory(function Tab({ properties, children, middleware: { store 
 							activeNav === "widgets" ? css.tabBarActive : css.tabBar,
 						]}
 						href="#"
-						onclick={(event: MouseEvent) => {
+						onclick={(event: MouseEvent): void => {
 							event.preventDefault();
 							executor(switchUIOperateTabProcess)({ tab: "widgets" });
 						}}
@@ -45,7 +42,7 @@ export default factory(function Tab({ properties, children, middleware: { store 
 							activeNav === "properties" ? css.tabBarActive : css.tabBar,
 						]}
 						href="#"
-						onclick={(event: MouseEvent) => {
+						onclick={(event: MouseEvent): void => {
 							event.preventDefault();
 							executor(switchUIOperateTabProcess)({ tab: "properties" });
 						}}

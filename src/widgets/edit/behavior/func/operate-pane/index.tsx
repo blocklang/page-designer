@@ -38,7 +38,7 @@ export default factory(function OperatePane({ properties, middleware: { drag } }
 		}
 
 		// 3. 属性面板的顶端不能移出视窗的底部
-		const clientHeight = document.documentElement!.clientHeight || document.body.clientHeight;
+		const clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
 		if (dragTop > clientHeight - DRAG_BOTTOM_LIMIT) {
 			dragTop = clientHeight - DRAG_BOTTOM_LIMIT;
 		}

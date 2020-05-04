@@ -6,10 +6,11 @@ import {
 	InputDataPort,
 	OutputSequencePort,
 	DataPort,
+	InputSequencePort,
 } from "@blocklang/designer-core/interfaces";
 import * as c from "bootstrap-classes";
 import * as css from "./index.m.css";
-import { DNode } from "@dojo/framework/core/interfaces";
+import { DNode, VNode } from "@dojo/framework/core/interfaces";
 import store from "@blocklang/designer-core/store";
 import {
 	activeFunctionNodeProcess,
@@ -98,180 +99,51 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 		}
 	}
 
-	return v(
-		"div",
-		{
-			key: "root",
-			classes: [c.border, css.root],
-			onpointermove: (event: PointerEvent) => {
-				if (!isConnecting) {
-					return;
-				}
+	function removeConnector(): void {
+		if (editingSequenceConnectorId) {
+			// 删除序列端口之间的连接线
+			executor(removeSequenceConnectorProcess)({ sequenceConnectorId: editingSequenceConnectorId });
+		} else if (editingDataConnectorId) {
+			// 删除数据端口之间的连接线
+			executor(removeDataConnectorProcess)({ dataConnectorId: editingDataConnectorId });
+		} else {
+			// 重新渲染，不再显示新建的连接线
+			invalidator();
+		}
+	}
 
-				drawingConnectorEndPort = {
-					x: event.clientX - rootDimensions.position.left,
-					y: event.clientY - rootDimensions.position.top,
-				};
-				invalidator();
-			},
-			onpointerup: (event: PointerEvent) => {
-				if (!isConnecting) {
-					return;
-				}
-				isConnecting = false;
+	function renderBlankPort(): DNode {
+		return v("div", { classes: [c.px_1] }, [v("span", { classes: [css.blankPort] })]);
+	}
 
-				// 如果松开鼠标前没有停留在端口上，则视为删除连接线的操作。
-				// 如果松开鼠标前停留在端口上，但是无效的端口，则也应该视为删除连接线的操作。
-				if (!connectingHoverPort) {
-					removeConnector();
-					return;
-				}
+	function startConnect(event: PointerEvent<EventTarget>): void {
+		// 为了避免有垂直滚动条，向下滚动后
+		// 或者增加数据项后，root 的位置发生了变化
+		// 所以在此处重新计算 root 的位置。
+		const newRootDimensions = dimensions.get("root");
+		drawingConnectorStartPort = drawingConnectorEndPort = {
+			x: event.clientX - newRootDimensions.position.left,
+			y: event.clientY - newRootDimensions.position.top,
+		};
 
-				// FIXME: 即使没有通过校验，也要记得清除临时存放正在编辑的连接线
+		isConnecting = true;
+		// 在此处调用此方法，只是因为当向下垂直滚动滚动条后，需要重新计算 root 节点的位置信息
+		// 不然起点位置就会不准确。
+		invalidator();
+	}
 
-				// 以下皆是松开鼠标后停留在端口上的处理逻辑
+	function onHoverPort(portInfo: PortInfo): void {
+		if (!isConnecting) {
+			return;
+		}
+		connectingHoverPort = portInfo;
+	}
 
-				// 连接线有效校验：
-				// 1. 节点内的端口之间不能互相连接
-				// 2. 端口不能自己连接自己
-				if (connectingStartPort.nodeId === connectingHoverPort.nodeId) {
-					invalidator();
-					return;
-				}
-				// 2. 不同节点之间有效的端口连接
-				if (
-					connectingStartPort.portType !== connectingHoverPort.portType ||
-					connectingStartPort.flowType === connectingHoverPort.flowType
-				) {
-					removeConnector();
-					return;
-				}
-
-				// startPort 对应起始节点的 output, endPort 对应终止节点的 input
-				let startPort: PortPosition;
-				let endPort: PortPosition;
-				if (connectingStartPort.flowType === "output") {
-					startPort = connectingStartPort;
-					endPort = connectingHoverPort;
-				} else {
-					startPort = connectingHoverPort;
-					endPort = connectingStartPort;
-				}
-
-				if (editingSequenceConnectorId) {
-					// 一次只会修改一个端口，所以就精准的更新一个端口的信息
-					if (connectingHoverPort.portType === "sequence" && connectingHoverPort.flowType === "output") {
-						executor(updateSequenceConnectorProcess)({
-							sequenceConnectorId: editingSequenceConnectorId,
-							startPort,
-							endPort,
-						});
-					}
-					return;
-				}
-
-				if (editingDataConnectorId) {
-					if (connectingHoverPort.portType === "data" && connectingHoverPort.flowType === "input") {
-						executor(updateDataConnectorProcess)({
-							dataConnectorId: editingDataConnectorId,
-							startPort,
-							endPort,
-						});
-					}
-					return;
-				}
-
-				// 判断 connectingHoverPort 上是否有连接线，如果有的话要先删除之前的连接线，再创建新的连接线
-				if (connectingHoverPort.portType === "sequence" && connectingHoverPort.flowType === "input") {
-					const connector = find(
-						sequenceConnections,
-						(connection) =>
-							connection.toNode === connectingHoverPort!.nodeId &&
-							connection.toInput === connectingHoverPort!.portId
-					);
-					if (connector) {
-						executor(updateSequenceConnectorProcess)({
-							sequenceConnectorId: connector.id,
-							startPort,
-							endPort,
-						});
-						return;
-					}
-				}
-
-				if (connectingHoverPort.portType === "data" && connectingHoverPort.flowType === "input") {
-					const connector = find(
-						dataConnections,
-						(connection) =>
-							connection.toNode === connectingHoverPort!.nodeId &&
-							connection.toInput === connectingHoverPort!.portId
-					);
-					if (connector) {
-						executor(updateDataConnectorProcess)({ dataConnectorId: connector.id, startPort, endPort });
-						return;
-					}
-				}
-
-				// TODO: 将此拆分为校验和新增两个方法，然后将校验方法前移。
-				if (connectingStartPort.portType === "sequence") {
-					// 节点-输出型序列端口 -> 节点-输入型序列端口之间的连线已存在
-					// 则从节点-输入型序列端口 往 节点-输出型序列端口之间连线时，不能重复添加
-					if (
-						findIndex(
-							sequenceConnections,
-							(connection) =>
-								connection.fromNode === startPort.nodeId &&
-								connection.fromOutput === startPort.portId &&
-								connection.toNode === endPort.nodeId &&
-								connection.toInput === endPort.portId
-						) > -1
-					) {
-						invalidator();
-						return;
-					}
-
-					executor(addSequenceConnectorProcess)({ startPort, endPort });
-				} else if (connectingStartPort.portType === "data") {
-					// 节点-输出型数据端口 -> 节点-输入型数据端口之间的连线已存在
-					// 则从节点-输出型数据端口 往 节点-输入型数据端口之间连线时，不能重复添加
-					if (
-						findIndex(
-							dataConnections,
-							(connection) =>
-								connection.fromNode === startPort.nodeId &&
-								connection.fromOutput === startPort.portId &&
-								connection.toNode === endPort.nodeId &&
-								connection.toInput === endPort.portId
-						) > -1
-					) {
-						invalidator();
-						return;
-					}
-
-					executor(addDataConnectorProcess)({ startPort, endPort });
-				}
-			},
-		},
-		[
-			...renderNodes(),
-			...renderSequenceConnections(),
-			...renderDataConnections(),
-			isConnecting && renderDrawingConnection(connectingStartPort.portType),
-		]
-	);
-
-	function renderNodes(): DNode[] {
-		return nodes.map((node) => {
-			if (node.layout === "flowControl") {
-				return renderFlowControlNode(node);
-			} else if (node.layout === "data") {
-				return renderDataNode(node);
-			} else if (node.layout === "async") {
-				return renderAsyncNode(node);
-			} else {
-				return v("div", { classes: [c.border, css.node] }, [`未实现 layout 为"${node.layout}"的节点`]);
-			}
-		});
+	function onLeavePort(): void {
+		if (!isConnecting) {
+			return;
+		}
+		connectingHoverPort = undefined;
 	}
 
 	function renderFlowControlNode(node: VisualNode): DNode {
@@ -286,7 +158,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 					css.node,
 				],
 				styles: { top: `${node.top}px`, left: `${node.left}px` },
-				onpointerdown: (event: PointerEvent) => {
+				onpointerdown: () => {
 					// 用于选中节点
 					// 如果已经选中了，则不再重复选中
 					if (selectedFunctionNodeId !== node.id) {
@@ -369,7 +241,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 										startConnect(event);
 									}
 								},
-								onpointerenter: (event: PointerEvent) => {
+								onpointerenter: () => {
 									onHoverPort({
 										nodeId: node.id,
 										portId: node.outputSequencePorts[0].id,
@@ -409,7 +281,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 										};
 										startConnect(event);
 									},
-									onpointerenter: (event: PointerEvent) => {
+									onpointerenter: () => {
 										onHoverPort({
 											nodeId: node.id,
 											portId: item.id,
@@ -417,7 +289,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 											flowType: "output",
 										});
 									},
-									onpointerleave: (event: PointerEvent) => {
+									onpointerleave: () => {
 										onLeavePort();
 									},
 								},
@@ -430,9 +302,161 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 		);
 	}
 
+	function onPointerDownInputDataPort(
+		nodeId: string,
+		inputDataPort: InputDataPort,
+		event: PointerEvent<EventTarget>
+	): void {
+		// 初始化数据
+		editingDataConnectorId = undefined;
+		editingSequenceConnectorId = undefined;
+		connectingHoverPort = undefined;
+
+		// 注意，输出型序列端口最多只能连一条线
+		const dc = find(dataConnections, (dc) => dc.toNode === nodeId && dc.toInput === inputDataPort.id);
+		if (dc) {
+			// 相当于从终点的输入型端口切断了，可看作是从起点的输出型端口开始连线
+			editingDataConnectorId = dc.id;
+			connectingStartPort = {
+				nodeId: dc.fromNode,
+				portId: dc.fromOutput,
+				portType: "data",
+				flowType: "output", // 有效值只能是 output
+			};
+			const newRootDimensions = dimensions.get("root");
+			const fromOutputPortDimensions = dimensions.get(dc.fromOutput);
+			drawingConnectorStartPort = {
+				x:
+					fromOutputPortDimensions.position.left -
+					newRootDimensions.position.left +
+					fromOutputPortDimensions.size.width / 2,
+				y:
+					fromOutputPortDimensions.position.top -
+					newRootDimensions.position.top +
+					fromOutputPortDimensions.size.height / 2,
+			};
+			drawingConnectorEndPort = {
+				x: event.clientX - newRootDimensions.position.left,
+				y: event.clientY - newRootDimensions.position.top,
+			};
+			isConnecting = true;
+		} else {
+			connectingStartPort = {
+				nodeId,
+				portId: inputDataPort.id,
+				portType: "data",
+				flowType: "input",
+			};
+			startConnect(event);
+		}
+	}
+
+	// FIXME: 合并 renderXXX 方法，不需要按 NodeLayout 来区分
 	function renderDataNode(node: VisualNode): DNode {
 		const singleSequenceOutput = node.outputSequencePorts.length === 1 && node.outputSequencePorts[0].text === "";
-		const singleSequenceInputAndOutput = node.inputSequencePort && singleSequenceOutput;
+
+		function renderSequencePortRow(inputSequencePort: InputSequencePort): any {
+			return v("div", { classes: [c.d_flex, c.justify_content_between] }, [
+				v(
+					"div",
+					{
+						key: inputSequencePort.id,
+						classes: [c.px_1],
+						onpointerdown: (event: PointerEvent) => {
+							// 初始化数据
+							editingDataConnectorId = undefined;
+							editingSequenceConnectorId = undefined;
+							connectingHoverPort = undefined;
+							connectingStartPort = {
+								nodeId: node.id,
+								portId: inputSequencePort.id,
+								portType: "sequence",
+								flowType: "input",
+							};
+							startConnect(event);
+						},
+						onpointerenter: () => {
+							onHoverPort({
+								nodeId: node.id,
+								portId: inputSequencePort.id,
+								portType: "sequence",
+								flowType: "input",
+							});
+						},
+						onpointerleave: () => {
+							onLeavePort();
+						},
+					},
+					[w(FontAwesomeIcon, { icon: "caret-right" })]
+				),
+				v("div", {}, [node.text]),
+				v(
+					"div",
+					{
+						key: node.outputSequencePorts[0].id,
+						classes: [c.px_1],
+						onpointerdown: (event: PointerEvent) => {
+							// 初始化数据
+							editingDataConnectorId = undefined;
+							editingSequenceConnectorId = undefined;
+							connectingHoverPort = undefined;
+							const sc = find(
+								sequenceConnections,
+								(sc) => sc.fromNode === node.id && sc.fromOutput === node.outputSequencePorts[0].id
+							);
+							// 编辑已有节点
+							if (sc) {
+								// 相当于从起点的输出型端口切断了，可看作是从终点的输入型端口开始连线
+								editingSequenceConnectorId = sc.id;
+								connectingStartPort = {
+									nodeId: sc.toNode,
+									portId: sc.toInput,
+									portType: "sequence",
+									flowType: "input",
+								};
+								const newRootDimensions = dimensions.get("root");
+								const toInputPortDimensions = dimensions.get(sc.toInput);
+								drawingConnectorStartPort = {
+									x:
+										toInputPortDimensions.position.left -
+										newRootDimensions.position.left +
+										toInputPortDimensions.size.width / 2,
+									y:
+										toInputPortDimensions.position.top -
+										newRootDimensions.position.top +
+										toInputPortDimensions.size.height / 2,
+								};
+								drawingConnectorEndPort = {
+									x: event.clientX - newRootDimensions.position.left,
+									y: event.clientY - newRootDimensions.position.top,
+								};
+								isConnecting = true;
+							} else {
+								connectingStartPort = {
+									nodeId: node.id,
+									portId: node.outputSequencePorts[0].id,
+									portType: "sequence",
+									flowType: "output",
+								};
+								startConnect(event);
+							}
+						},
+						onpointerenter: () => {
+							onHoverPort({
+								nodeId: node.id,
+								portId: node.outputSequencePorts[0].id,
+								portType: "sequence",
+								flowType: "output",
+							});
+						},
+						onpointerleave: () => {
+							onLeavePort();
+						},
+					},
+					[w(FontAwesomeIcon, { icon: "caret-right" })]
+				),
+			]);
+		}
 
 		return v(
 			"div",
@@ -446,7 +470,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 				],
 				styles: { top: `${node.top}px`, left: `${node.left}px` },
 				// FIXME: 抽取出一个事件 onSelectNode?
-				onpointerdown: (event: PointerEvent) => {
+				onpointerdown: () => {
 					// 用于选中节点
 					// 如果已经选中了，则不再重复选中
 					if (selectedFunctionNodeId !== node.id) {
@@ -461,7 +485,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 						"span",
 						{
 							classes: [c.float_right, c.text_white, c.ml_2, css.close],
-							onclick: (event: MouseEvent) => {
+							onclick: () => {
 								executor(removeFunctionNodeProcess)({ functionNodeId: node.id });
 							},
 							onpointerdown: (event: PointerEvent) => {
@@ -474,113 +498,9 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 					),
 				]),
 				// sequence port
-				singleSequenceInputAndOutput &&
-					v("div", { classes: [c.d_flex, c.justify_content_between] }, [
-						v(
-							"div",
-							{
-								key: node.inputSequencePort!.id,
-								classes: [c.px_1],
-								onpointerdown: (event: PointerEvent) => {
-									// 初始化数据
-									editingDataConnectorId = undefined;
-									editingSequenceConnectorId = undefined;
-									connectingHoverPort = undefined;
-
-									connectingStartPort = {
-										nodeId: node.id,
-										portId: node.inputSequencePort!.id,
-										portType: "sequence",
-										flowType: "input",
-									};
-									startConnect(event);
-								},
-								onpointerenter: (event: PointerEvent) => {
-									onHoverPort({
-										nodeId: node.id,
-										portId: node.inputSequencePort!.id,
-										portType: "sequence",
-										flowType: "input",
-									});
-								},
-								onpointerleave: (event: PointerEvent) => {
-									onLeavePort();
-								},
-							},
-							[w(FontAwesomeIcon, { icon: "caret-right" })]
-						),
-						v("div", {}, [node.text]),
-						v(
-							"div",
-							{
-								key: node.outputSequencePorts[0].id,
-								classes: [c.px_1],
-								onpointerdown: (event: PointerEvent) => {
-									// 初始化数据
-									editingDataConnectorId = undefined;
-									editingSequenceConnectorId = undefined;
-									connectingHoverPort = undefined;
-
-									const sc = find(
-										sequenceConnections,
-										(sc) =>
-											sc.fromNode === node.id && sc.fromOutput === node.outputSequencePorts[0].id
-									);
-									// 编辑已有节点
-									if (sc) {
-										// 相当于从起点的输出型端口切断了，可看作是从终点的输入型端口开始连线
-										editingSequenceConnectorId = sc.id;
-										connectingStartPort = {
-											nodeId: sc.toNode,
-											portId: sc.toInput,
-											portType: "sequence", // 有效值只能是 sequence
-											flowType: "input", // 有效值只能是 input
-										};
-
-										const newRootDimensions = dimensions.get("root");
-										const toInputPortDimensions = dimensions.get(sc.toInput);
-										drawingConnectorStartPort = {
-											x:
-												toInputPortDimensions.position.left -
-												newRootDimensions.position.left +
-												toInputPortDimensions.size.width / 2,
-											y:
-												toInputPortDimensions.position.top -
-												newRootDimensions.position.top +
-												toInputPortDimensions.size.height / 2,
-										};
-
-										drawingConnectorEndPort = {
-											x: event.clientX - newRootDimensions.position.left,
-											y: event.clientY - newRootDimensions.position.top,
-										};
-
-										isConnecting = true;
-									} else {
-										connectingStartPort = {
-											nodeId: node.id,
-											portId: node.outputSequencePorts[0].id,
-											portType: "sequence",
-											flowType: "output",
-										};
-										startConnect(event);
-									}
-								},
-								onpointerenter: (event: PointerEvent) => {
-									onHoverPort({
-										nodeId: node.id,
-										portId: node.outputSequencePorts[0].id,
-										portType: "sequence",
-										flowType: "output",
-									});
-								},
-								onpointerleave: (event: PointerEvent) => {
-									onLeavePort();
-								},
-							},
-							[w(FontAwesomeIcon, { icon: "caret-right" })]
-						),
-					]),
+				node.inputSequencePort != undefined &&
+					singleSequenceOutput &&
+					renderSequencePortRow(node.inputSequencePort),
 				// data ports
 				...node.inputDataPorts.map((item) =>
 					v("div", { classes: [c.d_flex, c.justify_content_between] }, [
@@ -641,7 +561,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 											onpointerdown: (event: PointerEvent) => {
 												onPointerDownInputDataPort(node.id, item, event);
 											},
-											onpointerenter: (event: PointerEvent) => {
+											onpointerenter: () => {
 												onHoverPort({
 													nodeId: node.id,
 													portId: item.id,
@@ -649,7 +569,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 													flowType: "input",
 												});
 											},
-											onpointerleave: (event: PointerEvent) => {
+											onpointerleave: () => {
 												onLeavePort();
 											},
 										},
@@ -686,7 +606,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 										};
 										startConnect(event);
 									},
-									onpointerenter: (event: PointerEvent) => {
+									onpointerenter: () => {
 										onHoverPort({
 											nodeId: node.id,
 											portId: item.id,
@@ -694,7 +614,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 											flowType: "output",
 										});
 									},
-									onpointerleave: (event: PointerEvent) => {
+									onpointerleave: () => {
 										onLeavePort();
 									},
 								},
@@ -717,22 +637,6 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 			return;
 		}
 
-		function renderDataPortRows(): DNode[] {
-			const maxDataPortRow = Math.max(inputDataPorts.length, outputPorts.length);
-			const result: DNode[] = [];
-			for (let i = 0; i < maxDataPortRow; i++) {
-				const idp = inputDataPorts[i];
-				const op = outputPorts[i];
-				result.push(
-					v("div", { classes: [c.d_flex, c.justify_content_between] }, [
-						idp ? renderInputDataPort(idp) : renderBlankPort(),
-						op ? renderOutputPort(op) : renderBlankPort(),
-					])
-				);
-			}
-			return result;
-		}
-
 		function renderInputDataPort(idp: InputDataPort): DNode {
 			const connected =
 				findIndex(
@@ -749,7 +653,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 							onpointerdown: (event: PointerEvent) => {
 								onPointerDownInputDataPort(node.id, idp, event);
 							},
-							onpointerenter: (event: PointerEvent) => {
+							onpointerenter: () => {
 								onHoverPort({
 									nodeId: node.id,
 									portId: idp.id,
@@ -757,7 +661,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 									flowType: "input",
 								});
 							},
-							onpointerleave: (event: PointerEvent) => {
+							onpointerleave: () => {
 								onLeavePort();
 							},
 						},
@@ -811,54 +715,6 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 						},
 					}),
 				]),
-			]);
-		}
-
-		function renderOutputPort(outputPort: OutputSequencePort | DataPort): DNode {
-			if ((<OutputSequencePort>outputPort).text) {
-				const op = outputPort as OutputSequencePort;
-				return renderOutputSequencePort(op);
-			}
-			const op = outputPort as DataPort;
-			return renderOutputDataPort(op);
-		}
-
-		function renderOutputDataPort(op: DataPort): DNode<any> {
-			return v("div", { classes: [c.pl_1] }, [
-				v("span", {}, [op.name]),
-				v("small", { classes: [c.ml_1, c.font_italic] }, [op.type]),
-				v(
-					"span",
-					{
-						key: op.id,
-						classes: [c.px_1, css.dataPointIcon],
-						onpointerdown: (event: PointerEvent) => {
-							// 初始化数据
-							editingDataConnectorId = undefined;
-							editingSequenceConnectorId = undefined;
-							connectingHoverPort = undefined;
-							connectingStartPort = {
-								nodeId: node.id,
-								portId: op.id,
-								portType: "data",
-								flowType: "output",
-							};
-							startConnect(event);
-						},
-						onpointerenter: (event: PointerEvent) => {
-							onHoverPort({
-								nodeId: node.id,
-								portId: op.id,
-								portType: "data",
-								flowType: "output",
-							});
-						},
-						onpointerleave: (event: PointerEvent) => {
-							onLeavePort();
-						},
-					},
-					[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
-				),
 			]);
 		}
 
@@ -916,7 +772,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 								startConnect(event);
 							}
 						},
-						onpointerenter: (event: PointerEvent) => {
+						onpointerenter: () => {
 							onHoverPort({
 								nodeId: node.id,
 								portId: osp.id,
@@ -924,13 +780,77 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 								flowType: "output",
 							});
 						},
-						onpointerleave: (event: PointerEvent) => {
+						onpointerleave: () => {
 							onLeavePort();
 						},
 					},
 					[w(FontAwesomeIcon, { icon: "caret-right" })]
 				),
 			]);
+		}
+
+		function renderOutputDataPort(op: DataPort): DNode<any> {
+			return v("div", { classes: [c.pl_1] }, [
+				v("span", {}, [op.name]),
+				v("small", { classes: [c.ml_1, c.font_italic] }, [op.type]),
+				v(
+					"span",
+					{
+						key: op.id,
+						classes: [c.px_1, css.dataPointIcon],
+						onpointerdown: (event: PointerEvent) => {
+							// 初始化数据
+							editingDataConnectorId = undefined;
+							editingSequenceConnectorId = undefined;
+							connectingHoverPort = undefined;
+							connectingStartPort = {
+								nodeId: node.id,
+								portId: op.id,
+								portType: "data",
+								flowType: "output",
+							};
+							startConnect(event);
+						},
+						onpointerenter: () => {
+							onHoverPort({
+								nodeId: node.id,
+								portId: op.id,
+								portType: "data",
+								flowType: "output",
+							});
+						},
+						onpointerleave: () => {
+							onLeavePort();
+						},
+					},
+					[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
+				),
+			]);
+		}
+
+		function renderOutputPort(outputPort: OutputSequencePort | DataPort): DNode {
+			if ((outputPort as OutputSequencePort).text) {
+				const op = outputPort as OutputSequencePort;
+				return renderOutputSequencePort(op);
+			}
+			const op = outputPort as DataPort;
+			return renderOutputDataPort(op);
+		}
+
+		function renderDataPortRows(): DNode[] {
+			const maxDataPortRow = Math.max(inputDataPorts.length, outputPorts.length);
+			const result: DNode[] = [];
+			for (let i = 0; i < maxDataPortRow; i++) {
+				const idp = inputDataPorts[i];
+				const op = outputPorts[i];
+				result.push(
+					v("div", { classes: [c.d_flex, c.justify_content_between] }, [
+						idp ? renderInputDataPort(idp) : renderBlankPort(),
+						op ? renderOutputPort(op) : renderBlankPort(),
+					])
+				);
+			}
+			return result;
 		}
 
 		return v(
@@ -944,7 +864,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 					css.node,
 				],
 				styles: { top: `${node.top}px`, left: `${node.left}px` },
-				onpointerdown: (event: PointerEvent) => {
+				onpointerdown: () => {
 					// 用于选中节点
 					// 如果已经选中了，则不再重复选中
 					if (selectedFunctionNodeId !== node.id) {
@@ -959,7 +879,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 						"span",
 						{
 							classes: [c.float_right, c.text_white, c.ml_2, css.close],
-							onclick: (event: MouseEvent) => {
+							onclick: () => {
 								executor(removeFunctionNodeProcess)({ functionNodeId: node.id });
 							},
 							onpointerdown: (event: PointerEvent) => {
@@ -991,7 +911,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 								};
 								startConnect(event);
 							},
-							onpointerenter: (event: PointerEvent) => {
+							onpointerenter: () => {
 								onHoverPort({
 									nodeId: node.id,
 									portId: inputSequencePort.id,
@@ -999,7 +919,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 									flowType: "input",
 								});
 							},
-							onpointerleave: (event: PointerEvent) => {
+							onpointerleave: () => {
 								onLeavePort();
 							},
 						},
@@ -1061,7 +981,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 									startConnect(event);
 								}
 							},
-							onpointerenter: (event: PointerEvent) => {
+							onpointerenter: () => {
 								onHoverPort({
 									nodeId: node.id,
 									portId: primaryOutputSequencePort.id,
@@ -1069,7 +989,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 									flowType: "output",
 								});
 							},
-							onpointerleave: (event: PointerEvent) => {
+							onpointerleave: () => {
 								onLeavePort();
 							},
 						},
@@ -1081,107 +1001,49 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 		);
 	}
 
-	function renderBlankPort(): DNode {
-		return v("div", { classes: [c.px_1] }, [v("span", { classes: [css.blankPort] })]);
+	function renderNodes(): DNode[] {
+		return nodes.map((node) => {
+			if (node.layout === "flowControl") {
+				return renderFlowControlNode(node);
+			} else if (node.layout === "data") {
+				return renderDataNode(node);
+			} else if (node.layout === "async") {
+				return renderAsyncNode(node);
+			} else {
+				return v("div", { classes: [c.border, css.node] }, [`未实现 layout 为"${node.layout}"的节点`]);
+			}
+		});
 	}
 
-	function onPointerDownInputDataPort(
-		nodeId: string,
-		inputDataPort: InputDataPort,
-		event: PointerEvent<EventTarget>
-	) {
-		// 初始化数据
-		editingDataConnectorId = undefined;
-		editingSequenceConnectorId = undefined;
-		connectingHoverPort = undefined;
-
-		// 注意，输出型序列端口最多只能连一条线
-		const dc = find(dataConnections, (dc) => dc.toNode === nodeId && dc.toInput === inputDataPort.id);
-		if (dc) {
-			// 相当于从终点的输入型端口切断了，可看作是从起点的输出型端口开始连线
-			editingDataConnectorId = dc.id;
-			connectingStartPort = {
-				nodeId: dc.fromNode,
-				portId: dc.fromOutput,
-				portType: "data",
-				flowType: "output", // 有效值只能是 output
-			};
-			const newRootDimensions = dimensions.get("root");
-			const fromOutputPortDimensions = dimensions.get(dc.fromOutput);
-			drawingConnectorStartPort = {
-				x:
-					fromOutputPortDimensions.position.left -
-					newRootDimensions.position.left +
-					fromOutputPortDimensions.size.width / 2,
-				y:
-					fromOutputPortDimensions.position.top -
-					newRootDimensions.position.top +
-					fromOutputPortDimensions.size.height / 2,
-			};
-			drawingConnectorEndPort = {
-				x: event.clientX - newRootDimensions.position.left,
-				y: event.clientY - newRootDimensions.position.top,
-			};
-			isConnecting = true;
-		} else {
-			connectingStartPort = {
-				nodeId,
-				portId: inputDataPort.id,
-				portType: "data",
-				flowType: "input",
-			};
-			startConnect(event);
-		}
-	}
-
-	function onHoverPort(portInfo: PortInfo) {
-		if (!isConnecting) {
-			return;
-		}
-		connectingHoverPort = portInfo;
-	}
-
-	function onLeavePort() {
-		if (!isConnecting) {
-			return;
-		}
-		connectingHoverPort = undefined;
-	}
-
-	function startConnect(event: PointerEvent<EventTarget>) {
-		// 为了避免有垂直滚动条，向下滚动后
-		// 或者增加数据项后，root 的位置发生了变化
-		// 所以在此处重新计算 root 的位置。
-		const newRootDimensions = dimensions.get("root");
-		drawingConnectorStartPort = drawingConnectorEndPort = {
-			x: event.clientX - newRootDimensions.position.left,
-			y: event.clientY - newRootDimensions.position.top,
-		};
-
-		isConnecting = true;
-		// 在此处调用此方法，只是因为当向下垂直滚动滚动条后，需要重新计算 root 节点的位置信息
-		// 不然起点位置就会不准确。
-		invalidator();
-	}
-
-	function renderSequenceConnections(): DNode[] {
-		if (!editingSequenceConnectorId) {
-			return sequenceConnections.map((connection) => renderSequenceConnection(connection));
-		}
-		// 过滤掉正在调整的连接线
-		return sequenceConnections
-			.filter((connection) => editingSequenceConnectorId !== connection.id)
-			.map((connection) => renderSequenceConnection(connection));
-	}
-
-	function renderDataConnections(): DNode[] {
-		if (!editingDataConnectorId) {
-			return dataConnections.map((connection) => renderDataConnection(connection));
-		}
-		// 过滤掉正在调整的连接线
-		return dataConnections
-			.filter((connection) => editingDataConnectorId !== connection.id)
-			.map((connection) => renderDataConnection(connection));
+	function renderConnection(
+		startPoint: { x: number; y: number } = { x: 0, y: 0 },
+		endPoint: { x: number; y: number } = { x: 0, y: 0 },
+		svgKey: string,
+		portType: PortType
+	): VNode {
+		const svgOffset = getConnectorOffset(startPoint, endPoint);
+		const connectorPath = getConnectorPath(startPoint, endPoint);
+		return v(
+			"svg",
+			{
+				key: svgKey,
+				classes: [css.svg],
+				styles: { left: `${svgOffset.left}px`, top: `${svgOffset.top}px` },
+				width: `${Math.max(svgOffset.width, 2)}`,
+				height: `${Math.max(svgOffset.height, 2)}`,
+				"pointer-events": "none",
+			},
+			[
+				v("path", {
+					d: `M${connectorPath.start.x} ${connectorPath.start.y} L${connectorPath.end.x} ${connectorPath.end.y}`,
+					fill: "none",
+					stroke: portType === "sequence" ? "#6c757d" : "#17a2b8",
+					"stroke-width": "2",
+					// 在拖拽时，该值必须是 none，否则在要放置的节点处，节点和 path 之间会不确定性的切换。
+					"pointer-events": "none",
+				}),
+			]
+		);
 	}
 
 	function renderSequenceConnection(connection: NodeConnection): DNode {
@@ -1224,6 +1086,16 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 		};
 
 		return renderConnection(startPoint, endPoint, connection.id, "sequence");
+	}
+
+	function renderSequenceConnections(): DNode[] {
+		if (!editingSequenceConnectorId) {
+			return sequenceConnections.map((connection) => renderSequenceConnection(connection));
+		}
+		// 过滤掉正在调整的连接线
+		return sequenceConnections
+			.filter((connection) => editingSequenceConnectorId !== connection.id)
+			.map((connection) => renderSequenceConnection(connection));
 	}
 
 	function renderDataConnection(connection: NodeConnection): DNode {
@@ -1273,51 +1145,181 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 		return renderConnection(startPoint, endPoint, connection.id, "data");
 	}
 
-	function renderConnection(
-		startPoint: { x: number; y: number } = { x: 0, y: 0 },
-		endPoint: { x: number; y: number } = { x: 0, y: 0 },
-		svgKey: string,
-		portType: PortType
-	) {
-		const svgOffset = getConnectorOffset(startPoint, endPoint);
-		const connectorPath = getConnectorPath(startPoint, endPoint);
-		return v(
-			"svg",
-			{
-				key: svgKey,
-				classes: [css.svg],
-				styles: { left: `${svgOffset.left}px`, top: `${svgOffset.top}px` },
-				width: `${Math.max(svgOffset.width, 2)}`,
-				height: `${Math.max(svgOffset.height, 2)}`,
-				"pointer-events": "none",
-			},
-			[
-				v("path", {
-					d: `M${connectorPath.start.x} ${connectorPath.start.y} L${connectorPath.end.x} ${connectorPath.end.y}`,
-					fill: "none",
-					stroke: portType === "sequence" ? "#6c757d" : "#17a2b8",
-					"stroke-width": "2",
-					// 在拖拽时，该值必须是 none，否则在要放置的节点处，节点和 path 之间会不确定性的切换。
-					"pointer-events": "none",
-				}),
-			]
-		);
+	function renderDataConnections(): DNode[] {
+		if (!editingDataConnectorId) {
+			return dataConnections.map((connection) => renderDataConnection(connection));
+		}
+		// 过滤掉正在调整的连接线
+		return dataConnections
+			.filter((connection) => editingDataConnectorId !== connection.id)
+			.map((connection) => renderDataConnection(connection));
 	}
 
 	function renderDrawingConnection(portType: PortType): DNode {
 		return renderConnection(drawingConnectorStartPort, drawingConnectorEndPort, "drawingConnector", portType);
 	}
 
-	function removeConnector(): void {
-		if (editingSequenceConnectorId) {
-			// 删除序列端口之间的连接线
-			executor(removeSequenceConnectorProcess)({ sequenceConnectorId: editingSequenceConnectorId });
-		} else if (editingDataConnectorId) {
-			// 删除数据端口之间的连接线
-			executor(removeDataConnectorProcess)({ dataConnectorId: editingDataConnectorId });
-		} else {
-			// 重新渲染，不再显示新建的连接线
-			invalidator();
-		}
-	}
+	return v(
+		"div",
+		{
+			key: "root",
+			classes: [c.border, css.root],
+			onpointermove: (event: PointerEvent) => {
+				if (!isConnecting) {
+					return;
+				}
+
+				drawingConnectorEndPort = {
+					x: event.clientX - rootDimensions.position.left,
+					y: event.clientY - rootDimensions.position.top,
+				};
+				invalidator();
+			},
+			onpointerup: () => {
+				if (!isConnecting) {
+					return;
+				}
+				isConnecting = false;
+
+				// 如果松开鼠标前没有停留在端口上，则视为删除连接线的操作。
+				// 如果松开鼠标前停留在端口上，但是无效的端口，则也应该视为删除连接线的操作。
+				if (!connectingHoverPort) {
+					removeConnector();
+					return;
+				}
+
+				// FIXME: 即使没有通过校验，也要记得清除临时存放正在编辑的连接线
+
+				// 以下皆是松开鼠标后停留在端口上的处理逻辑
+
+				// 连接线有效校验：
+				// 1. 节点内的端口之间不能互相连接
+				// 2. 端口不能自己连接自己
+				if (connectingStartPort.nodeId === connectingHoverPort.nodeId) {
+					invalidator();
+					return;
+				}
+				// 2. 不同节点之间有效的端口连接
+				if (
+					connectingStartPort.portType !== connectingHoverPort.portType ||
+					connectingStartPort.flowType === connectingHoverPort.flowType
+				) {
+					removeConnector();
+					return;
+				}
+
+				// startPort 对应起始节点的 output, endPort 对应终止节点的 input
+				let startPort: PortPosition;
+				let endPort: PortPosition;
+				if (connectingStartPort.flowType === "output") {
+					startPort = connectingStartPort;
+					endPort = connectingHoverPort;
+				} else {
+					startPort = connectingHoverPort;
+					endPort = connectingStartPort;
+				}
+
+				if (editingSequenceConnectorId) {
+					// 一次只会修改一个端口，所以就精准的更新一个端口的信息
+					if (connectingHoverPort.portType === "sequence" && connectingHoverPort.flowType === "output") {
+						executor(updateSequenceConnectorProcess)({
+							sequenceConnectorId: editingSequenceConnectorId,
+							startPort,
+							endPort,
+						});
+					}
+					return;
+				}
+
+				if (editingDataConnectorId) {
+					if (connectingHoverPort.portType === "data" && connectingHoverPort.flowType === "input") {
+						executor(updateDataConnectorProcess)({
+							dataConnectorId: editingDataConnectorId,
+							startPort,
+							endPort,
+						});
+					}
+					return;
+				}
+
+				// 判断 connectingHoverPort 上是否有连接线，如果有的话要先删除之前的连接线，再创建新的连接线
+				if (connectingHoverPort.portType === "sequence" && connectingHoverPort.flowType === "input") {
+					const connector = find(
+						sequenceConnections,
+						(connection) =>
+							connectingHoverPort != undefined &&
+							connection.toNode === connectingHoverPort.nodeId &&
+							connection.toInput === connectingHoverPort.portId
+					);
+					if (connector) {
+						executor(updateSequenceConnectorProcess)({
+							sequenceConnectorId: connector.id,
+							startPort,
+							endPort,
+						});
+						return;
+					}
+				}
+
+				if (connectingHoverPort.portType === "data" && connectingHoverPort.flowType === "input") {
+					const connector = find(
+						dataConnections,
+						(connection) =>
+							connectingHoverPort != undefined &&
+							connection.toNode === connectingHoverPort.nodeId &&
+							connection.toInput === connectingHoverPort.portId
+					);
+					if (connector) {
+						executor(updateDataConnectorProcess)({ dataConnectorId: connector.id, startPort, endPort });
+						return;
+					}
+				}
+
+				// TODO: 将此拆分为校验和新增两个方法，然后将校验方法前移。
+				if (connectingStartPort.portType === "sequence") {
+					// 节点-输出型序列端口 -> 节点-输入型序列端口之间的连线已存在
+					// 则从节点-输入型序列端口 往 节点-输出型序列端口之间连线时，不能重复添加
+					if (
+						findIndex(
+							sequenceConnections,
+							(connection) =>
+								connection.fromNode === startPort.nodeId &&
+								connection.fromOutput === startPort.portId &&
+								connection.toNode === endPort.nodeId &&
+								connection.toInput === endPort.portId
+						) > -1
+					) {
+						invalidator();
+						return;
+					}
+
+					executor(addSequenceConnectorProcess)({ startPort, endPort });
+				} else if (connectingStartPort.portType === "data") {
+					// 节点-输出型数据端口 -> 节点-输入型数据端口之间的连线已存在
+					// 则从节点-输出型数据端口 往 节点-输入型数据端口之间连线时，不能重复添加
+					if (
+						findIndex(
+							dataConnections,
+							(connection) =>
+								connection.fromNode === startPort.nodeId &&
+								connection.fromOutput === startPort.portId &&
+								connection.toNode === endPort.nodeId &&
+								connection.toInput === endPort.portId
+						) > -1
+					) {
+						invalidator();
+						return;
+					}
+
+					executor(addDataConnectorProcess)({ startPort, endPort });
+				}
+			},
+		},
+		[
+			...renderNodes(),
+			...renderSequenceConnections(),
+			...renderDataConnections(),
+			isConnecting && renderDrawingConnection(connectingStartPort.portType),
+		]
+	);
 });

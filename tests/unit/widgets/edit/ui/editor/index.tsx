@@ -8,7 +8,7 @@ import { State, ComponentRepo, PageModel } from "@blocklang/designer-core/interf
 import store from "@blocklang/designer-core/store";
 import * as c from "bootstrap-classes";
 import { replace } from "@dojo/framework/stores/state/operations";
-import Page from "std-ide-widget/page";
+import Page from "@blocklang/std-ide-widget/page";
 import { AttachedWidget, EditableWidgetProperties } from "@blocklang/designer-core/interfaces";
 import FocusBox from "../../../../../../src/widgets/edit/ui/editor/FocusBox";
 import HighlightBox from "../../../../../../src/widgets/edit/ui/editor/HighlightBox";

@@ -65,11 +65,39 @@ const highlightWidgetCommand = commandFactory<{
 	];
 });
 
-const unhighlightWidgetCommand = commandFactory(({ get, path }) => {
+const unhighlightWidgetCommand = commandFactory(({ path }) => {
 	return [remove(path("highlightWidgetIndex")), remove(path("highlightWidgetDimensions"))];
 });
 
-const insertWidgetsCommand = commandFactory<{ widgets: Widget[] }>(({ get, at, path, state, payload: { widgets } }) => {
+/**
+ * 获取新节点的插入位置。
+ *
+ * 如果源数组中有三个元素，如['one', 'two', 'three'],
+ * 若需要在第二个元素，即 'two' 后插入一个新元素，则返回的值是 2。
+ * 因为 0 表示在 'one' 之前插入一个元素，1 表示在 'one' 之后插入一个元素，
+ * 而 2 正表示在 'two' 后插入一个元素。
+ *
+ * @param widgets                页面中的所有部件
+ * @param selectedWidgetIndex    当前选中的部件索引
+ * @returns 插入新节点的位置
+ */
+function getInsertPosition(widgets: AttachedWidget[], selectedWidgetIndex: number): number {
+	let insertedIndex = 0;
+	// 1. 获取选中的部件
+	const selectedWidget = widgets[selectedWidgetIndex];
+	// 2. 如果是容器部件，则在容器的最后一个子节点的后面添加
+	if (selectedWidget.canHasChildren) {
+		// 2.1 从 selectedWidgetIndex 位置开始，寻找容器部件的所有子节点的个数
+		const count = getAllChildCount(widgets, selectedWidgetIndex);
+		insertedIndex = selectedWidgetIndex + count;
+	} else {
+		// 如果不是容器部件，则在选中的部件后面添加
+		insertedIndex = selectedWidgetIndex;
+	}
+	return insertedIndex + 1;
+}
+
+const insertWidgetsCommand = commandFactory<{ widgets: Widget[] }>(({ get, at, path, payload: { widgets } }) => {
 	const pageWidgets = get(path("pageModel", "widgets"));
 	const selectedWidgetIndex = get(path("selectedWidgetIndex"));
 
@@ -229,34 +257,6 @@ const activeParentWidgetCommand = commandFactory<{}>(({ get, path }) => {
 	}
 });
 
-/**
- * 获取新节点的插入位置。
- *
- * 如果源数组中有三个元素，如['one', 'two', 'three'],
- * 若需要在第二个元素，即 'two' 后插入一个新元素，则返回的值是 2。
- * 因为 0 表示在 'one' 之前插入一个元素，1 表示在 'one' 之后插入一个元素，
- * 而 2 正表示在 'two' 后插入一个元素。
- *
- * @param widgets                页面中的所有部件
- * @param selectedWidgetIndex    当前选中的部件索引
- * @returns 插入新节点的位置
- */
-function getInsertPosition(widgets: AttachedWidget[], selectedWidgetIndex: number) {
-	let insertedIndex = 0;
-	// 1. 获取选中的部件
-	const selectedWidget = widgets[selectedWidgetIndex];
-	// 2. 如果是容器部件，则在容器的最后一个子节点的后面添加
-	if (selectedWidget.canHasChildren) {
-		// 2.1 从 selectedWidgetIndex 位置开始，寻找容器部件的所有子节点的个数
-		let count = getAllChildCount(widgets, selectedWidgetIndex);
-		insertedIndex = selectedWidgetIndex + count;
-	} else {
-		// 如果不是容器部件，则在选中的部件后面添加
-		insertedIndex = selectedWidgetIndex;
-	}
-	return insertedIndex + 1;
-}
-
 const getPageModelCommand = commandFactory(async ({ path }) => {
 	console.log("get page model command");
 	const response = await fetch(config.fetchPageModelUrl, { headers: config.customFetchHeaders() });
@@ -340,14 +340,14 @@ const removeUndefinedWidgetCommand = commandFactory<{ widgetId: string }>(
 );
 
 const undoCallback: ProcessCallback = () => ({
-	after(error, result) {
+	after(error, result): void {
 		uiHistoryManager.undo(result.store);
 		result.store.invalidate();
 	},
 });
 
 const redoCallback: ProcessCallback = () => ({
-	after(error, result) {
+	after(error, result): void {
 		uiHistoryManager.redo(result.store);
 		result.store.invalidate();
 	},

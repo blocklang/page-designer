@@ -6,12 +6,9 @@ import { switchBehaviorFunctionOperateTabProcess } from "../../../../../../proce
 import Func from "./functions-tab";
 import Api from "./services-tab";
 
-export interface TabProperties {}
+const factory = create({ store }).properties();
 
-const factory = create({ store }).properties<TabProperties>();
-
-export default factory(function Tab({ properties, middleware: { store } }) {
-	const {} = properties();
+export default factory(function Tab({ middleware: { store } }) {
 	const { get, path, executor } = store;
 	const activeNav = get(path("paneLayout", "behaviorFunctionOperateTab")) || "services";
 	return (
@@ -26,7 +23,7 @@ export default factory(function Tab({ properties, middleware: { store } }) {
 							activeNav === "services" ? css.tabBarActive : css.tabBar,
 						]}
 						href="#"
-						onclick={(event: MouseEvent) => {
+						onclick={(event: MouseEvent): void => {
 							event.preventDefault();
 							executor(switchBehaviorFunctionOperateTabProcess)({ tab: "services" });
 						}}
@@ -43,7 +40,7 @@ export default factory(function Tab({ properties, middleware: { store } }) {
 							activeNav === "functions" ? css.tabBarActive : css.tabBar,
 						]}
 						href="#"
-						onclick={(event: MouseEvent) => {
+						onclick={(event: MouseEvent): void => {
 							event.preventDefault();
 							executor(switchBehaviorFunctionOperateTabProcess)({ tab: "functions" });
 						}}

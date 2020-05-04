@@ -3,7 +3,7 @@
  *
  * config 中只能存储系统参数
  */
-export let config = {
+export const config = {
 	fetchApiRepoWidgetsUrl: "", // 获取项目依赖的所有 Widget 组件库中的部件
 	fetchApiRepoServicesUrl: "", // 获取项目依赖的所有 Service 仓库中的 Service
 	fetchApiRepoFunctionsUrl: "", // 获取项目依赖的所有 Function 仓库中的函数
@@ -15,7 +15,9 @@ export let config = {
 	// 第三方静态资源，即组件市场中的 js 文件和 css 文件的根网址
 	// 值为空字符串时，表示第三方资源与设计器部署在同一个服务器
 	externalScriptAndCssWebsite: "",
-	customFetchHeaders: (): any => {},
+	customFetchHeaders: (): any => {
+		// do nothing.
+	},
 	// 界面中根部件的父 id
 	rootWidgetParentId: "-1",
 	// 页面数据中根节点的父 id

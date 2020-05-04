@@ -20,33 +20,46 @@ let roIdeWebApiRepos: ReadonlyArray<ComponentRepo>;
 let roFunctions: ReadonlyArray<PageFunction>;
 let cachedStore: any;
 
+// 标准库。标准库是在引用处显式指定的。而扩展库是由用户配置的。
+// TODO: 移到单独的文件中
+// 因为此处只加载了一个版本，所以不需要在路径中包含版本号。
+const stdMap: { [propName: string]: any } = {
+	"github.com/blocklang/std-ide-widget": {
+		Page: { widget: Page, propertiesLayout: [] },
+	},
+};
+
+function findStdWidgetType(repoUrl: string, widgetName: string): any {
+	return stdMap[repoUrl] && stdMap[repoUrl][widgetName] && stdMap[repoUrl][widgetName].widget;
+}
+
 /**
- * @function renderPage
+ * 根据部件的基本信息，获取对应的部件类型。
  *
- * 返回渲染页面的节点，只能有一个根节点。
+ * 按照以下顺序查找部件类型：
  *
- * @param widgets                页面部件列表
- * @param ideRepos               项目引用的 ide 版组件库
- * @param functions              页面函数列表
+ * 1. 从标准库中查找组件，如果查不到
+ * 1. 再从 window._block_lang_widgets_ 中查找，如果查不到
+ * 1. 则返回 undefined
+ *
+ * @param ideRepo IDE 版组件库基本信息
+ * @param widgetName 部件名称，此名称要在组件库中全局唯一
  */
-export function renderPage(widgets: AttachedWidget[], ideRepos: ComponentRepo[], store: any): WNode {
-	if (widgets.length === 0) {
-		throw new Error("页面中的部件个数不能为0，至少要包含一个根部件！");
+function getWidgetType(ideRepo: ComponentRepo, widgetName: string): any {
+	// key 中不需要版本号，因为页面中只加载了一个版本。
+	const repoKey = blocklang.getRepoUrl({
+		website: ideRepo.gitRepoWebsite,
+		owner: ideRepo.gitRepoOwner,
+		repoName: ideRepo.gitRepoName,
+	});
+	// 优先从标准库中查找
+	const widgetType = findStdWidgetType(repoKey, widgetName);
+	if (widgetType) {
+		return widgetType;
 	}
 
-	const rootWidget = widgets[0];
-	if (rootWidget.parentId !== config.rootWidgetParentId) {
-		throw new Error("第一个部件应该是根部件，但此模块的第一个部件却不是根部件。");
-	}
-
-	// 缓存数据
-	roWidgets = widgets;
-	roIdeWidgetRepos = ideRepos.filter((repo) => repo.category === "Widget");
-	roIdeWebApiRepos = ideRepos.filter((repo) => repo.category === "WebAPI");
-	cachedStore = store;
-	roFunctions = store.get(store.path("pageModel", "functions")) || [];
-
-	return renderWidget(rootWidget, 0);
+	// 从扩展库中查找
+	return blocklang.findWidgetType(repoKey, widgetName);
 }
 
 /**
@@ -81,7 +94,7 @@ function renderWidget(widget: AttachedWidget, index: number): WNode {
 	// 注意，index 的值是直属子部件的索引，不是全局列表的索引
 	const key = `${index}_${widget.id}`;
 
-	let originalProperties: InstWidgetProperties = {};
+	const originalProperties: InstWidgetProperties = {};
 	widget.properties &&
 		widget.properties.forEach((item) => {
 			// 如果 item 的 type 为 function，且值为 undefined，则设置为 ()=>{}
@@ -92,7 +105,7 @@ function renderWidget(widget: AttachedWidget, index: number): WNode {
 				// 如果 value 的值为 undefined，则说明该事件未绑定函数
 				if (item.value != undefined) {
 					// 绑定一个函数
-					value = (eventValue: string) => {
+					value = (eventValue: string): void => {
 						// 根据 item.value 定位到函数，然后开始执行函数节点
 						const func = find(roFunctions, (funcItem) => funcItem.id === item.value);
 						if (func) {
@@ -112,69 +125,45 @@ function renderWidget(widget: AttachedWidget, index: number): WNode {
 		...originalProperties,
 	};
 
+	// 渲染子节点
 	// index 指向的是选中的部件，这里要获取选中部件的第一个子节点，所以要 + 1
 	const firstChildIndex = index + 1;
-	let childWNodes: WNode[] = renderChildWidgets(widget.id, firstChildIndex);
 
-	return w(widgetType, properties, childWNodes);
-}
-
-/**
- * @function renderChildWidgets
- *
- * 渲染子部件
- *
- * @param widgetId          部件 id
- * @param firstChildIndex   部件的第一个子部件的索引
- */
-function renderChildWidgets(widgetId: string, firstChildIndex: number): WNode[] {
-	const children = getChildrenIndex(roWidgets, widgetId, firstChildIndex);
+	const children = getChildrenIndex(roWidgets, widget.id, firstChildIndex);
 	const childWNodes: WNode[] = [];
 	for (let i = 0; i < children.length; i++) {
 		const eachWidget = roWidgets[children[i]];
 		childWNodes.push(renderWidget(eachWidget, i));
 	}
-	return childWNodes;
+
+	return w(widgetType, properties, childWNodes);
 }
 
 /**
- * 根据部件的基本信息，获取对应的部件类型。
+ * @function renderPage
  *
- * 按照以下顺序查找部件类型：
+ * 返回渲染页面的节点，只能有一个根节点。
  *
- * 1. 从标准库中查找组件，如果查不到
- * 1. 再从 window._block_lang_widgets_ 中查找，如果查不到
- * 1. 则返回 undefined
- *
- * @param ideRepo IDE 版组件库基本信息
- * @param widgetName 部件名称，此名称要在组件库中全局唯一
+ * @param widgets                页面部件列表
+ * @param ideRepos               项目引用的 ide 版组件库
+ * @param functions              页面函数列表
  */
-function getWidgetType(ideRepo: ComponentRepo, widgetName: string) {
-	// key 中不需要版本号，因为页面中只加载了一个版本。
-	const repoKey = blocklang.getRepoUrl({
-		website: ideRepo.gitRepoWebsite,
-		owner: ideRepo.gitRepoOwner,
-		repoName: ideRepo.gitRepoName,
-	});
-	// 优先从标准库中查找
-	const widgetType = findStdWidgetType(repoKey, widgetName);
-	if (widgetType) {
-		return widgetType;
+export function renderPage(widgets: AttachedWidget[], ideRepos: ComponentRepo[], store: any): WNode {
+	if (widgets.length === 0) {
+		throw new Error("页面中的部件个数不能为0，至少要包含一个根部件！");
 	}
 
-	// 从扩展库中查找
-	return blocklang.findWidgetType(repoKey, widgetName);
-}
+	const rootWidget = widgets[0];
+	if (rootWidget.parentId !== config.rootWidgetParentId) {
+		throw new Error("第一个部件应该是根部件，但此模块的第一个部件却不是根部件。");
+	}
 
-// 标准库。标准库是在引用处显式指定的。而扩展库是由用户配置的。
-// TODO: 移到单独的文件中
-// 因为此处只加载了一个版本，所以不需要在路径中包含版本号。
-const stdMap: { [propName: string]: any } = {
-	"github.com/blocklang/std-ide-widget": {
-		Page: { widget: Page, propertiesLayout: [] },
-	},
-};
+	// 缓存数据
+	roWidgets = widgets;
+	roIdeWidgetRepos = ideRepos.filter((repo) => repo.category === "Widget");
+	roIdeWebApiRepos = ideRepos.filter((repo) => repo.category === "WebAPI");
+	cachedStore = store;
+	roFunctions = store.get(store.path("pageModel", "functions")) || [];
 
-function findStdWidgetType(repoUrl: string, widgetName: string) {
-	return stdMap[repoUrl] && stdMap[repoUrl][widgetName] && stdMap[repoUrl][widgetName].widget;
+	return renderWidget(rootWidget, 0);
 }

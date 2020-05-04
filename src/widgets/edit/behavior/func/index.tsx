@@ -1,4 +1,4 @@
-import { create, tsx, invalidator } from "@dojo/framework/core/vdom";
+import { create, tsx } from "@dojo/framework/core/vdom";
 import {
 	PageFunction,
 	AttachedWidget,
@@ -6,7 +6,6 @@ import {
 	EventHandler,
 } from "@blocklang/designer-core/interfaces";
 import store from "@blocklang/designer-core/store";
-import { drag } from "../../../../middleware/drag";
 import { find } from "@dojo/framework/shim/array";
 import { newFunctionProcess, activeFunctionProcess } from "../../../../processes/pageFunctionProcesses";
 import dimensions from "@dojo/framework/core/middleware/dimensions";
@@ -19,9 +18,9 @@ export interface EditorProperties {
 	widgets: AttachedWidget[];
 }
 
-const factory = create({ store, drag, invalidator, dimensions }).properties<EditorProperties>();
+const factory = create({ store, dimensions }).properties<EditorProperties>();
 
-export default factory(function Func({ properties, middleware: { store, drag, invalidator, dimensions } }) {
+export default factory(function Func({ properties, middleware: { store, dimensions } }) {
 	const { widgets = [], functions = [] } = properties();
 
 	const { get, path, executor } = store;
@@ -83,12 +82,14 @@ export default factory(function Func({ properties, middleware: { store, drag, in
 			// TODO: pageModel 中还需要存储函数定义信息，函数签名信息应该来自部件的事件定义
 
 			// 新建一个函数
-			const eventHandler: EventHandler = {
-				handlerId: activeWidgetProperty.value!,
-				eventName: activeWidgetProperty.name,
-				eventInputArguments: activeWidgetProperty.arguments || [],
-			};
-			executor(newFunctionProcess)({ eventHandler });
+			if (activeWidgetProperty.value) {
+				const eventHandler: EventHandler = {
+					handlerId: activeWidgetProperty.value,
+					eventName: activeWidgetProperty.name,
+					eventInputArguments: activeWidgetProperty.arguments || [],
+				};
+				executor(newFunctionProcess)({ eventHandler });
+			}
 		} else {
 			executor(activeFunctionProcess)({ functionId: currentFunction.id });
 		}

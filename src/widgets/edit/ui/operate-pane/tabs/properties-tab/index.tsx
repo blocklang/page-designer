@@ -12,14 +12,11 @@ import {
 	activeWidgetPropertyProcess,
 } from "../../../../../../processes/uiProcesses";
 import { switchPageViewTypeProcess } from "../../../../../../processes/designerProcesses";
+import { VNode } from "@dojo/framework/core/interfaces";
 
-export interface PropertiesTabProperties {}
+const factory = create({ store }).properties();
 
-const factory = create({ store }).properties<PropertiesTabProperties>();
-
-export default factory(function PropertiesTab({ properties, middleware: { store } }) {
-	const {} = properties();
-
+export default factory(function PropertiesTab({ middleware: { store } }) {
 	let activeWidget: AttachedWidget | undefined;
 	// 获取当前聚焦的部件
 	const { get, path, executor } = store;
@@ -29,7 +26,7 @@ export default factory(function PropertiesTab({ properties, middleware: { store 
 		activeWidget = widgets[selectedWidgetIndex];
 	}
 
-	let _renderMessageNode = (errorMessage: string) =>
+	const _renderMessageNode = (errorMessage: string): VNode =>
 		v("div", { classes: [css.root] }, [
 			v("div", { classes: [c.text_center, c.text_muted, c.py_2] }, [`${errorMessage}`]),
 		]);
@@ -44,7 +41,7 @@ export default factory(function PropertiesTab({ properties, middleware: { store 
 
 	// 因为属性的布局信息是存在 ide 仓库中的，所以这里需要找到组件所在的 ide 仓库
 	const ideRepos = (get(path("projectDependencies")) || []).filter((repo) => repo.category === "Widget");
-	const ideRepo = find(ideRepos, (item) => item.apiRepoId === activeWidget!.apiRepoId);
+	const ideRepo = find(ideRepos, (item) => activeWidget != undefined && item.apiRepoId === activeWidget.apiRepoId);
 	if (!ideRepo) {
 		return _renderMessageNode("没有找到聚焦部件所属的 ide 组件仓库信息");
 	}

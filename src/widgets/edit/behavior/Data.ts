@@ -23,178 +23,6 @@ import { addVariableGetNodeProcess, addVariableSetNodeProcess } from "../../../p
 
 const dataTypes = ["String", "Number", "Date", "Boolean", "Object", "Array"];
 
-export interface DataProperties {
-	data: PageDataItem[];
-}
-
-const factory = create({ store }).properties<DataProperties>();
-
-export default factory(function Data({ properties, middleware: { store } }) {
-	const { data = [] } = properties();
-
-	const { get, path, executor } = store;
-
-	if (data.length === 0) {
-		return v("div", { key: "root" }, [
-			v("div", { key: "alert-has-no-root", classes: [c.alert, c.alert_danger, c.text_center], role: "alert" }, [
-				"共发现 0 个数据节点，至少要存在一个根节点！",
-			]),
-		]);
-	}
-
-	if (data[0].parentId !== config.rootDataParentId) {
-		return v("div", { key: "root" }, [
-			v("div", { key: "alert-not-a-root", classes: [c.alert, c.alert_danger, c.text_center], role: "alert" }, [
-				"第一个节点必须是根节点！",
-			]),
-		]);
-	}
-
-	const selectedDataItemIndex = get(path("selectedDataItemIndex")) || 0;
-	const activeDataItemId = data[selectedDataItemIndex].id;
-
-	const selectedFunctionId = get(path("selectedFunctionId"));
-
-	return v("div", { key: "root", classes: [c.ml_4] }, [
-		v(
-			"div",
-			{
-				key: `${data[0].id}-0`,
-				classes: [
-					c.position_relative,
-					c.border,
-					activeDataItemId === data[0].id ? c.border_primary : c.border_white,
-				],
-				onclick: (event: MouseEvent) => {
-					event.stopPropagation();
-					executor(activeDataItemProcess)({ id: data[0].id });
-				},
-			},
-			[
-				v(
-					"span",
-					{
-						classes: [c.position_absolute, css.icon, c.text_muted],
-						onclick: () => {
-							executor(foldDataGroupProcess)({ id: data[0].id });
-						},
-					},
-					[
-						data[0].open
-							? w(FontAwesomeIcon, { icon: "angle-down" })
-							: w(FontAwesomeIcon, { icon: "angle-right" }),
-					]
-				),
-				v("span", { classes: [c.ml_1] }, ["data（页面数据）"]),
-				activeDataItemId === data[0].id &&
-					v(
-						"span",
-						{
-							key: `op-add-${data[0].id}`,
-							title: "加变量",
-							classes: [c.ml_3, c.text_muted, css.op],
-							onclick: (event: MouseEvent) => {
-								event.stopPropagation();
-								if (!data[0].open) {
-									executor(foldDataGroupProcess)({ id: data[0].id });
-								}
-								executor(insertDataItemProcess)({});
-							},
-						},
-						[w(FontAwesomeIcon, { icon: "plus" })]
-					),
-			]
-		),
-		data.length > 1 &&
-			data[0].open &&
-			v(
-				"div",
-				{
-					key: `${data[0].id}-0-children`,
-					classes: [c.pl_4, c.border_left],
-				},
-				_renderChildren(data, data[0], 1, activeDataItemId, selectedDataItemIndex, selectedFunctionId, executor)
-			),
-	]);
-});
-
-function _renderChildren(
-	pageData: PageDataItem[],
-	currentData: PageDataItem,
-	firstChildIndex: number,
-	activeDataItemId: string,
-	selectedDataItemIndex: number,
-	selectedFunctionId: string,
-	executor: any
-): VNode[] {
-	const children = getChildrenIndex(pageData, currentData.id, firstChildIndex);
-	let result: VNode[] = [];
-	for (let i = 0; i < children.length; i++) {
-		const eachData = pageData[children[i]];
-		result.push(
-			_renderDataItem(
-				eachData,
-				i,
-				currentData,
-				activeDataItemId,
-				pageData,
-				selectedDataItemIndex,
-				selectedFunctionId,
-				executor
-			)
-		);
-
-		if (eachData.open) {
-			const subChildren = _renderChildren(
-				pageData,
-				eachData,
-				children[i] + 1,
-				activeDataItemId,
-				selectedDataItemIndex,
-				selectedFunctionId,
-				executor
-			);
-			if (subChildren.length > 0) {
-				result.push(
-					v("div", { key: `${currentData.id}-${i}-children`, classes: [c.pl_4, c.border_left] }, subChildren)
-				);
-			}
-		}
-	}
-	return result;
-}
-
-function _renderDataItem(
-	data: PageDataItem,
-	index: number,
-	parentData: PageDataItem,
-	activeDataItemId: string,
-	allData: PageDataItem[],
-	selectedDataItemIndex: number,
-	selectedFunctionId: string,
-	executor: any
-): VNode {
-	return v(
-		"div",
-		{
-			key: `${data.id}-${index}`,
-			classes: [c.position_relative, c.border, activeDataItemId === data.id ? c.border_primary : c.border_white],
-			// 注意：如果改为 onclick，则第一次点击数据类型的 dropdown 时没有弹出菜单。
-			onmouseup: (event: MouseEvent) => {
-				event.stopPropagation();
-				executor(activeDataItemProcess)({ id: data.id });
-			},
-		},
-		[
-			_renderIcon(data, executor),
-			_renderVariableName(data, index, parentData, executor),
-			_renderDataType(data, index, executor),
-			_renderDefaultValue(data, executor),
-			_renderOperators(data, activeDataItemId, allData, selectedDataItemIndex, selectedFunctionId, executor),
-		]
-	);
-}
-
 function _renderIcon(dataItem: PageDataItem, executor: any): VNode | undefined {
 	if (dataItem.type === "Object" || dataItem.type === "Array") {
 		return v(
@@ -243,7 +71,6 @@ function _renderVariableName(
 		},
 	});
 }
-
 /**
  * 渲染变量类型
  *
@@ -262,8 +89,8 @@ function _renderDataType(dataItem: PageDataItem, index: number, executor: any): 
 				"data-toggle": "dropdown",
 				"aria-haspopup": "true",
 				"aria-expanded": "false",
-				onclick: (event: MouseEvent) => {
-					($(event.srcElement!) as any).dropdown();
+				onclick: (event: MouseEvent<HTMLButtonElement>) => {
+					($(event.target) as any).dropdown();
 				},
 			},
 			[`${dataItem.type}`]
@@ -462,3 +289,175 @@ function _renderOperators(
 
 	return v("span", { classes: [c.ml_3] }, ops);
 }
+
+function _renderDataItem(
+	data: PageDataItem,
+	index: number,
+	parentData: PageDataItem,
+	activeDataItemId: string,
+	allData: PageDataItem[],
+	selectedDataItemIndex: number,
+	selectedFunctionId: string,
+	executor: any
+): VNode {
+	return v(
+		"div",
+		{
+			key: `${data.id}-${index}`,
+			classes: [c.position_relative, c.border, activeDataItemId === data.id ? c.border_primary : c.border_white],
+			// 注意：如果改为 onclick，则第一次点击数据类型的 dropdown 时没有弹出菜单。
+			onmouseup: (event: MouseEvent) => {
+				event.stopPropagation();
+				executor(activeDataItemProcess)({ id: data.id });
+			},
+		},
+		[
+			_renderIcon(data, executor),
+			_renderVariableName(data, index, parentData, executor),
+			_renderDataType(data, index, executor),
+			_renderDefaultValue(data, executor),
+			_renderOperators(data, activeDataItemId, allData, selectedDataItemIndex, selectedFunctionId, executor),
+		]
+	);
+}
+
+function _renderChildren(
+	pageData: PageDataItem[],
+	currentData: PageDataItem,
+	firstChildIndex: number,
+	activeDataItemId: string,
+	selectedDataItemIndex: number,
+	selectedFunctionId: string,
+	executor: any
+): VNode[] {
+	const children = getChildrenIndex(pageData, currentData.id, firstChildIndex);
+	const result: VNode[] = [];
+	for (let i = 0; i < children.length; i++) {
+		const eachData = pageData[children[i]];
+		result.push(
+			_renderDataItem(
+				eachData,
+				i,
+				currentData,
+				activeDataItemId,
+				pageData,
+				selectedDataItemIndex,
+				selectedFunctionId,
+				executor
+			)
+		);
+
+		if (eachData.open) {
+			const subChildren = _renderChildren(
+				pageData,
+				eachData,
+				children[i] + 1,
+				activeDataItemId,
+				selectedDataItemIndex,
+				selectedFunctionId,
+				executor
+			);
+			if (subChildren.length > 0) {
+				result.push(
+					v("div", { key: `${currentData.id}-${i}-children`, classes: [c.pl_4, c.border_left] }, subChildren)
+				);
+			}
+		}
+	}
+	return result;
+}
+
+export interface DataProperties {
+	data: PageDataItem[];
+}
+
+const factory = create({ store }).properties<DataProperties>();
+
+export default factory(function Data({ properties, middleware: { store } }) {
+	const { data = [] } = properties();
+
+	const { get, path, executor } = store;
+
+	if (data.length === 0) {
+		return v("div", { key: "root" }, [
+			v("div", { key: "alert-has-no-root", classes: [c.alert, c.alert_danger, c.text_center], role: "alert" }, [
+				"共发现 0 个数据节点，至少要存在一个根节点！",
+			]),
+		]);
+	}
+
+	if (data[0].parentId !== config.rootDataParentId) {
+		return v("div", { key: "root" }, [
+			v("div", { key: "alert-not-a-root", classes: [c.alert, c.alert_danger, c.text_center], role: "alert" }, [
+				"第一个节点必须是根节点！",
+			]),
+		]);
+	}
+
+	const selectedDataItemIndex = get(path("selectedDataItemIndex")) || 0;
+	const activeDataItemId = data[selectedDataItemIndex].id;
+
+	const selectedFunctionId = get(path("selectedFunctionId"));
+
+	return v("div", { key: "root", classes: [c.ml_4] }, [
+		v(
+			"div",
+			{
+				key: `${data[0].id}-0`,
+				classes: [
+					c.position_relative,
+					c.border,
+					activeDataItemId === data[0].id ? c.border_primary : c.border_white,
+				],
+				onclick: (event: MouseEvent) => {
+					event.stopPropagation();
+					executor(activeDataItemProcess)({ id: data[0].id });
+				},
+			},
+			[
+				v(
+					"span",
+					{
+						classes: [c.position_absolute, css.icon, c.text_muted],
+						onclick: () => {
+							executor(foldDataGroupProcess)({ id: data[0].id });
+						},
+					},
+					[
+						data[0].open
+							? w(FontAwesomeIcon, { icon: "angle-down" })
+							: w(FontAwesomeIcon, { icon: "angle-right" }),
+					]
+				),
+				v("span", { classes: [c.ml_1] }, ["data（页面数据）"]),
+				activeDataItemId === data[0].id &&
+					v(
+						"span",
+						{
+							key: `op-add-${data[0].id}`,
+							title: "加变量",
+							classes: [c.ml_3, c.text_muted, css.op],
+							onclick: (event: MouseEvent) => {
+								event.stopPropagation();
+								if (!data[0].open) {
+									executor(foldDataGroupProcess)({ id: data[0].id });
+								}
+								executor(insertDataItemProcess)({});
+							},
+						},
+						[w(FontAwesomeIcon, { icon: "plus" })]
+					),
+			]
+		),
+		data.length > 1 &&
+			data[0].open &&
+			v(
+				"div",
+				{
+					key: `${data[0].id}-0-children`,
+					classes: [c.pl_4, c.border_left],
+				},
+				_renderChildren(data, data[0], 1, activeDataItemId, selectedDataItemIndex, selectedFunctionId, executor)
+			),
+	]);
+});

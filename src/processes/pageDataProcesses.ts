@@ -11,6 +11,10 @@ import {
 	getNextIndex,
 } from "@blocklang/designer-core/utils/treeUtil";
 
+function isConnected(nodeId: string, connection: NodeConnection): boolean {
+	return connection.fromNode === nodeId || connection.toNode === nodeId;
+}
+
 const insertEmptyDataItemCommand = commandFactory(({ get, path, at }) => {
 	// 默认添加在距离父节点最近的位置，参考自 vscode 中的在文件夹下新建文件的逻辑
 	const pageData = get(path("pageModel", "data"));
@@ -36,7 +40,7 @@ const insertEmptyDataItemCommand = commandFactory(({ get, path, at }) => {
 	return [add(at(path("pageModel", "data"), insertedIndex), dataItem)];
 });
 
-const activeDataItemCommand = commandFactory(({ payload: { id }, get, path, at }) => {
+const activeDataItemCommand = commandFactory(({ payload: { id }, get, path }) => {
 	const pageData = get(path("pageModel", "data"));
 	const selectedIndex = findIndex(pageData, (item) => {
 		return item.id === id;
@@ -202,10 +206,6 @@ const removeActiveDataItemCommand = commandFactory(({ get, path, at }) => {
 
 	return result;
 });
-
-function isConnected(nodeId: string, connection: NodeConnection) {
-	return connection.fromNode === nodeId || connection.toNode === nodeId;
-}
 
 const moveUpActiveDataItemCommand = commandFactory(({ get, path, at }) => {
 	const pageData = get(path("pageModel", "data"));

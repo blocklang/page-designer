@@ -16,6 +16,10 @@ import { findIndex } from "@dojo/framework/shim/array";
 import { ConnectorPayload, PortPosition, ServicePayload } from "./interfaces";
 import { uuid } from "@dojo/framework/core/util";
 
+function isConnected(nodeId: string, connection: NodeConnection): boolean {
+	return connection.fromNode === nodeId || connection.toNode === nodeId;
+}
+
 const newFunctionCommand = commandFactory<{ eventHandler: EventHandler }>(
 	({ get, path, at, payload: { eventHandler } }) => {
 		const functions = get(path("pageModel", "functions")) || [];
@@ -148,10 +152,6 @@ const removeFunctionNodeCommand = commandFactory<{ functionNodeId: string }>(
 		return result;
 	}
 );
-
-function isConnected(nodeId: string, connection: NodeConnection) {
-	return connection.fromNode === nodeId || connection.toNode === nodeId;
-}
 
 const addSequenceConnectorCommand = commandFactory<ConnectorPayload>(
 	({ get, path, at, payload: { startPort, endPort } }) => {
@@ -392,7 +392,8 @@ const addServiceNodeCommand = commandFactory<{ service: ServicePayload }>(({ get
 		.map((param) => ({
 			id: uuid().replace(/-/g, ""),
 			name: `${param.name}(${param.in})`,
-			type: param.schema!.type as PropertyValueType,
+			// 如果没有设置 schema，则类型默认为 string
+			type: param.schema ? (param.schema.type as PropertyValueType) : "string",
 		}));
 
 	if (service.requestBody) {

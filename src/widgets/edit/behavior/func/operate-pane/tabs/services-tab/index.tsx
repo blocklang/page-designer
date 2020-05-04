@@ -9,12 +9,9 @@ import { find } from "@dojo/framework/shim/array";
 import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
 import { HttpMethod } from "@blocklang/designer-core/interfaces";
 
-export interface ApiProperties {}
+const factory = create({ store, icache }).properties();
 
-const factory = create({ store, icache }).properties<ApiProperties>();
-
-export default factory(function Api({ properties, middleware: { store, icache } }) {
-	const {} = properties();
+export default factory(function Api({ middleware: { store, icache } }) {
 	const { path, get, executor } = store;
 
 	const repoServices = get(path("repoServices"));
@@ -25,7 +22,7 @@ export default factory(function Api({ properties, middleware: { store, icache } 
 	// FIXME: service 仓库，可能只有 api 仓库，没有 ide 仓库
 	const serviceRepos = (get(path("projectDependencies")) || []).filter((repo) => repo.category === "Service");
 
-	function getHttpMethodBadgeColor(httpMethod: HttpMethod) {
+	function getHttpMethodBadgeColor(httpMethod: HttpMethod): string {
 		if (httpMethod === "GET") {
 			return c.badge_primary;
 		}
@@ -73,7 +70,9 @@ export default factory(function Api({ properties, middleware: { store, icache } 
 							<div key={repo.apiRepoId} classes={[c.pb_2]}>
 								<div
 									classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]}
-									onclick={() => icache.set<boolean>(`fold-repo-${repo.apiRepoId}`, !apiRepoFold)}
+									onclick={(): void =>
+										icache.set<boolean>(`fold-repo-${repo.apiRepoId}`, !apiRepoFold)
+									}
 								>
 									{apiRepoFold ? (
 										<FontAwesomeIcon icon="angle-right" />
@@ -96,7 +95,7 @@ export default factory(function Api({ properties, middleware: { store, icache } 
 													<div key={group.name}>
 														<div
 															classes={[c.pl_1, c.text_muted, css.groupNameBar]}
-															onclick={() =>
+															onclick={(): void =>
 																icache.set<boolean>(
 																	`fold-group-${repo.apiRepoId}-${group.name}`,
 																	!groupFold
@@ -115,11 +114,12 @@ export default factory(function Api({ properties, middleware: { store, icache } 
 														{!groupFold && (
 															<div classes={[c.mx_1]}>
 																{group.paths.map((pathItem) => {
-																	return pathItem.operations.map((op) => {
+																	return pathItem.operations.map((op, index) => {
 																		return (
 																			<div
+																				key={index}
 																				classes={[css.opItem]}
-																				onclick={() => {
+																				onclick={(): void => {
 																					executor(addServiceNodeProcess)({
 																						service: {
 																							path: pathItem.name,

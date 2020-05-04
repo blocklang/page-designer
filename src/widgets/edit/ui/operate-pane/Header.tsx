@@ -6,12 +6,9 @@ import * as c from "bootstrap-classes";
 import * as css from "./Header.m.css";
 import { getNodePath } from "@blocklang/designer-core/utils/treeUtil";
 
-export interface HeaderProperties {}
+const factory = create({ store }).properties();
 
-const factory = create({ store }).properties<HeaderProperties>();
-
-export default factory(function Header({ properties, middleware: { store } }) {
-	const {} = properties();
+export default factory(function Header({ middleware: { store } }) {
 	const { get, path, executor } = store;
 	const pageWidgets = get(path("pageModel", "widgets")) || [];
 	if (pageWidgets.length === 0) {
@@ -22,8 +19,6 @@ export default factory(function Header({ properties, middleware: { store } }) {
 	const activeWidget = pageWidgets[selectedWidgetIndex];
 	const nodePath = getNodePath(pageWidgets, selectedWidgetIndex);
 	const length = nodePath.length;
-
-	console.log("nodePath", nodePath);
 
 	return (
 		<div classes={[css.root]}>
@@ -48,7 +43,7 @@ export default factory(function Header({ properties, middleware: { store } }) {
 							<li key={`fwp-${item.node.id}`} classes={[c.breadcrumb_item, css.breadcrumbItem]}>
 								<a
 									href="#"
-									onclick={() => {
+									onclick={(): void => {
 										const activeWidgetId = item.node.id;
 										executor(activeWidgetProcess)({ activeWidgetId });
 									}}

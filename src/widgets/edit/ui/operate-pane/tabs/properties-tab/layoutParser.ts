@@ -4,6 +4,7 @@ import { AttachedWidgetProperty } from "@blocklang/designer-core/interfaces";
 import { findIndex } from "@dojo/framework/shim/array";
 import * as css from "./index.m.css";
 import * as c from "bootstrap-classes";
+import { VNode } from "@dojo/framework/core/interfaces";
 
 export function parse(
 	propertiesLayout: PropertyLayout[],
@@ -15,7 +16,7 @@ export function parse(
 		data: { propertyIndex: number; propertyValue: string }
 	) => void,
 	onSelectProperty: (index: number) => void
-) {
+): (VNode | undefined)[] {
 	return propertiesLayout.map((item) => {
 		// 注意，此处必须严格匹配属性名
 		// TODO: 编写一个 CLI 工具，校验属性名
