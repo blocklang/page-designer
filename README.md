@@ -23,8 +23,8 @@ Page Designer 相应包含三块区域：UI 设计区、数据编辑区和事件
 使用以下命令安装：
 
 ```shell
-npm install designer-core
-npm install page-designer
+npm install @blocklang/designer-core
+npm install @blocklang/page-designer
 ```
 
 在页面中添加 `PageDesigner` 部件：
