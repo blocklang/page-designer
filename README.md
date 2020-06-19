@@ -53,7 +53,7 @@ const urls: RequestUrl = {
     // 获取项目依赖的 JavaScript 对象列表，按仓库分组
     fetchApiRepoFunctions: `http://localhost:3000/designer/projects/${project.id}/dependences/functions`,
     // 获取项目依赖的 ide 版 UI 库、API 库，以及 api 版 service 仓库的基本信息
-    fetchIdeDependenceInfos: `http://localhost:3000/designer/projects/${project.id}/dependences?category=dev`,
+    fetchIdeDependenceInfos: `http://localhost:3000/designer/projects/${project.id}/dependences?repo=ide`,
     // 获取页面模型
     fetchPageModel: `http://localhost:3000/designer/pages/${page.id}/model`,
     // 更新页面模型
