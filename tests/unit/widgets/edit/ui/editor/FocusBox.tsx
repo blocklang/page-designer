@@ -1,14 +1,14 @@
 const { describe, it } = intern.getInterface("bdd");
 const { assert } = intern.getPlugin("chai");
 
-import harness from "@dojo/framework/testing/harness";
+import harness from "@dojo/framework/testing/harness/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 
 import FocusBox, { FocusBoxProperties } from "../../../../../../src/widgets/edit/ui/editor/FocusBox";
 import * as css from "../../../../../../src/widgets/edit/ui/editor/FocusBox.m.css";
 import Box from "../../../../../../src/widgets/edit/ui/editor/Box";
-import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
-import * as c from "bootstrap-classes";
+import FontAwesomeIcon from "@blocklang/dojo-fontawesome/FontAwesomeIcon";
+import * as c from "@blocklang/bootstrap-classes";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
 import { State } from "@blocklang/designer-core/interfaces";
 import store from "@blocklang/designer-core/store";

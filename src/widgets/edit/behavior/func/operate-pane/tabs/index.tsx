@@ -1,6 +1,6 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
 import store from "@blocklang/designer-core/store";
-import * as c from "bootstrap-classes";
+import * as c from "@blocklang/bootstrap-classes";
 import * as css from "./index.m.css";
 import { switchBehaviorFunctionOperateTabProcess } from "../../../../../../processes/designerProcesses";
 import Func from "./functions-tab";

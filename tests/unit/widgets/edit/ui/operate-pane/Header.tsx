@@ -1,7 +1,7 @@
 const { describe, it } = intern.getInterface("bdd");
 const { assert } = intern.getPlugin("chai");
 
-import harness from "@dojo/framework/testing/harness";
+import harness from "@dojo/framework/testing/harness/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 import Header from "../../../../../../src/widgets/edit/ui/operate-pane/Header";
 import store from "@blocklang/designer-core/store";
@@ -10,9 +10,9 @@ import { add } from "@dojo/framework/stores/state/operations";
 import { AttachedWidget } from "@blocklang/designer-core/interfaces";
 import { activeWidgetProcess } from "../../../../../../src/processes/uiProcesses";
 import { stub } from "sinon";
-import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
+import FontAwesomeIcon from "@blocklang/dojo-fontawesome/FontAwesomeIcon";
 
-import * as c from "bootstrap-classes";
+import * as c from "@blocklang/bootstrap-classes";
 import * as css from "../../../../../../src/widgets/edit/ui/operate-pane/Header.m.css";
 
 describe("edit/ui/operate-pane/Header", () => {

@@ -2,8 +2,8 @@ import { create, tsx } from "@dojo/framework/core/vdom";
 import store from "@blocklang/designer-core/store";
 import icache from "@dojo/framework/core/middleware/icache";
 import { getFunctionsProcess } from "../../../../../../../processes/projectDependenciesProcesses";
-import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
-import * as c from "bootstrap-classes";
+import FontAwesomeIcon from "@blocklang/dojo-fontawesome/FontAwesomeIcon";
+import * as c from "@blocklang/bootstrap-classes";
 import * as css from "./index.m.css";
 import { find } from "@dojo/framework/shim/array";
 import { addFunctionNodeProcess } from "../../../../../../../processes/pageFunctionProcesses";
@@ -51,9 +51,9 @@ export default factory(function Func({ middleware: { store, icache } }) {
 							<div key={repo.apiRepoId} classes={[c.pb_2]}>
 								<div
 									classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]}
-									onclick={(): void =>
-										icache.set<boolean>(`fold-repo-${repo.apiRepoId}`, !apiRepoFold)
-									}
+									onclick={(): void => {
+										icache.set<boolean>(`fold-repo-${repo.apiRepoId}`, !apiRepoFold);
+									}}
 								>
 									{apiRepoFold ? (
 										<FontAwesomeIcon icon="angle-right" />

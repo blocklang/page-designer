@@ -2,7 +2,7 @@ import { create, v, w } from "@dojo/framework/core/vdom";
 import { VNode } from "@dojo/framework/core/interfaces";
 import { PageDataItem } from "@blocklang/designer-core/interfaces";
 import store from "@blocklang/designer-core/store";
-import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
+import FontAwesomeIcon from "@blocklang/dojo-fontawesome/FontAwesomeIcon";
 import { config } from "../../../config";
 import {
 	insertDataItemProcess,
@@ -17,7 +17,7 @@ import * as $ from "jquery";
 import { getChildrenIndex, getPreviousIndex, getNextIndex } from "@blocklang/designer-core/utils/treeUtil";
 
 import "bootstrap";
-import * as c from "bootstrap-classes";
+import * as c from "@blocklang/bootstrap-classes";
 import * as css from "./Data.m.css";
 import { addVariableGetNodeProcess, addVariableSetNodeProcess } from "../../../processes/pageFunctionProcesses";
 

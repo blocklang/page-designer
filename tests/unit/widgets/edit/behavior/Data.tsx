@@ -1,9 +1,9 @@
 const { describe, it } = intern.getInterface("bdd");
 
-import harness from "@dojo/framework/testing/harness";
+import harness from "@dojo/framework/testing/harness/harness";
 import { tsx } from "@dojo/framework/core/vdom";
-import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
-import * as c from "bootstrap-classes";
+import FontAwesomeIcon from "@blocklang/dojo-fontawesome/FontAwesomeIcon";
+import * as c from "@blocklang/bootstrap-classes";
 
 import Data from "../../../../../src/widgets/edit/behavior/Data";
 import * as css from "../../../../../src/widgets/edit/behavior/Data.m.css";

@@ -1,7 +1,7 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
 import store from "@blocklang/designer-core/store";
 import Data from "./Data";
-import * as c from "bootstrap-classes";
+import * as c from "@blocklang/bootstrap-classes";
 import Func from "./func";
 
 const factory = create({ store }).properties();

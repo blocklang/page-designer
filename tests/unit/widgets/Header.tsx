@@ -1,11 +1,11 @@
 const { describe, it } = intern.getInterface("bdd");
 
-import harness from "@dojo/framework/testing/harness";
+import harness from "@dojo/framework/testing/harness/harness";
 import { tsx } from "@dojo/framework/core/vdom";
-import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
+import FontAwesomeIcon from "@blocklang/dojo-fontawesome/FontAwesomeIcon";
 import Header from "../../../src/widgets/Header";
 import { Path, Permission, User } from "../../../src/interfaces";
-import * as c from "bootstrap-classes";
+import * as c from "@blocklang/bootstrap-classes";
 import { stub } from "sinon";
 import { assert } from "chai";
 import { Project, State, EditMode, PageViewType } from "@blocklang/designer-core/interfaces";

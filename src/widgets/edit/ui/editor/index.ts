@@ -1,6 +1,6 @@
 import { create, v, w } from "@dojo/framework/core/vdom";
 import { renderPage } from "./render";
-import * as c from "bootstrap-classes";
+import * as c from "@blocklang/bootstrap-classes";
 import store from "@blocklang/designer-core/store";
 import FocusBox from "./FocusBox";
 import HighlightBox from "./HighlightBox";

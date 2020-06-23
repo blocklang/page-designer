@@ -1,12 +1,12 @@
 const { describe, it, beforeEach } = intern.getInterface("bdd");
 
-import harness from "@dojo/framework/testing/harness";
+import harness from "@dojo/framework/testing/harness/harness";
 import { create, tsx } from "@dojo/framework/core/vdom";
 import Editor from "../../../../../../src/widgets/edit/ui/editor";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
 import { State, ComponentRepo, PageModel } from "@blocklang/designer-core/interfaces";
 import store from "@blocklang/designer-core/store";
-import * as c from "bootstrap-classes";
+import * as c from "@blocklang/bootstrap-classes";
 import { replace } from "@dojo/framework/stores/state/operations";
 import Page from "@blocklang/std-ide-widget/page";
 import { AttachedWidget, EditableWidgetProperties } from "@blocklang/designer-core/interfaces";
@@ -17,15 +17,13 @@ import * as blocklang from "@blocklang/designer-core/blocklang";
 describe("edit/ui/editor", () => {
 	// 创建一个在测试用例中使用的部件
 
-	interface ContainerProperties extends EditableWidgetProperties {}
+	type ContainerProperties = EditableWidgetProperties;
 	const factory = create().properties<ContainerProperties>();
-	const Container = factory(function Container({ properties }) {
-		const {} = properties();
+	const Container = factory(function Container() {
 		return <div></div>;
 	});
 
-	const IdeContainer = factory(function Container({ properties }) {
-		const {} = properties();
+	const IdeContainer = factory(function Container() {
 		return <div></div>;
 	});
 

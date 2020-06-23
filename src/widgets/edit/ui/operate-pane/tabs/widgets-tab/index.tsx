@@ -4,11 +4,11 @@ import cache from "@dojo/framework/core/middleware/cache";
 import { find } from "@dojo/framework/shim/array";
 import store from "@blocklang/designer-core/store";
 import { RepoWidgetList } from "@blocklang/designer-core/interfaces";
-import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
+import FontAwesomeIcon from "@blocklang/dojo-fontawesome/FontAwesomeIcon";
 import { getWidgetsProcess } from "../../../../../../processes/projectDependenciesProcesses";
 import { deepMixin } from "@dojo/framework/core/util";
 import { insertWidgetsProcess } from "../../../../../../processes/uiProcesses";
-import * as c from "bootstrap-classes";
+import * as c from "@blocklang/bootstrap-classes";
 import * as css from "./index.m.css";
 
 const factory = create({ store, icache, cache }).properties();

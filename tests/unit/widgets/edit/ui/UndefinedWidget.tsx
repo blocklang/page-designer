@@ -1,12 +1,12 @@
 const { describe, it } = intern.getInterface("bdd");
 const { assert } = intern.getPlugin("chai");
-import harness from "@dojo/framework/testing/harness";
+import harness from "@dojo/framework/testing/harness/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 
 import UndefinedWidget from "../../../../../src/widgets/UndefinedWidget";
 import { ComponentRepo, State } from "@blocklang/designer-core/interfaces";
 import { AttachedWidget } from "@blocklang/designer-core/interfaces";
-import * as c from "bootstrap-classes";
+import * as c from "@blocklang/bootstrap-classes";
 import store from "@blocklang/designer-core/store";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
 import { removeUndefinedWidgetProcess } from "../../../../../src/processes/uiProcesses";
@@ -87,7 +87,7 @@ describe("edit/ui/UndefinedWidget", () => {
 			gitRepoOwner: "B",
 			gitRepoName: "C",
 			name: "D",
-			category: "E",
+			category: "Widget",
 			version: "0.0.1",
 			std: true,
 		};
@@ -131,7 +131,7 @@ describe("edit/ui/UndefinedWidget", () => {
 			gitRepoOwner: "B",
 			gitRepoName: "C",
 			name: "D",
-			category: "E",
+			category: "Widget",
 			version: "0.0.1",
 			std: true,
 		};

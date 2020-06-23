@@ -3,10 +3,10 @@ import store from "@blocklang/designer-core/store";
 import icache from "@dojo/framework/core/middleware/icache";
 import { getServicesProcess } from "../../../../../../../processes/projectDependenciesProcesses";
 import { addServiceNodeProcess } from "../../../../../../../processes/pageFunctionProcesses";
-import * as c from "bootstrap-classes";
+import * as c from "@blocklang/bootstrap-classes";
 import * as css from "./index.m.css";
 import { find } from "@dojo/framework/shim/array";
-import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
+import FontAwesomeIcon from "@blocklang/dojo-fontawesome/FontAwesomeIcon";
 import { HttpMethod } from "@blocklang/designer-core/interfaces";
 
 const factory = create({ store, icache }).properties();
@@ -70,9 +70,9 @@ export default factory(function Api({ middleware: { store, icache } }) {
 							<div key={repo.apiRepoId} classes={[c.pb_2]}>
 								<div
 									classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]}
-									onclick={(): void =>
-										icache.set<boolean>(`fold-repo-${repo.apiRepoId}`, !apiRepoFold)
-									}
+									onclick={(): void => {
+										icache.set<boolean>(`fold-repo-${repo.apiRepoId}`, !apiRepoFold);
+									}}
 								>
 									{apiRepoFold ? (
 										<FontAwesomeIcon icon="angle-right" />
@@ -95,12 +95,12 @@ export default factory(function Api({ middleware: { store, icache } }) {
 													<div key={group.name}>
 														<div
 															classes={[c.pl_1, c.text_muted, css.groupNameBar]}
-															onclick={(): void =>
+															onclick={(): void => {
 																icache.set<boolean>(
 																	`fold-group-${repo.apiRepoId}-${group.name}`,
 																	!groupFold
-																)
-															}
+																);
+															}}
 														>
 															{groupFold ? (
 																<FontAwesomeIcon icon="angle-right" />

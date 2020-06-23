@@ -3,7 +3,7 @@ import { PropertyLayout, ChangedPropertyValue, PaneLayout } from "@blocklang/des
 import { AttachedWidgetProperty } from "@blocklang/designer-core/interfaces";
 import { findIndex } from "@dojo/framework/shim/array";
 import * as css from "./index.m.css";
-import * as c from "bootstrap-classes";
+import * as c from "@blocklang/bootstrap-classes";
 import { VNode } from "@dojo/framework/core/interfaces";
 
 export function parse(

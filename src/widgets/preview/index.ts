@@ -1,10 +1,10 @@
 import { create, v, w } from "@dojo/framework/core/vdom";
 import store from "@blocklang/designer-core/store";
 import { Permission } from "../../interfaces";
-import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
+import FontAwesomeIcon from "@blocklang/dojo-fontawesome/FontAwesomeIcon";
 import { renderPage } from "./render";
 
-import * as c from "bootstrap-classes";
+import * as c from "@blocklang/bootstrap-classes";
 import * as css from "./index.m.css";
 
 export interface PreviewProperties {

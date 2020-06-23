@@ -1,10 +1,10 @@
 const { describe, it } = intern.getInterface("bdd");
 
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
-import harness from "@dojo/framework/testing/harness";
+import harness from "@dojo/framework/testing/harness/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 import { add, replace } from "@dojo/framework/stores/state/operations";
-import * as c from "bootstrap-classes";
+import * as c from "@blocklang/bootstrap-classes";
 import { stub } from "sinon";
 
 import WidgetsTab from "../../../../../../../../src/widgets/edit/ui/operate-pane/tabs/widgets-tab";
@@ -12,7 +12,7 @@ import * as css from "../../../../../../../../src/widgets/edit/ui/operate-pane/t
 import { State } from "@blocklang/designer-core/interfaces";
 import store from "@blocklang/designer-core/store";
 import { getWidgetsProcess } from "../../../../../../../../src/processes/projectDependenciesProcesses";
-import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
+import FontAwesomeIcon from "@blocklang/dojo-fontawesome/FontAwesomeIcon";
 
 describe("edit/ui/operate-pane/tabs/widgets-tab", () => {
 	it("No widget repo", () => {

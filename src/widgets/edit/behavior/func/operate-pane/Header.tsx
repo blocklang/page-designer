@@ -1,6 +1,6 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
-import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
-import * as c from "bootstrap-classes";
+import FontAwesomeIcon from "@blocklang/dojo-fontawesome/FontAwesomeIcon";
+import * as c from "@blocklang/bootstrap-classes";
 import * as css from "./Header.m.css";
 
 const factory = create().properties();

@@ -1,9 +1,9 @@
 const { describe, it, beforeEach } = intern.getInterface("bdd");
 const { assert } = intern.getPlugin("chai");
 
-import harness from "@dojo/framework/testing/harness";
+import harness from "@dojo/framework/testing/harness/harness";
 import { tsx, create } from "@dojo/framework/core/vdom";
-import * as c from "bootstrap-classes";
+import * as c from "@blocklang/bootstrap-classes";
 import Preview from "../../../../src/widgets/preview";
 import * as css from "../../../../src/widgets/preview/index.m.css";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
@@ -11,11 +11,11 @@ import { State, PageModel, ComponentRepo } from "@blocklang/designer-core/interf
 import store from "@blocklang/designer-core/store";
 import { replace } from "@dojo/framework/stores/state/operations";
 import { Permission } from "../../../../src/interfaces";
-import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
+import FontAwesomeIcon from "@blocklang/dojo-fontawesome/FontAwesomeIcon";
 import { stub } from "sinon";
 import WidgetBase from "@dojo/framework/core/WidgetBase";
 import * as blocklang from "@blocklang/designer-core/blocklang";
-import Page from "std-widget-web/page";
+import Page from "@blocklang/std-widget-web/page";
 import { changeDataItemValueProcess } from "../../../../src/processes/pageDataProcesses";
 
 describe("widgets/preview", () => {
@@ -389,7 +389,7 @@ describe("widgets/preview", () => {
 	// 执行函数
 	it("trigger event - call one set data", () => {
 		const factory = create({}).properties<{ onValue: (value: string) => void }>();
-		const TextInput = factory(function TextInput({ properties }) {
+		const TextInput = factory(function TextInput() {
 			return <virtual></virtual>;
 		});
 		class IdeTextInput extends WidgetBase {}
@@ -555,7 +555,7 @@ describe("widgets/preview", () => {
 
 	it("trigger event - call two set data", () => {
 		const factory = create({}).properties<{ onValue: (value: string) => void }>();
-		const TextInput = factory(function TextInput({ properties }) {
+		const TextInput = factory(function TextInput() {
 			return <virtual></virtual>;
 		});
 		class IdeTextInput extends WidgetBase {}

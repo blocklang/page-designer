@@ -1,6 +1,6 @@
 const { describe, it } = intern.getInterface("bdd");
 
-import harness from "@dojo/framework/testing/harness";
+import harness from "@dojo/framework/testing/harness/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 
 import * as css from "../../../../../../src/widgets/edit/ui/operate-pane/index.m.css";

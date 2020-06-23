@@ -1,5 +1,5 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
-import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
+import FontAwesomeIcon from "@blocklang/dojo-fontawesome/FontAwesomeIcon";
 import { DNode } from "@dojo/framework/core/interfaces";
 import { invalidator } from "@dojo/framework/core/vdom";
 import Store from "@dojo/framework/stores/Store";
@@ -13,7 +13,7 @@ import { uiHistoryManager } from "../processes/utils";
 import { config } from "../config";
 
 import * as css from "./Header.m.css";
-import * as c from "bootstrap-classes";
+import * as c from "@blocklang/bootstrap-classes";
 
 export interface HeaderProperties {
 	user?: User;
@@ -255,3 +255,14 @@ export default factory(function Header({ properties, middleware: { store, invali
 		</div>
 	);
 });
+
+<div
+	classes={[c.bg_light, c.d_flex, c.justify_content_between, c.align_items_center, c.p_2, c.position_fixed, css.root]}
+>
+	<div key="left">
+		<Link title={"到上级目录"} params={{ owner: "tom", project: "project" }} to={""}>
+			<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
+		</Link>
+		<span classes={[c.ml_1]}>page1</span>
+	</div>
+</div>;

@@ -1,7 +1,7 @@
 const { describe, it } = intern.getInterface("bdd");
 
-import assertionTemplate from "@dojo/framework/testing/assertionTemplate";
-import harness from "@dojo/framework/testing/harness";
+import assertionTemplate from "@dojo/framework/testing/harness/assertionTemplate";
+import harness from "@dojo/framework/testing/harness/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 import Func from "../../../../../../src/widgets/edit/behavior/func";
 import { AttachedWidget, State, PageFunction } from "@blocklang/designer-core/interfaces";
@@ -293,7 +293,10 @@ describe("widgets/edit/behavior/func", () => {
 				activeWidgetProperty: widgets[0].properties[0],
 			})
 			.setProperties("~editor", { pageFunction: functions[0] })
-			.setChildren("~container", () => [<OperatePane top={0} />, <Editor pageFunction={functions[0]} />]);
+			.setChildren("~container", () => [
+				<OperatePane key="0" top={0} />,
+				<Editor key="1" pageFunction={functions[0]} />,
+			]);
 
 		const mockStore = createMockStoreMiddleware<State>();
 		mockStore((path) => [add(path("selectedWidgetIndex"), 0), add(path("selectedWidgetPropertyIndex"), 0)]);

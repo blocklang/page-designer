@@ -3,7 +3,7 @@ import { AttachedWidget, ComponentRepo, EditMode } from "@blocklang/designer-cor
 import store from "@blocklang/designer-core/store";
 import { removeUndefinedWidgetProcess } from "../processes/uiProcesses";
 
-import * as c from "bootstrap-classes";
+import * as c from "@blocklang/bootstrap-classes";
 
 /**
  *

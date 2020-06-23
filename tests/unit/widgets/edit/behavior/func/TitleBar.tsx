@@ -1,10 +1,10 @@
 const { describe, it } = intern.getInterface("bdd");
 
-import assertionTemplate from "@dojo/framework/testing/assertionTemplate";
-import harness from "@dojo/framework/testing/harness";
+import assertionTemplate from "@dojo/framework/testing/harness/assertionTemplate";
+import harness from "@dojo/framework/testing/harness/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 import TitleBar from "../../../../../../src/widgets/edit/behavior/func/TitleBar";
-import * as c from "bootstrap-classes";
+import * as c from "@blocklang/bootstrap-classes";
 
 describe("widgets/edit/behavior/func/TitleBar", () => {
 	const baseAssertion = assertionTemplate(() => (

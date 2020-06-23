@@ -1,4 +1,4 @@
-import Page from "std-widget-web/page";
+import Page from "@blocklang/std-widget-web/page";
 import { InstWidgetProperties } from "../../interfaces";
 import { ComponentRepo, AttachedWidget, PageFunction } from "@blocklang/designer-core/interfaces";
 import { find } from "@dojo/framework/shim/array";

@@ -2,8 +2,8 @@ import { create, tsx } from "@dojo/framework/core/vdom";
 import { HighlightBoxProperties } from "./HighlightBox";
 import Box from "./Box";
 import * as css from "./FocusBox.m.css";
-import * as c from "bootstrap-classes";
-import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
+import * as c from "@blocklang/bootstrap-classes";
+import FontAwesomeIcon from "@blocklang/dojo-fontawesome/FontAwesomeIcon";
 import { getPreviousIndex, getNextIndex } from "@blocklang/designer-core/utils/treeUtil";
 import { calculateOffset } from "../../../util";
 import {

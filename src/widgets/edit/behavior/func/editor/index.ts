@@ -8,7 +8,7 @@ import {
 	DataPort,
 	InputSequencePort,
 } from "@blocklang/designer-core/interfaces";
-import * as c from "bootstrap-classes";
+import * as c from "@blocklang/bootstrap-classes";
 import * as css from "./index.m.css";
 import { DNode, VNode } from "@dojo/framework/core/interfaces";
 import store from "@blocklang/designer-core/store";
@@ -24,7 +24,7 @@ import {
 	removeFunctionNodeProcess,
 	updateInputDataPortValueProcess,
 } from "../../../../../processes/pageFunctionProcesses";
-import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
+import FontAwesomeIcon from "@blocklang/dojo-fontawesome/FontAwesomeIcon";
 import { find, findIndex } from "@dojo/framework/shim/array";
 import { getConnectorOffset, getConnectorPath } from "../util";
 import { drag, DragResults } from "../../../../../middleware/drag";

@@ -1,14 +1,14 @@
 const { describe, it } = intern.getInterface("bdd");
 const { assert } = intern.getPlugin("chai");
 
-import assertionTemplate from "@dojo/framework/testing/assertionTemplate";
-import harness from "@dojo/framework/testing/harness";
+import assertionTemplate from "@dojo/framework/testing/harness/assertionTemplate";
+import harness from "@dojo/framework/testing/harness/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 import Editor from "../../../../../../src/widgets/edit/behavior/func/editor";
 import * as css from "../../../../../../src/widgets/edit/behavior/func/editor/index.m.css";
-import * as c from "bootstrap-classes";
+import * as c from "@blocklang/bootstrap-classes";
 import { PageFunction, State } from "@blocklang/designer-core/interfaces";
-import FontAwesomeIcon from "dojo-fontawesome/FontAwesomeIcon";
+import FontAwesomeIcon from "@blocklang/dojo-fontawesome/FontAwesomeIcon";
 import store from "@blocklang/designer-core/store";
 import createMockStoreMiddleware from "@dojo/framework/testing/mocks/middleware/store";
 import {

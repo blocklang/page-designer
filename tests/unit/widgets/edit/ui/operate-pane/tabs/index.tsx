@@ -1,11 +1,11 @@
 const { describe, it } = intern.getInterface("bdd");
 const { assert } = intern.getPlugin("chai");
 
-import harness from "@dojo/framework/testing/harness";
+import harness from "@dojo/framework/testing/harness/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 import { stub } from "sinon";
 
-import * as c from "bootstrap-classes";
+import * as c from "@blocklang/bootstrap-classes";
 import * as css from "../../../../../../../src/widgets/edit/ui/operate-pane/tabs/index.m.css";
 
 import Tab from "../../../../../../../src/widgets/edit/ui/operate-pane/tabs";

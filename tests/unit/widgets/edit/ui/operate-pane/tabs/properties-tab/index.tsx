@@ -1,7 +1,7 @@
 const { describe, it, afterEach } = intern.getInterface("bdd");
 const { assert } = intern.getPlugin("chai");
 
-import harness from "@dojo/framework/testing/harness";
+import harness from "@dojo/framework/testing/harness/harness";
 import { tsx } from "@dojo/framework/core/vdom";
 import PropertiesTab from "../../../../../../../../src/widgets/edit/ui/operate-pane/tabs/properties-tab";
 import store from "@blocklang/designer-core/store";
@@ -15,7 +15,7 @@ import { AttachedWidget, GitUrlSegment, PropertyLayout } from "@blocklang/design
 import { SingleProperty } from "@blocklang/designer-core/interfaces";
 import { changeActiveWidgetPropertiesProcess } from "../../../../../../../../src/processes/uiProcesses";
 
-import * as c from "bootstrap-classes";
+import * as c from "@blocklang/bootstrap-classes";
 import * as css from "../../../../../../../../src/widgets/edit/ui/operate-pane/tabs/properties-tab/index.m.css";
 
 let findWidgetPropertiesLayoutStub: SinonStub<[GitUrlSegment | string, string], PropertyLayout[]>;

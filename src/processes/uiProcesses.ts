@@ -178,7 +178,7 @@ const changeActiveWidgetPropertiesCommand = commandFactory<{ changedProperties: 
  *
  * 将选中的部件往前移动一步
  */
-const moveActiveWidgetPreviousCommand = commandFactory<{}>(({ at, get, path }) => {
+const moveActiveWidgetPreviousCommand = commandFactory(({ at, get, path }) => {
 	const pageWidgets = get(path("pageModel", "widgets"));
 	const selectedWidgetIndex = get(path("selectedWidgetIndex"));
 
@@ -210,7 +210,7 @@ const moveActiveWidgetPreviousCommand = commandFactory<{}>(({ at, get, path }) =
  *
  * 将选中的部件往后移动一步
  */
-const moveActiveWidgetNextCommand = commandFactory<{}>(({ at, get, path }) => {
+const moveActiveWidgetNextCommand = commandFactory(({ at, get, path }) => {
 	const pageWidgets = get(path("pageModel", "widgets"));
 	const selectedWidgetIndex = get(path("selectedWidgetIndex"));
 
@@ -245,7 +245,7 @@ const moveActiveWidgetNextCommand = commandFactory<{}>(({ at, get, path }) => {
 /**
  * 相对于当前选中的部件，改为选中父部件
  */
-const activeParentWidgetCommand = commandFactory<{}>(({ get, path }) => {
+const activeParentWidgetCommand = commandFactory(({ get, path }) => {
 	const selectedWidgetIndex = get(path("selectedWidgetIndex"));
 	if (selectedWidgetIndex === 0) {
 		return [];
@@ -289,7 +289,7 @@ const savePageModelCommand = commandFactory(async ({ path, get }) => {
  * 1. 否则，查找是否有后一个兄弟节点，如有则让其聚焦；
  * 1. 否则，则让父部件聚焦。
  */
-const removeActiveWidgetCommand = commandFactory<{}>(({ at, get, path }) => {
+const removeActiveWidgetCommand = commandFactory(({ at, get, path }) => {
 	const selectedWidgetIndex = get(path("selectedWidgetIndex"));
 	if (selectedWidgetIndex === 0) {
 		// 根节点是系统默认添加的，不允许删除。
