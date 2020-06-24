@@ -1,6 +1,5 @@
 import { create, tsx } from "@dojo/framework/core/vdom";
-import theme from "@dojo/framework/core/middleware/theme";
-import dojo from "@dojo/themes/dojo";
+
 // 注意： 此样式要放在 import PageDesigner 语句之上，这样 PageDesigner 及其子部件中的样式优先级就会提高
 import "bootstrap/dist/css/bootstrap.min.css";
 import * as css from "./App.m.css";
@@ -8,12 +7,9 @@ import PageDesigner from ".";
 import { Project } from "@blocklang/designer-core/interfaces";
 import { User, Permission, Page, Path, RequestUrl, RouteName } from "./interfaces";
 
-const factory = create({ theme });
+const factory = create();
 
-export default factory(function App({ middleware: { theme } }) {
-	if (!theme.get()) {
-		theme.set(dojo);
-	}
+export default factory(function App() {
 	// TODO: 支持调整参数，随着参数的变化，设计器也跟着改变
 	const user: User = {
 		name: "jack",
