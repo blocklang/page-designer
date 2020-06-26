@@ -256,9 +256,9 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 			/>
 			<div classes={[css.container]}>
 				{editMode === "Preview" ? (
-					<Preview permission={permission} onSwitchEditMode={onSwitchEditMode} />
+					<Preview page={page} permission={permission} onSwitchEditMode={onSwitchEditMode} />
 				) : activePageView === "ui" ? (
-					<UIView />
+					<UIView page={page} />
 				) : (
 					<BehaviorView />
 				)}

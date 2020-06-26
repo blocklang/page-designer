@@ -31,7 +31,7 @@ export default factory(function App() {
 		id: 1,
 		key: "page1",
 		name: "页面1",
-		appType: "01", // web
+		appType: "WeChat", // web, WeChat
 	};
 
 	const pathes: Path[] = [{ name: "page1", path: "page1" }];

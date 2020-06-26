@@ -1,0 +1,8 @@
+.root {
+	font-size: 14px;
+}
+.capsule {
+	border: 1px solid hsla(0, 0%, 100%, 0.25);
+	border-color: rgba(0, 0, 0, 0.1);
+	border-radius: 27px;
+}

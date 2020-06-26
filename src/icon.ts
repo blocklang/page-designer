@@ -21,6 +21,11 @@ import { faEdit as faSolidEdit } from "@fortawesome/free-solid-svg-icons/faEdit"
 import { faCaretRight } from "@fortawesome/free-solid-svg-icons/faCaretRight";
 import { faCircle } from "@fortawesome/free-solid-svg-icons/faCircle";
 import { faTimes } from "@fortawesome/free-solid-svg-icons/faTimes";
+import { faSignal } from "@fortawesome/free-solid-svg-icons/faSignal";
+import { faWifi } from "@fortawesome/free-solid-svg-icons/faWifi";
+import { faBatteryFull } from "@fortawesome/free-solid-svg-icons/faBatteryFull";
+import { faEllipsisH } from "@fortawesome/free-solid-svg-icons/faEllipsisH";
+import { faDotCircle } from "@fortawesome/free-solid-svg-icons/faDotCircle";
 
 export function init(): void {
 	library.add(
@@ -44,6 +49,11 @@ export function init(): void {
 		faSolidEdit,
 		faCaretRight,
 		faCircle,
-		faTimes
+		faTimes,
+		faSignal,
+		faWifi,
+		faBatteryFull,
+		faEllipsisH,
+		faDotCircle
 	);
 }

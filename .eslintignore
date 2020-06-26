@@ -9,3 +9,4 @@ serve
 docs
 src/utils/fg-loadcss/onloadCSS.ts
 src/middleware/drag.ts
+src/**/*.css
