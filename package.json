@@ -32,7 +32,7 @@
     "@types/scriptjs": "^0.0.2",
     "@blocklang/designer-core": "~0.0.1-alpha.88",
     "@blocklang/std-ide-widget": "~0.0.3-alpha.23",
-    "@blocklang/bootstrap-classes": "~0.0.3-alpha.7",
+    "@blocklang/bootstrap-classes": "~0.0.3-alpha.8",
     "@blocklang/dojo-fontawesome": "^0.0.3-alpha.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.29",
     "@fortawesome/free-brands-svg-icons": "^5.13.1",
