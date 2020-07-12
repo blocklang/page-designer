@@ -1,4 +1,4 @@
-import { create, tsx } from "@dojo/framework/core/vdom";
+import { create, tsx, invalidator } from "@dojo/framework/core/vdom";
 import icache from "@dojo/framework/core/middleware/icache";
 import cache from "@dojo/framework/core/middleware/cache";
 import dimensions from "@dojo/framework/core/middleware/dimensions";
@@ -129,13 +129,22 @@ function loadExternalResources(ideRepos: ComponentRepo[], loadSuccess: (resource
 	});
 }
 
-const factory = create({ icache, store, cache }).properties<PageDesignerProperties>();
+const factory = create({ icache, store, cache, invalidator }).properties<PageDesignerProperties>();
 
+// 这两个属性用于确定在浏览器大小发生变化后，重新渲染设计器区域。
+let height = 0;
+let width = 0;
 // 注意，根据单一职责原则，以及参数宜集中不宜分散的原则，在调用 PageDesigner 只有一个设置参数入口，
 // 就是通过 PageDesignerProperties，不允许直接设置 config 对象。
-export default factory(function PageDesigner({ properties, middleware: { icache, store, cache } }) {
+export default factory(function PageDesigner({ properties, middleware: { icache, store, cache, invalidator } }) {
 	const { user, project, page, permission, pathes, urls, routes } = properties();
 	const { executor, get, path } = store;
+
+	window.addEventListener("resize", () => {
+		height = window.document.documentElement.clientHeight;
+		width = window.document.documentElement.clientWidth;
+		invalidator();
+	});
 
 	// 初始化数据
 	// 1. 本地数据
@@ -187,7 +196,7 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 
 	// 此处取名 projectDependences 也是非常合理的，因为在设计器这个环境下，就是项目依赖，只是在实现层面加载不同版本的依赖
 	// 直接就是返回设计器专用的依赖项：Service repo 和 widget 的 ide 版仓库，因为 url 中已包含 designer
-	const projectDependencies = get(path("projectDependencies"));
+	const projectDependencies: ComponentRepo[] = get(path("projectDependencies"));
 	if (!projectDependencies) {
 		return (
 			<div classes={[c.text_muted, c.text_center, c.mt_5]}>
@@ -258,7 +267,7 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 				{editMode === "Preview" ? (
 					<Preview page={page} permission={permission} onSwitchEditMode={onSwitchEditMode} />
 				) : activePageView === "ui" ? (
-					<UIView page={page} />
+					<UIView page={page} key={`${height}-${width}`} />
 				) : (
 					<BehaviorView />
 				)}

@@ -30,7 +30,7 @@ export default factory(function UIView({ properties, middleware: { dimensions } 
 			)}
 			{useMobileLayout && (
 				<SimulatorContainer>
-					<div key="editContainer">
+					<div key="editContainer" classes={["h-100"]}>
 						<OperatePane top={top} />
 						<Editor />
 					</div>

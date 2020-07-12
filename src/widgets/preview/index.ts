@@ -37,14 +37,12 @@ export default factory(function Preview({ properties, middleware: { store } }) {
 		]);
 	}
 
-	const result = tryRenderPage();
-
 	if (useMobileLayout) {
-		return w(SimulatorContainer, {}, [result]);
+		return w(SimulatorContainer, {}, [tryRenderMobilePage()]);
 	}
-	return result;
+	return tryRenderWebPage();
 
-	function tryRenderPage() {
+	function tryRenderWebPage() {
 		if (pageWidgets.length === 0) {
 			// 一个页面中至少会有一个 Page 部件。
 			// 代码不应执行到此处。
@@ -84,5 +82,25 @@ export default factory(function Preview({ properties, middleware: { store } }) {
 
 		const ideRepos = get(path("projectDependencies")) || [];
 		return v("div", [renderPage(pageWidgets, ideRepos, store)]);
+	}
+
+	function tryRenderMobilePage() {
+		if (pageWidgets.length === 0) {
+			// 一个页面中至少会有一个 Page 部件。
+			// 代码不应执行到此处。
+			return v("div", [
+				v(
+					"div",
+					{
+						classes: [c.alert, c.alert_danger, c.mx_auto, c.text_center, c.py_5, css.emptyPage],
+						role: "alert",
+					},
+					["页面中缺少根节点！"]
+				),
+			]);
+		}
+
+		const ideRepos = get(path("projectDependencies")) || [];
+		return v("div", { classes: ["h-100"] }, [renderPage(pageWidgets, ideRepos, store)]);
 	}
 });

@@ -11,7 +11,7 @@ import {
 	unhighlightWidgetProcess,
 	changeActiveWidgetPropertiesProcess,
 } from "../../../../processes/uiProcesses";
-import { ChangedPropertyValue } from "@blocklang/designer-core/interfaces";
+import { ChangedPropertyValue, ComponentRepo } from "@blocklang/designer-core/interfaces";
 
 const factory = create({ store }).properties();
 
@@ -34,8 +34,9 @@ export default factory(function Editor({ middleware: { store } }) {
 	// 如果聚焦的部件和高亮显示的部件是同一个，则只显示聚焦框
 	const onlyShowFocusBox = highlightWidgetIndex != undefined && selectedWidgetIndex === highlightWidgetIndex;
 
-	const widgetIdeRepos = (get(path("projectDependencies")) || []).filter((repo) => repo.category === "Widget");
-	return v("div", {}, [
+	const projectDependencies: ComponentRepo[] = get(path("projectDependencies")) || [];
+	const widgetIdeRepos = projectDependencies.filter((repo) => repo.category === "Widget");
+	return v("div", { classes: ["h-100"] }, [
 		renderPage(pageWidgets, widgetIdeRepos, {
 			onFocusing: (activeWidgetId) => {
 				executor(activeWidgetProcess)({ activeWidgetId });
