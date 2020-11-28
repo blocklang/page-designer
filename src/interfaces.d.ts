@@ -38,6 +38,7 @@ export interface Page {
 	key: string;
 	name: string;
 	appType: string;
+	deviceType: string;
 }
 
 /**

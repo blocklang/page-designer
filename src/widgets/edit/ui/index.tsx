@@ -3,7 +3,8 @@ import dimensions from "@dojo/framework/core/middleware/dimensions";
 import OperatePane from "./operate-pane";
 import Editor from "./editor";
 import { Page } from "../../../interfaces";
-import SimulatorContainer from "./mobile/SimulatorContainer";
+import MobileSimulatorContainer from "./mobile/SimulatorContainer";
+import WearableSimulatorContainer from "./wearable/SimulatorContainer";
 
 export interface UIViewProperties {
 	page: Page;
@@ -16,26 +17,44 @@ export default factory(function UIView({ properties, middleware: { dimensions } 
 	const dimensionResult = dimensions.get("editContainer");
 	const top = dimensionResult.offset.top;
 	const { page } = properties();
-	const { appType } = page;
+	const { appType, deviceType } = page;
 
-	const useMobileLayout = appType !== "web";
+	console.log("appType", appType, "deviceType", deviceType);
 
-	return (
-		<virtual>
-			{!useMobileLayout && (
-				<div key="editContainer">
+	if (appType === "web") {
+		// 01
+		return (
+			<div key="editContainer">
+				<OperatePane top={top} />
+				<Editor />
+			</div>
+		);
+	}
+
+	if (appType === "mobile" || appType === "miniProgram") {
+		// 02 或 03
+		return (
+			<MobileSimulatorContainer>
+				<div key="editContainer" classes={["h-100"]}>
 					<OperatePane top={top} />
 					<Editor />
 				</div>
-			)}
-			{useMobileLayout && (
-				<SimulatorContainer>
+			</MobileSimulatorContainer>
+		);
+	}
+
+	if (appType === "harmonyOS") {
+		// 04
+		if (deviceType === "05") {
+			// Lite Wearable
+			return (
+				<WearableSimulatorContainer>
 					<div key="editContainer" classes={["h-100"]}>
 						<OperatePane top={top} />
 						<Editor />
 					</div>
-				</SimulatorContainer>
-			)}
-		</virtual>
-	);
+				</WearableSimulatorContainer>
+			);
+		}
+	}
 });

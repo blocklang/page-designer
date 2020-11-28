@@ -31,7 +31,8 @@ export default factory(function App() {
 		id: 1,
 		key: "page1",
 		name: "页面1",
-		appType: "WeChat", // web, WeChat
+		appType: "harmonyOS", // web, WeChat
+		deviceType: "05", // Lite Wearable
 	};
 
 	const pathes: Path[] = [{ name: "page1", path: "page1" }];

@@ -7,7 +7,8 @@ import { renderPage } from "./render";
 import * as c from "@blocklang/bootstrap-classes";
 import * as css from "./index.m.css";
 
-import SimulatorContainer from "../edit/ui/mobile/SimulatorContainer";
+import MobileSimulatorContainer from "../edit/ui/mobile/SimulatorContainer";
+import WearableSimulatorContainer from "../edit/ui/wearable/SimulatorContainer";
 
 export interface PreviewProperties {
 	page: Page;
@@ -19,9 +20,7 @@ const factory = create({ store }).properties<PreviewProperties>();
 
 export default factory(function Preview({ properties, middleware: { store } }) {
 	const { page, permission, onSwitchEditMode } = properties();
-	const { appType } = page;
-
-	const useMobileLayout = appType !== "web";
+	const { appType, deviceType } = page;
 
 	const { get, path } = store;
 	const pageWidgets = get(path("pageModel", "widgets"));
@@ -37,10 +36,23 @@ export default factory(function Preview({ properties, middleware: { store } }) {
 		]);
 	}
 
-	if (useMobileLayout) {
-		return w(SimulatorContainer, {}, [tryRenderMobilePage()]);
+	if (appType === "web") {
+		// 01
+		return tryRenderWebPage();
 	}
-	return tryRenderWebPage();
+
+	if (appType === "mobile" || appType === "miniProgram") {
+		// 02 或 03
+		return w(MobileSimulatorContainer, {}, [tryRenderMobilePage()]);
+	}
+
+	if (appType === "harmonyOS") {
+		// 04
+		if (deviceType === "05") {
+			// Lite Wearable
+			return w(WearableSimulatorContainer, {}, [tryRenderMobilePage()]);
+		}
+	}
 
 	function tryRenderWebPage() {
 		if (pageWidgets.length === 0) {

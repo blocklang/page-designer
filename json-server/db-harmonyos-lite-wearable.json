@@ -1,0 +1,53 @@
+{
+    "widgets": [
+      {
+        "projectId": 1,
+        "apiRepoId": 2,
+        "apiRepoName": "api-harmonyos-lite-wearable-ui ",
+        "widgetCategories": []
+      },
+      {
+        "projectId": 1,
+        "apiRepoId": 3,
+        "apiRepoName": "api repo 3",
+        "widgetCategories": []
+      }
+    ],
+    "services": [],
+    "functions": [],
+    "pages": [
+      {
+        "id": 1,
+        "pageId": 1,
+        "widgets": [
+          {
+            "id": "1",
+            "parentId": "-1",
+            "apiRepoId": 1,
+            "widgetCode": "0001",
+            "widgetName": "App",
+            "canHasChildren": true,
+            "properties": [
+              {}
+            ]
+          }
+        ],
+        "data": [],
+        "functions": []
+      }
+    ],
+    "projectDependences": [
+      {
+        "projectId": 1,
+        "id": 1,
+        "apiRepoId": 1,
+        "gitRepoWebsite": "github.com",
+        "gitRepoOwner": "blocklang-marketplace",
+        "gitRepoName": "ide-harmonyos-lite-wearable-ui ",
+        "name": "ide-harmonyos-lite-wearable-ui ",
+        "category": "Widget",
+        "version": "0.1.0",
+        "std": false
+      }
+    ]
+  }

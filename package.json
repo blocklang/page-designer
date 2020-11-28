@@ -24,6 +24,7 @@
     "uploadCoverage": "codecov --file=coverage/coverage.json",
     "json-server": "json-server --watch json-server/db.json --routes json-server/routes.json",
     "json-server:mini": "json-server --watch json-server/db-mini-program.json --routes json-server/routes.json",
+    "json-server:harmonyos:liteWearable": "json-server --watch json-server/db-harmonyos-lite-wearable.json --routes json-server/routes.json",
     "serve": "cd serve && serve -l 3001",
     "eslint": "eslint --ext .tsx,.ts --fix ./src"
   },
