@@ -29,4 +29,4 @@ npm config set registry https://registry.npm.taobao.org
 ## 发布
 
 1. 使用 `npm login` 命令登录;
-2. 使用 `npm publish` 命令发布。
+2. 使用 `npm publish --access public` 命令发布。
