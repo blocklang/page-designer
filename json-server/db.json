@@ -292,7 +292,7 @@
       "functions": []
     }
   ],
-  "projectDependences": [
+  "projectDependencies": [
     {
       "projectId": 1,
       "id": 1,

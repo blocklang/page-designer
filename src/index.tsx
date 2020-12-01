@@ -194,7 +194,7 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 		cache.set<boolean>("projectDependenciesIsLoading", true);
 	}
 
-	// 此处取名 projectDependences 也是非常合理的，因为在设计器这个环境下，就是项目依赖，只是在实现层面加载不同版本的依赖
+	// 此处取名 projectDependencies 也是非常合理的，因为在设计器这个环境下，就是项目依赖，只是在实现层面加载不同版本的依赖
 	// 直接就是返回设计器专用的依赖项：Service repo 和 widget 的 ide 版仓库，因为 url 中已包含 designer
 	const projectDependencies: ComponentRepo[] = get(path("projectDependencies"));
 	if (!projectDependencies) {

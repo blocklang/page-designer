@@ -551,7 +551,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 											},
 										}),
 									]),
-							  ])
+							])
 							: v("div", {}, [
 									v(
 										"span",
@@ -577,7 +577,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 									),
 									v("small", { classes: [c.font_italic] }, [item.type]),
 									v("span", { classes: [c.ml_1] }, [item.name]),
-							  ]),
+							]),
 						renderBlankPort(),
 					])
 				),

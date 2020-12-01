@@ -142,7 +142,7 @@ export default factory(function Header({ properties, middleware: { store, invali
 							canSave
 								? (): void => {
 										store.executor(savePageModelProcess)({});
-								  }
+								}
 								: undefined
 						}
 					>
@@ -161,7 +161,7 @@ export default factory(function Header({ properties, middleware: { store, invali
 										// 注意，必须要在部件中失效，才会每次都刷新 Header
 										// 只使用 store 的 middleware 中使用 store.invalidate()，在一些情况下不刷页面
 										invalidator();
-								  }
+								}
 								: undefined
 						}
 					>
@@ -180,7 +180,7 @@ export default factory(function Header({ properties, middleware: { store, invali
 										// 注意，必须要在部件中失效，才会每次都刷新 Header
 										// 只使用 store 的 middleware 中使用 store.invalidate()，在一些情况下不刷页面
 										invalidator();
-								  }
+								}
 								: undefined
 						}
 					>

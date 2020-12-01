@@ -38,11 +38,11 @@ export default factory(function App() {
 	const pathes: Path[] = [{ name: "page1", path: "page1" }];
 
 	const urls: RequestUrl = {
-		fetchApiRepoWidgets: `http://localhost:3000/designer/projects/${project.id}/dependences/widgets`,
-		fetchApiRepoServices: `http://localhost:3000/designer/projects/${project.id}/dependences/services`,
-		fetchApiRepoFunctions: `http://localhost:3000/designer/projects/${project.id}/dependences/functions`,
+		fetchApiRepoWidgets: `http://localhost:3000/designer/projects/${project.id}/dependencies/widgets`,
+		fetchApiRepoServices: `http://localhost:3000/designer/projects/${project.id}/dependencies/services`,
+		fetchApiRepoFunctions: `http://localhost:3000/designer/projects/${project.id}/dependencies/functions`,
 		fetchPageModel: `http://localhost:3000/designer/pages/${page.id}/model`,
-		fetchIdeDependenceInfos: `http://localhost:3000/designer/projects/${project.id}/dependences?repo=ide`,
+		fetchIdeDependenceInfos: `http://localhost:3000/designer/projects/${project.id}/dependencies?repo=ide`,
 		externalScriptAndCssWebsite: "http://localhost:3001",
 		savePageModel: "",
 	};

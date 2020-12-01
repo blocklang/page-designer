@@ -47,13 +47,13 @@ const pathes: Path[] = [{ name: "page1", path: "page1" }];
 // 与服务器端交互的 url
 const urls: RequestUrl = {
     // 获取项目依赖的部件列表，按仓库分组
-    fetchApiRepoWidgets: `http://localhost:3000/designer/projects/${project.id}/dependences/widgets`,
+    fetchApiRepoWidgets: `http://localhost:3000/designer/projects/${project.id}/dependencies/widgets`,
     // 获取项目依赖的 RESTful API 列表，按仓库分组
-    fetchApiRepoServices: `http://localhost:3000/designer/projects/${project.id}/dependences/services`,
+    fetchApiRepoServices: `http://localhost:3000/designer/projects/${project.id}/dependencies/services`,
     // 获取项目依赖的 JavaScript 对象列表，按仓库分组
-    fetchApiRepoFunctions: `http://localhost:3000/designer/projects/${project.id}/dependences/functions`,
+    fetchApiRepoFunctions: `http://localhost:3000/designer/projects/${project.id}/dependencies/functions`,
     // 获取项目依赖的 ide 版 UI 库、API 库，以及 api 版 service 仓库的基本信息
-    fetchIdeDependenceInfos: `http://localhost:3000/designer/projects/${project.id}/dependences?repo=ide`,
+    fetchIdeDependenceInfos: `http://localhost:3000/designer/projects/${project.id}/dependencies?repo=ide`,
     // 获取页面模型
     fetchPageModel: `http://localhost:3000/designer/pages/${page.id}/model`,
     // 更新页面模型

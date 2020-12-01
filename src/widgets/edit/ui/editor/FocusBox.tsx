@@ -70,7 +70,7 @@ export default factory(function FocusBox({ properties, middleware: { store } }) 
 									? undefined
 									: (): void => {
 											executor(moveActiveWidgetPreviousProcess)({});
-									  }
+									}
 							}
 							disabled={disableMovePreviousButton}
 						>
@@ -87,7 +87,7 @@ export default factory(function FocusBox({ properties, middleware: { store } }) 
 									? undefined
 									: (): void => {
 											executor(moveActiveWidgetNextProcess)({});
-									  }
+									}
 							}
 							disabled={disableMoveNextButton}
 						>
