@@ -76,7 +76,7 @@ export default factory(function WidgetsTab({ middleware: { store, icache, cache 
 				{filterWidgetRepos ? (
 					filterWidgetRepos.length === 0 ? (
 						<p classes={[c.text_muted, c.text_center]}>
-							请在 <strong>DEPENDENCE.json</strong> 中添加部件仓库
+							请在 <strong>Y.json</strong> 中添加部件仓库
 						</p>
 					) : (
 						filterWidgetRepos.map((repo) => {

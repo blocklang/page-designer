@@ -43,10 +43,10 @@
         "apiRepoId": 1,
         "gitRepoWebsite": "github.com",
         "gitRepoOwner": "blocklang-marketplace",
-        "gitRepoName": "ide-harmonyos-lite-wearable-ui ",
-        "name": "ide-harmonyos-lite-wearable-ui ",
+        "gitRepoName": "ide-harmonyos-lite-wearable-ui",
+        "name": "ide-harmonyos-lite-wearable-ui",
         "category": "Widget",
-        "version": "0.1.0",
+        "version": "0.0.1",
         "std": false
       }
     ]

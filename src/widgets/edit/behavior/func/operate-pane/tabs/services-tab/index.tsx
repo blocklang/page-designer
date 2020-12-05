@@ -53,7 +53,7 @@ export default factory(function Api({ middleware: { store, icache } }) {
 				)}
 				{repoServices && repoServices.length === 0 && (
 					<p classes={[c.text_muted, c.text_center]}>
-						请在 <strong>DEPENDENCE.json</strong> 中添加 Service 仓库
+						请在 <strong>DEPENDENCY.json</strong> 中添加 Service 仓库
 					</p>
 				)}
 				{repoServices &&

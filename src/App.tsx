@@ -31,7 +31,7 @@ export default factory(function App() {
 		id: 1,
 		key: "page1",
 		name: "页面1",
-		appType: "harmonyOS", // web, WeChat
+		appType: "04", // web, WeChat，04(harmonyOS)
 		deviceType: "05", // Lite Wearable
 	};
 
@@ -42,7 +42,7 @@ export default factory(function App() {
 		fetchApiRepoServices: `http://localhost:3000/designer/projects/${project.id}/dependencies/services`,
 		fetchApiRepoFunctions: `http://localhost:3000/designer/projects/${project.id}/dependencies/functions`,
 		fetchPageModel: `http://localhost:3000/designer/pages/${page.id}/model`,
-		fetchIdeDependenceInfos: `http://localhost:3000/designer/projects/${project.id}/dependencies?repo=ide`,
+		fetchIdeDependencyInfos: `http://localhost:3000/designer/projects/${project.id}/dependencies?repo=ide`,
 		externalScriptAndCssWebsite: "http://localhost:3001",
 		savePageModel: "",
 	};

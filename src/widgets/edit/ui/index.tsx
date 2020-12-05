@@ -5,6 +5,7 @@ import Editor from "./editor";
 import { Page } from "../../../interfaces";
 import MobileSimulatorContainer from "./mobile/SimulatorContainer";
 import WearableSimulatorContainer from "./wearable/SimulatorContainer";
+import { AppType, DeviceType } from "../../../constants";
 
 export interface UIViewProperties {
 	page: Page;
@@ -21,8 +22,7 @@ export default factory(function UIView({ properties, middleware: { dimensions } 
 
 	console.log("appType", appType, "deviceType", deviceType);
 
-	if (appType === "web") {
-		// 01
+	if (appType === AppType.Web) {
 		return (
 			<div key="editContainer">
 				<OperatePane top={top} />
@@ -31,8 +31,7 @@ export default factory(function UIView({ properties, middleware: { dimensions } 
 		);
 	}
 
-	if (appType === "mobile" || appType === "miniProgram") {
-		// 02 或 03
+	if (appType === AppType.Mobile || appType === AppType.MiniProgram) {
 		return (
 			<MobileSimulatorContainer>
 				<div key="editContainer" classes={["h-100"]}>
@@ -43,17 +42,15 @@ export default factory(function UIView({ properties, middleware: { dimensions } 
 		);
 	}
 
-	if (appType === "harmonyOS") {
-		// 04
-		if (deviceType === "05") {
-			// Lite Wearable
+	if (appType === AppType.HarmonyOS) {
+		if (deviceType === DeviceType.LiteWearable) {
 			return (
-				<WearableSimulatorContainer>
-					<div key="editContainer" classes={["h-100"]}>
-						<OperatePane top={top} />
+				<div key="editContainer" classes={["h-100"]}>
+					<OperatePane top={top} />
+					<WearableSimulatorContainer>
 						<Editor />
-					</div>
-				</WearableSimulatorContainer>
+					</WearableSimulatorContainer>
+				</div>
 			);
 		}
 	}

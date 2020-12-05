@@ -30,7 +30,6 @@
 		"./src/**/*.ts",
 		"./src/**/*.tsx",
 		"./tests/**/*.ts",
-		"./tests/**/*.tsx",
-		"./images.d.ts"
+		"./tests/**/*.tsx"
 	]
 }

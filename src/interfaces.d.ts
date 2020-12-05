@@ -31,14 +31,18 @@ export interface Permission {
  *
  * 页面基本信息
  *
- * @property id    页面标识
+ * @property id            页面标识
+ * @property key           页面的 key
+ * @property name          页面的显示名
+ * @property appType       应用类型
+ * @property deviceType    设备类型
  */
 export interface Page {
 	id: number;
 	key: string;
 	name: string;
 	appType: string;
-	deviceType: string;
+	deviceType?: string;
 }
 
 /**
@@ -121,14 +125,13 @@ export interface InstWidgetProperties extends WidgetProperties {
  *
  * @property fetchApiRepoWidgets  用户获取 API 仓库中的部件列表
  * @function customFetchHeaders   自定义 fetch 请求的 header 信息
- * @deprecated
  */
 export interface RequestUrl {
 	fetchApiRepoWidgets: string;
 	fetchApiRepoServices: string;
 	fetchApiRepoFunctions: string;
 	fetchPageModel: string;
-	fetchIdeDependenceInfos: string;
+	fetchIdeDependencyInfos: string;
 	savePageModel: string;
 	externalScriptAndCssWebsite: string;
 	customFetchHeaders?: () => { [key: string]: string };

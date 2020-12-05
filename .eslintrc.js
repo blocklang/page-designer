@@ -19,6 +19,7 @@ module.exports = {
     rules: {
         '@typescript-eslint/no-explicit-any': 0,
         '@typescript-eslint/no-empty-function': 0,
+        "@typescript-eslint/no-var-requires": 0,
         "react/no-unknown-property": 0,
         'react/react-in-jsx-scope': 0,
     }

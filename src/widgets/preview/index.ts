@@ -9,6 +9,7 @@ import * as css from "./index.m.css";
 
 import MobileSimulatorContainer from "../edit/ui/mobile/SimulatorContainer";
 import WearableSimulatorContainer from "../edit/ui/wearable/SimulatorContainer";
+import { AppType, DeviceType } from "../../constants";
 
 export interface PreviewProperties {
 	page: Page;
@@ -36,20 +37,16 @@ export default factory(function Preview({ properties, middleware: { store } }) {
 		]);
 	}
 
-	if (appType === "web") {
-		// 01
+	if (appType === AppType.Web) {
 		return tryRenderWebPage();
 	}
 
-	if (appType === "mobile" || appType === "miniProgram") {
-		// 02 或 03
+	if (appType === AppType.Mobile || appType === AppType.MiniProgram) {
 		return w(MobileSimulatorContainer, {}, [tryRenderMobilePage()]);
 	}
 
-	if (appType === "harmonyOS") {
-		// 04
-		if (deviceType === "05") {
-			// Lite Wearable
+	if (appType === AppType.HarmonyOS) {
+		if (deviceType === DeviceType.LiteWearable) {
 			return w(WearableSimulatorContainer, {}, [tryRenderMobilePage()]);
 		}
 	}

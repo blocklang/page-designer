@@ -56,7 +56,7 @@ describe("edit/ui/operate-pane/tabs/widgets-tab", () => {
 				</div>
 				<div>
 					<p classes={[c.text_muted, c.text_center]}>
-						请在 <strong>DEPENDENCE.json</strong> 中添加部件仓库
+						请在 <strong>DEPENDENCY.json</strong> 中添加部件仓库
 					</p>
 				</div>
 			</div>

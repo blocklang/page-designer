@@ -152,7 +152,7 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 	config.fetchApiRepoServicesUrl = urls.fetchApiRepoServices;
 	config.fetchApiRepoFunctionsUrl = urls.fetchApiRepoFunctions;
 	config.fetchPageModelUrl = urls.fetchPageModel;
-	config.fetchIdeDependenceInfosUrl = urls.fetchIdeDependenceInfos;
+	config.fetchIdeDependencyInfosUrl = urls.fetchIdeDependencyInfos;
 	config.savePageModelUrl = urls.savePageModel;
 	if (urls.externalScriptAndCssWebsite) {
 		config.externalScriptAndCssWebsite = urls.externalScriptAndCssWebsite;
@@ -211,8 +211,10 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 	// 获取完依赖之后要加载相应的 js 脚本
 	// 去除掉标准库，因为已默认引用标准库
 	// 同时也要排除掉 Service 仓库，因为 Service 仓库不需要在浏览器中加载 js 文件
+	// 注意：在 v0.6.0 版本中删除了 std 属性，因为不再通过内嵌的方式默认加载任何标准库或基础库，
+	// 统一基础库和第三方库的加载方式。
 	const externalResources = projectDependencies.filter(
-		(item) => (item.category === "Widget" || item.category === "WebAPI") && item.std === false
+		(item) => item.category === "Widget" || item.category === "WebAPI"
 	);
 	if (externalResources.length > 0) {
 		const externalResourcesLoaded = icache.getOrSet<boolean>("externalResourcesLoaded", false);

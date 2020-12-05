@@ -36,7 +36,7 @@ export default factory(function Func({ middleware: { store, icache } }) {
 				)}
 				{repoFunctions && repoFunctions.length === 0 && (
 					<p classes={[c.text_muted, c.text_center]}>
-						请在 <strong>DEPENDENCE.json</strong> 中添加客户端的函数仓库
+						请在 <strong>DEPENDENCY.json</strong> 中添加客户端的函数仓库
 					</p>
 				)}
 				{repoFunctions &&

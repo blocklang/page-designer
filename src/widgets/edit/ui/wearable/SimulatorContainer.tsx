@@ -2,7 +2,8 @@ import { create, tsx } from "@dojo/framework/core/vdom";
 import * as css from "./SimulatorContainer.m.css";
 import icache from "@dojo/framework/core/middleware/icache";
 import * as c from "@blocklang/bootstrap-classes";
-import wearableImg from "../../../../assets/wearable.png";
+
+const wearableImg = require("../../../../assets/wearable.png");
 
 const factory = create({ icache }).properties();
 
