@@ -1,53 +1,165 @@
 {
-    "widgets": [
-      {
-        "projectId": 1,
-        "apiRepoId": 2,
-        "apiRepoName": "api-harmonyos-lite-wearable-ui ",
-        "widgetCategories": []
-      },
-      {
-        "projectId": 1,
-        "apiRepoId": 3,
-        "apiRepoName": "api repo 3",
-        "widgetCategories": []
-      }
-    ],
-    "services": [],
-    "functions": [],
-    "pages": [
-      {
-        "id": 1,
-        "pageId": 1,
-        "widgets": [
+  "widgets": [
+    {
+      "projectId": 1,
+      "apiRepoId": 2,
+      "apiRepoName": "api-harmonyos-lite-wearable-ui",
+      "widgetCategories": [
+        {
+          "name": "基础 UI",
+          "widgets": [
+            {
+              "widgetId": 1,
+              "widgetCode": "0001",
+              "widgetName": "App",
+              "properties": [
+                {
+                  "id": "1",
+                  "name": "vendor",
+                  "valueType": "string"
+                }
+              ]
+            },
+            {
+              "widgetId": 2,
+              "widgetCode": "0002",
+              "widgetName": "Page",
+              "properties": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "projectId": 1,
+      "apiRepoId": 3,
+      "apiRepoName": "api repo 3",
+      "widgetCategories": []
+    }
+  ],
+  "services": [],
+  "functions": [
+    {
+      "projectId": 1,
+      "apiRepoId": 4,
+      "apiRepoName": "api-func-1",
+      "jsObjects": [{
+        "name": "console",
+        "functions": [
           {
-            "id": "1",
-            "parentId": "-1",
-            "apiRepoId": 1,
-            "widgetCode": "0001",
-            "widgetName": "App",
-            "canHasChildren": true,
-            "properties": [
-              {}
-            ]
+            "name": "log",
+            "parameters": [{
+              "name": "message",
+              "type": "any",
+              "optional": true,
+              "variable": true
+            }],
+            "returnType": "void"
+          },{
+            "name": "info",
+            "parameters": [{
+              "name": "message",
+              "type": "any",
+              "optional": true,
+              "variable": true
+            }],
+            "returnType": "void"
+          },{
+            "name": "warn",
+            "parameters": [{
+              "name": "message",
+              "type": "any",
+              "optional": true,
+              "variable": true
+            }],
+            "returnType": "void"
+          },{
+            "name": "error",
+            "parameters": [{
+              "name": "message",
+              "type": "any",
+              "optional": true,
+              "variable": true
+            }],
+            "returnType": "void"
           }
-        ],
-        "data": [],
-        "functions": []
-      }
-    ],
-    "projectDependencies": [
-      {
-        "projectId": 1,
-        "id": 1,
-        "apiRepoId": 1,
-        "gitRepoWebsite": "github.com",
-        "gitRepoOwner": "blocklang-marketplace",
-        "gitRepoName": "ide-harmonyos-lite-wearable-ui",
-        "name": "ide-harmonyos-lite-wearable-ui",
-        "category": "Widget",
-        "version": "0.0.1",
-        "std": false
-      }
-    ]
-  }
+        ]
+      }]
+    }
+  ],
+  "pages": [
+    {
+      "id": 1,
+      "pageId": 1,
+      "widgets": [
+        {
+          "id": "1",
+          "parentId": "-1",
+          "apiRepoId": 1,
+          "widgetCode": "0001",
+          "widgetName": "App",
+          "canHasChildren": true,
+          "properties": [
+            {
+              "id": "1",
+              "code": "0001",
+              "name": "vendor",
+              "valueType": "string",
+              "isExpr": false
+            }, {
+              "id": "2",
+              "code": "0002",
+              "name": "onCreate",
+              "valueType": "function",
+              "isExpr": false,
+              "arguments": []
+            }, {
+              "id": "3",
+              "code": "0003",
+              "name": "onDestroy",
+              "valueType": "function",
+              "isExpr": false,
+              "arguments": []
+            }
+          ]
+        }
+      ],
+      "data": [
+        {
+          "id": "1",
+          "parentId": "-1",
+          "type": "Object",
+          "name": "$",
+          "open": true
+        }
+      ],
+      "functions": []
+    }
+  ],
+  "projectDependencies": [
+    {
+      "projectId": 1,
+      "id": 1,
+      "apiRepoId": 1,
+      "gitRepoWebsite": "github.com",
+      "gitRepoOwner": "blocklang-marketplace",
+      "gitRepoName": "ide-harmonyos-lite-wearable-ui",
+      "name": "ide-harmonyos-lite-wearable-ui",
+      "category": "Widget",
+      "version": "0.0.1",
+      "std": false
+    },
+    {
+      "projectId": 1,
+      "id": 4,
+      "apiRepoId": 4,
+      "gitRepoWebsite": "github.com",
+      "gitRepoOwner": "blocklang",
+      "gitRepoName": "ide-web-api",
+      "name": "ide-web-api",
+      "category": "WebAPI",
+      "version": "0.1.0",
+      "std": false
+    }
+  ]
+}
