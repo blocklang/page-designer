@@ -67,7 +67,7 @@ describe("Header", () => {
 					<Link title={"到上级目录"} params={{ owner: "tom", project: "project" }} to={""}>
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
 					</Link>
-					<span classes={[c.ml_1]}>tom/project/page1</span>
+					<span classes={[c.ms_1]}>tom/project/page1</span>
 				</div>
 			</div>
 		));
@@ -119,12 +119,12 @@ describe("Header", () => {
 					<Link title={"到上级目录"} params={{ owner: "tom", project: "project" }} to={""}>
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
 					</Link>
-					<span classes={[c.ml_1]}>tom/project/page1</span>
+					<span classes={[c.ms_1]}>tom/project/page1</span>
 				</div>
 				<div key="right">
-					<span classes={[c.ml_2]}>
+					<span classes={[c.ms_2]}>
 						<Link to={""} params={{ user: "jack" }}>
-							<img src="url" classes={[c.mr_1, css.avatar]} />
+							<img src="url" classes={[c.me_1, css.avatar]} />
 							<span>jack</span>
 						</Link>
 					</span>
@@ -179,16 +179,16 @@ describe("Header", () => {
 					<Link title={"到上级目录"} params={{ owner: "tom", project: "project" }} to={""}>
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
 					</Link>
-					<span classes={[c.ml_1]}>tom/project/page1</span>
+					<span classes={[c.ms_1]}>tom/project/page1</span>
 				</div>
 				<div key="right">
 					<button type="button" key="toEditButton" classes={[css.btn]} onclick={() => {}}>
 						<FontAwesomeIcon icon={["far", "edit"]} />
-						<span classes={[c.ml_1]}>编辑</span>
+						<span classes={[c.ms_1]}>编辑</span>
 					</button>
-					<span classes={[c.ml_2]}>
+					<span classes={[c.ms_2]}>
 						<Link to={""} params={{ user: "jack" }}>
-							<img src="url" classes={[c.mr_1, css.avatar]} />
+							<img src="url" classes={[c.me_1, css.avatar]} />
 							<span>jack</span>
 						</Link>
 					</span>
@@ -250,7 +250,7 @@ describe("Header", () => {
 					<Link title={"到上级目录"} params={{ owner: "tom", project: "project" }} to={""}>
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
 					</Link>
-					<span classes={[c.ml_1]}>page1</span>
+					<span classes={[c.ms_1]}>page1</span>
 				</div>
 				<div key="center" classes={[c.d_inline_flex, c.align_items_center]}>
 					<div classes={[c.btn_group, c.btn_group_sm]} role="group" aria-label="视图">
@@ -266,7 +266,7 @@ describe("Header", () => {
 							交互
 						</button>
 					</div>
-					<div classes={[c.ml_2]}>
+					<div classes={[c.ms_2]}>
 						<button
 							key="saveButton"
 							type="button"
@@ -275,7 +275,7 @@ describe("Header", () => {
 							onclick={undefined}
 						>
 							<FontAwesomeIcon icon={["far", "save"]} />
-							<span classes={[c.ml_1]}>保存</span>
+							<span classes={[c.ms_1]}>保存</span>
 						</button>
 						<button
 							key="undoButton"
@@ -285,7 +285,7 @@ describe("Header", () => {
 							onclick={undefined}
 						>
 							<FontAwesomeIcon icon="undo" />
-							<span classes={[c.ml_1]}>撤销</span>
+							<span classes={[c.ms_1]}>撤销</span>
 						</button>
 						<button
 							key="redoButton"
@@ -295,18 +295,18 @@ describe("Header", () => {
 							onclick={undefined}
 						>
 							<FontAwesomeIcon icon="redo" />
-							<span classes={[c.ml_1]}>恢复</span>
+							<span classes={[c.ms_1]}>恢复</span>
 						</button>
 					</div>
 				</div>
 				<div key="right">
 					<button type="button" key="toPreviewButton" classes={[css.btn]} onclick={() => {}}>
 						<FontAwesomeIcon icon={["far", "caret-square-right"]} />
-						<span classes={[c.ml_1]}>预览</span>
+						<span classes={[c.ms_1]}>预览</span>
 					</button>
-					<span classes={[c.ml_2]}>
+					<span classes={[c.ms_2]}>
 						<Link to={""} params={{ user: "jack" }}>
-							<img src="url" classes={[c.mr_1, css.avatar]} />
+							<img src="url" classes={[c.me_1, css.avatar]} />
 							<span>jack</span>
 						</Link>
 					</span>
@@ -374,7 +374,7 @@ describe("Header", () => {
 					<Link title={"到上级目录"} params={{ owner: "tom", project: "project" }} to={""}>
 						<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
 					</Link>
-					<span classes={[c.ml_1]}>page1</span>
+					<span classes={[c.ms_1]}>page1</span>
 				</div>
 				<div key="center" classes={[c.d_inline_flex, c.align_items_center]}>
 					<div classes={[c.btn_group, c.btn_group_sm]} role="group" aria-label="视图">
@@ -394,7 +394,7 @@ describe("Header", () => {
 							交互
 						</button>
 					</div>
-					<div classes={[c.ml_2]}>
+					<div classes={[c.ms_2]}>
 						<button
 							key="saveButton"
 							type="button"
@@ -403,7 +403,7 @@ describe("Header", () => {
 							onclick={undefined}
 						>
 							<FontAwesomeIcon icon={["far", "save"]} />
-							<span classes={[c.ml_1]}>保存</span>
+							<span classes={[c.ms_1]}>保存</span>
 						</button>
 						<button
 							key="undoButton"
@@ -413,7 +413,7 @@ describe("Header", () => {
 							onclick={undefined}
 						>
 							<FontAwesomeIcon icon="undo" />
-							<span classes={[c.ml_1]}>撤销</span>
+							<span classes={[c.ms_1]}>撤销</span>
 						</button>
 						<button
 							key="redoButton"
@@ -423,18 +423,18 @@ describe("Header", () => {
 							onclick={undefined}
 						>
 							<FontAwesomeIcon icon="redo" />
-							<span classes={[c.ml_1]}>恢复</span>
+							<span classes={[c.ms_1]}>恢复</span>
 						</button>
 					</div>
 				</div>
 				<div key="right">
 					<button key="toPreviewButton" type="button" classes={[css.btn]} onclick={() => {}}>
 						<FontAwesomeIcon icon={["far", "caret-square-right"]} />
-						<span classes={[c.ml_1]}>预览</span>
+						<span classes={[c.ms_1]}>预览</span>
 					</button>
-					<span classes={[c.ml_2]}>
+					<span classes={[c.ms_2]}>
 						<Link to={""} params={{ user: "jack" }}>
-							<img src="url" classes={[c.mr_1, css.avatar]} />
+							<img src="url" classes={[c.me_1, css.avatar]} />
 							<span>jack</span>
 						</Link>
 					</span>
@@ -492,7 +492,7 @@ describe("Header", () => {
 		h.expectPartial("@saveButton", () => (
 			<button key="saveButton" type="button" classes={[css.btn, undefined]} disabled={false} onclick={() => {}}>
 				<FontAwesomeIcon icon={["far", "save"]} />
-				<span classes={[c.ml_1]}>保存</span>
+				<span classes={[c.ms_1]}>保存</span>
 			</button>
 		));
 	});
@@ -545,7 +545,7 @@ describe("Header", () => {
 				onclick={undefined}
 			>
 				<FontAwesomeIcon icon={["far", "save"]} />
-				<span classes={[c.ml_1]}>保存</span>
+				<span classes={[c.ms_1]}>保存</span>
 			</button>
 		));
 	});
@@ -640,7 +640,7 @@ describe("Header", () => {
 				onclick={undefined}
 			>
 				<FontAwesomeIcon icon="undo" />
-				<span classes={[c.ml_1]}>撤销</span>
+				<span classes={[c.ms_1]}>撤销</span>
 			</button>
 		));
 	});
@@ -684,7 +684,7 @@ describe("Header", () => {
 		h.expectPartial("@undoButton", () => (
 			<button key="undoButton" type="button" classes={[css.btn, undefined]} disabled={false} onclick={() => {}}>
 				<FontAwesomeIcon icon="undo" />
-				<span classes={[c.ml_1]}>撤销</span>
+				<span classes={[c.ms_1]}>撤销</span>
 			</button>
 		));
 	});
@@ -776,7 +776,7 @@ describe("Header", () => {
 				onclick={undefined}
 			>
 				<FontAwesomeIcon icon="redo" />
-				<span classes={[c.ml_1]}>恢复</span>
+				<span classes={[c.ms_1]}>恢复</span>
 			</button>
 		));
 	});
@@ -820,7 +820,7 @@ describe("Header", () => {
 		h.expectPartial("@redoButton", () => (
 			<button key="redoButton" type="button" classes={[css.btn, undefined]} disabled={false} onclick={() => {}}>
 				<FontAwesomeIcon icon="redo" />
-				<span classes={[c.ml_1]}>恢复</span>
+				<span classes={[c.ms_1]}>恢复</span>
 			</button>
 		));
 	});

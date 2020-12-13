@@ -13,10 +13,9 @@ import {
 	moveUpActiveDataItemProcess,
 	moveDownActiveDataItemProcess,
 } from "../../../processes/pageDataProcesses";
-import * as $ from "jquery";
 import { getChildrenIndex, getPreviousIndex, getNextIndex } from "@blocklang/designer-core/utils/treeUtil";
 
-import "bootstrap";
+import Dropdown from "bootstrap/js/dist/dropdown";
 import * as c from "@blocklang/bootstrap-classes";
 import * as css from "./Data.m.css";
 import { addVariableGetNodeProcess, addVariableSetNodeProcess } from "../../../processes/pageFunctionProcesses";
@@ -52,7 +51,7 @@ function _renderVariableName(
 	executor: any
 ): VNode {
 	if (parentDataItem.type === "Array") {
-		return v("span", { key: "variable", classes: [c.mr_1] }, [`${index}`]);
+		return v("span", { key: "variable", classes: [c.me_1] }, [`${index}`]);
 	}
 
 	return v("input", {
@@ -79,18 +78,19 @@ function _renderVariableName(
  * @param executor   store 执行器
  */
 function _renderDataType(dataItem: PageDataItem, index: number, executor: any): VNode {
-	return v("span", { key: "dataType", classes: [c.dropdown, c.ml_1] }, [
+	return v("span", { key: "dataType", classes: [c.dropdown, c.ms_1] }, [
 		v(
 			"button",
 			{
 				classes: [c.btn, c.btn_outline_secondary, c.btn_sm, c.dropdown_toggle],
 				type: "button",
 				key: `dataType-button`,
-				"data-toggle": "dropdown",
+				"data-bs-toggle": "dropdown",
 				"aria-haspopup": "true",
 				"aria-expanded": "false",
 				onclick: (event: MouseEvent<HTMLButtonElement>) => {
-					($(event.target) as any).dropdown();
+					const dropdown = new Dropdown(event.target);
+					dropdown.show();
 				},
 			},
 			[`${dataItem.type}`]
@@ -132,7 +132,7 @@ function _renderDefaultValue(dataItem: PageDataItem, executor: any): VNode | und
 			type: "checkbox",
 			checked: dataItem.defaultValue === "true",
 			title: "默认值",
-			classes: [c.ml_1],
+			classes: [c.ms_1],
 			onchange: (event: MouseEvent) => {
 				const target = event.target as HTMLInputElement;
 				executor(changeActiveDataItemPropertyProcess)({
@@ -149,7 +149,7 @@ function _renderDefaultValue(dataItem: PageDataItem, executor: any): VNode | und
 			value: dataItem.defaultValue,
 			placeholder: "默认值",
 			type: "text",
-			classes: [c.form_control, c.form_control_sm, c.ml_1, css.defaultValue],
+			classes: [c.form_control, c.form_control_sm, c.ms_1, css.defaultValue],
 			oninput: (event: KeyboardEvent) => {
 				const target = event.target as HTMLInputElement;
 				// TODO: 校验数据的有效性
@@ -200,7 +200,7 @@ function _renderOperators(
 			v(
 				"span",
 				{
-					classes: [c.text_muted, c.ml_1, c.mr_3, css.op, css.setter],
+					classes: [c.text_muted, c.ms_1, c.me_3, css.op, css.setter],
 					title: "在函数设计器中添加 Set 节点",
 					onclick: (event: MouseEvent) => {
 						event.stopPropagation();
@@ -238,7 +238,7 @@ function _renderOperators(
 				"span",
 				{
 					key: `op-up-${dataItem.id}`,
-					classes: [c.ml_1, c.text_muted, css.op],
+					classes: [c.ms_1, c.text_muted, css.op],
 					title: "上移",
 					onclick: (event: MouseEvent) => {
 						event.stopPropagation();
@@ -258,7 +258,7 @@ function _renderOperators(
 				"span",
 				{
 					key: `op-down-${dataItem.id}`,
-					classes: [c.ml_1, c.text_muted, css.op],
+					classes: [c.ms_1, c.text_muted, css.op],
 					title: "下移",
 					onclick: (event: MouseEvent) => {
 						event.stopPropagation();
@@ -277,7 +277,7 @@ function _renderOperators(
 			{
 				key: `op-remove-${dataItem.id}`,
 				title: "删除变量",
-				classes: [c.ml_1, c.text_muted, css.op],
+				classes: [c.ms_1, c.text_muted, css.op],
 				onclick: (event: MouseEvent) => {
 					event.stopPropagation();
 					executor(removeActiveDataItemProcess)({});
@@ -287,7 +287,7 @@ function _renderOperators(
 		)
 	);
 
-	return v("span", { classes: [c.ml_3] }, ops);
+	return v("span", { classes: [c.ms_3] }, ops);
 }
 
 function _renderDataItem(
@@ -359,7 +359,7 @@ function _renderChildren(
 			);
 			if (subChildren.length > 0) {
 				result.push(
-					v("div", { key: `${currentData.id}-${i}-children`, classes: [c.pl_4, c.border_left] }, subChildren)
+					v("div", { key: `${currentData.id}-${i}-children`, classes: [c.ps_4, c.border_start] }, subChildren)
 				);
 			}
 		}
@@ -399,7 +399,7 @@ export default factory(function Data({ properties, middleware: { store } }) {
 
 	const selectedFunctionId = get(path("selectedFunctionId"));
 
-	return v("div", { key: "root", classes: [c.ml_4] }, [
+	return v("div", { key: "root", classes: [c.ms_4] }, [
 		v(
 			"div",
 			{
@@ -429,14 +429,14 @@ export default factory(function Data({ properties, middleware: { store } }) {
 							: w(FontAwesomeIcon, { icon: "angle-right" }),
 					]
 				),
-				v("span", { classes: [c.ml_1] }, ["data（页面数据）"]),
+				v("span", { classes: [c.ms_1] }, ["data（页面数据）"]),
 				activeDataItemId === data[0].id &&
 					v(
 						"span",
 						{
 							key: `op-add-${data[0].id}`,
 							title: "加变量",
-							classes: [c.ml_3, c.text_muted, css.op],
+							classes: [c.ms_3, c.text_muted, css.op],
 							onclick: (event: MouseEvent) => {
 								event.stopPropagation();
 								if (!data[0].open) {
@@ -455,7 +455,7 @@ export default factory(function Data({ properties, middleware: { store } }) {
 				"div",
 				{
 					key: `${data[0].id}-0-children`,
-					classes: [c.pl_4, c.border_left],
+					classes: [c.ps_4, c.border_start],
 				},
 				_renderChildren(data, data[0], 1, activeDataItemId, selectedDataItemIndex, selectedFunctionId, executor)
 			),

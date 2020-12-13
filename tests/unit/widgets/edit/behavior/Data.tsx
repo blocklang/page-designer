@@ -68,13 +68,13 @@ describe("edit/behavior/data", () => {
 		mockStore((path) => [replace(path("pageModel", "data"), pageData)]);
 
 		h.expect(() => (
-			<div key="root" classes={[c.ml_4]}>
+			<div key="root" classes={[c.ms_4]}>
 				<div key="1-0" classes={[c.position_relative, c.border, c.border_primary]} onclick={() => {}}>
 					<span classes={[c.position_absolute, css.icon, c.text_muted]} onclick={() => {}}>
 						<FontAwesomeIcon icon="angle-down" />
 					</span>
-					<span classes={[c.ml_1]}>data（页面数据）</span>
-					<span key="op-add-1" title="加变量" classes={[c.ml_3, c.text_muted, css.op]} onclick={() => {}}>
+					<span classes={[c.ms_1]}>data（页面数据）</span>
+					<span key="op-add-1" title="加变量" classes={[c.ms_3, c.text_muted, css.op]} onclick={() => {}}>
 						<FontAwesomeIcon icon="plus" />
 					</span>
 				</div>
@@ -106,7 +106,7 @@ describe("edit/behavior/data", () => {
 		mockStore((path) => [replace(path("pageModel", "data"), pageData)]);
 
 		h.expectPartial("@1-0-children", () => (
-			<div key="1-0-children" classes={[c.pl_4, c.border_left]}>
+			<div key="1-0-children" classes={[c.ps_4, c.border_left]}>
 				{
 					// index 不是全页面的，而是当前兄弟节点内排序
 				}
@@ -119,7 +119,7 @@ describe("edit/behavior/data", () => {
 						placeholder="变量名(英文字母、数字、‘_’)"
 						oninput={() => {}}
 					/>
-					<span key="dataType" classes={[c.dropdown, c.ml_1]}>
+					<span key="dataType" classes={[c.dropdown, c.ms_1]}>
 						<button
 							classes={[c.btn, c.btn_outline_secondary, c.btn_sm, c.dropdown_toggle]}
 							type="button"
@@ -157,7 +157,7 @@ describe("edit/behavior/data", () => {
 						value="a string value"
 						placeholder="默认值"
 						type="text"
-						classes={[c.form_control, c.form_control_sm, c.ml_1, css.defaultValue]}
+						classes={[c.form_control, c.form_control_sm, c.ms_1, css.defaultValue]}
 						oninput={() => {}}
 					/>
 				</div>
@@ -188,7 +188,7 @@ describe("edit/behavior/data", () => {
 		mockStore((path) => [replace(path("pageModel", "data"), pageData)]);
 
 		h.expectPartial("@1-0-children", () => (
-			<div key="1-0-children" classes={[c.pl_4, c.border_left]}>
+			<div key="1-0-children" classes={[c.ps_4, c.border_left]}>
 				{
 					// index 不是全页面的，而是当前兄弟节点内排序
 				}
@@ -201,7 +201,7 @@ describe("edit/behavior/data", () => {
 						placeholder="变量名(英文字母、数字、‘_’)"
 						oninput={() => {}}
 					/>
-					<span key="dataType" classes={[c.dropdown, c.ml_1]}>
+					<span key="dataType" classes={[c.dropdown, c.ms_1]}>
 						<button
 							classes={[c.btn, c.btn_outline_secondary, c.btn_sm, c.dropdown_toggle]}
 							type="button"
@@ -239,7 +239,7 @@ describe("edit/behavior/data", () => {
 						value="1"
 						placeholder="默认值"
 						type="text"
-						classes={[c.form_control, c.form_control_sm, c.ml_1, css.defaultValue]}
+						classes={[c.form_control, c.form_control_sm, c.ms_1, css.defaultValue]}
 						oninput={() => {}}
 					/>
 				</div>
@@ -269,7 +269,7 @@ describe("edit/behavior/data", () => {
 		mockStore((path) => [replace(path("pageModel", "data"), pageData)]);
 
 		h.expectPartial("@1-0-children", () => (
-			<div key="1-0-children" classes={[c.pl_4, c.border_left]}>
+			<div key="1-0-children" classes={[c.ps_4, c.border_left]}>
 				{
 					// index 不是全页面的，而是当前兄弟节点内排序
 				}
@@ -285,7 +285,7 @@ describe("edit/behavior/data", () => {
 						placeholder="变量名(英文字母、数字、‘_’)"
 						oninput={() => {}}
 					/>
-					<span key="dataType" classes={[c.dropdown, c.ml_1]}>
+					<span key="dataType" classes={[c.dropdown, c.ms_1]}>
 						<button
 							classes={[c.btn, c.btn_outline_secondary, c.btn_sm, c.dropdown_toggle]}
 							type="button"

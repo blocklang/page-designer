@@ -17,7 +17,7 @@ export default factory(function TitleBar({ properties }) {
 		return (
 			<div key="root">
 				<span>页面行为</span>
-				<small classes={[c.ml_2, c.text_info]}>请先选择事件</small>
+				<small classes={[c.ms_2, c.text_info]}>请先选择事件</small>
 			</div>
 		);
 	}
@@ -36,7 +36,7 @@ export default factory(function TitleBar({ properties }) {
 	return (
 		<div key="root">
 			<span>页面行为</span>
-			<small classes={[c.ml_2, c.text_muted]}>
+			<small classes={[c.ms_2, c.text_muted]}>
 				{`${parentWidgetPathes} / `}
 				<strong>{`${activeWidgetProperty.name}`}</strong>
 			</small>

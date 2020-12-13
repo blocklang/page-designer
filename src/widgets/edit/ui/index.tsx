@@ -6,6 +6,7 @@ import { Page } from "../../../interfaces";
 import MobileSimulatorContainer from "./mobile/SimulatorContainer";
 import WearableSimulatorContainer from "./wearable/SimulatorContainer";
 import { AppType, DeviceType } from "../../../constants";
+import * as c from "@blocklang/bootstrap-classes";
 
 export interface UIViewProperties {
 	page: Page;
@@ -34,7 +35,7 @@ export default factory(function UIView({ properties, middleware: { dimensions } 
 	if (appType === AppType.Mobile || appType === AppType.MiniProgram) {
 		return (
 			<MobileSimulatorContainer>
-				<div key="editContainer" classes={["h-100"]}>
+				<div key="editContainer" classes={[c.h_100]}>
 					<OperatePane top={top} />
 					<Editor />
 				</div>
@@ -45,7 +46,7 @@ export default factory(function UIView({ properties, middleware: { dimensions } 
 	if (appType === AppType.HarmonyOS) {
 		if (deviceType === DeviceType.LiteWearable) {
 			return (
-				<div key="editContainer" classes={["h-100"]}>
+				<div key="editContainer" classes={[c.h_100]}>
 					<OperatePane top={top} />
 					<WearableSimulatorContainer>
 						<Editor />

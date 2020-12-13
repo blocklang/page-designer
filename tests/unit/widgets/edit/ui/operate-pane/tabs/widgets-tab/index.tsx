@@ -34,7 +34,7 @@ describe("edit/ui/operate-pane/tabs/widgets-tab", () => {
 				<div>
 					<div classes={[c.text_muted, c.text_center]}>
 						<div classes={[c.spinner_border]} role="status">
-							<span classes={[c.sr_only]}>Loading...</span>
+							<span classes={[c.visually_hidden]}>Loading...</span>
 						</div>
 					</div>
 				</div>
@@ -89,18 +89,18 @@ describe("edit/ui/operate-pane/tabs/widgets-tab", () => {
 				</div>
 				<div>
 					<div key="1">
-						<div classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
+						<div classes={[c.ps_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
 							<FontAwesomeIcon icon="angle-down" />
-							<span classes={[c.ml_1]}>widget api repo 1</span>
+							<span classes={[c.ms_1]}>widget api repo 1</span>
 						</div>
 						<div>
 							<p classes={[c.text_muted, c.text_center]}>无部件</p>
 						</div>
 					</div>
 					<div key="2">
-						<div classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
+						<div classes={[c.ps_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
 							<FontAwesomeIcon icon="angle-down" />
-							<span classes={[c.ml_1]}>widget api repo 2</span>
+							<span classes={[c.ms_1]}>widget api repo 2</span>
 						</div>
 						<div>
 							<p classes={[c.text_muted, c.text_center]}>无部件</p>
@@ -138,9 +138,9 @@ describe("edit/ui/operate-pane/tabs/widgets-tab", () => {
 				</div>
 				<div>
 					<div key="1">
-						<div classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
+						<div classes={[c.ps_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
 							<FontAwesomeIcon icon="angle-right" />
-							<span classes={[c.ml_1]}>widget api repo 1</span>
+							<span classes={[c.ms_1]}>widget api repo 1</span>
 						</div>
 					</div>
 				</div>
@@ -162,9 +162,9 @@ describe("edit/ui/operate-pane/tabs/widgets-tab", () => {
 				</div>
 				<div>
 					<div key="1">
-						<div classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
+						<div classes={[c.ps_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
 							<FontAwesomeIcon icon="angle-down" />
-							<span classes={[c.ml_1]}>widget api repo 1</span>
+							<span classes={[c.ms_1]}>widget api repo 1</span>
 						</div>
 						<div>
 							<p classes={[c.text_muted, c.text_center]}>无部件</p>
@@ -199,9 +199,9 @@ describe("edit/ui/operate-pane/tabs/widgets-tab", () => {
 				</div>
 				<div>
 					<div key="1">
-						<div classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
+						<div classes={[c.ps_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
 							<FontAwesomeIcon icon="angle-down" />
-							<span classes={[c.ml_1]}>widget api repo 1</span>
+							<span classes={[c.ms_1]}>widget api repo 1</span>
 						</div>
 						<div>
 							<p classes={[c.text_muted, c.text_center]}>无部件</p>
@@ -254,15 +254,15 @@ describe("edit/ui/operate-pane/tabs/widgets-tab", () => {
 				</div>
 				<div>
 					<div key="1">
-						<div classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
+						<div classes={[c.ps_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
 							<FontAwesomeIcon icon="angle-down" />
-							<span classes={[c.ml_1]}>widget api repo 1</span>
+							<span classes={[c.ms_1]}>widget api repo 1</span>
 						</div>
 						<div>
 							<div key="category 1">
-								<div classes={[c.pl_1, c.text_muted, css.categoryNameBar]} onclick={() => {}}>
+								<div classes={[c.ps_1, c.text_muted, css.categoryNameBar]} onclick={() => {}}>
 									<FontAwesomeIcon icon="angle-down" />
-									<span classes={[c.ml_1]}>category 1</span>
+									<span classes={[c.ms_1]}>category 1</span>
 								</div>
 								<div>
 									<ul classes={[css.widgetGroup]}>
@@ -326,15 +326,15 @@ describe("edit/ui/operate-pane/tabs/widgets-tab", () => {
 				</div>
 				<div>
 					<div key="1">
-						<div classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
+						<div classes={[c.ps_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
 							<FontAwesomeIcon icon="angle-down" />
-							<span classes={[c.ml_1]}>widget api repo 1</span>
+							<span classes={[c.ms_1]}>widget api repo 1</span>
 						</div>
 						<div>
 							<div key="category 1">
-								<div classes={[c.pl_1, c.text_muted, css.categoryNameBar]} onclick={() => {}}>
+								<div classes={[c.ps_1, c.text_muted, css.categoryNameBar]} onclick={() => {}}>
 									<FontAwesomeIcon icon="angle-right" />
-									<span classes={[c.ml_1]}>category 1</span>
+									<span classes={[c.ms_1]}>category 1</span>
 								</div>
 							</div>
 						</div>
@@ -359,15 +359,15 @@ describe("edit/ui/operate-pane/tabs/widgets-tab", () => {
 				</div>
 				<div>
 					<div key="1">
-						<div classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
+						<div classes={[c.ps_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
 							<FontAwesomeIcon icon="angle-down" />
-							<span classes={[c.ml_1]}>widget api repo 1</span>
+							<span classes={[c.ms_1]}>widget api repo 1</span>
 						</div>
 						<div>
 							<div key="category 1">
-								<div classes={[c.pl_1, c.text_muted, css.categoryNameBar]} onclick={() => {}}>
+								<div classes={[c.ps_1, c.text_muted, css.categoryNameBar]} onclick={() => {}}>
 									<FontAwesomeIcon icon="angle-down" />
-									<span classes={[c.ml_1]}>category 1</span>
+									<span classes={[c.ms_1]}>category 1</span>
 								</div>
 								<div>
 									<ul classes={[css.widgetGroup]}>
@@ -429,15 +429,15 @@ describe("edit/ui/operate-pane/tabs/widgets-tab", () => {
 				</div>
 				<div>
 					<div key="1">
-						<div classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
+						<div classes={[c.ps_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
 							<FontAwesomeIcon icon="angle-down" />
-							<span classes={[c.ml_1]}>widget api repo 1</span>
+							<span classes={[c.ms_1]}>widget api repo 1</span>
 						</div>
 						<div>
 							<div key="_">
-								<div classes={[c.pl_1, c.text_muted, css.categoryNameBar]} onclick={() => {}}>
+								<div classes={[c.ps_1, c.text_muted, css.categoryNameBar]} onclick={() => {}}>
 									<FontAwesomeIcon icon="angle-down" />
-									<span classes={[c.ml_1]}>未分类</span>
+									<span classes={[c.ms_1]}>未分类</span>
 								</div>
 								<div>
 									<ul classes={[css.widgetGroup]}>
@@ -501,9 +501,9 @@ describe("edit/ui/operate-pane/tabs/widgets-tab", () => {
 				</div>
 				<div>
 					<div key="1">
-						<div classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
+						<div classes={[c.ps_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
 							<FontAwesomeIcon icon="angle-down" />
-							<span classes={[c.ml_1]}>widget api repo 1</span>
+							<span classes={[c.ms_1]}>widget api repo 1</span>
 						</div>
 						<div>
 							<p classes={[c.text_muted, c.text_center]}>无部件</p>
@@ -528,15 +528,15 @@ describe("edit/ui/operate-pane/tabs/widgets-tab", () => {
 				</div>
 				<div>
 					<div key="1">
-						<div classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
+						<div classes={[c.ps_1, c.py_1, c.text_muted, css.repoNameBar]} onclick={() => {}}>
 							<FontAwesomeIcon icon="angle-down" />
-							<span classes={[c.ml_1]}>widget api repo 1</span>
+							<span classes={[c.ms_1]}>widget api repo 1</span>
 						</div>
 						<div>
 							<div key="_">
-								<div classes={[c.pl_1, c.text_muted, css.categoryNameBar]} onclick={() => {}}>
+								<div classes={[c.ps_1, c.text_muted, css.categoryNameBar]} onclick={() => {}}>
 									<FontAwesomeIcon icon="angle-down" />
-									<span classes={[c.ml_1]}>未分类</span>
+									<span classes={[c.ms_1]}>未分类</span>
 								</div>
 								<div>
 									<ul classes={[css.widgetGroup]}>

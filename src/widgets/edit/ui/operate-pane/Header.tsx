@@ -22,7 +22,7 @@ export default factory(function Header({ middleware: { store } }) {
 
 	return (
 		<div classes={[css.root]}>
-			<FontAwesomeIcon icon="arrows-alt" classes={[c.text_muted, c.ml_1]} />
+			<FontAwesomeIcon icon="arrows-alt" classes={[c.text_muted, c.ms_1]} />
 			<nav classes={[c.d_inline_block]}>
 				<ol classes={[c.breadcrumb, css.focusWidgetPath]}>
 					{nodePath.map((item, index) => {

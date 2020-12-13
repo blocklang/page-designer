@@ -94,7 +94,7 @@ export default factory(function WidgetsTab({ middleware: { store, icache, cache 
 							return (
 								<div key={`${repo.apiRepoId}`}>
 									<div
-										classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]}
+										classes={[c.ps_1, c.py_1, c.text_muted, css.repoNameBar]}
 										onclick={(): void => {
 											icache.set<boolean>(`fold-repo-${repo.apiRepoId}`, !apiRepoFold);
 										}}
@@ -104,7 +104,7 @@ export default factory(function WidgetsTab({ middleware: { store, icache, cache 
 										) : (
 											<FontAwesomeIcon icon="angle-down" />
 										)}
-										<span classes={[c.ml_1]}>{repo.apiRepoName}</span>
+										<span classes={[c.ms_1]}>{repo.apiRepoName}</span>
 									</div>
 									{!apiRepoFold && (
 										<div>
@@ -119,7 +119,7 @@ export default factory(function WidgetsTab({ middleware: { store, icache, cache 
 													return (
 														<div key={category.name}>
 															<div
-																classes={[c.pl_1, c.text_muted, css.categoryNameBar]}
+																classes={[c.ps_1, c.text_muted, css.categoryNameBar]}
 																onclick={(): void => {
 																	icache.set<boolean>(
 																		`fold-category-${repo.apiRepoId}-${category.name}`,
@@ -132,7 +132,7 @@ export default factory(function WidgetsTab({ middleware: { store, icache, cache 
 																) : (
 																	<FontAwesomeIcon icon="angle-down" />
 																)}
-																<span classes={[c.ml_1]}>
+																<span classes={[c.ms_1]}>
 																	{category.name === "_" ? "未分类" : category.name}
 																</span>
 															</div>
@@ -177,7 +177,7 @@ export default factory(function WidgetsTab({ middleware: { store, icache, cache 
 				) : (
 					<div classes={[c.text_muted, c.text_center]}>
 						<div classes={[c.spinner_border]} role="status">
-							<span classes={[c.sr_only]}>Loading...</span>
+							<span classes={[c.visually_hidden]}>Loading...</span>
 						</div>
 					</div>
 				)}

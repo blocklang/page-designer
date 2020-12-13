@@ -201,7 +201,7 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 		return (
 			<div classes={[c.text_muted, c.text_center, c.mt_5]}>
 				<div classes={[c.spinner_border]} role="status">
-					<span classes={[c.sr_only]}>Loading...</span>
+					<span classes={[c.visually_hidden]}>Loading...</span>
 				</div>
 			</div>
 		);
@@ -231,7 +231,7 @@ export default factory(function PageDesigner({ properties, middleware: { icache,
 			return (
 				<div classes={[c.text_muted, c.text_center, c.mt_5]}>
 					<div classes={[c.spinner_border]} role="status">
-						<span classes={[c.sr_only]}>Loading...</span>
+						<span classes={[c.visually_hidden]}>Loading...</span>
 					</div>
 				</div>
 			);

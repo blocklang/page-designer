@@ -8,8 +8,8 @@ const factory = create().properties();
 export default factory(function Header() {
 	return (
 		<div classes={[css.root]}>
-			<FontAwesomeIcon icon="arrows-alt" classes={[c.text_muted, c.ml_1]} />
-			<span classes={[c.text_muted, c.ml_2]}></span>
+			<FontAwesomeIcon icon="arrows-alt" classes={[c.text_muted, c.ms_1]} />
+			<span classes={[c.text_muted, c.ms_2]}></span>
 		</div>
 	);
 });

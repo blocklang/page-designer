@@ -35,7 +35,7 @@ describe("widgets/preview", () => {
 			<div>
 				<div classes={[c.d_flex, c.justify_content_center, css.loadingPage]}>
 					<div classes={[c.spinner_border, c.text_muted]} role="status" title="加载中……">
-						<span classes={[c.sr_only]}>Loading...</span>
+						<span classes={[c.visually_hidden]}>Loading...</span>
 					</div>
 				</div>
 			</div>
@@ -148,7 +148,7 @@ describe("widgets/preview", () => {
 				<div classes={[c.alert, c.alert_info, c.mx_auto, c.text_center, c.py_5, css.emptyPage]} role="alert">
 					<p classes={[c.mb_0]}>我是一张空页面，您看看需加点什么。</p>
 					<button classes={[c.btn, c.btn_outline_primary, c.mt_3]} onclick={() => {}}>
-						<FontAwesomeIcon icon={["far", "edit"]} classes={[c.mr_1]} />
+						<FontAwesomeIcon icon={["far", "edit"]} classes={[c.me_1]} />
 						开始编辑
 					</button>
 				</div>

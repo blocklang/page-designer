@@ -259,9 +259,9 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 				...node.outputDataPorts.map((item) =>
 					v("div", { classes: [c.d_flex, c.justify_content_between] }, [
 						renderBlankPort(),
-						v("div", { classes: [c.pl_1] }, [
+						v("div", { classes: [c.ps_1] }, [
 							v("span", {}, [item.name]),
-							v("small", { classes: [c.ml_1, c.font_italic] }, [item.type]),
+							v("small", { classes: [c.ms_1, c.fst_italic] }, [item.type]),
 							v(
 								"span",
 								{
@@ -484,7 +484,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 					v(
 						"span",
 						{
-							classes: [c.float_right, c.text_white, c.ml_2, css.close],
+							classes: [c.float_end, c.text_white, c.ms_2, css.close],
 							onclick: () => {
 								executor(removeFunctionNodeProcess)({ functionNodeId: node.id });
 							},
@@ -535,8 +535,8 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 									]),
 									v("div", { key: "right" }, [
 										v("div", {}, [
-											v("small", { classes: [c.font_italic] }, [item.type]),
-											v("span", { classes: [c.ml_1] }, [item.name]),
+											v("small", { classes: [c.fst_italic] }, [item.type]),
+											v("span", { classes: [c.ms_1] }, [item.name]),
 										]),
 										v("input", {
 											key: "input",
@@ -551,7 +551,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 											},
 										}),
 									]),
-							])
+							  ])
 							: v("div", {}, [
 									v(
 										"span",
@@ -575,18 +575,18 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 										},
 										[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
 									),
-									v("small", { classes: [c.font_italic] }, [item.type]),
-									v("span", { classes: [c.ml_1] }, [item.name]),
-							]),
+									v("small", { classes: [c.fst_italic] }, [item.type]),
+									v("span", { classes: [c.ms_1] }, [item.name]),
+							  ]),
 						renderBlankPort(),
 					])
 				),
 				...node.outputDataPorts.map((item) =>
 					v("div", { classes: [c.d_flex, c.justify_content_between] }, [
 						renderBlankPort(),
-						v("div", { classes: [c.pl_1] }, [
+						v("div", { classes: [c.ps_1] }, [
 							v("span", {}, [item.name]),
-							v("small", { classes: [c.ml_1, c.font_italic] }, [item.type]),
+							v("small", { classes: [c.ms_1, c.fst_italic] }, [item.type]),
 							v(
 								"span",
 								{
@@ -644,7 +644,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 					(connection) => connection.toNode === node.id && connection.toInput === idp.id
 				) > -1;
 			if (connected) {
-				return v("div", { classes: [c.mr_2] }, [
+				return v("div", { classes: [c.me_2] }, [
 					v(
 						"span",
 						{
@@ -667,12 +667,12 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 						},
 						[w(FontAwesomeIcon, { icon: "circle", size: "xs" })]
 					),
-					v("small", { classes: [c.font_italic] }, [idp.type]),
-					v("span", { classes: [c.ml_1] }, [idp.name]),
+					v("small", { classes: [c.fst_italic] }, [idp.type]),
+					v("span", { classes: [c.ms_1] }, [idp.name]),
 				]);
 			}
 
-			return v("div", { classes: [c.d_flex, c.justify_content_start, c.mr_2] }, [
+			return v("div", { classes: [c.d_flex, c.justify_content_start, c.me_2] }, [
 				v("div", { key: "left", classes: [c.d_flex, c.align_items_center] }, [
 					v(
 						"span",
@@ -699,8 +699,8 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 				]),
 				v("div", { key: "right" }, [
 					v("div", {}, [
-						v("small", { classes: [c.font_italic] }, [idp.type]),
-						v("span", { classes: [c.ml_1] }, [idp.name]),
+						v("small", { classes: [c.fst_italic] }, [idp.type]),
+						v("span", { classes: [c.ms_1] }, [idp.name]),
 					]),
 					v("input", {
 						key: "input",
@@ -790,9 +790,9 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 		}
 
 		function renderOutputDataPort(op: DataPort): DNode<any> {
-			return v("div", { classes: [c.pl_1] }, [
+			return v("div", { classes: [c.ps_1] }, [
 				v("span", {}, [op.name]),
-				v("small", { classes: [c.ml_1, c.font_italic] }, [op.type]),
+				v("small", { classes: [c.ms_1, c.fst_italic] }, [op.type]),
 				v(
 					"span",
 					{
@@ -878,7 +878,7 @@ export default factory(function Editor({ properties, middleware: { store, drag, 
 					v(
 						"span",
 						{
-							classes: [c.float_right, c.text_white, c.ml_2, css.close],
+							classes: [c.float_end, c.text_white, c.ms_2, css.close],
 							onclick: () => {
 								executor(removeFunctionNodeProcess)({ functionNodeId: node.id });
 							},

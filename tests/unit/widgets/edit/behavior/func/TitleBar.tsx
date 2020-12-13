@@ -10,7 +10,7 @@ describe("widgets/edit/behavior/func/TitleBar", () => {
 	const baseAssertion = assertionTemplate(() => (
 		<div key="root">
 			<span>页面行为</span>
-			<small classes={[c.ml_2, c.text_info]}>请先选择事件</small>
+			<small classes={[c.ms_2, c.text_info]}>请先选择事件</small>
 		</div>
 	));
 

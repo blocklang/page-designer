@@ -14,7 +14,7 @@ export default factory(function BehaviorView({ middleware: { store } }) {
 		return (
 			<div key="root">
 				<div key="loading" classes={[c.spinner_border, c.text_secondary, c.text_center, c.mt_5]} role="status">
-					<span classes={[c.sr_only]}>Loading...</span>
+					<span classes={[c.visually_hidden]}>Loading...</span>
 				</div>
 			</div>
 		);

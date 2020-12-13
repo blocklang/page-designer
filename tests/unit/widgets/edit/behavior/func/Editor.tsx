@@ -136,9 +136,9 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						<div classes={[c.px_1]}>
 							<span classes={[css.blankPort]}></span>
 						</div>
-						<div classes={[c.pl_1]}>
+						<div classes={[c.ps_1]}>
 							<span>value</span>
-							<small classes={[c.ml_1, c.font_italic]}>string</small>
+							<small classes={[c.ms_1, c.fst_italic]}>string</small>
 							<span
 								key="odp1"
 								classes={[c.px_1, css.dataPointIcon]}
@@ -222,9 +222,9 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						<div classes={[c.px_1]}>
 							<span classes={[css.blankPort]}></span>
 						</div>
-						<div classes={[c.pl_1]}>
+						<div classes={[c.ps_1]}>
 							<span>value</span>
-							<small classes={[c.ml_1, c.font_italic]}>string</small>
+							<small classes={[c.ms_1, c.fst_italic]}>string</small>
 							<span
 								key="odp1"
 								classes={[c.px_1, css.dataPointIcon]}
@@ -240,9 +240,9 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						<div classes={[c.px_1]}>
 							<span classes={[css.blankPort]}></span>
 						</div>
-						<div classes={[c.pl_1]}>
+						<div classes={[c.ps_1]}>
 							<span>value2</span>
-							<small classes={[c.ml_1, c.font_italic]}>string</small>
+							<small classes={[c.ms_1, c.fst_italic]}>string</small>
 							<span
 								key="odp2"
 								classes={[c.px_1, css.dataPointIcon]}
@@ -312,7 +312,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Set a
 						<span
-							classes={[c.float_right, c.text_white, c.ml_2, css.close]}
+							classes={[c.float_end, c.text_white, c.ms_2, css.close]}
 							onclick={() => {}}
 							onpointerdown={() => {}}
 						>
@@ -355,8 +355,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							</div>
 							<div key="right">
 								<div>
-									<small classes={[c.font_italic]}>string</small>
-									<span classes={[c.ml_1]}>set</span>
+									<small classes={[c.fst_italic]}>string</small>
+									<span classes={[c.ms_1]}>set</span>
 								</div>
 								<input key="input" value={undefined} classes={[css.inputValue]} oninput={() => {}} />
 							</div>
@@ -464,7 +464,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Get a
 						<span
-							classes={[c.float_right, c.text_white, c.ml_2, css.close]}
+							classes={[c.float_end, c.text_white, c.ms_2, css.close]}
 							onclick={() => {}}
 							onpointerdown={() => {}}
 						>
@@ -475,9 +475,9 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						<div classes={[c.px_1]}>
 							<span classes={[css.blankPort]}></span>
 						</div>
-						<div classes={[c.pl_1]}>
+						<div classes={[c.ps_1]}>
 							<span>value</span>
-							<small classes={[c.ml_1, c.font_italic]}>string</small>
+							<small classes={[c.ms_1, c.fst_italic]}>string</small>
 							<span
 								key="odp1"
 								classes={[c.px_1, css.dataPointIcon]}
@@ -563,7 +563,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					<div key="12-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Set a
 						<span
-							classes={[c.float_right, c.text_white, c.ml_2, css.close]}
+							classes={[c.float_end, c.text_white, c.ms_2, css.close]}
 							onclick={() => {}}
 							onpointerdown={() => {}}
 						>
@@ -676,7 +676,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Get a
 						<span
-							classes={[c.float_right, c.text_white, c.ml_2, css.close]}
+							classes={[c.float_end, c.text_white, c.ms_2, css.close]}
 							onclick={() => {}}
 							onpointerdown={() => {}}
 						>
@@ -687,9 +687,9 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						<div classes={[c.px_1]}>
 							<span classes={[css.blankPort]}></span>
 						</div>
-						<div classes={[c.pl_1]}>
+						<div classes={[c.ps_1]}>
 							<span>value</span>
-							<small classes={[c.ml_1, c.font_italic]}>string</small>
+							<small classes={[c.ms_1, c.fst_italic]}>string</small>
 							<span
 								key="odp1"
 								classes={[c.px_1, css.dataPointIcon]}
@@ -711,7 +711,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					<div key="21-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Set a
 						<span
-							classes={[c.float_right, c.text_white, c.ml_2, css.close]}
+							classes={[c.float_end, c.text_white, c.ms_2, css.close]}
 							onclick={() => {}}
 							onpointerdown={() => {}}
 						>
@@ -750,8 +750,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							>
 								<FontAwesomeIcon icon="circle" size="xs" />
 							</span>
-							<small classes={[c.font_italic]}>string</small>
-							<span classes={[c.ml_1]}>set</span>
+							<small classes={[c.fst_italic]}>string</small>
+							<span classes={[c.ms_1]}>set</span>
 						</div>
 						<div classes={[c.px_1]}>
 							<span classes={[css.blankPort]}></span>
@@ -1045,7 +1045,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Set a
 						<span
-							classes={[c.float_right, c.text_white, c.ml_2, css.close]}
+							classes={[c.float_end, c.text_white, c.ms_2, css.close]}
 							onclick={() => {}}
 							onpointerdown={() => {}}
 						>
@@ -1141,7 +1141,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Set a
 						<span
-							classes={[c.float_right, c.text_white, c.ml_2, css.close]}
+							classes={[c.float_end, c.text_white, c.ms_2, css.close]}
 							onclick={() => {}}
 							onpointerdown={() => {}}
 						>
@@ -1241,9 +1241,9 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						<div classes={[c.px_1]}>
 							<span classes={[css.blankPort]}></span>
 						</div>
-						<div classes={[c.pl_1]}>
+						<div classes={[c.ps_1]}>
 							<span>value</span>
-							<small classes={[c.ml_1, c.font_italic]}>string</small>
+							<small classes={[c.ms_1, c.fst_italic]}>string</small>
 							<span
 								key="odp1"
 								classes={[c.px_1, css.dataPointIcon]}
@@ -1323,7 +1323,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Get a
 						<span
-							classes={[c.float_right, c.text_white, c.ml_2, css.close]}
+							classes={[c.float_end, c.text_white, c.ms_2, css.close]}
 							onclick={() => {}}
 							onpointerdown={() => {}}
 						>
@@ -1334,9 +1334,9 @@ describe("widgets/edit/behavior/func/Editor", () => {
 						<div classes={[c.px_1]}>
 							<span classes={[css.blankPort]}></span>
 						</div>
-						<div classes={[c.pl_1]}>
+						<div classes={[c.ps_1]}>
 							<span>value</span>
-							<small classes={[c.ml_1, c.font_italic]}>string</small>
+							<small classes={[c.ms_1, c.fst_italic]}>string</small>
 							<span
 								key="odp1"
 								classes={[c.px_1, css.dataPointIcon]}
@@ -1416,7 +1416,7 @@ describe("widgets/edit/behavior/func/Editor", () => {
 					<div key="11-caption" classes={[c.bg_secondary, c.px_1, css.caption]}>
 						Set a
 						<span
-							classes={[c.float_right, c.text_white, c.ml_2, css.close]}
+							classes={[c.float_end, c.text_white, c.ms_2, css.close]}
 							onclick={() => {}}
 							onpointerdown={() => {}}
 						>
@@ -1459,8 +1459,8 @@ describe("widgets/edit/behavior/func/Editor", () => {
 							</div>
 							<div key="right">
 								<div>
-									<small classes={[c.font_italic]}>string</small>
-									<span classes={[c.ml_1]}>set</span>
+									<small classes={[c.fst_italic]}>string</small>
+									<span classes={[c.ms_1]}>set</span>
 								</div>
 								<input key="input" value={undefined} classes={[css.inputValue]} oninput={() => {}} />
 							</div>

@@ -24,18 +24,18 @@ export default factory(function Api({ middleware: { store, icache } }) {
 
 	function getHttpMethodBadgeColor(httpMethod: HttpMethod): string {
 		if (httpMethod === "GET") {
-			return c.badge_primary;
+			return c.bg_primary;
 		}
 		if (httpMethod === "POST") {
-			return c.badge_success;
+			return c.bg_success;
 		}
 		if (httpMethod === "PUT") {
-			return `${c.badge_warning} ${c.text_white}`;
+			return `${c.bg_warning} ${c.text_white}`;
 		}
 		if (httpMethod === "DELETE") {
-			return c.badge_danger;
+			return c.bg_danger;
 		}
-		return c.badge_secondary;
+		return c.bg_secondary;
 	}
 
 	return (
@@ -47,7 +47,7 @@ export default factory(function Api({ middleware: { store, icache } }) {
 				{!repoServices && (
 					<div classes={[c.text_muted, c.text_center]}>
 						<div classes={[c.spinner_border]} role="status">
-							<span classes={[c.sr_only]}>Loading...</span>
+							<span classes={[c.visually_hidden]}>Loading...</span>
 						</div>
 					</div>
 				)}
@@ -69,7 +69,7 @@ export default factory(function Api({ middleware: { store, icache } }) {
 						return (
 							<div key={repo.apiRepoId} classes={[c.pb_2]}>
 								<div
-									classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]}
+									classes={[c.ps_1, c.py_1, c.text_muted, css.repoNameBar]}
 									onclick={(): void => {
 										icache.set<boolean>(`fold-repo-${repo.apiRepoId}`, !apiRepoFold);
 									}}
@@ -79,7 +79,7 @@ export default factory(function Api({ middleware: { store, icache } }) {
 									) : (
 										<FontAwesomeIcon icon="angle-down" />
 									)}
-									<span classes={[c.ml_1]}>{repo.apiRepoName}</span>
+									<span classes={[c.ms_1]}>{repo.apiRepoName}</span>
 								</div>
 								{!apiRepoFold && (
 									<div>
@@ -94,7 +94,7 @@ export default factory(function Api({ middleware: { store, icache } }) {
 												return (
 													<div key={group.name}>
 														<div
-															classes={[c.pl_1, c.text_muted, css.groupNameBar]}
+															classes={[c.ps_1, c.text_muted, css.groupNameBar]}
 															onclick={(): void => {
 																icache.set<boolean>(
 																	`fold-group-${repo.apiRepoId}-${group.name}`,
@@ -107,7 +107,7 @@ export default factory(function Api({ middleware: { store, icache } }) {
 															) : (
 																<FontAwesomeIcon icon="angle-down" />
 															)}
-															<span classes={[c.ml_1]}>
+															<span classes={[c.ms_1]}>
 																{group.name === "_" ? "未分组" : group.name}
 															</span>
 														</div>
@@ -139,10 +139,10 @@ export default factory(function Api({ middleware: { store, icache } }) {
 																				>
 																					{op.httpMethod}
 																				</span>
-																				<span classes={[c.ml_1]}>
+																				<span classes={[c.ms_1]}>
 																					{pathItem.name}
 																				</span>
-																				<small classes={[c.text_muted, c.ml_1]}>
+																				<small classes={[c.text_muted, c.ms_1]}>
 																					{op.description}
 																				</small>
 																			</div>

@@ -84,7 +84,7 @@ export default factory(function Header({ properties, middleware: { store, invali
 	const leftBlock = (
 		<div key="left">
 			{gotoGroupNodes}
-			<span classes={[c.ml_1]}>{path}</span>
+			<span classes={[c.ms_1]}>{path}</span>
 		</div>
 	);
 
@@ -132,7 +132,7 @@ export default factory(function Header({ properties, middleware: { store, invali
 				<div classes={[c.btn_group, c.btn_group_sm]} role="group" aria-label="视图">
 					{switchViewActionButtons}
 				</div>
-				<div classes={[c.ml_2]}>
+				<div classes={[c.ms_2]}>
 					<button
 						key="saveButton"
 						type="button"
@@ -142,12 +142,12 @@ export default factory(function Header({ properties, middleware: { store, invali
 							canSave
 								? (): void => {
 										store.executor(savePageModelProcess)({});
-								}
+								  }
 								: undefined
 						}
 					>
 						<FontAwesomeIcon icon={["far", "save"]} />
-						<span classes={[c.ml_1]}>保存</span>
+						<span classes={[c.ms_1]}>保存</span>
 					</button>
 					<button
 						key="undoButton"
@@ -161,12 +161,12 @@ export default factory(function Header({ properties, middleware: { store, invali
 										// 注意，必须要在部件中失效，才会每次都刷新 Header
 										// 只使用 store 的 middleware 中使用 store.invalidate()，在一些情况下不刷页面
 										invalidator();
-								}
+								  }
 								: undefined
 						}
 					>
 						<FontAwesomeIcon icon="undo" />
-						<span classes={[c.ml_1]}>撤销</span>
+						<span classes={[c.ms_1]}>撤销</span>
 					</button>
 					<button
 						key="redoButton"
@@ -180,12 +180,12 @@ export default factory(function Header({ properties, middleware: { store, invali
 										// 注意，必须要在部件中失效，才会每次都刷新 Header
 										// 只使用 store 的 middleware 中使用 store.invalidate()，在一些情况下不刷页面
 										invalidator();
-								}
+								  }
 								: undefined
 						}
 					>
 						<FontAwesomeIcon icon="redo" />
-						<span classes={[c.ml_1]}>恢复</span>
+						<span classes={[c.ms_1]}>恢复</span>
 					</button>
 				</div>
 			</div>
@@ -193,9 +193,9 @@ export default factory(function Header({ properties, middleware: { store, invali
 	}
 
 	const userBlock = user && (
-		<span classes={[c.ml_2]}>
+		<span classes={[c.ms_2]}>
 			<Link to={config.routeProfile} params={{ user: user.name }}>
-				<img src={user.avatar} classes={[c.mr_1, css.avatar]} />
+				<img src={user.avatar} classes={[c.me_1, css.avatar]} />
 				<span>{user.name}</span>
 			</Link>
 		</span>
@@ -207,7 +207,7 @@ export default factory(function Header({ properties, middleware: { store, invali
 			switchEditModeBlock = (
 				<button type="button" classes={[css.btn]} key="toEditButton" onclick={(): void => onSwitchEditMode()}>
 					<FontAwesomeIcon icon={["far", "edit"]} />
-					<span classes={[c.ml_1]}>编辑</span>
+					<span classes={[c.ms_1]}>编辑</span>
 				</button>
 			);
 		} else {
@@ -219,7 +219,7 @@ export default factory(function Header({ properties, middleware: { store, invali
 					onclick={(): void => onSwitchEditMode()}
 				>
 					<FontAwesomeIcon icon={["far", "caret-square-right"]} />
-					<span classes={[c.ml_1]}>预览</span>
+					<span classes={[c.ms_1]}>预览</span>
 				</button>
 			);
 		}
@@ -263,6 +263,6 @@ export default factory(function Header({ properties, middleware: { store, invali
 		<Link title={"到上级目录"} params={{ owner: "tom", project: "project" }} to={""}>
 			<FontAwesomeIcon icon={["far", "arrow-alt-circle-left"]} />
 		</Link>
-		<span classes={[c.ml_1]}>page1</span>
+		<span classes={[c.ms_1]}>page1</span>
 	</div>
 </div>;

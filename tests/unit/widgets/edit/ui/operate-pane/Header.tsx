@@ -41,7 +41,7 @@ describe("edit/ui/operate-pane/Header", () => {
 		const h = harness(() => <Header />, { middleware: [[store, mockStore]] });
 		h.expect(() => (
 			<div classes={[css.root]}>
-				<FontAwesomeIcon icon="arrows-alt" classes={[c.text_muted, c.ml_1]} />
+				<FontAwesomeIcon icon="arrows-alt" classes={[c.text_muted, c.ms_1]} />
 				<nav classes={[c.d_inline_block]}>
 					<ol classes={[c.breadcrumb, css.focusWidgetPath]}>
 						<li key="fwp-1" classes={[c.breadcrumb_item, css.breadcrumbItem, c.active]}>
@@ -83,7 +83,7 @@ describe("edit/ui/operate-pane/Header", () => {
 		const h = harness(() => <Header />, { middleware: [[store, mockStore]] });
 		h.expect(() => (
 			<div classes={[css.root]}>
-				<FontAwesomeIcon icon="arrows-alt" classes={[c.text_muted, c.ml_1]} />
+				<FontAwesomeIcon icon="arrows-alt" classes={[c.text_muted, c.ms_1]} />
 				<nav classes={[c.d_inline_block]}>
 					<ol classes={[c.breadcrumb, css.focusWidgetPath]}>
 						<li key="fwp-1" classes={[c.breadcrumb_item, css.breadcrumbItem]}>

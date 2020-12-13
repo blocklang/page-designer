@@ -31,7 +31,7 @@ export default factory(function Preview({ properties, middleware: { store } }) {
 		return v("div", [
 			v("div", { classes: [c.d_flex, c.justify_content_center, css.loadingPage] }, [
 				v("div", { classes: [c.spinner_border, c.text_muted], role: "status", title: "加载中……" }, [
-					v("span", { classes: [c.sr_only] }, ["Loading..."]),
+					v("span", { classes: [c.visually_hidden] }, ["Loading..."]),
 				]),
 			]),
 		]);
@@ -82,7 +82,7 @@ export default factory(function Preview({ properties, middleware: { store } }) {
 							v(
 								"button",
 								{ classes: [c.btn, c.btn_outline_primary, c.mt_3], onclick: () => onSwitchEditMode() },
-								[w(FontAwesomeIcon, { icon: ["far", "edit"], classes: [c.mr_1] }), "开始编辑"]
+								[w(FontAwesomeIcon, { icon: ["far", "edit"], classes: [c.me_1] }), "开始编辑"]
 							),
 					]
 				),

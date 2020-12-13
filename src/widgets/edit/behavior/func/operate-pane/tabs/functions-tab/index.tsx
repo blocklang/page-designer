@@ -30,7 +30,7 @@ export default factory(function Func({ middleware: { store, icache } }) {
 				{!repoFunctions && (
 					<div classes={[c.text_muted, c.text_center]}>
 						<div classes={[c.spinner_border]} role="status">
-							<span classes={[c.sr_only]}>Loading...</span>
+							<span classes={[c.visually_hidden]}>Loading...</span>
 						</div>
 					</div>
 				)}
@@ -50,7 +50,7 @@ export default factory(function Func({ middleware: { store, icache } }) {
 						return (
 							<div key={repo.apiRepoId} classes={[c.pb_2]}>
 								<div
-									classes={[c.pl_1, c.py_1, c.text_muted, css.repoNameBar]}
+									classes={[c.ps_1, c.py_1, c.text_muted, css.repoNameBar]}
 									onclick={(): void => {
 										icache.set<boolean>(`fold-repo-${repo.apiRepoId}`, !apiRepoFold);
 									}}
@@ -60,7 +60,7 @@ export default factory(function Func({ middleware: { store, icache } }) {
 									) : (
 										<FontAwesomeIcon icon="angle-down" />
 									)}
-									<span classes={[c.ml_1]}>{repo.apiRepoName}</span>
+									<span classes={[c.ms_1]}>{repo.apiRepoName}</span>
 								</div>
 								{!apiRepoFold && (
 									<div classes={[c.mx_1]}>

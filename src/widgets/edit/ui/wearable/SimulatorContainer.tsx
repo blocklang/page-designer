@@ -13,7 +13,7 @@ export default factory(function WearableContainer({ children, middleware: { icac
 			<div classes={[c.mx_auto, c.mt_4, c.bg_white]} styles={{ width: "530px" }}>
 				<div classes={[c.text_center]}>Lite Wearable</div>
 				<div styles={{ width: "530px", height: "626px" }} classes={[css.simulatorBox]}>
-					<img src={wearableImg} classes={[c.position_absolute]} styles={{ pointerEvents: "none" }} />
+					<img src={wearableImg} classes={[c.position_absolute, c.pe_none]} />
 					<div styles={{ width: "454px", height: "454px", borderRadius: "50%" }}>{children()}</div>
 				</div>
 			</div>

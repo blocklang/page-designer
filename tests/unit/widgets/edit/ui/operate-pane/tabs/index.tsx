@@ -23,7 +23,7 @@ describe("edit/ui/operate-pane/tabs", () => {
 
 		h.expect(() => (
 			<virtual>
-				<ul classes={[c.nav, "nav-fill"]}>
+				<ul classes={[c.nav, c.nav_fill]}>
 					<li classes={[c.nav_item]}>
 						<a
 							key="nav-widgets"
@@ -59,7 +59,7 @@ describe("edit/ui/operate-pane/tabs", () => {
 
 		h.expect(() => (
 			<virtual>
-				<ul classes={[c.nav, "nav-fill"]}>
+				<ul classes={[c.nav, c.nav_fill]}>
 					<li classes={[c.nav_item]}>
 						<a
 							key="nav-widgets"
@@ -92,7 +92,7 @@ describe("edit/ui/operate-pane/tabs", () => {
 
 		h.expect(() => (
 			<virtual>
-				<ul classes={[c.nav, "nav-fill"]}>
+				<ul classes={[c.nav, c.nav_fill]}>
 					<li classes={[c.nav_item]}>
 						<a
 							key="nav-widgets"
@@ -128,7 +128,7 @@ describe("edit/ui/operate-pane/tabs", () => {
 
 		h.expect(() => (
 			<virtual>
-				<ul classes={[c.nav, "nav-fill"]}>
+				<ul classes={[c.nav, c.nav_fill]}>
 					<li classes={[c.nav_item]}>
 						<a
 							key="nav-widgets"
@@ -164,7 +164,7 @@ describe("edit/ui/operate-pane/tabs", () => {
 
 		h.expect(() => (
 			<virtual>
-				<ul classes={[c.nav, "nav-fill"]}>
+				<ul classes={[c.nav, c.nav_fill]}>
 					<li classes={[c.nav_item]}>
 						<a
 							key="nav-widgets"
