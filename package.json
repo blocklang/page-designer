@@ -37,7 +37,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.1",
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
-    "@tanem/svg-injector": "^8.1.0",
+    "@tanem/svg-injector": "8.2.5",
     "@types/scriptjs": "^0.0.2",
     "@popperjs/core": "^2.5.4",
     "scriptjs": "^2.5.9",
