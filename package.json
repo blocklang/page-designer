@@ -71,7 +71,7 @@
     "prettier": "^2.2.1",
     "shx": "^0.3.3",
     "sinon": "^9.2.1",
-    "typescript": "^3.9.7"
+    "typescript": "3.9.10"
   },
   "husky": {
     "hooks": {
