@@ -41,7 +41,7 @@
     "@types/scriptjs": "^0.0.2",
     "@popperjs/core": "^2.5.4",
     "scriptjs": "^2.5.9",
-    "tslib": "^2.0.3"
+    "tslib": "2.4.0"
   },
   "peerDependencies": {
     "@dojo/framework": "^7.0.5",
