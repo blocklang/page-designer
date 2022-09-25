@@ -39,7 +39,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@tanem/svg-injector": "^8.1.0",
     "@types/scriptjs": "^0.0.2",
-    "@popperjs/core": "^2.5.4",
+    "@popperjs/core": "2.11.6",
     "scriptjs": "^2.5.9",
     "tslib": "^2.0.3"
   },
