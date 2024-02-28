@@ -49,8 +49,8 @@
     "@blocklang/std-widget-web": "^0.0.6-alpha.2"
   },
   "devDependencies": {
-    "@commitlint/cli": "^9.1.2",
-    "@commitlint/config-conventional": "^9.1.2",
+    "@commitlint/cli": "^19.0.0",
+    "@commitlint/config-conventional": "^19.0.0",
     "@dojo/cli": "^7.0.0",
     "@dojo/cli-build-app": "^7.0.4",
     "@dojo/cli-build-widget": "^7.0.0",
